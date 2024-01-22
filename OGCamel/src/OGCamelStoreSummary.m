@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -12,104 +12,133 @@
 
 - (instancetype)init
 {
-	self = [super initWithGObject:(GObject*)camel_store_summary_new()];
+	CamelStoreSummary* gobjectValue = CAMEL_STORE_SUMMARY(camel_store_summary_new());
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (CamelStoreSummary*)STORESUMMARY
+- (CamelStoreSummary*)castedGObject
 {
-	return CAMEL_STORE_SUMMARY([self GOBJECT]);
+	return CAMEL_STORE_SUMMARY([self gObject]);
 }
 
 - (void)add:(CamelStoreInfo*)info
 {
-	camel_store_summary_add([self STORESUMMARY], info);
+	camel_store_summary_add([self castedGObject], info);
 }
 
 - (CamelStoreInfo*)addFromPath:(OFString*)path
 {
-	return camel_store_summary_add_from_path([self STORESUMMARY], [path UTF8String]);
+	CamelStoreInfo* returnValue = camel_store_summary_add_from_path([self castedGObject], [path UTF8String]);
+
+	return returnValue;
 }
 
 - (GPtrArray*)array
 {
-	return camel_store_summary_array([self STORESUMMARY]);
+	GPtrArray* returnValue = camel_store_summary_array([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)arrayFree:(GPtrArray*)array
 {
-	camel_store_summary_array_free([self STORESUMMARY], array);
+	camel_store_summary_array_free([self castedGObject], array);
 }
 
 - (bool)connectFolderSummaryWithPath:(OFString*)path folderSummary:(OGCamelFolderSummary*)folderSummary
 {
-	return camel_store_summary_connect_folder_summary([self STORESUMMARY], [path UTF8String], [folderSummary FOLDERSUMMARY]);
+	bool returnValue = camel_store_summary_connect_folder_summary([self castedGObject], [path UTF8String], [folderSummary castedGObject]);
+
+	return returnValue;
 }
 
 - (gint)count
 {
-	return camel_store_summary_count([self STORESUMMARY]);
+	gint returnValue = camel_store_summary_count([self castedGObject]);
+
+	return returnValue;
 }
 
 - (bool)disconnectFolderSummary:(OGCamelFolderSummary*)folderSummary
 {
-	return camel_store_summary_disconnect_folder_summary([self STORESUMMARY], [folderSummary FOLDERSUMMARY]);
+	bool returnValue = camel_store_summary_disconnect_folder_summary([self castedGObject], [folderSummary castedGObject]);
+
+	return returnValue;
 }
 
 - (CamelStoreInfo*)infoNew
 {
-	return camel_store_summary_info_new([self STORESUMMARY]);
+	CamelStoreInfo* returnValue = camel_store_summary_info_new([self castedGObject]);
+
+	return returnValue;
 }
 
 - (CamelStoreInfo*)infoRef:(CamelStoreInfo*)info
 {
-	return camel_store_summary_info_ref([self STORESUMMARY], info);
+	CamelStoreInfo* returnValue = camel_store_summary_info_ref([self castedGObject], info);
+
+	return returnValue;
 }
 
 - (void)infoUnref:(CamelStoreInfo*)info
 {
-	camel_store_summary_info_unref([self STORESUMMARY], info);
+	camel_store_summary_info_unref([self castedGObject], info);
 }
 
 - (gint)load
 {
-	return camel_store_summary_load([self STORESUMMARY]);
+	gint returnValue = camel_store_summary_load([self castedGObject]);
+
+	return returnValue;
 }
 
 - (CamelStoreInfo*)path:(OFString*)path
 {
-	return camel_store_summary_path([self STORESUMMARY], [path UTF8String]);
+	CamelStoreInfo* returnValue = camel_store_summary_path([self castedGObject], [path UTF8String]);
+
+	return returnValue;
 }
 
 - (void)remove:(CamelStoreInfo*)info
 {
-	camel_store_summary_remove([self STORESUMMARY], info);
+	camel_store_summary_remove([self castedGObject], info);
 }
 
 - (void)removePath:(OFString*)path
 {
-	camel_store_summary_remove_path([self STORESUMMARY], [path UTF8String]);
+	camel_store_summary_remove_path([self castedGObject], [path UTF8String]);
 }
 
 - (gint)save
 {
-	return camel_store_summary_save([self STORESUMMARY]);
+	gint returnValue = camel_store_summary_save([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)setFilename:(OFString*)filename
 {
-	camel_store_summary_set_filename([self STORESUMMARY], [filename UTF8String]);
+	camel_store_summary_set_filename([self castedGObject], [filename UTF8String]);
 }
 
 - (void)sortWithCompareFunc:(GCompareDataFunc)compareFunc userData:(gpointer)userData
 {
-	camel_store_summary_sort([self STORESUMMARY], compareFunc, userData);
+	camel_store_summary_sort([self castedGObject], compareFunc, userData);
 }
 
 - (void)touch
 {
-	camel_store_summary_touch([self STORESUMMARY]);
+	camel_store_summary_touch([self castedGObject]);
 }
 
 

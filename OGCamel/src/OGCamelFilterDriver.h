@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,10 +8,11 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCamelMessageInfo;
-@class OGCamelSession;
-@class OGCamelFolder;
 @class OGCamelMimeMessage;
+@class OGCamelSession;
+@class OGCancellable;
+@class OGCamelFolder;
+@class OGCamelMessageInfo;
 
 @interface OGCamelFilterDriver : OGObject
 {
@@ -28,7 +29,7 @@
  * Methods
  */
 
-- (CamelFilterDriver*)FILTERDRIVER;
+- (CamelFilterDriver*)castedGObject;
 
 /**
  * Adds a new rule to set of rules to process by the filter driver.
@@ -45,15 +46,14 @@
  *
  * @param folder CamelFolder to be filtered
  * @param cache UID cache (needed for POP folders)
- * @param uids message uids to be filtered or NULL (as a
- *        shortcut to filter all messages)
+ * @param uids message uids to be filtered or
+ *         %NULL (as a shortcut to filter all messages)
  * @param remove TRUE to mark filtered messages as deleted
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return -1 if errors were encountered during filtering,
  * otherwise returns 0.
  */
-- (gint)filterFolderWithFolder:(OGCamelFolder*)folder cache:(CamelUIDCache*)cache uids:(GPtrArray*)uids remove:(bool)remove cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (gint)filterFolderWithFolder:(OGCamelFolder*)folder cache:(CamelUIDCache*)cache uids:(GPtrArray*)uids remove:(bool)remove cancellable:(OGCancellable*)cancellable;
 
 /**
  * Filters an mbox file based on rules defined in the FilterDriver
@@ -63,11 +63,10 @@
  * @param mbox mbox filename to be filtered
  * @param originalSourceUrl URI of the @mbox, or %NULL
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return -1 if errors were encountered during filtering,
  * otherwise returns 0.
  */
-- (gint)filterMboxWithMbox:(OFString*)mbox originalSourceUrl:(OFString*)originalSourceUrl cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (gint)filterMboxWithMbox:(OFString*)mbox originalSourceUrl:(OFString*)originalSourceUrl cancellable:(OGCancellable*)cancellable;
 
 /**
  * Filters a message based on rules defined in the FilterDriver
@@ -76,25 +75,23 @@
  * certain cases is more efficient than using the default
  * camel_folder_append_message() function).
  *
- * @param message message to filter or NULL
- * @param info message info or NULL
- * @param uid message uid or NULL
- * @param source source folder or NULL
+ * @param message message to filter or %NULL
+ * @param info message info or %NULL
+ * @param uid message uid or %NULL
+ * @param source source folder or %NULL
  * @param storeUid UID of source store, or %NULL
  * @param originalStoreUid UID of source store (pre-movemail), or %NULL
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return -1 if errors were encountered during filtering,
  * otherwise returns 0.
  */
-- (gint)filterMessageWithMessage:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info uid:(OFString*)uid source:(OGCamelFolder*)source storeUid:(OFString*)storeUid originalStoreUid:(OFString*)originalStoreUid cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (gint)filterMessageWithMessage:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info uid:(OFString*)uid source:(OGCamelFolder*)source storeUid:(OFString*)storeUid originalStoreUid:(OFString*)originalStoreUid cancellable:(OGCancellable*)cancellable;
 
 /**
  * Flush all of the only-once filter actions.
  *
- * @param err
  */
-- (void)flush:(GError**)err;
+- (void)flush;
 
 /**
  * Removes a rule by name, added by camel_filter_driver_add_rule().

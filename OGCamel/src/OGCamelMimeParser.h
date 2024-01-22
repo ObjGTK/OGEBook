@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -9,6 +9,7 @@
 #import <OGObject/OGObject.h>
 
 @class OGCamelStream;
+@class OGInputStream;
 @class OGCamelMimeFilter;
 
 @interface OGCamelMimeParser : OGObject
@@ -26,12 +27,12 @@
  * Methods
  */
 
-- (CamelMimeParser*)MIMEPARSER;
+- (CamelMimeParser*)castedGObject;
 
 /**
  * Get the content type defined in the current part.
  *
- * @return A content_type structure, or NULL if there
+ * @return A content_type structure, or %NULL if there
  * is no content-type defined for this part of state of the
  * parser.
  */
@@ -53,8 +54,9 @@
  * current state of the parser.  These headers are valid
  * until the next call to camel_mime_parser_step(), or camel_mime_parser_drop_step().
  *
- * @return The headers, or %NULL, if there are no headers
- * defined for the current part or state. Free it with camel_name_value_array_free().
+ * @return The headers, or %NULL, if there are no
+ * headers defined for the current part or state. Free it with
+ * camel_name_value_array_free().
  */
 - (CamelNameValueArray*)dupHeaders;
 
@@ -96,7 +98,7 @@
  * The return value will remain valid while in the CAMEL_MIME_PARSER_STATE_FROM
  * state, or any deeper state.
  *
- * @return The From line, or NULL if called out of context.
+ * @return The From line, or %NULL if called out of context.
  */
 - (OFString*)fromLine;
 
@@ -106,7 +108,7 @@
  * @param name Name of header.
  * @param offset Pointer that can receive the offset of the header in
  * the stream from the start of parsing.
- * @return The header value, or NULL if the header is not
+ * @return The header value, or %NULL if the header is not
  * defined.
  */
 - (OFString*)headerWithName:(OFString*)name offset:(gint*)offset;
@@ -137,7 +139,7 @@
  *
  * @param inputStream a #GInputStream
  */
-- (void)initWithInputStream:(GInputStream*)inputStream;
+- (void)initWithInputStream:(OGInputStream*)inputStream;
 
 /**
  * Initialise the scanner with a source stream.  The scanner's
@@ -146,17 +148,16 @@
  * be seeked using the parser seek function.
  *
  * @param stream a #CamelStream to init with
- * @param err
  * @return -1 on error.
  */
-- (gint)initWithStreamWithStream:(OGCamelStream*)stream err:(GError**)err;
+- (gint)initWithStream:(OGCamelStream*)stream;
 
 /**
  * Retrieve the postface text for the current multipart.
  * Only returns valid data when the current state if
  * CAMEL_MIME_PARSER_STATE_MULTIPART_END.
  *
- * @return The postface text, or NULL if there wasn't any.
+ * @return The postface text, or %NULL if there wasn't any.
  */
 - (OFString*)postface;
 
@@ -164,7 +165,7 @@
  * Retrieve the preface text for the current multipart.
  * Can only be used when the state is CAMEL_MIME_PARSER_STATE_MULTIPART_END.
  *
- * @return The preface text, or NULL if there wasn't any.
+ * @return The preface text, or %NULL if there wasn't any.
  */
 - (OFString*)preface;
 
@@ -192,10 +193,9 @@
  *
  * @param databuffer The data buffer
  * @param len The length of data to read
- * @param err
  * @return The number of bytes available, or -1 on error.
  */
-- (gssize)readWithDatabuffer:(const gchar**)databuffer len:(gssize)len err:(GError**)err;
+- (gssize)readWithDatabuffer:(const gchar**)databuffer len:(gssize)len;
 
 /**
  * Tell the scanner if it should scan "^From " lines or not.
@@ -266,8 +266,8 @@
  * the states an application is gauranteed to get from the
  * scanner.
  *
- * @param databuffer Pointer to accept a pointer to the data
- * associated with this step (if any).  May be %NULL,
+ * @param databuffer Pointer to
+ * accept a pointer to the data associated with this step (if any).  May be %NULL,
  * in which case datalength is also ingored.
  * @param datalength Pointer to accept a pointer to the data
  * length associated with this step (if any).

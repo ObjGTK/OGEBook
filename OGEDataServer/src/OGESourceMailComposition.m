@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,124 +8,158 @@
 
 @implementation OGESourceMailComposition
 
-- (ESourceMailComposition*)SOURCEMAILCOMPOSITION
+- (ESourceMailComposition*)castedGObject
 {
-	return E_SOURCE_MAIL_COMPOSITION([self GOBJECT]);
+	return E_SOURCE_MAIL_COMPOSITION([self gObject]);
 }
 
 - (gchar**)dupBcc
 {
-	return e_source_mail_composition_dup_bcc([self SOURCEMAILCOMPOSITION]);
+	gchar** returnValue = e_source_mail_composition_dup_bcc([self castedGObject]);
+
+	return returnValue;
 }
 
 - (gchar**)dupCc
 {
-	return e_source_mail_composition_dup_cc([self SOURCEMAILCOMPOSITION]);
+	gchar** returnValue = e_source_mail_composition_dup_cc([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)dupDraftsFolder
 {
-	return [OFString stringWithUTF8String:e_source_mail_composition_dup_drafts_folder([self SOURCEMAILCOMPOSITION])];
+	gchar* gobjectValue = e_source_mail_composition_dup_drafts_folder([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)dupLanguage
 {
-	return [OFString stringWithUTF8String:e_source_mail_composition_dup_language([self SOURCEMAILCOMPOSITION])];
+	gchar* gobjectValue = e_source_mail_composition_dup_language([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)dupTemplatesFolder
 {
-	return [OFString stringWithUTF8String:e_source_mail_composition_dup_templates_folder([self SOURCEMAILCOMPOSITION])];
+	gchar* gobjectValue = e_source_mail_composition_dup_templates_folder([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (const gchar* const*)bcc
 {
-	return e_source_mail_composition_get_bcc([self SOURCEMAILCOMPOSITION]);
+	const gchar* const* returnValue = e_source_mail_composition_get_bcc([self castedGObject]);
+
+	return returnValue;
 }
 
 - (const gchar* const*)cc
 {
-	return e_source_mail_composition_get_cc([self SOURCEMAILCOMPOSITION]);
+	const gchar* const* returnValue = e_source_mail_composition_get_cc([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)draftsFolder
 {
-	return [OFString stringWithUTF8String:e_source_mail_composition_get_drafts_folder([self SOURCEMAILCOMPOSITION])];
+	const gchar* gobjectValue = e_source_mail_composition_get_drafts_folder([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OFString*)language
 {
-	return [OFString stringWithUTF8String:e_source_mail_composition_get_language([self SOURCEMAILCOMPOSITION])];
+	const gchar* gobjectValue = e_source_mail_composition_get_language([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (ESourceMailCompositionReplyStyle)replyStyle
 {
-	return e_source_mail_composition_get_reply_style([self SOURCEMAILCOMPOSITION]);
+	ESourceMailCompositionReplyStyle returnValue = e_source_mail_composition_get_reply_style([self castedGObject]);
+
+	return returnValue;
 }
 
 - (bool)signImip
 {
-	return e_source_mail_composition_get_sign_imip([self SOURCEMAILCOMPOSITION]);
+	bool returnValue = e_source_mail_composition_get_sign_imip([self castedGObject]);
+
+	return returnValue;
 }
 
 - (EThreeState)startBottom
 {
-	return e_source_mail_composition_get_start_bottom([self SOURCEMAILCOMPOSITION]);
+	EThreeState returnValue = e_source_mail_composition_get_start_bottom([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)templatesFolder
 {
-	return [OFString stringWithUTF8String:e_source_mail_composition_get_templates_folder([self SOURCEMAILCOMPOSITION])];
+	const gchar* gobjectValue = e_source_mail_composition_get_templates_folder([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (EThreeState)topSignature
 {
-	return e_source_mail_composition_get_top_signature([self SOURCEMAILCOMPOSITION]);
+	EThreeState returnValue = e_source_mail_composition_get_top_signature([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)setBcc:(const gchar* const*)bcc
 {
-	e_source_mail_composition_set_bcc([self SOURCEMAILCOMPOSITION], bcc);
+	e_source_mail_composition_set_bcc([self castedGObject], bcc);
 }
 
 - (void)setCc:(const gchar* const*)cc
 {
-	e_source_mail_composition_set_cc([self SOURCEMAILCOMPOSITION], cc);
+	e_source_mail_composition_set_cc([self castedGObject], cc);
 }
 
 - (void)setDraftsFolder:(OFString*)draftsFolder
 {
-	e_source_mail_composition_set_drafts_folder([self SOURCEMAILCOMPOSITION], [draftsFolder UTF8String]);
+	e_source_mail_composition_set_drafts_folder([self castedGObject], [draftsFolder UTF8String]);
 }
 
 - (void)setLanguage:(OFString*)language
 {
-	e_source_mail_composition_set_language([self SOURCEMAILCOMPOSITION], [language UTF8String]);
+	e_source_mail_composition_set_language([self castedGObject], [language UTF8String]);
 }
 
 - (void)setReplyStyle:(ESourceMailCompositionReplyStyle)replyStyle
 {
-	e_source_mail_composition_set_reply_style([self SOURCEMAILCOMPOSITION], replyStyle);
+	e_source_mail_composition_set_reply_style([self castedGObject], replyStyle);
 }
 
 - (void)setSignImip:(bool)signImip
 {
-	e_source_mail_composition_set_sign_imip([self SOURCEMAILCOMPOSITION], signImip);
+	e_source_mail_composition_set_sign_imip([self castedGObject], signImip);
 }
 
 - (void)setStartBottom:(EThreeState)startBottom
 {
-	e_source_mail_composition_set_start_bottom([self SOURCEMAILCOMPOSITION], startBottom);
+	e_source_mail_composition_set_start_bottom([self castedGObject], startBottom);
 }
 
 - (void)setTemplatesFolder:(OFString*)templatesFolder
 {
-	e_source_mail_composition_set_templates_folder([self SOURCEMAILCOMPOSITION], [templatesFolder UTF8String]);
+	e_source_mail_composition_set_templates_folder([self castedGObject], [templatesFolder UTF8String]);
 }
 
 - (void)setTopSignature:(EThreeState)topSignature
 {
-	e_source_mail_composition_set_top_signature([self SOURCEMAILCOMPOSITION], topSignature);
+	e_source_mail_composition_set_top_signature([self castedGObject], topSignature);
 }
 
 

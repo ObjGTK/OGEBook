@@ -1,10 +1,12 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelFolder.h"
+
+@class OGCancellable;
 
 @interface OGCamelOfflineFolder : OGCamelFolder
 {
@@ -16,7 +18,7 @@
  * Methods
  */
 
-- (CamelOfflineFolder*)OFFLINEFOLDER;
+- (CamelOfflineFolder*)castedGObject;
 
 /**
  * Checks whether the @folder can run downsync according to its
@@ -42,16 +44,15 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)downsyncWithExpression:(OFString*)expression ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)downsyncWithExpression:(OFString*)expression ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_offline_folder_downsync().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)downsyncFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)downsyncFinish:(GAsyncResult*)result;
 
 /**
  * Synchronizes messages in @folder described by the search @expression to
@@ -60,10 +61,9 @@
  * @param expression search expression describing which set of messages
  *              to downsync (%NULL for all)
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)downsyncSyncWithExpression:(OFString*)expression cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)downsyncSyncWithExpression:(OFString*)expression cancellable:(OGCancellable*)cancellable;
 
 /**
  *

@@ -1,446 +1,754 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelFolder.h"
 
-#import "OGCamelMimeMessage.h"
-#import "OGCamelMessageInfo.h"
-#import "OGCamelStore.h"
 #import "OGCamelFolderSummary.h"
+#import "OGCamelStore.h"
+#import "OGCamelMessageInfo.h"
+#import <OGio/OGCancellable.h>
+#import "OGCamelMimeMessage.h"
 
 @implementation OGCamelFolder
 
-+ (GQuark)errorQuark
-{
-	return camel_folder_error_quark();
-}
-
 + (gint)threadedMessagesDump:(CamelFolderThreadNode*)c
 {
-	return camel_folder_threaded_messages_dump(c);
+	gint returnValue = camel_folder_threaded_messages_dump(c);
+
+	return returnValue;
 }
 
-- (CamelFolder*)FOLDER
+- (CamelFolder*)castedGObject
 {
-	return CAMEL_FOLDER([self GOBJECT]);
+	return CAMEL_FOLDER([self gObject]);
 }
 
-- (void)appendMessageWithMessage:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)appendMessageWithMessage:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	camel_folder_append_message([self FOLDER], [message MIMEMESSAGE], [info MESSAGEINFO], ioPriority, cancellable, callback, userData);
+	camel_folder_append_message([self castedGObject], [message castedGObject], [info castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)appendMessageFinishWithResult:(GAsyncResult*)result appendedUid:(gchar**)appendedUid err:(GError**)err
+- (bool)appendMessageFinishWithResult:(GAsyncResult*)result appendedUid:(gchar**)appendedUid
 {
-	return camel_folder_append_message_finish([self FOLDER], result, appendedUid, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_folder_append_message_finish([self castedGObject], result, appendedUid, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)appendMessageSyncWithMessage:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info appendedUid:(gchar**)appendedUid cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)appendMessageSyncWithMessage:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info appendedUid:(gchar**)appendedUid cancellable:(OGCancellable*)cancellable
 {
-	return camel_folder_append_message_sync([self FOLDER], [message MIMEMESSAGE], [info MESSAGEINFO], appendedUid, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_folder_append_message_sync([self castedGObject], [message castedGObject], [info castedGObject], appendedUid, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (void)changed:(CamelFolderChangeInfo*)changes
 {
-	camel_folder_changed([self FOLDER], changes);
+	camel_folder_changed([self castedGObject], changes);
 }
 
 - (gint)cmpUidsWithUid1:(OFString*)uid1 uid2:(OFString*)uid2
 {
-	return camel_folder_cmp_uids([self FOLDER], [uid1 UTF8String], [uid2 UTF8String]);
+	gint returnValue = camel_folder_cmp_uids([self castedGObject], [uid1 UTF8String], [uid2 UTF8String]);
+
+	return returnValue;
 }
 
-- (guint32)countByExpressionWithExpression:(OFString*)expression cancellable:(GCancellable*)cancellable err:(GError**)err
+- (guint32)countByExpressionWithExpression:(OFString*)expression cancellable:(OGCancellable*)cancellable
 {
-	return camel_folder_count_by_expression([self FOLDER], [expression UTF8String], cancellable, err);
+	GError* err = NULL;
+
+	guint32 returnValue = camel_folder_count_by_expression([self castedGObject], [expression UTF8String], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (void)delete
 {
-	camel_folder_delete([self FOLDER]);
+	camel_folder_delete([self castedGObject]);
 }
 
 - (OFString*)dupDescription
 {
-	return [OFString stringWithUTF8String:camel_folder_dup_description([self FOLDER])];
+	gchar* gobjectValue = camel_folder_dup_description([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)dupDisplayName
 {
-	return [OFString stringWithUTF8String:camel_folder_dup_display_name([self FOLDER])];
+	gchar* gobjectValue = camel_folder_dup_display_name([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)dupFullName
 {
-	return [OFString stringWithUTF8String:camel_folder_dup_full_name([self FOLDER])];
+	gchar* gobjectValue = camel_folder_dup_full_name([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
-- (void)expungeWithIoPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)expungeWithIoPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	camel_folder_expunge([self FOLDER], ioPriority, cancellable, callback, userData);
+	camel_folder_expunge([self castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)expungeFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)expungeFinish:(GAsyncResult*)result
 {
-	return camel_folder_expunge_finish([self FOLDER], result, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_folder_expunge_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)expungeSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)expungeSync:(OGCancellable*)cancellable
 {
-	return camel_folder_expunge_sync([self FOLDER], cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_folder_expunge_sync([self castedGObject], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (void)freeDeep:(GPtrArray*)array
 {
-	camel_folder_free_deep([self FOLDER], array);
+	camel_folder_free_deep([self castedGObject], array);
 }
 
 - (void)freeShallow:(GPtrArray*)array
 {
-	camel_folder_free_shallow([self FOLDER], array);
+	camel_folder_free_shallow([self castedGObject], array);
 }
 
 - (void)freeSummary:(GPtrArray*)array
 {
-	camel_folder_free_summary([self FOLDER], array);
+	camel_folder_free_summary([self castedGObject], array);
 }
 
 - (void)freeUids:(GPtrArray*)array
 {
-	camel_folder_free_uids([self FOLDER], array);
+	camel_folder_free_uids([self castedGObject], array);
 }
 
 - (void)freeze
 {
-	camel_folder_freeze([self FOLDER]);
+	camel_folder_freeze([self castedGObject]);
 }
 
 - (gint)deletedMessageCount
 {
-	return camel_folder_get_deleted_message_count([self FOLDER]);
+	gint returnValue = camel_folder_get_deleted_message_count([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)description
 {
-	return [OFString stringWithUTF8String:camel_folder_get_description([self FOLDER])];
+	const gchar* gobjectValue = camel_folder_get_description([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OFString*)displayName
 {
-	return [OFString stringWithUTF8String:camel_folder_get_display_name([self FOLDER])];
+	const gchar* gobjectValue = camel_folder_get_display_name([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
-- (OFString*)filenameWithUid:(OFString*)uid err:(GError**)err
+- (OFString*)filename:(OFString*)uid
 {
-	return [OFString stringWithUTF8String:camel_folder_get_filename([self FOLDER], [uid UTF8String], err)];
+	GError* err = NULL;
+
+	gchar* gobjectValue = camel_folder_get_filename([self castedGObject], [uid UTF8String], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (guint32)flags
 {
-	return camel_folder_get_flags([self FOLDER]);
+	guint32 returnValue = camel_folder_get_flags([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OGCamelFolderSummary*)folderSummary
 {
-	return [[[OGCamelFolderSummary alloc] initWithGObject:(GObject*)camel_folder_get_folder_summary([self FOLDER])] autorelease];
+	CamelFolderSummary* gobjectValue = CAMEL_FOLDER_SUMMARY(camel_folder_get_folder_summary([self castedGObject]));
+
+	OGCamelFolderSummary* returnValue = [OGCamelFolderSummary wrapperFor:gobjectValue];
+	return returnValue;
 }
 
 - (gint)frozenCount
 {
-	return camel_folder_get_frozen_count([self FOLDER]);
+	gint returnValue = camel_folder_get_frozen_count([self castedGObject]);
+
+	return returnValue;
+}
+
+- (OFString*)fullDisplayName
+{
+	const gchar* gobjectValue = camel_folder_get_full_display_name([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OFString*)fullName
 {
-	return [OFString stringWithUTF8String:camel_folder_get_full_name([self FOLDER])];
+	const gchar* gobjectValue = camel_folder_get_full_name([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (CamelThreeState)markSeen
 {
-	return camel_folder_get_mark_seen([self FOLDER]);
+	CamelThreeState returnValue = camel_folder_get_mark_seen([self castedGObject]);
+
+	return returnValue;
 }
 
 - (gint)markSeenTimeout
 {
-	return camel_folder_get_mark_seen_timeout([self FOLDER]);
+	gint returnValue = camel_folder_get_mark_seen_timeout([self castedGObject]);
+
+	return returnValue;
 }
 
-- (void)messageWithMessageUid:(OFString*)messageUid ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)messageWithMessageUid:(OFString*)messageUid ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	camel_folder_get_message([self FOLDER], [messageUid UTF8String], ioPriority, cancellable, callback, userData);
+	camel_folder_get_message([self castedGObject], [messageUid UTF8String], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (OGCamelMimeMessage*)messageCachedWithMessageUid:(OFString*)messageUid cancellable:(GCancellable*)cancellable
+- (OGCamelMimeMessage*)messageCachedWithMessageUid:(OFString*)messageUid cancellable:(OGCancellable*)cancellable
 {
-	return [[[OGCamelMimeMessage alloc] initWithGObject:(GObject*)camel_folder_get_message_cached([self FOLDER], [messageUid UTF8String], cancellable)] autorelease];
+	CamelMimeMessage* gobjectValue = CAMEL_MIME_MESSAGE(camel_folder_get_message_cached([self castedGObject], [messageUid UTF8String], [cancellable castedGObject]));
+
+	OGCamelMimeMessage* returnValue = [OGCamelMimeMessage wrapperFor:gobjectValue];
+	g_object_unref(gobjectValue);
+
+	return returnValue;
 }
 
 - (gint)messageCount
 {
-	return camel_folder_get_message_count([self FOLDER]);
+	gint returnValue = camel_folder_get_message_count([self castedGObject]);
+
+	return returnValue;
 }
 
-- (OGCamelMimeMessage*)messageFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (OGCamelMimeMessage*)messageFinish:(GAsyncResult*)result
 {
-	return [[[OGCamelMimeMessage alloc] initWithGObject:(GObject*)camel_folder_get_message_finish([self FOLDER], result, err)] autorelease];
+	GError* err = NULL;
+
+	CamelMimeMessage* gobjectValue = CAMEL_MIME_MESSAGE(camel_folder_get_message_finish([self castedGObject], result, &err));
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	OGCamelMimeMessage* returnValue = [OGCamelMimeMessage wrapperFor:gobjectValue];
+	return returnValue;
 }
 
 - (guint32)messageFlags:(OFString*)uid
 {
-	return camel_folder_get_message_flags([self FOLDER], [uid UTF8String]);
+	guint32 returnValue = camel_folder_get_message_flags([self castedGObject], [uid UTF8String]);
+
+	return returnValue;
 }
 
 - (OGCamelMessageInfo*)messageInfo:(OFString*)uid
 {
-	return [[[OGCamelMessageInfo alloc] initWithGObject:(GObject*)camel_folder_get_message_info([self FOLDER], [uid UTF8String])] autorelease];
+	CamelMessageInfo* gobjectValue = CAMEL_MESSAGE_INFO(camel_folder_get_message_info([self castedGObject], [uid UTF8String]));
+
+	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo wrapperFor:gobjectValue];
+	g_object_unref(gobjectValue);
+
+	return returnValue;
 }
 
-- (OGCamelMimeMessage*)messageSyncWithMessageUid:(OFString*)messageUid cancellable:(GCancellable*)cancellable err:(GError**)err
+- (OGCamelMimeMessage*)messageSyncWithMessageUid:(OFString*)messageUid cancellable:(OGCancellable*)cancellable
 {
-	return [[[OGCamelMimeMessage alloc] initWithGObject:(GObject*)camel_folder_get_message_sync([self FOLDER], [messageUid UTF8String], cancellable, err)] autorelease];
+	GError* err = NULL;
+
+	CamelMimeMessage* gobjectValue = CAMEL_MIME_MESSAGE(camel_folder_get_message_sync([self castedGObject], [messageUid UTF8String], [cancellable castedGObject], &err));
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	OGCamelMimeMessage* returnValue = [OGCamelMimeMessage wrapperFor:gobjectValue];
+	return returnValue;
 }
 
 - (bool)messageUserFlagWithUid:(OFString*)uid name:(OFString*)name
 {
-	return camel_folder_get_message_user_flag([self FOLDER], [uid UTF8String], [name UTF8String]);
+	bool returnValue = camel_folder_get_message_user_flag([self castedGObject], [uid UTF8String], [name UTF8String]);
+
+	return returnValue;
 }
 
 - (OFString*)messageUserTagWithUid:(OFString*)uid name:(OFString*)name
 {
-	return [OFString stringWithUTF8String:camel_folder_get_message_user_tag([self FOLDER], [uid UTF8String], [name UTF8String])];
+	const gchar* gobjectValue = camel_folder_get_message_user_tag([self castedGObject], [uid UTF8String], [name UTF8String]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OGCamelStore*)parentStore
 {
-	return [[[OGCamelStore alloc] initWithGObject:(GObject*)camel_folder_get_parent_store([self FOLDER])] autorelease];
+	CamelStore* gobjectValue = CAMEL_STORE(camel_folder_get_parent_store([self castedGObject]));
+
+	OGCamelStore* returnValue = [OGCamelStore wrapperFor:gobjectValue];
+	return returnValue;
 }
 
 - (guint32)permanentFlags
 {
-	return camel_folder_get_permanent_flags([self FOLDER]);
+	guint32 returnValue = camel_folder_get_permanent_flags([self castedGObject]);
+
+	return returnValue;
 }
 
-- (void)quotaInfoWithIoPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)quotaInfoWithIoPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	camel_folder_get_quota_info([self FOLDER], ioPriority, cancellable, callback, userData);
+	camel_folder_get_quota_info([self castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (CamelFolderQuotaInfo*)quotaInfoFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (CamelFolderQuotaInfo*)quotaInfoFinish:(GAsyncResult*)result
 {
-	return camel_folder_get_quota_info_finish([self FOLDER], result, err);
+	GError* err = NULL;
+
+	CamelFolderQuotaInfo* returnValue = camel_folder_get_quota_info_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (CamelFolderQuotaInfo*)quotaInfoSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err
+- (CamelFolderQuotaInfo*)quotaInfoSync:(OGCancellable*)cancellable
 {
-	return camel_folder_get_quota_info_sync([self FOLDER], cancellable, err);
+	GError* err = NULL;
+
+	CamelFolderQuotaInfo* returnValue = camel_folder_get_quota_info_sync([self castedGObject], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (GPtrArray*)summary
 {
-	return camel_folder_get_summary([self FOLDER]);
+	GPtrArray* returnValue = camel_folder_get_summary([self castedGObject]);
+
+	return returnValue;
 }
 
 - (GPtrArray*)uids
 {
-	return camel_folder_get_uids([self FOLDER]);
+	GPtrArray* returnValue = camel_folder_get_uids([self castedGObject]);
+
+	return returnValue;
 }
 
-- (GPtrArray*)uncachedUidsWithUids:(GPtrArray*)uids err:(GError**)err
+- (GPtrArray*)uncachedUids:(GPtrArray*)uids
 {
-	return camel_folder_get_uncached_uids([self FOLDER], uids, err);
+	GError* err = NULL;
+
+	GPtrArray* returnValue = camel_folder_get_uncached_uids([self castedGObject], uids, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (gint)unreadMessageCount
 {
-	return camel_folder_get_unread_message_count([self FOLDER]);
+	gint returnValue = camel_folder_get_unread_message_count([self castedGObject]);
+
+	return returnValue;
 }
 
 - (bool)hasSummaryCapability
 {
-	return camel_folder_has_summary_capability([self FOLDER]);
+	bool returnValue = camel_folder_has_summary_capability([self castedGObject]);
+
+	return returnValue;
 }
 
 - (bool)isFrozen
 {
-	return camel_folder_is_frozen([self FOLDER]);
+	bool returnValue = camel_folder_is_frozen([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)lock
 {
-	camel_folder_lock([self FOLDER]);
+	camel_folder_lock([self castedGObject]);
 }
 
 - (void)prepareContentRefresh
 {
-	camel_folder_prepare_content_refresh([self FOLDER]);
+	camel_folder_prepare_content_refresh([self castedGObject]);
 }
 
-- (void)purgeMessageCacheWithStartUid:(OFString*)startUid endUid:(OFString*)endUid ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)purgeMessageCacheWithStartUid:(OFString*)startUid endUid:(OFString*)endUid ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	camel_folder_purge_message_cache([self FOLDER], (gchar*) [startUid UTF8String], (gchar*) [endUid UTF8String], ioPriority, cancellable, callback, userData);
+	camel_folder_purge_message_cache([self castedGObject], g_strdup([startUid UTF8String]), g_strdup([endUid UTF8String]), ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)purgeMessageCacheFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)purgeMessageCacheFinish:(GAsyncResult*)result
 {
-	return camel_folder_purge_message_cache_finish([self FOLDER], result, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_folder_purge_message_cache_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)purgeMessageCacheSyncWithStartUid:(OFString*)startUid endUid:(OFString*)endUid cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)purgeMessageCacheSyncWithStartUid:(OFString*)startUid endUid:(OFString*)endUid cancellable:(OGCancellable*)cancellable
 {
-	return camel_folder_purge_message_cache_sync([self FOLDER], (gchar*) [startUid UTF8String], (gchar*) [endUid UTF8String], cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_folder_purge_message_cache_sync([self castedGObject], g_strdup([startUid UTF8String]), g_strdup([endUid UTF8String]), [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)refreshInfoWithIoPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)refreshInfoWithIoPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	camel_folder_refresh_info([self FOLDER], ioPriority, cancellable, callback, userData);
+	camel_folder_refresh_info([self castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)refreshInfoFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)refreshInfoFinish:(GAsyncResult*)result
 {
-	return camel_folder_refresh_info_finish([self FOLDER], result, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_folder_refresh_info_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)refreshInfoSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)refreshInfoSync:(OGCancellable*)cancellable
 {
-	return camel_folder_refresh_info_sync([self FOLDER], cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_folder_refresh_info_sync([self castedGObject], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (void)rename:(OFString*)newName
 {
-	camel_folder_rename([self FOLDER], [newName UTF8String]);
+	camel_folder_rename([self castedGObject], [newName UTF8String]);
 }
 
-- (GPtrArray*)searchByExpressionWithExpression:(OFString*)expression cancellable:(GCancellable*)cancellable err:(GError**)err
+- (GPtrArray*)searchByExpressionWithExpression:(OFString*)expression cancellable:(OGCancellable*)cancellable
 {
-	return camel_folder_search_by_expression([self FOLDER], [expression UTF8String], cancellable, err);
+	GError* err = NULL;
+
+	GPtrArray* returnValue = camel_folder_search_by_expression([self castedGObject], [expression UTF8String], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (GPtrArray*)searchByUidsWithExpression:(OFString*)expression uids:(GPtrArray*)uids cancellable:(GCancellable*)cancellable err:(GError**)err
+- (GPtrArray*)searchByUidsWithExpression:(OFString*)expression uids:(GPtrArray*)uids cancellable:(OGCancellable*)cancellable
 {
-	return camel_folder_search_by_uids([self FOLDER], [expression UTF8String], uids, cancellable, err);
+	GError* err = NULL;
+
+	GPtrArray* returnValue = camel_folder_search_by_uids([self castedGObject], [expression UTF8String], uids, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (void)searchFree:(GPtrArray*)result
 {
-	camel_folder_search_free([self FOLDER], result);
+	camel_folder_search_free([self castedGObject], result);
 }
 
 - (void)setDescription:(OFString*)description
 {
-	camel_folder_set_description([self FOLDER], [description UTF8String]);
+	camel_folder_set_description([self castedGObject], [description UTF8String]);
 }
 
 - (void)setDisplayName:(OFString*)displayName
 {
-	camel_folder_set_display_name([self FOLDER], [displayName UTF8String]);
+	camel_folder_set_display_name([self castedGObject], [displayName UTF8String]);
 }
 
 - (void)setFlags:(guint32)folderFlags
 {
-	camel_folder_set_flags([self FOLDER], folderFlags);
+	camel_folder_set_flags([self castedGObject], folderFlags);
 }
 
 - (void)setFullName:(OFString*)fullName
 {
-	camel_folder_set_full_name([self FOLDER], [fullName UTF8String]);
+	camel_folder_set_full_name([self castedGObject], [fullName UTF8String]);
 }
 
 - (void)setLockAsync:(bool)skipFolderLock
 {
-	camel_folder_set_lock_async([self FOLDER], skipFolderLock);
+	camel_folder_set_lock_async([self castedGObject], skipFolderLock);
 }
 
 - (void)setMarkSeen:(CamelThreeState)markSeen
 {
-	camel_folder_set_mark_seen([self FOLDER], markSeen);
+	camel_folder_set_mark_seen([self castedGObject], markSeen);
 }
 
 - (void)setMarkSeenTimeout:(gint)timeout
 {
-	camel_folder_set_mark_seen_timeout([self FOLDER], timeout);
+	camel_folder_set_mark_seen_timeout([self castedGObject], timeout);
 }
 
 - (bool)setMessageFlagsWithUid:(OFString*)uid mask:(guint32)mask set:(guint32)set
 {
-	return camel_folder_set_message_flags([self FOLDER], [uid UTF8String], mask, set);
+	bool returnValue = camel_folder_set_message_flags([self castedGObject], [uid UTF8String], mask, set);
+
+	return returnValue;
 }
 
 - (void)setMessageUserFlagWithUid:(OFString*)uid name:(OFString*)name value:(bool)value
 {
-	camel_folder_set_message_user_flag([self FOLDER], [uid UTF8String], [name UTF8String], value);
+	camel_folder_set_message_user_flag([self castedGObject], [uid UTF8String], [name UTF8String], value);
 }
 
 - (void)setMessageUserTagWithUid:(OFString*)uid name:(OFString*)name value:(OFString*)value
 {
-	camel_folder_set_message_user_tag([self FOLDER], [uid UTF8String], [name UTF8String], [value UTF8String]);
+	camel_folder_set_message_user_tag([self castedGObject], [uid UTF8String], [name UTF8String], [value UTF8String]);
 }
 
 - (void)sortUids:(GPtrArray*)uids
 {
-	camel_folder_sort_uids([self FOLDER], uids);
+	camel_folder_sort_uids([self castedGObject], uids);
 }
 
-- (void)synchronizeWithExpunge:(bool)expunge ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)synchronizeWithExpunge:(bool)expunge ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	camel_folder_synchronize([self FOLDER], expunge, ioPriority, cancellable, callback, userData);
+	camel_folder_synchronize([self castedGObject], expunge, ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)synchronizeFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)synchronizeFinish:(GAsyncResult*)result
 {
-	return camel_folder_synchronize_finish([self FOLDER], result, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_folder_synchronize_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)synchronizeMessageWithMessageUid:(OFString*)messageUid ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)synchronizeMessageWithMessageUid:(OFString*)messageUid ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	camel_folder_synchronize_message([self FOLDER], [messageUid UTF8String], ioPriority, cancellable, callback, userData);
+	camel_folder_synchronize_message([self castedGObject], [messageUid UTF8String], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)synchronizeMessageFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)synchronizeMessageFinish:(GAsyncResult*)result
 {
-	return camel_folder_synchronize_message_finish([self FOLDER], result, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_folder_synchronize_message_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)synchronizeMessageSyncWithMessageUid:(OFString*)messageUid cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)synchronizeMessageSyncWithMessageUid:(OFString*)messageUid cancellable:(OGCancellable*)cancellable
 {
-	return camel_folder_synchronize_message_sync([self FOLDER], [messageUid UTF8String], cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_folder_synchronize_message_sync([self castedGObject], [messageUid UTF8String], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)synchronizeSyncWithExpunge:(bool)expunge cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)synchronizeSyncWithExpunge:(bool)expunge cancellable:(OGCancellable*)cancellable
 {
-	return camel_folder_synchronize_sync([self FOLDER], expunge, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_folder_synchronize_sync([self castedGObject], expunge, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (void)takeFolderSummary:(OGCamelFolderSummary*)summary
 {
-	camel_folder_take_folder_summary([self FOLDER], [summary FOLDERSUMMARY]);
+	camel_folder_take_folder_summary([self castedGObject], [summary castedGObject]);
 }
 
 - (void)thaw
 {
-	camel_folder_thaw([self FOLDER]);
+	camel_folder_thaw([self castedGObject]);
 }
 
-- (void)transferMessagesToWithMessageUids:(GPtrArray*)messageUids destination:(OGCamelFolder*)destination deleteOriginals:(bool)deleteOriginals ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)transferMessagesToWithMessageUids:(GPtrArray*)messageUids destination:(OGCamelFolder*)destination deleteOriginals:(bool)deleteOriginals ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	camel_folder_transfer_messages_to([self FOLDER], messageUids, [destination FOLDER], deleteOriginals, ioPriority, cancellable, callback, userData);
+	camel_folder_transfer_messages_to([self castedGObject], messageUids, [destination castedGObject], deleteOriginals, ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)transferMessagesToFinishWithResult:(GAsyncResult*)result transferredUids:(GPtrArray**)transferredUids err:(GError**)err
+- (bool)transferMessagesToFinishWithResult:(GAsyncResult*)result transferredUids:(GPtrArray**)transferredUids
 {
-	return camel_folder_transfer_messages_to_finish([self FOLDER], result, transferredUids, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_folder_transfer_messages_to_finish([self castedGObject], result, transferredUids, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)transferMessagesToSyncWithMessageUids:(GPtrArray*)messageUids destination:(OGCamelFolder*)destination deleteOriginals:(bool)deleteOriginals transferredUids:(GPtrArray**)transferredUids cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)transferMessagesToSyncWithMessageUids:(GPtrArray*)messageUids destination:(OGCamelFolder*)destination deleteOriginals:(bool)deleteOriginals transferredUids:(GPtrArray**)transferredUids cancellable:(OGCancellable*)cancellable
 {
-	return camel_folder_transfer_messages_to_sync([self FOLDER], messageUids, [destination FOLDER], deleteOriginals, transferredUids, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_folder_transfer_messages_to_sync([self castedGObject], messageUids, [destination castedGObject], deleteOriginals, transferredUids, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (void)unlock
 {
-	camel_folder_unlock([self FOLDER]);
+	camel_folder_unlock([self castedGObject]);
 }
 
 

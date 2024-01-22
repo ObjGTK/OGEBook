@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,34 +8,54 @@
 
 @implementation OGESourceSelectable
 
-- (ESourceSelectable*)SOURCESELECTABLE
+- (ESourceSelectable*)castedGObject
 {
-	return E_SOURCE_SELECTABLE([self GOBJECT]);
+	return E_SOURCE_SELECTABLE([self gObject]);
 }
 
 - (OFString*)dupColor
 {
-	return [OFString stringWithUTF8String:e_source_selectable_dup_color([self SOURCESELECTABLE])];
+	gchar* gobjectValue = e_source_selectable_dup_color([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)color
 {
-	return [OFString stringWithUTF8String:e_source_selectable_get_color([self SOURCESELECTABLE])];
+	const gchar* gobjectValue = e_source_selectable_get_color([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
+}
+
+- (guint)order
+{
+	guint returnValue = e_source_selectable_get_order([self castedGObject]);
+
+	return returnValue;
 }
 
 - (bool)selected
 {
-	return e_source_selectable_get_selected([self SOURCESELECTABLE]);
+	bool returnValue = e_source_selectable_get_selected([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)setColor:(OFString*)color
 {
-	e_source_selectable_set_color([self SOURCESELECTABLE], [color UTF8String]);
+	e_source_selectable_set_color([self castedGObject], [color UTF8String]);
+}
+
+- (void)setOrder:(guint)order
+{
+	e_source_selectable_set_order([self castedGObject], order);
 }
 
 - (void)setSelected:(bool)selected
 {
-	e_source_selectable_set_selected([self SOURCESELECTABLE], selected);
+	e_source_selectable_set_selected([self castedGObject], selected);
 }
 
 

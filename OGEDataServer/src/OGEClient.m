@@ -1,38 +1,50 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGEClient.h"
 
 #import "OGESource.h"
+#import <OGio/OGCancellable.h>
 
 @implementation OGEClient
 
 + (GError*)errorCreateWithCode:(EClientError)code customMsg:(OFString*)customMsg
 {
-	return e_client_error_create(code, [customMsg UTF8String]);
+	GError* returnValue = e_client_error_create(code, [customMsg UTF8String]);
+
+	return returnValue;
 }
 
 + (GQuark)errorQuark
 {
-	return e_client_error_quark();
+	GQuark returnValue = e_client_error_quark();
+
+	return returnValue;
 }
 
 + (OFString*)errorToString:(EClientError)code
 {
-	return [OFString stringWithUTF8String:e_client_error_to_string(code)];
+	const gchar* gobjectValue = e_client_error_to_string(code);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 + (GSList*)utilCopyObjectSlistWithCopyTo:(GSList*)copyTo objects:(const GSList*)objects
 {
-	return e_client_util_copy_object_slist(copyTo, objects);
+	GSList* returnValue = e_client_util_copy_object_slist(copyTo, objects);
+
+	return returnValue;
 }
 
 + (GSList*)utilCopyStringSlistWithCopyTo:(GSList*)copyTo strings:(const GSList*)strings
 {
-	return e_client_util_copy_string_slist(copyTo, strings);
+	GSList* returnValue = e_client_util_copy_string_slist(copyTo, strings);
+
+	return returnValue;
 }
 
 + (void)utilFreeObjectSlist:(GSList*)objects
@@ -47,207 +59,404 @@
 
 + (GSList*)utilParseCommaStrings:(OFString*)strings
 {
-	return e_client_util_parse_comma_strings([strings UTF8String]);
+	GSList* returnValue = e_client_util_parse_comma_strings([strings UTF8String]);
+
+	return returnValue;
 }
 
 + (gchar**)utilSlistToStrv:(const GSList*)strings
 {
-	return e_client_util_slist_to_strv(strings);
+	gchar** returnValue = e_client_util_slist_to_strv(strings);
+
+	return returnValue;
 }
 
 + (GSList*)utilStrvToSlist:(const gchar* const*)strv
 {
-	return e_client_util_strv_to_slist(strv);
+	GSList* returnValue = e_client_util_strv_to_slist(strv);
+
+	return returnValue;
 }
 
 + (bool)utilUnwrapDbusErrorWithDbusError:(GError*)dbusError clientError:(GError**)clientError knownErrors:(const EClientErrorsList*)knownErrors knownErrorsCount:(guint)knownErrorsCount knownErrorsDomain:(GQuark)knownErrorsDomain failWhenNoneMatched:(bool)failWhenNoneMatched
 {
-	return e_client_util_unwrap_dbus_error(dbusError, clientError, knownErrors, knownErrorsCount, knownErrorsDomain, failWhenNoneMatched);
+	bool returnValue = e_client_util_unwrap_dbus_error(dbusError, clientError, knownErrors, knownErrorsCount, knownErrorsDomain, failWhenNoneMatched);
+
+	return returnValue;
 }
 
-- (EClient*)CLIENT
+- (EClient*)castedGObject
 {
-	return E_CLIENT([self GOBJECT]);
+	return E_CLIENT([self gObject]);
 }
 
 - (void)cancelAll
 {
-	e_client_cancel_all([self CLIENT]);
+	e_client_cancel_all([self castedGObject]);
 }
 
 - (bool)checkCapability:(OFString*)capability
 {
-	return e_client_check_capability([self CLIENT], [capability UTF8String]);
+	bool returnValue = e_client_check_capability([self castedGObject], [capability UTF8String]);
+
+	return returnValue;
 }
 
 - (bool)checkRefreshSupported
 {
-	return e_client_check_refresh_supported([self CLIENT]);
+	bool returnValue = e_client_check_refresh_supported([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)dupBusName
 {
-	return [OFString stringWithUTF8String:e_client_dup_bus_name([self CLIENT])];
+	gchar* gobjectValue = e_client_dup_bus_name([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
-- (void)backendPropertyWithPropName:(OFString*)propName cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)backendPropertyWithPropName:(OFString*)propName cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_client_get_backend_property([self CLIENT], [propName UTF8String], cancellable, callback, userData);
+	e_client_get_backend_property([self castedGObject], [propName UTF8String], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)backendPropertyFinishWithResult:(GAsyncResult*)result propValue:(gchar**)propValue err:(GError**)err
+- (bool)backendPropertyFinishWithResult:(GAsyncResult*)result propValue:(gchar**)propValue
 {
-	return e_client_get_backend_property_finish([self CLIENT], result, propValue, err);
+	GError* err = NULL;
+
+	bool returnValue = e_client_get_backend_property_finish([self castedGObject], result, propValue, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)backendPropertySyncWithPropName:(OFString*)propName propValue:(gchar**)propValue cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)backendPropertySyncWithPropName:(OFString*)propName propValue:(gchar**)propValue cancellable:(OGCancellable*)cancellable
 {
-	return e_client_get_backend_property_sync([self CLIENT], [propName UTF8String], propValue, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_client_get_backend_property_sync([self castedGObject], [propName UTF8String], propValue, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (const GSList*)capabilities
 {
-	return e_client_get_capabilities([self CLIENT]);
+	const GSList* returnValue = e_client_get_capabilities([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OGESource*)source
 {
-	return [[[OGESource alloc] initWithGObject:(GObject*)e_client_get_source([self CLIENT])] autorelease];
+	ESource* gobjectValue = E_SOURCE(e_client_get_source([self castedGObject]));
+
+	OGESource* returnValue = [OGESource wrapperFor:gobjectValue];
+	return returnValue;
 }
 
 - (bool)isOnline
 {
-	return e_client_is_online([self CLIENT]);
+	bool returnValue = e_client_is_online([self castedGObject]);
+
+	return returnValue;
 }
 
 - (bool)isOpened
 {
-	return e_client_is_opened([self CLIENT]);
+	bool returnValue = e_client_is_opened([self castedGObject]);
+
+	return returnValue;
 }
 
 - (bool)isReadonly
 {
-	return e_client_is_readonly([self CLIENT]);
+	bool returnValue = e_client_is_readonly([self castedGObject]);
+
+	return returnValue;
 }
 
-- (void)openWithOnlyIfExists:(bool)onlyIfExists cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)openWithOnlyIfExists:(bool)onlyIfExists cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_client_open([self CLIENT], onlyIfExists, cancellable, callback, userData);
+	e_client_open([self castedGObject], onlyIfExists, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)openFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)openFinish:(GAsyncResult*)result
 {
-	return e_client_open_finish([self CLIENT], result, err);
+	GError* err = NULL;
+
+	bool returnValue = e_client_open_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)openSyncWithOnlyIfExists:(bool)onlyIfExists cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)openSyncWithOnlyIfExists:(bool)onlyIfExists cancellable:(OGCancellable*)cancellable
 {
-	return e_client_open_sync([self CLIENT], onlyIfExists, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_client_open_sync([self castedGObject], onlyIfExists, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (GMainContext*)refMainContext
 {
-	return e_client_ref_main_context([self CLIENT]);
+	GMainContext* returnValue = e_client_ref_main_context([self castedGObject]);
+
+	return returnValue;
 }
 
-- (void)refreshWithCancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)refreshWithCancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_client_refresh([self CLIENT], cancellable, callback, userData);
+	e_client_refresh([self castedGObject], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)refreshFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)refreshFinish:(GAsyncResult*)result
 {
-	return e_client_refresh_finish([self CLIENT], result, err);
+	GError* err = NULL;
+
+	bool returnValue = e_client_refresh_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)refreshSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)refreshSync:(OGCancellable*)cancellable
 {
-	return e_client_refresh_sync([self CLIENT], cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_client_refresh_sync([self castedGObject], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)removeWithCancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)removeWithCancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_client_remove([self CLIENT], cancellable, callback, userData);
+	e_client_remove([self castedGObject], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)removeFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)removeFinish:(GAsyncResult*)result
 {
-	return e_client_remove_finish([self CLIENT], result, err);
+	GError* err = NULL;
+
+	bool returnValue = e_client_remove_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)removeSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)removeSync:(OGCancellable*)cancellable
 {
-	return e_client_remove_sync([self CLIENT], cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_client_remove_sync([self castedGObject], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)retrieveCapabilitiesWithCancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)retrieveCapabilitiesWithCancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_client_retrieve_capabilities([self CLIENT], cancellable, callback, userData);
+	e_client_retrieve_capabilities([self castedGObject], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)retrieveCapabilitiesFinishWithResult:(GAsyncResult*)result capabilities:(gchar**)capabilities err:(GError**)err
+- (bool)retrieveCapabilitiesFinishWithResult:(GAsyncResult*)result capabilities:(gchar**)capabilities
 {
-	return e_client_retrieve_capabilities_finish([self CLIENT], result, capabilities, err);
+	GError* err = NULL;
+
+	bool returnValue = e_client_retrieve_capabilities_finish([self castedGObject], result, capabilities, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)retrieveCapabilitiesSyncWithCapabilities:(gchar**)capabilities cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)retrieveCapabilitiesSyncWithCapabilities:(gchar**)capabilities cancellable:(OGCancellable*)cancellable
 {
-	return e_client_retrieve_capabilities_sync([self CLIENT], capabilities, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_client_retrieve_capabilities_sync([self castedGObject], capabilities, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)retrievePropertiesWithCancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)retrievePropertiesWithCancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_client_retrieve_properties([self CLIENT], cancellable, callback, userData);
+	e_client_retrieve_properties([self castedGObject], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)retrievePropertiesFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)retrievePropertiesFinish:(GAsyncResult*)result
 {
-	return e_client_retrieve_properties_finish([self CLIENT], result, err);
+	GError* err = NULL;
+
+	bool returnValue = e_client_retrieve_properties_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)retrievePropertiesSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)retrievePropertiesSync:(OGCancellable*)cancellable
 {
-	return e_client_retrieve_properties_sync([self CLIENT], cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_client_retrieve_properties_sync([self castedGObject], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)setBackendPropertyWithPropName:(OFString*)propName propValue:(OFString*)propValue cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)setBackendPropertyWithPropName:(OFString*)propName propValue:(OFString*)propValue cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_client_set_backend_property([self CLIENT], [propName UTF8String], [propValue UTF8String], cancellable, callback, userData);
+	e_client_set_backend_property([self castedGObject], [propName UTF8String], [propValue UTF8String], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)setBackendPropertyFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)setBackendPropertyFinish:(GAsyncResult*)result
 {
-	return e_client_set_backend_property_finish([self CLIENT], result, err);
+	GError* err = NULL;
+
+	bool returnValue = e_client_set_backend_property_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)setBackendPropertySyncWithPropName:(OFString*)propName propValue:(OFString*)propValue cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)setBackendPropertySyncWithPropName:(OFString*)propName propValue:(OFString*)propValue cancellable:(OGCancellable*)cancellable
 {
-	return e_client_set_backend_property_sync([self CLIENT], [propName UTF8String], [propValue UTF8String], cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_client_set_backend_property_sync([self castedGObject], [propName UTF8String], [propValue UTF8String], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (void)setBusName:(OFString*)busName
 {
-	e_client_set_bus_name([self CLIENT], [busName UTF8String]);
+	e_client_set_bus_name([self castedGObject], [busName UTF8String]);
 }
 
-- (void)unwrapDbusErrorWithDbusError:(GError*)dbusError err:(GError**)err
+- (void)unwrapDbusError:(GError*)dbusError
 {
-	e_client_unwrap_dbus_error([self CLIENT], dbusError, err);
+	GError* err = NULL;
+
+	e_client_unwrap_dbus_error([self castedGObject], dbusError, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
 }
 
-- (void)waitForConnectedWithTimeoutSeconds:(guint32)timeoutSeconds cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)waitForConnectedWithTimeoutSeconds:(guint32)timeoutSeconds cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_client_wait_for_connected([self CLIENT], timeoutSeconds, cancellable, callback, userData);
+	e_client_wait_for_connected([self castedGObject], timeoutSeconds, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)waitForConnectedFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)waitForConnectedFinish:(GAsyncResult*)result
 {
-	return e_client_wait_for_connected_finish([self CLIENT], result, err);
+	GError* err = NULL;
+
+	bool returnValue = e_client_wait_for_connected_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)waitForConnectedSyncWithTimeoutSeconds:(guint32)timeoutSeconds cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)waitForConnectedSyncWithTimeoutSeconds:(guint32)timeoutSeconds cancellable:(OGCancellable*)cancellable
 {
-	return e_client_wait_for_connected_sync([self CLIENT], timeoutSeconds, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_client_wait_for_connected_sync([self castedGObject], timeoutSeconds, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 

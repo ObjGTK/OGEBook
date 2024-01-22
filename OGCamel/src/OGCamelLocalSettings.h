@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -21,7 +21,7 @@
  * Methods
  */
 
-- (CamelLocalSettings*)LOCALSETTINGS;
+- (CamelLocalSettings*)castedGObject;
 
 /**
  * Thread-safe variation of camel_local_settings_get_path().
@@ -48,6 +48,17 @@
 - (bool)filterJunk;
 
 /**
+ * Returns, whether the Maildir provider should use alternative
+ * flag separator in the file name. When %TRUE, uses an exclamation
+ * mark (!), when %FALSE, uses the colon (:). The default
+ * is %FALSE, to be consistent with the Maildir specification.
+ * The flag separator is flipped on the Windows build.
+ *
+ * @return whether the Maildir provider should use an alternative flag separator
+ */
+- (bool)maildirAltFlagSep;
+
+/**
  * Returns the file path to the root of the local mail store.
  *
  * @return the file path to the local store
@@ -67,6 +78,18 @@
  * @param filterJunk whether to check new messages for junk
  */
 - (void)setFilterJunk:(bool)filterJunk;
+
+/**
+ * Sets whether Maildir should use alternative flag separator.
+ * See camel_local_settings_get_maildir_alt_flag_sep() for more
+ * information on what it means.
+ * 
+ * Note: Change to this setting takes effect only for newly created
+ *     Maildir stores.
+ *
+ * @param maildirAltFlagSep value to set
+ */
+- (void)setMaildirAltFlagSep:(bool)maildirAltFlagSep;
 
 /**
  * Sets the file path to the root of the local mail store.  Any

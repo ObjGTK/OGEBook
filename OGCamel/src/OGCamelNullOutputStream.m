@@ -1,33 +1,48 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelNullOutputStream.h"
 
+#import <OGio/OGOutputStream.h>
+
 @implementation OGCamelNullOutputStream
 
 - (instancetype)init
 {
-	self = [super initWithGObject:(GObject*)camel_null_output_stream_new()];
+	CamelNullOutputStream* gobjectValue = CAMEL_NULL_OUTPUT_STREAM(camel_null_output_stream_new());
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (CamelNullOutputStream*)NULLOUTPUTSTREAM
+- (CamelNullOutputStream*)castedGObject
 {
-	return CAMEL_NULL_OUTPUT_STREAM([self GOBJECT]);
+	return CAMEL_NULL_OUTPUT_STREAM([self gObject]);
 }
 
 - (gsize)bytesWritten
 {
-	return camel_null_output_stream_get_bytes_written([self NULLOUTPUTSTREAM]);
+	gsize returnValue = camel_null_output_stream_get_bytes_written([self castedGObject]);
+
+	return returnValue;
 }
 
 - (bool)endsWithCrlf
 {
-	return camel_null_output_stream_get_ends_with_crlf([self NULLOUTPUTSTREAM]);
+	bool returnValue = camel_null_output_stream_get_ends_with_crlf([self castedGObject]);
+
+	return returnValue;
 }
 
 

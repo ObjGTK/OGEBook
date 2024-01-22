@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,34 +8,42 @@
 
 @implementation OGESourceWeather
 
-- (ESourceWeather*)SOURCEWEATHER
+- (ESourceWeather*)castedGObject
 {
-	return E_SOURCE_WEATHER([self GOBJECT]);
+	return E_SOURCE_WEATHER([self gObject]);
 }
 
 - (OFString*)dupLocation
 {
-	return [OFString stringWithUTF8String:e_source_weather_dup_location([self SOURCEWEATHER])];
+	gchar* gobjectValue = e_source_weather_dup_location([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)location
 {
-	return [OFString stringWithUTF8String:e_source_weather_get_location([self SOURCEWEATHER])];
+	const gchar* gobjectValue = e_source_weather_get_location([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (ESourceWeatherUnits)units
 {
-	return e_source_weather_get_units([self SOURCEWEATHER]);
+	ESourceWeatherUnits returnValue = e_source_weather_get_units([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)setLocation:(OFString*)location
 {
-	e_source_weather_set_location([self SOURCEWEATHER], [location UTF8String]);
+	e_source_weather_set_location([self castedGObject], [location UTF8String]);
 }
 
 - (void)setUnits:(ESourceWeatherUnits)units
 {
-	e_source_weather_set_units([self SOURCEWEATHER], units);
+	e_source_weather_set_units([self castedGObject], units);
 }
 
 

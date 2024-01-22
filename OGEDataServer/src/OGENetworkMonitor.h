@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -34,7 +34,7 @@
  * Methods
  */
 
-- (ENetworkMonitor*)NETWORKMONITOR;
+- (ENetworkMonitor*)castedGObject;
 
 /**
  * Get currently set GIO name for the network availability checks.

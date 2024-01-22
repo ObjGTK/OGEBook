@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,29 +8,45 @@
 
 @implementation OGESourceRefresh
 
-- (ESourceRefresh*)SOURCEREFRESH
+- (ESourceRefresh*)castedGObject
 {
-	return E_SOURCE_REFRESH([self GOBJECT]);
+	return E_SOURCE_REFRESH([self gObject]);
 }
 
 - (bool)enabled
 {
-	return e_source_refresh_get_enabled([self SOURCEREFRESH]);
+	bool returnValue = e_source_refresh_get_enabled([self castedGObject]);
+
+	return returnValue;
+}
+
+- (bool)enabledOnMeteredNetwork
+{
+	bool returnValue = e_source_refresh_get_enabled_on_metered_network([self castedGObject]);
+
+	return returnValue;
 }
 
 - (guint)intervalMinutes
 {
-	return e_source_refresh_get_interval_minutes([self SOURCEREFRESH]);
+	guint returnValue = e_source_refresh_get_interval_minutes([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)setEnabled:(bool)enabled
 {
-	e_source_refresh_set_enabled([self SOURCEREFRESH], enabled);
+	e_source_refresh_set_enabled([self castedGObject], enabled);
+}
+
+- (void)setEnabledOnMeteredNetwork:(bool)enabled
+{
+	e_source_refresh_set_enabled_on_metered_network([self castedGObject], enabled);
 }
 
 - (void)setIntervalMinutes:(guint)intervalMinutes
 {
-	e_source_refresh_set_interval_minutes([self SOURCEREFRESH], intervalMinutes);
+	e_source_refresh_set_interval_minutes([self castedGObject], intervalMinutes);
 }
 
 

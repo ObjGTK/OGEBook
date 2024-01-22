@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -9,6 +9,7 @@
 #import <OGObject/OGObject.h>
 
 @class OGESource;
+@class OGCancellable;
 
 /**
  * Contains only private data that should be read and manipulated using the
@@ -60,7 +61,7 @@
 + (GSList*)utilCopyObjectSlistWithCopyTo:(GSList*)copyTo objects:(const GSList*)objects;
 
 /**
- * Copies the #GSList of strings to the end of @copy_to.
+ * Use e_util_copy_string_slist() instead.
  *
  * @param copyTo Where to copy; may be %NULL
  * @param strings #GSList of strings to be copied
@@ -105,7 +106,7 @@
 + (gchar**)utilSlistToStrv:(const GSList*)strings;
 
 /**
- * Convert a %NULL-terminated array of strings to a list of strings.
+ * Use e_util_strv_to_slist() instead.
  *
  * @param strv a %NULL-terminated array of strings (const gchar *)
  * @return Newly allocated #GSList of
@@ -144,7 +145,7 @@
  * Methods
  */
 
-- (EClient*)CLIENT;
+- (EClient*)castedGObject;
 
 /**
  * Cancels all pending operations started on @client.
@@ -190,17 +191,16 @@
  * @param callback callback to call when a result is ready
  * @param userData user data for the @callback
  */
-- (void)backendPropertyWithPropName:(OFString*)propName cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)backendPropertyWithPropName:(OFString*)propName cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes previous call of e_client_get_backend_property().
  *
  * @param result a #GAsyncResult
  * @param propValue Retrieved backend property value; cannot be %NULL
- * @param err
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)backendPropertyFinishWithResult:(GAsyncResult*)result propValue:(gchar**)propValue err:(GError**)err;
+- (bool)backendPropertyFinishWithResult:(GAsyncResult*)result propValue:(gchar**)propValue;
 
 /**
  * Queries @client's backend for a property of name @prop_name.
@@ -208,10 +208,9 @@
  * @param propName property name, whose value to retrieve; cannot be %NULL
  * @param propValue Retrieved backend property value; cannot be %NULL
  * @param cancellable a #GCancellable; can be %NULL
- * @param err
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)backendPropertySyncWithPropName:(OFString*)propName propValue:(gchar**)propValue cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)backendPropertySyncWithPropName:(OFString*)propName propValue:(gchar**)propValue cancellable:(OGCancellable*)cancellable;
 
 /**
  * Get list of strings with capabilities advertised by a backend.
@@ -264,26 +263,24 @@
  * @param callback callback to call when a result is ready
  * @param userData user data for the @callback
  */
-- (void)openWithOnlyIfExists:(bool)onlyIfExists cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)openWithOnlyIfExists:(bool)onlyIfExists cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes previous call of e_client_open().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)openFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)openFinish:(GAsyncResult*)result;
 
 /**
  * Opens the @client, making it ready for queries and other operations.
  *
  * @param onlyIfExists this parameter is not used anymore
  * @param cancellable a #GCancellable; can be %NULL
- * @param err
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)openSyncWithOnlyIfExists:(bool)onlyIfExists cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)openSyncWithOnlyIfExists:(bool)onlyIfExists cancellable:(OGCancellable*)cancellable;
 
 /**
  * Returns the #GMainContext on which event sources for @client are to
@@ -307,16 +304,15 @@
  * @param callback callback to call when a result is ready
  * @param userData user data for the @callback
  */
-- (void)refreshWithCancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)refreshWithCancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes previous call of e_client_refresh().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)refreshFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)refreshFinish:(GAsyncResult*)result;
 
 /**
  * Initiates refresh on the @client. Finishing the method doesn't mean
@@ -325,10 +321,9 @@
  * whether the backend supports this method.
  *
  * @param cancellable a #GCancellable; can be %NULL
- * @param err
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)refreshSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)refreshSync:(OGCancellable*)cancellable;
 
 /**
  * Removes the backing data for this #EClient. For example, with the file
@@ -339,26 +334,24 @@
  * @param callback callback to call when a result is ready
  * @param userData user data for the @callback
  */
-- (void)removeWithCancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)removeWithCancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes previous call of e_client_remove().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)removeFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)removeFinish:(GAsyncResult*)result;
 
 /**
  * Removes the backing data for this #EClient. For example, with the file
  * backend this deletes the database file. You cannot get it back!
  *
  * @param cancellable a #GCancellable; can be %NULL
- * @param err
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)removeSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)removeSync:(OGCancellable*)cancellable;
 
 /**
  * Initiates retrieval of capabilities on the @client. This is usually
@@ -372,7 +365,7 @@
  * @param callback callback to call when a result is ready
  * @param userData user data for the @callback
  */
-- (void)retrieveCapabilitiesWithCancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)retrieveCapabilitiesWithCancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes previous call of e_client_retrieve_capabilities().
@@ -381,10 +374,9 @@
  *
  * @param result a #GAsyncResult
  * @param capabilities Comma-separated list of capabilities of the @client
- * @param err
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)retrieveCapabilitiesFinishWithResult:(GAsyncResult*)result capabilities:(gchar**)capabilities err:(GError**)err;
+- (bool)retrieveCapabilitiesFinishWithResult:(GAsyncResult*)result capabilities:(gchar**)capabilities;
 
 /**
  * Initiates retrieval of capabilities on the @client. This is usually
@@ -395,10 +387,9 @@
  *
  * @param capabilities Comma-separated list of capabilities of the @client
  * @param cancellable a #GCancellable; can be %NULL
- * @param err
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)retrieveCapabilitiesSyncWithCapabilities:(gchar**)capabilities cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)retrieveCapabilitiesSyncWithCapabilities:(gchar**)capabilities cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously retrieves @client properties to match server-side values,
@@ -411,7 +402,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)retrievePropertiesWithCancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)retrievePropertiesWithCancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_client_retrieve_properties().
@@ -419,10 +410,9 @@
  * If an error occurs, the function sets @error and returns %FALSE.
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)retrievePropertiesFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)retrievePropertiesFinish:(GAsyncResult*)result;
 
 /**
  * Retrieves @client properties to match server-side values, without waiting
@@ -431,10 +421,9 @@
  * If an error occurs, the function sets @error and returns %FALSE.
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)retrievePropertiesSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)retrievePropertiesSync:(OGCancellable*)cancellable;
 
 /**
  * Sets @client's backend property of name @prop_name
@@ -447,16 +436,15 @@
  * @param callback callback to call when a result is ready
  * @param userData user data for the @callback
  */
-- (void)setBackendPropertyWithPropName:(OFString*)propName propValue:(OFString*)propValue cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)setBackendPropertyWithPropName:(OFString*)propName propValue:(OFString*)propValue cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes previous call of e_client_set_backend_property().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)setBackendPropertyFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)setBackendPropertyFinish:(GAsyncResult*)result;
 
 /**
  * Sets @client's backend property of name @prop_name
@@ -465,10 +453,9 @@
  * @param propName property name, whose value to change; cannot be %NULL
  * @param propValue property value, to set; cannot be %NULL
  * @param cancellable a #GCancellable; can be %NULL
- * @param err
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)setBackendPropertySyncWithPropName:(OFString*)propName propValue:(OFString*)propValue cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)setBackendPropertySyncWithPropName:(OFString*)propName propValue:(OFString*)propValue cancellable:(OGCancellable*)cancellable;
 
 /**
  * Sets a D-Bus bus name that will be used to connect the client
@@ -483,9 +470,8 @@
  * @dbus_erorr and @out_error can point to the same variable.
  *
  * @param dbusError a #GError returned bu D-Bus
- * @param err
  */
-- (void)unwrapDbusErrorWithDbusError:(GError*)dbusError err:(GError**)err;
+- (void)unwrapDbusError:(GError*)dbusError;
 
 /**
  * Asynchronously waits until the @client is connected (according
@@ -499,16 +485,15 @@
  * @param callback callback to call when a result is ready
  * @param userData user data for the @callback
  */
-- (void)waitForConnectedWithTimeoutSeconds:(guint32)timeoutSeconds cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)waitForConnectedWithTimeoutSeconds:(guint32)timeoutSeconds cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes previous call of e_client_wait_for_connected().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)waitForConnectedFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)waitForConnectedFinish:(GAsyncResult*)result;
 
 /**
  * Synchronously waits until the @client is connected (according
@@ -520,9 +505,8 @@
  *
  * @param timeoutSeconds a timeout for the wait, in seconds
  * @param cancellable a #GCancellable; or %NULL
- * @param err
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)waitForConnectedSyncWithTimeoutSeconds:(guint32)timeoutSeconds cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)waitForConnectedSyncWithTimeoutSeconds:(guint32)timeoutSeconds cancellable:(OGCancellable*)cancellable;
 
 @end

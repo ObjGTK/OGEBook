@@ -1,34 +1,67 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelTransport.h"
 
-#import "OGCamelAddress.h"
+#import <OGio/OGCancellable.h>
 #import "OGCamelMimeMessage.h"
+#import "OGCamelAddress.h"
 
 @implementation OGCamelTransport
 
-- (CamelTransport*)TRANSPORT
+- (CamelTransport*)castedGObject
 {
-	return CAMEL_TRANSPORT([self GOBJECT]);
+	return CAMEL_TRANSPORT([self gObject]);
 }
 
-- (void)sendToWithMessage:(OGCamelMimeMessage*)message from:(OGCamelAddress*)from recipients:(OGCamelAddress*)recipients ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (bool)requestDsn
 {
-	camel_transport_send_to([self TRANSPORT], [message MIMEMESSAGE], [from ADDRESS], [recipients ADDRESS], ioPriority, cancellable, callback, userData);
+	bool returnValue = camel_transport_get_request_dsn([self castedGObject]);
+
+	return returnValue;
 }
 
-- (bool)sendToFinishWithResult:(GAsyncResult*)result outSentMessageSaved:(gboolean*)outSentMessageSaved err:(GError**)err
+- (void)sendToWithMessage:(OGCamelMimeMessage*)message from:(OGCamelAddress*)from recipients:(OGCamelAddress*)recipients ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	return camel_transport_send_to_finish([self TRANSPORT], result, outSentMessageSaved, err);
+	camel_transport_send_to([self castedGObject], [message castedGObject], [from castedGObject], [recipients castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)sendToSyncWithMessage:(OGCamelMimeMessage*)message from:(OGCamelAddress*)from recipients:(OGCamelAddress*)recipients outSentMessageSaved:(gboolean*)outSentMessageSaved cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)sendToFinishWithResult:(GAsyncResult*)result outSentMessageSaved:(gboolean*)outSentMessageSaved
 {
-	return camel_transport_send_to_sync([self TRANSPORT], [message MIMEMESSAGE], [from ADDRESS], [recipients ADDRESS], outSentMessageSaved, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_transport_send_to_finish([self castedGObject], result, outSentMessageSaved, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
+}
+
+- (bool)sendToSyncWithMessage:(OGCamelMimeMessage*)message from:(OGCamelAddress*)from recipients:(OGCamelAddress*)recipients outSentMessageSaved:(gboolean*)outSentMessageSaved cancellable:(OGCancellable*)cancellable
+{
+	GError* err = NULL;
+
+	bool returnValue = camel_transport_send_to_sync([self castedGObject], [message castedGObject], [from castedGObject], [recipients castedGObject], outSentMessageSaved, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
+}
+
+- (void)setRequestDsn:(bool)requestDsn
+{
+	camel_transport_set_request_dsn([self castedGObject], requestDsn);
 }
 
 

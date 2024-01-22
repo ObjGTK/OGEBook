@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -10,14 +10,23 @@
 
 - (instancetype)initWithFromCharset:(OFString*)fromCharset toCharset:(OFString*)toCharset
 {
-	self = [super initWithGObject:(GObject*)camel_mime_filter_charset_new([fromCharset UTF8String], [toCharset UTF8String])];
+	CamelMimeFilterCharset* gobjectValue = CAMEL_MIME_FILTER_CHARSET(camel_mime_filter_charset_new([fromCharset UTF8String], [toCharset UTF8String]));
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (CamelMimeFilterCharset*)MIMEFILTERCHARSET
+- (CamelMimeFilterCharset*)castedGObject
 {
-	return CAMEL_MIME_FILTER_CHARSET([self GOBJECT]);
+	return CAMEL_MIME_FILTER_CHARSET([self gObject]);
 }
 
 

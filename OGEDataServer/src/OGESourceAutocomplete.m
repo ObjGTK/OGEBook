@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,19 +8,21 @@
 
 @implementation OGESourceAutocomplete
 
-- (ESourceAutocomplete*)SOURCEAUTOCOMPLETE
+- (ESourceAutocomplete*)castedGObject
 {
-	return E_SOURCE_AUTOCOMPLETE([self GOBJECT]);
+	return E_SOURCE_AUTOCOMPLETE([self gObject]);
 }
 
 - (bool)includeMe
 {
-	return e_source_autocomplete_get_include_me([self SOURCEAUTOCOMPLETE]);
+	bool returnValue = e_source_autocomplete_get_include_me([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)setIncludeMe:(bool)includeMe
 {
-	e_source_autocomplete_set_include_me([self SOURCEAUTOCOMPLETE], includeMe);
+	e_source_autocomplete_set_include_me([self castedGObject], includeMe);
 }
 
 

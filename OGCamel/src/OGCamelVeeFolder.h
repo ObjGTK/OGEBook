@@ -1,13 +1,14 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelFolder.h"
 
-@class OGCamelVeeMessageInfoData;
 @class OGCamelStore;
+@class OGCancellable;
+@class OGCamelVeeMessageInfoData;
 
 @interface OGCamelVeeFolder : OGCamelFolder
 {
@@ -24,7 +25,7 @@
  * Methods
  */
 
-- (CamelVeeFolder*)VEEFOLDER;
+- (CamelVeeFolder*)castedGObject;
 
 /**
  * Adds @subfolder as a source folder to @vfolder.
@@ -32,7 +33,7 @@
  * @param subfolder source CamelFolder to add to @vfolder
  * @param cancellable optional #GCancellable object, or %NULL
  */
-- (void)addFolderWithSubfolder:(OGCamelFolder*)subfolder cancellable:(GCancellable*)cancellable;
+- (void)addFolderWithSubfolder:(OGCamelFolder*)subfolder cancellable:(OGCancellable*)cancellable;
 
 /**
  * Adds the @mi_data to the @vfolder. The @changes can be
@@ -117,7 +118,7 @@
  * @param subfolder source CamelFolder to add to @vfolder
  * @param cancellable optional #GCancellable object, or %NULL
  */
-- (void)rebuildFolderWithSubfolder:(OGCamelFolder*)subfolder cancellable:(GCancellable*)cancellable;
+- (void)rebuildFolderWithSubfolder:(OGCamelFolder*)subfolder cancellable:(OGCancellable*)cancellable;
 
 /**
  * Returns a #GList of all folders of this @vfolder, which
@@ -138,7 +139,7 @@
  * @param subfolder source CamelFolder to remove from @vfolder
  * @param cancellable optional #GCancellable object, or %NULL
  */
-- (void)removeFolderWithSubfolder:(OGCamelFolder*)subfolder cancellable:(GCancellable*)cancellable;
+- (void)removeFolderWithSubfolder:(OGCamelFolder*)subfolder cancellable:(OGCancellable*)cancellable;
 
 /**
  * Make sure the next @subfolder-'s 'changed' event will not be silently ignored.
@@ -182,6 +183,6 @@
  * @param folders a #GList of #CamelFolder to add
  * @param cancellable optional #GCancellable object, or %NULL
  */
-- (void)setFoldersWithFolders:(GList*)folders cancellable:(GCancellable*)cancellable;
+- (void)setFoldersWithFolders:(GList*)folders cancellable:(OGCancellable*)cancellable;
 
 @end

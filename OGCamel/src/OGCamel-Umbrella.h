@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -78,6 +78,7 @@
 #import "OGCamelSaslXOAuth2.h"
 #import "OGCamelSaslXOAuth2Google.h"
 #import "OGCamelSaslXOAuth2Outlook.h"
+#import "OGCamelSaslXOAuth2Yahoo.h"
 #import "OGCamelService.h"
 #import "OGCamelSession.h"
 #import "OGCamelSettings.h"

@@ -1,15 +1,16 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelObject.h"
 
-@class OGCamelMimeMessage;
-@class OGCamelMessageInfo;
-@class OGCamelStore;
 @class OGCamelFolderSummary;
+@class OGCamelStore;
+@class OGCamelMessageInfo;
+@class OGCancellable;
+@class OGCamelMimeMessage;
 
 @interface OGCamelFolder : OGCamelObject
 {
@@ -22,12 +23,6 @@
 
 /**
  *
- * @return
- */
-+ (GQuark)errorQuark;
-
-/**
- *
  * @param c
  * @return
  */
@@ -37,7 +32,7 @@
  * Methods
  */
 
-- (CamelFolder*)FOLDER;
+- (CamelFolder*)castedGObject;
 
 /**
  * Appends @message to @folder asynchronously.  Only the flag and tag data
@@ -48,40 +43,40 @@
  * the operation.
  *
  * @param message a #CamelMimeMessage
- * @param info a #CamelMessageInfo with additional flags/etc to set on the
- *        new message, or %NULL
+ * @param info a #CamelMessageInfo with additional flags/etc to set
+ *        on the new message, or %NULL
  * @param ioPriority the I/O priority of the request
  * @param cancellable optional #GCancellable object, or %NULL
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)appendMessageWithMessage:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)appendMessageWithMessage:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_folder_append_message_finish().
  *
  * @param result a #GAsyncResult
- * @param appendedUid if non-%NULL, the UID of the appended message will
- *                be returned here, if it is known
- * @param err
+ * @param appendedUid if non-%NULL, the UID of
+ *                the appended message will be returned here, if it is
+ *                known
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)appendMessageFinishWithResult:(GAsyncResult*)result appendedUid:(gchar**)appendedUid err:(GError**)err;
+- (bool)appendMessageFinishWithResult:(GAsyncResult*)result appendedUid:(gchar**)appendedUid;
 
 /**
  * Appends @message to @folder.  Only the flag and tag data from @info
  * are used.  If @info is %NULL, no flags or tags will be set.
  *
  * @param message a #CamelMimeMessage
- * @param info a #CamelMessageInfo with additional flags/etc to set on the
- *        new message, or %NULL
- * @param appendedUid if non-%NULL, the UID of the appended message will
- *                be returned here, if it is known
+ * @param info a #CamelMessageInfo with additional flags/etc to set
+ *        on the new message, or %NULL
+ * @param appendedUid if non-%NULL, the UID
+ *                of the appended message will be returned here, if it
+ *                is known
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)appendMessageSyncWithMessage:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info appendedUid:(gchar**)appendedUid cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)appendMessageSyncWithMessage:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info appendedUid:(gchar**)appendedUid cancellable:(OGCancellable*)cancellable;
 
 /**
  * Emits the #CamelFolder::changed signal from an idle source on the
@@ -108,10 +103,9 @@
  *
  * @param expression a search expression
  * @param cancellable a #GCancellable
- * @param err
  * @return an interger
  */
-- (guint32)countByExpressionWithExpression:(OFString*)expression cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (guint32)countByExpressionWithExpression:(OFString*)expression cancellable:(OGCancellable*)cancellable;
 
 /**
  * Marks @folder as deleted and performs any required cleanup.
@@ -163,25 +157,23 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)expungeWithIoPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)expungeWithIoPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_folder_expunge().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)expungeFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)expungeFinish:(GAsyncResult*)result;
 
 /**
  * Deletes messages which have been marked as "DELETED".
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)expungeSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)expungeSync:(OGCancellable*)cancellable;
 
 /**
  * Frees the provided array and its contents. Used by #CamelFolder
@@ -250,12 +242,11 @@
 /**
  *
  * @param uid a message UID
- * @param err
  * @return a file name corresponding to a message
  *   with UID @uid. Free the returned string with g_free(), when
  *   no longer needed.
  */
-- (OFString*)filenameWithUid:(OFString*)uid err:(GError**)err;
+- (OFString*)filename:(OFString*)uid;
 
 /**
  *
@@ -274,6 +265,14 @@
  * @return
  */
 - (gint)frozenCount;
+
+/**
+ * Similar to the camel_folder_get_full_name(), only returning
+ * full path to the @folder suitable for the display to a user.
+ *
+ * @return full path to the @folder suitable for the display to a user
+ */
+- (OFString*)fullDisplayName;
 
 /**
  * Returns the fully qualified name of the folder.
@@ -308,7 +307,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)messageWithMessageUid:(OFString*)messageUid ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)messageWithMessageUid:(OFString*)messageUid ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Gets the message corresponding to @message_uid from the @folder cache,
@@ -324,7 +323,7 @@
  * @return a cached #CamelMimeMessage corresponding
  *    to the requested UID
  */
-- (OGCamelMimeMessage*)messageCachedWithMessageUid:(OFString*)messageUid cancellable:(GCancellable*)cancellable;
+- (OGCamelMimeMessage*)messageCachedWithMessageUid:(OFString*)messageUid cancellable:(OGCancellable*)cancellable;
 
 /**
  *
@@ -336,10 +335,9 @@
  * Finishes the operation started with camel_folder_get_message().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return a #CamelMimeMessage corresponding to the requested UID
  */
-- (OGCamelMimeMessage*)messageFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (OGCamelMimeMessage*)messageFinish:(GAsyncResult*)result;
 
 /**
  *
@@ -353,9 +351,9 @@
  * Retrieve the #CamelMessageInfo for the specified @uid.
  *
  * @param uid the uid of a message
- * @return The summary information for the indicated message, or %NULL
- *   if the uid does not exist. Free the returned object with g_object_unref(),
- *   when done with it.
+ * @return The summary information for the
+ *   indicated message, or %NULL if the uid does not exist. Free the returned
+ *   object with g_object_unref(), when done with it.
  */
 - (OGCamelMessageInfo*)messageInfo:(OFString*)uid;
 
@@ -364,10 +362,9 @@
  *
  * @param messageUid the message UID
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return a #CamelMimeMessage corresponding to the requested UID
  */
-- (OGCamelMimeMessage*)messageSyncWithMessageUid:(OFString*)messageUid cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (OGCamelMimeMessage*)messageSyncWithMessageUid:(OFString*)messageUid cancellable:(OGCancellable*)cancellable;
 
 /**
  *
@@ -412,7 +409,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)quotaInfoWithIoPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)quotaInfoWithIoPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_folder_get_quota_info().
@@ -423,10 +420,9 @@
  * and sets @error to #G_IO_ERROR_NOT_SUPPORTED.
  *
  * @param result a #GAsyncResult
- * @param err
- * @return a #CamelFolderQuotaInfo, or %NULL
+ * @return a #CamelFolderQuotaInfo, or %NULL on error
  */
-- (CamelFolderQuotaInfo*)quotaInfoFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (CamelFolderQuotaInfo*)quotaInfoFinish:(GAsyncResult*)result;
 
 /**
  * Gets a list of known quotas for @folder.  Free the returned
@@ -436,10 +432,9 @@
  * and sets @error to #G_IO_ERROR_NOT_SUPPORTED.
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
- * @return a #CamelFolderQuotaInfo, or %NULL
+ * @return a #CamelFolderQuotaInfo, or %NULL on error
  */
-- (CamelFolderQuotaInfo*)quotaInfoSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (CamelFolderQuotaInfo*)quotaInfoSync:(OGCancellable*)cancellable;
 
 /**
  * This returns the summary information for the folder. This array
@@ -468,10 +463,9 @@
  * Frees the array of UIDs returned by camel_folder_get_uids().
  *
  * @param uids the array of uids to filter down to uncached ones.
- * @param err
  * @return
  */
-- (GPtrArray*)uncachedUidsWithUids:(GPtrArray*)uids err:(GError**)err;
+- (GPtrArray*)uncachedUids:(GPtrArray*)uids;
 
 /**
  *
@@ -521,16 +515,15 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)purgeMessageCacheWithStartUid:(OFString*)startUid endUid:(OFString*)endUid ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)purgeMessageCacheWithStartUid:(OFString*)startUid endUid:(OFString*)endUid ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_folder_purge_message_cache().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)purgeMessageCacheFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)purgeMessageCacheFinish:(GAsyncResult*)result;
 
 /**
  * Delete the local cache of all messages between these uids.
@@ -538,10 +531,9 @@
  * @param startUid the start message UID
  * @param endUid the end message UID
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)purgeMessageCacheSyncWithStartUid:(OFString*)startUid endUid:(OFString*)endUid cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)purgeMessageCacheSyncWithStartUid:(OFString*)startUid endUid:(OFString*)endUid cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously synchronizes a folder's summary with its backing store.
@@ -554,25 +546,23 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)refreshInfoWithIoPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)refreshInfoWithIoPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_folder_refresh_info().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)refreshInfoFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)refreshInfoFinish:(GAsyncResult*)result;
 
 /**
  * Synchronizes a folder's summary with its backing store.
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)refreshInfoSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)refreshInfoSync:(OGCancellable*)cancellable;
 
 /**
  * Marks @folder as renamed.
@@ -592,12 +582,11 @@
  *
  * @param expression a search expression
  * @param cancellable a #GCancellable
- * @param err
  * @return a #GPtrArray of uids of
  * matching messages. The caller must free the list and each of the elements
  * when it is done.
  */
-- (GPtrArray*)searchByExpressionWithExpression:(OFString*)expression cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (GPtrArray*)searchByExpressionWithExpression:(OFString*)expression cancellable:(OGCancellable*)cancellable;
 
 /**
  * Search a subset of uid's for an expression match.
@@ -605,12 +594,11 @@
  * @param expression search expression
  * @param uids array of uid's to match against.
  * @param cancellable a #GCancellable
- * @param err
  * @return a #GPtrArray of uids of
  * matching messages. The caller must free the list and each of the elements
  * when it is done.
  */
-- (GPtrArray*)searchByUidsWithExpression:(OFString*)expression uids:(GPtrArray*)uids cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (GPtrArray*)searchByUidsWithExpression:(OFString*)expression uids:(GPtrArray*)uids cancellable:(OGCancellable*)cancellable;
 
 /**
  * Free the result of a search as gotten by camel_folder_search_by_expression()
@@ -726,16 +714,15 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)synchronizeWithExpunge:(bool)expunge ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)synchronizeWithExpunge:(bool)expunge ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_folder_synchronize().
  *
  * @param result a #GAsyncResult
- * @param err
- * @return %TRUE on sucess, %FALSE on error
+ * @return %TRUE on success, %FALSE on error
  */
-- (bool)synchronizeFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)synchronizeFinish:(GAsyncResult*)result;
 
 /**
  * Asynchronously ensure that a message identified by @message_uid has been
@@ -752,16 +739,15 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)synchronizeMessageWithMessageUid:(OFString*)messageUid ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)synchronizeMessageWithMessageUid:(OFString*)messageUid ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_folder_synchronize_message().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)synchronizeMessageFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)synchronizeMessageFinish:(GAsyncResult*)result;
 
 /**
  * Ensure that a message identified by @message_uid has been synchronized in
@@ -770,10 +756,9 @@
  *
  * @param messageUid a message UID
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)synchronizeMessageSyncWithMessageUid:(OFString*)messageUid cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)synchronizeMessageSyncWithMessageUid:(OFString*)messageUid cancellable:(OGCancellable*)cancellable;
 
 /**
  * Synchronizes any changes that have been made to @folder to its
@@ -781,10 +766,9 @@
  *
  * @param expunge whether to expunge after synchronizing
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)synchronizeSyncWithExpunge:(bool)expunge cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)synchronizeSyncWithExpunge:(bool)expunge cancellable:(OGCancellable*)cancellable;
 
 /**
  * Sets a #CamelFolderSummary of the folder. It consumes the @summary.
@@ -821,19 +805,18 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)transferMessagesToWithMessageUids:(GPtrArray*)messageUids destination:(OGCamelFolder*)destination deleteOriginals:(bool)deleteOriginals ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)transferMessagesToWithMessageUids:(GPtrArray*)messageUids destination:(OGCamelFolder*)destination deleteOriginals:(bool)deleteOriginals ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_folder_transfer_messages_to().
  *
  * @param result a #GAsyncResult
- * @param transferredUids if non-%NULL, the UIDs of the
- *                    resulting messages in @destination will be stored here,
- *                    if known.
- * @param err
+ * @param transferredUids if
+ *                    non-%NULL, the UIDs of the resulting messages in
+ *                    @destination will be stored here, if known.
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)transferMessagesToFinishWithResult:(GAsyncResult*)result transferredUids:(GPtrArray**)transferredUids err:(GError**)err;
+- (bool)transferMessagesToFinishWithResult:(GAsyncResult*)result transferredUids:(GPtrArray**)transferredUids;
 
 /**
  * Copies or moves messages from one folder to another.  If the
@@ -843,14 +826,13 @@
  * @param messageUids message UIDs in @source
  * @param destination the destination #CamelFolder
  * @param deleteOriginals whether or not to delete the original messages
- * @param transferredUids if non-%NULL, the UIDs of the
- *                    resulting messages in @destination will be stored here,
- *                    if known.
+ * @param transferredUids if
+ *                    non-%NULL, the UIDs of the resulting messages in
+ *                    @destination will be stored here, if known.
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)transferMessagesToSyncWithMessageUids:(GPtrArray*)messageUids destination:(OGCamelFolder*)destination deleteOriginals:(bool)deleteOriginals transferredUids:(GPtrArray**)transferredUids cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)transferMessagesToSyncWithMessageUids:(GPtrArray*)messageUids destination:(OGCamelFolder*)destination deleteOriginals:(bool)deleteOriginals transferredUids:(GPtrArray**)transferredUids cancellable:(OGCancellable*)cancellable;
 
 /**
  * Unlocks @folder, previously locked with camel_folder_lock().

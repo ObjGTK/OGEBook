@@ -1,145 +1,211 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelMimePart.h"
 
+#import <OGio/OGCancellable.h>
 #import "OGCamelMimeParser.h"
 
 @implementation OGCamelMimePart
 
 - (instancetype)init
 {
-	self = [super initWithGObject:(GObject*)camel_mime_part_new()];
+	CamelMimePart* gobjectValue = CAMEL_MIME_PART(camel_mime_part_new());
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (CamelMimePart*)MIMEPART
+- (CamelMimePart*)castedGObject
 {
-	return CAMEL_MIME_PART([self GOBJECT]);
+	return CAMEL_MIME_PART([self gObject]);
 }
 
-- (bool)constructContentFromParserWithMp:(OGCamelMimeParser*)mp cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)constructContentFromParserWithMp:(OGCamelMimeParser*)mp cancellable:(OGCancellable*)cancellable
 {
-	return camel_mime_part_construct_content_from_parser([self MIMEPART], [mp MIMEPARSER], cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_mime_part_construct_content_from_parser([self castedGObject], [mp castedGObject], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)constructFromParserWithParser:(OGCamelMimeParser*)parser ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)constructFromParserWithParser:(OGCamelMimeParser*)parser ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	camel_mime_part_construct_from_parser([self MIMEPART], [parser MIMEPARSER], ioPriority, cancellable, callback, userData);
+	camel_mime_part_construct_from_parser([self castedGObject], [parser castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)constructFromParserFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)constructFromParserFinish:(GAsyncResult*)result
 {
-	return camel_mime_part_construct_from_parser_finish([self MIMEPART], result, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_mime_part_construct_from_parser_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)constructFromParserSyncWithParser:(OGCamelMimeParser*)parser cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)constructFromParserSyncWithParser:(OGCamelMimeParser*)parser cancellable:(OGCancellable*)cancellable
 {
-	return camel_mime_part_construct_from_parser_sync([self MIMEPART], [parser MIMEPARSER], cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_mime_part_construct_from_parser_sync([self castedGObject], [parser castedGObject], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (const CamelContentDisposition*)contentDisposition
 {
-	return camel_mime_part_get_content_disposition([self MIMEPART]);
+	const CamelContentDisposition* returnValue = camel_mime_part_get_content_disposition([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)contentId
 {
-	return [OFString stringWithUTF8String:camel_mime_part_get_content_id([self MIMEPART])];
+	const gchar* gobjectValue = camel_mime_part_get_content_id([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (const GList*)contentLanguages
 {
-	return camel_mime_part_get_content_languages([self MIMEPART]);
+	const GList* returnValue = camel_mime_part_get_content_languages([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)contentLocation
 {
-	return [OFString stringWithUTF8String:camel_mime_part_get_content_location([self MIMEPART])];
+	const gchar* gobjectValue = camel_mime_part_get_content_location([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OFString*)contentMd5
 {
-	return [OFString stringWithUTF8String:camel_mime_part_get_content_md5([self MIMEPART])];
+	const gchar* gobjectValue = camel_mime_part_get_content_md5([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (CamelContentType*)contentType
 {
-	return camel_mime_part_get_content_type([self MIMEPART]);
+	CamelContentType* returnValue = camel_mime_part_get_content_type([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)description
 {
-	return [OFString stringWithUTF8String:camel_mime_part_get_description([self MIMEPART])];
+	const gchar* gobjectValue = camel_mime_part_get_description([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OFString*)disposition
 {
-	return [OFString stringWithUTF8String:camel_mime_part_get_disposition([self MIMEPART])];
+	const gchar* gobjectValue = camel_mime_part_get_disposition([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (CamelTransferEncoding)encoding
 {
-	return camel_mime_part_get_encoding([self MIMEPART]);
+	CamelTransferEncoding returnValue = camel_mime_part_get_encoding([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)filename
 {
-	return [OFString stringWithUTF8String:camel_mime_part_get_filename([self MIMEPART])];
+	const gchar* gobjectValue = camel_mime_part_get_filename([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (void)setContentWithData:(OFString*)data length:(gint)length type:(OFString*)type
 {
-	camel_mime_part_set_content([self MIMEPART], [data UTF8String], length, [type UTF8String]);
+	camel_mime_part_set_content([self castedGObject], [data UTF8String], length, [type UTF8String]);
 }
 
 - (void)setContentId:(OFString*)contentid
 {
-	camel_mime_part_set_content_id([self MIMEPART], [contentid UTF8String]);
+	camel_mime_part_set_content_id([self castedGObject], [contentid UTF8String]);
 }
 
 - (void)setContentLanguages:(GList*)contentLanguages
 {
-	camel_mime_part_set_content_languages([self MIMEPART], contentLanguages);
+	camel_mime_part_set_content_languages([self castedGObject], contentLanguages);
 }
 
 - (void)setContentLocation:(OFString*)location
 {
-	camel_mime_part_set_content_location([self MIMEPART], [location UTF8String]);
+	camel_mime_part_set_content_location([self castedGObject], [location UTF8String]);
 }
 
 - (void)setContentMd5:(OFString*)md5sum
 {
-	camel_mime_part_set_content_md5([self MIMEPART], [md5sum UTF8String]);
+	camel_mime_part_set_content_md5([self castedGObject], [md5sum UTF8String]);
 }
 
 - (void)setContentType:(OFString*)contentType
 {
-	camel_mime_part_set_content_type([self MIMEPART], [contentType UTF8String]);
+	camel_mime_part_set_content_type([self castedGObject], [contentType UTF8String]);
 }
 
 - (void)setDescription:(OFString*)description
 {
-	camel_mime_part_set_description([self MIMEPART], [description UTF8String]);
+	camel_mime_part_set_description([self castedGObject], [description UTF8String]);
 }
 
 - (void)setDisposition:(OFString*)disposition
 {
-	camel_mime_part_set_disposition([self MIMEPART], [disposition UTF8String]);
+	camel_mime_part_set_disposition([self castedGObject], [disposition UTF8String]);
 }
 
 - (void)setEncoding:(CamelTransferEncoding)encoding
 {
-	camel_mime_part_set_encoding([self MIMEPART], encoding);
+	camel_mime_part_set_encoding([self castedGObject], encoding);
 }
 
 - (void)setFilename:(OFString*)filename
 {
-	camel_mime_part_set_filename([self MIMEPART], [filename UTF8String]);
+	camel_mime_part_set_filename([self castedGObject], [filename UTF8String]);
 }
 
 

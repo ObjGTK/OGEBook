@@ -6,7 +6,8 @@ FRAMEWORK = ${OGEBOOKCONTACTS_FRAMEWORK}
 LIB_MAJOR = 1
 LIB_MINOR = 2
 
-SRCS = OGEContact.m \
+SRCS = OGEBookIndicesUpdater.m \
+	OGEContact.m \
 	OGESourceBackendSummarySetup.m \
 	OGEVCard.m \
 	

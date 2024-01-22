@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -21,7 +21,7 @@
  * Methods
  */
 
-- (ESourceMailIdentity*)SOURCEMAILIDENTITY;
+- (ESourceMailIdentity*)castedGObject;
 
 /**
  * Thread-safe variation of e_source_mail_identity_get_address().
@@ -213,7 +213,7 @@
  * If the user does not want to use a signature for this identity, the
  * convention is to set the #ESourceMailIdentity:signature-uid property
  * to "none".  In keeping with that convention, the property will be set
- * to "none" if @signature is %NULL or an empty string.
+ * to "none" if @signature_uid is %NULL or an empty string.
  *
  * @param signatureUid the sender's signature ID, or %NULL
  */

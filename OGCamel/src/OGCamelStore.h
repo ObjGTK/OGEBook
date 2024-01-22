@@ -1,12 +1,13 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelService.h"
 
 @class OGCamelDB;
+@class OGCancellable;
 @class OGCamelFolder;
 
 @interface OGCamelStore : OGCamelService
@@ -14,21 +15,12 @@
 
 }
 
-/**
- * Functions
- */
-
-/**
- *
- * @return
- */
-+ (GQuark)errorQuark;
 
 /**
  * Methods
  */
 
-- (CamelStore*)STORE;
+- (CamelStore*)castedGObject;
 
 /**
  * Returns if this folder (param info) should be checked for new mail or not.
@@ -37,10 +29,9 @@
  * Default behavior is that all Inbox folders are intended to be refreshed.
  *
  * @param info a #CamelFolderInfo
- * @param err
  * @return whether folder should be checked for new mails
  */
-- (bool)canRefreshFolderWithInfo:(CamelFolderInfo*)info err:(GError**)err;
+- (bool)canRefreshFolder:(CamelFolderInfo*)info;
 
 /**
  * Asynchronously creates a new folder as a child of an existing folder.
@@ -56,7 +47,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)createFolderWithParentName:(OFString*)parentName folderName:(OFString*)folderName ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)createFolderWithParentName:(OFString*)parentName folderName:(OFString*)folderName ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_store_create_folder().
@@ -64,10 +55,9 @@
  * camel_folder_info_free().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return info about the created folder, or %NULL on error
  */
-- (CamelFolderInfo*)createFolderFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (CamelFolderInfo*)createFolderFinish:(GAsyncResult*)result;
 
 /**
  * Creates a new folder as a child of an existing folder.
@@ -78,10 +68,9 @@
  * @param parentName name of the new folder's parent, or %NULL
  * @param folderName name of the folder to create
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return info about the created folder, or %NULL on error
  */
-- (CamelFolderInfo*)createFolderSyncWithParentName:(OFString*)parentName folderName:(OFString*)folderName cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (CamelFolderInfo*)createFolderSyncWithParentName:(OFString*)parentName folderName:(OFString*)folderName cancellable:(OGCancellable*)cancellable;
 
 /**
  * Deletes local data for the given @folder_name. The folder should
@@ -108,26 +97,24 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)deleteFolderWithFolderName:(OFString*)folderName ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)deleteFolderWithFolderName:(OFString*)folderName ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_store_delete_folder().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)deleteFolderFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)deleteFolderFinish:(GAsyncResult*)result;
 
 /**
  * Deletes the folder described by @folder_name.  The folder must be empty.
  *
  * @param folderName name of the folder to delete
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)deleteFolderSyncWithFolderName:(OFString*)folderName cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)deleteFolderSyncWithFolderName:(OFString*)folderName cancellable:(OGCancellable*)cancellable;
 
 /**
  * Returns a #GPtrArray of all the opened folders for the @store. The caller owns
@@ -229,17 +216,16 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)folderWithFolderName:(OFString*)folderName flags:(CamelStoreGetFolderFlags)flags ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)folderWithFolderName:(OFString*)folderName flags:(CamelStoreGetFolderFlags)flags ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_store_get_folder().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return the requested #CamelFolder object, or
  * %NULL on error
  */
-- (OGCamelFolder*)folderFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (OGCamelFolder*)folderFinish:(GAsyncResult*)result;
 
 /**
  * Asynchronously fetches information about the folder structure of @store,
@@ -257,7 +243,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)folderInfoWithTop:(OFString*)top flags:(CamelStoreGetFolderInfoFlags)flags ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)folderInfoWithTop:(OFString*)top flags:(CamelStoreGetFolderInfoFlags)flags ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_store_get_folder_info().
@@ -265,10 +251,9 @@
  * camel_folder_info_free().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return a #CamelFolderInfo tree, or %NULL on error
  */
-- (CamelFolderInfo*)folderInfoFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (CamelFolderInfo*)folderInfoFinish:(GAsyncResult*)result;
 
 /**
  * This fetches information about the folder structure of @store,
@@ -296,10 +281,9 @@
  * @param top the name of the folder to start from
  * @param flags various CAMEL_STORE_FOLDER_INFO_* flags to control behavior
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return a #CamelFolderInfo tree, or %NULL on error
  */
-- (CamelFolderInfo*)folderInfoSyncWithTop:(OFString*)top flags:(CamelStoreGetFolderInfoFlags)flags cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (CamelFolderInfo*)folderInfoSyncWithTop:(OFString*)top flags:(CamelStoreGetFolderInfoFlags)flags cancellable:(OGCancellable*)cancellable;
 
 /**
  * Gets a specific folder object from @store by name.
@@ -307,11 +291,10 @@
  * @param folderName name of the folder to get
  * @param flags folder flags (create, save body index, etc)
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return the requested #CamelFolder object, or
  * %NULL on error
  */
-- (OGCamelFolder*)folderSyncWithFolderName:(OFString*)folderName flags:(CamelStoreGetFolderFlags)flags cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (OGCamelFolder*)folderSyncWithFolderName:(OFString*)folderName flags:(CamelStoreGetFolderFlags)flags cancellable:(OGCancellable*)cancellable;
 
 /**
  *
@@ -331,27 +314,25 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)inboxFolderWithIoPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)inboxFolderWithIoPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_store_get_inbox_folder().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return the inbox folder for @store, or %NULL on
  * error or if no such folder exists
  */
-- (OGCamelFolder*)inboxFolderFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (OGCamelFolder*)inboxFolderFinish:(GAsyncResult*)result;
 
 /**
  * Gets the folder in @store into which new mail is delivered.
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return the inbox folder for @store, or %NULL on
  * error or if no such folder exists
  */
-- (OGCamelFolder*)inboxFolderSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (OGCamelFolder*)inboxFolderSync:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously gets the folder in @store into which junk is delivered.
@@ -365,27 +346,25 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)junkFolderWithIoPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)junkFolderWithIoPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_store_get_junk_folder().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return the junk folder for @store, or %NULL on
  * error or if no such folder exists
  */
-- (OGCamelFolder*)junkFolderFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (OGCamelFolder*)junkFolderFinish:(GAsyncResult*)result;
 
 /**
  * Gets the folder in @store into which junk is delivered.
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return the junk folder for @store, or %NULL on
  * error or if no such folder exists
  */
-- (OGCamelFolder*)junkFolderSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (OGCamelFolder*)junkFolderSync:(OGCancellable*)cancellable;
 
 /**
  *
@@ -405,27 +384,25 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)trashFolderWithIoPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)trashFolderWithIoPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_store_get_trash_folder().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return the trash folder for @store, or %NULL on
  * error or if no such folder exists
  */
-- (OGCamelFolder*)trashFolderFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (OGCamelFolder*)trashFolderFinish:(GAsyncResult*)result;
 
 /**
  * Gets the folder in @store into which trash is delivered.
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return the trash folder for @store, or %NULL on
  * error or if no such folder exists
  */
-- (OGCamelFolder*)trashFolderSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (OGCamelFolder*)trashFolderSync:(OGCancellable*)cancellable;
 
 /**
  * Runs initial setup for the @store asynchronously.
@@ -441,7 +418,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)initialSetupWithIoPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)initialSetupWithIoPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_store_initial_setup().
@@ -452,10 +429,9 @@
  *
  * @param result a #GAsyncResult
  * @param outSaveSetup setup values to save
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)initialSetupFinishWithResult:(GAsyncResult*)result outSaveSetup:(GHashTable**)outSaveSetup err:(GError**)err;
+- (bool)initialSetupFinishWithResult:(GAsyncResult*)result outSaveSetup:(GHashTable**)outSaveSetup;
 
 /**
  * Runs initial setup for the @store. It's meant to preset some
@@ -475,19 +451,17 @@
  *
  * @param outSaveSetup setup values to save
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)initialSetupSyncWithOutSaveSetup:(GHashTable**)outSaveSetup cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)initialSetupSyncWithOutSaveSetup:(GHashTable**)outSaveSetup cancellable:(OGCancellable*)cancellable;
 
 /**
  * Checks the state of the current CamelDB used for the @store and eventually
  * runs maintenance routines on it.
  *
- * @param err
  * @return Whether succeeded.
  */
-- (bool)maybeRunDbMaintenance:(GError**)err;
+- (bool)maybeRunDbMaintenance;
 
 /**
  * Asynchronously renames the folder described by @old_name to @new_name.
@@ -502,16 +476,15 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)renameFolderWithOldName:(OFString*)oldName newName:(OFString*)newName ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)renameFolderWithOldName:(OFString*)oldName newName:(OFString*)newName ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_store_rename_folder().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)renameFolderFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)renameFolderFinish:(GAsyncResult*)result;
 
 /**
  * Renames the folder described by @old_name to @new_name.
@@ -519,10 +492,9 @@
  * @param oldName the current name of the folder
  * @param newName the new name of the folder
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)renameFolderSyncWithOldName:(OFString*)oldName newName:(OFString*)newName cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)renameFolderSyncWithOldName:(OFString*)oldName newName:(OFString*)newName cancellable:(OGCancellable*)cancellable;
 
 /**
  * Sets flags for the @store, a bit-or of #CamelStoreFlags.
@@ -551,16 +523,15 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)synchronizeWithExpunge:(bool)expunge ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)synchronizeWithExpunge:(bool)expunge ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_store_synchronize().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)synchronizeFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)synchronizeFinish:(GAsyncResult*)result;
 
 /**
  * Synchronizes any changes that have been made to @store and its folders
@@ -568,9 +539,8 @@
  *
  * @param expunge whether to expunge after synchronizing
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)synchronizeSyncWithExpunge:(bool)expunge cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)synchronizeSyncWithExpunge:(bool)expunge cancellable:(OGCancellable*)cancellable;
 
 @end

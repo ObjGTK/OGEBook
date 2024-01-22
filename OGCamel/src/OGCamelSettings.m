@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,19 +8,26 @@
 
 @implementation OGCamelSettings
 
-- (CamelSettings*)SETTINGS
+- (CamelSettings*)castedGObject
 {
-	return CAMEL_SETTINGS([self GOBJECT]);
+	return CAMEL_SETTINGS([self gObject]);
 }
 
 - (OGCamelSettings*)clone
 {
-	return [[[OGCamelSettings alloc] initWithGObject:(GObject*)camel_settings_clone([self SETTINGS])] autorelease];
+	CamelSettings* gobjectValue = CAMEL_SETTINGS(camel_settings_clone([self castedGObject]));
+
+	OGCamelSettings* returnValue = [OGCamelSettings wrapperFor:gobjectValue];
+	g_object_unref(gobjectValue);
+
+	return returnValue;
 }
 
 - (bool)equal:(OGCamelSettings*)settingsB
 {
-	return camel_settings_equal([self SETTINGS], [settingsB SETTINGS]);
+	bool returnValue = camel_settings_equal([self castedGObject], [settingsB castedGObject]);
+
+	return returnValue;
 }
 
 

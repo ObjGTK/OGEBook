@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,10 +8,12 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCamelFilterDriver;
+@class OGCancellable;
 @class OGCamelFolder;
-@class OGCamelService;
 @class OGCamelMimeMessage;
+@class OGCamelFilterDriver;
+@class OGCamelService;
+@class OGTlsCertificate;
 
 @interface OGCamelSession : OGObject
 {
@@ -23,7 +25,7 @@
  * Methods
  */
 
-- (CamelSession*)SESSION;
+- (CamelSession*)castedGObject;
 
 /**
  * Instantiates a new #CamelService for @session.  The @uid identifies the
@@ -45,10 +47,27 @@
  * @param uid a unique identifier string
  * @param protocol the service protocol
  * @param type the service type
- * @param err
- * @return a #CamelService instance, or %NULL
+ * @return a #CamelService instance, or %NULL on error
  */
-- (OGCamelService*)addServiceWithUid:(OFString*)uid protocol:(OFString*)protocol type:(CamelProviderType)type err:(GError**)err;
+- (OGCamelService*)addServiceWithUid:(OFString*)uid protocol:(OFString*)protocol type:(CamelProviderType)type;
+
+/**
+ * Look up in an address book @book_uid for an address @email_address
+ * and returns whether any such contact exists.
+ * 
+ * The @book_uid can be either one of the special constants
+ * %CAMEL_SESSION_BOOK_UID_ANY or %CAMEL_SESSION_BOOK_UID_COMPLETION,
+ * or it can be a UID of a configured address book.
+ * 
+ * The @email_address can contain multiple addresses, then the function
+ * checks whether any of the given addresses is in the address book.
+ *
+ * @param bookUid an address book UID
+ * @param emailAddress an email address to check for
+ * @param cancellable optional #GCancellable object, or %NULL
+ * @return %TRUE, when the @email_address could be found in the @book_uid
+ */
+- (bool)addressbookContainsSyncWithBookUid:(OFString*)bookUid emailAddress:(OFString*)emailAddress cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously authenticates @service, which may involve repeated calls
@@ -68,7 +87,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)authenticateWithService:(OGCamelService*)service mechanism:(OFString*)mechanism ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)authenticateWithService:(OGCamelService*)service mechanism:(OFString*)mechanism ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_session_authenticate().
@@ -77,10 +96,9 @@
  * sets @error and returns %FALSE.
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)authenticateFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)authenticateFinish:(GAsyncResult*)result;
 
 /**
  * Authenticates @service, which may involve repeated calls to
@@ -95,10 +113,9 @@
  * @param service a #CamelService
  * @param mechanism a SASL mechanism name, or %NULL
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)authenticateSyncWithService:(OGCamelService*)service mechanism:(OFString*)mechanism cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)authenticateSyncWithService:(OGCamelService*)service mechanism:(OFString*)mechanism cancellable:(OGCancellable*)cancellable;
 
 /**
  * This function is used by a #CamelService to tell the application
@@ -112,10 +129,9 @@
  *
  * @param service the #CamelService rejecting the password
  * @param item an identifier, unique within this service, for the information
- * @param err
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)forgetPasswordWithService:(OGCamelService*)service item:(OFString*)item err:(GError**)err;
+- (bool)forgetPasswordWithService:(OGCamelService*)service item:(OFString*)item;
 
 /**
  * Asynchronously forwards @message in @folder to the email address(s)
@@ -133,7 +149,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)forwardToWithFolder:(OGCamelFolder*)folder message:(OGCamelMimeMessage*)message address:(OFString*)address ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)forwardToWithFolder:(OGCamelFolder*)folder message:(OGCamelMimeMessage*)message address:(OFString*)address ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_session_forward_to().
@@ -141,10 +157,9 @@
  * If an error occurred, the function sets @error and returns %FALSE.
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)forwardToFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)forwardToFinish:(GAsyncResult*)result;
 
 /**
  * Forwards @message in @folder to the email address(es) given by @address.
@@ -155,10 +170,9 @@
  * @param message the #CamelMimeMessage to forward
  * @param address the recipient's email address
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)forwardToSyncWithFolder:(OGCamelFolder*)folder message:(OGCamelMimeMessage*)message address:(OFString*)address cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)forwardToSyncWithFolder:(OGCamelFolder*)folder message:(OGCamelMimeMessage*)message address:(OFString*)address cancellable:(OGCancellable*)cancellable;
 
 /**
  * The optional @for_folder can be used to determine which filters
@@ -166,10 +180,9 @@
  *
  * @param type the type of filter (eg, "incoming")
  * @param forFolder an optional #CamelFolder, for which the filter driver will run, or %NULL
- * @param err
  * @return a filter driver, loaded with applicable rules
  */
-- (OGCamelFilterDriver*)filterDriverWithType:(OFString*)type forFolder:(OGCamelFolder*)forFolder err:(GError**)err;
+- (OGCamelFilterDriver*)filterDriverWithType:(OFString*)type forFolder:(OGCamelFolder*)forFolder;
 
 /**
  * Returns the #CamelJunkFilter instance used to classify messages as
@@ -200,10 +213,9 @@
  * @param outAccessToken return location for the access token, or %NULL
  * @param outExpiresIn return location for the token expiry, or %NULL
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return whether succeeded
  */
-- (bool)oauth2AccessTokenSyncWithService:(OGCamelService*)service outAccessToken:(gchar**)outAccessToken outExpiresIn:(gint*)outExpiresIn cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)oauth2AccessTokenSyncWithService:(OGCamelService*)service outAccessToken:(gchar**)outAccessToken outExpiresIn:(gint*)outExpiresIn cancellable:(OGCancellable*)cancellable;
 
 /**
  *
@@ -236,10 +248,9 @@
  * @param flags %CAMEL_SESSION_PASSWORD_REPROMPT, the prompt should force a reprompt
  * %CAMEL_SESSION_PASSWORD_SECRET, whether the password is secret
  * %CAMEL_SESSION_PASSWORD_STATIC, the password is remembered externally
- * @param err
- * @return the authentication information or %NULL
+ * @return the authentication information or %NULL on error
  */
-- (OFString*)passwordWithService:(OGCamelService*)service prompt:(OFString*)prompt item:(OFString*)item flags:(guint32)flags err:(GError**)err;
+- (OFString*)passwordWithService:(OGCamelService*)service prompt:(OFString*)prompt item:(OFString*)item flags:(guint32)flags;
 
 /**
  * Searches for S/MIME certificates or PGP keys for the given @recipients,
@@ -265,10 +276,9 @@
  * @param recipients a #GPtrArray of recipients
  * @param outCertificates a #GSList of gathered certificates
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return Whether succeeded, or better whether no fatal error happened.
  */
-- (bool)recipientCertificatesSyncWithFlags:(guint32)flags recipients:(const GPtrArray*)recipients outCertificates:(GSList**)outCertificates cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)recipientCertificatesSyncWithFlags:(guint32)flags recipients:(const GPtrArray*)recipients outCertificates:(GSList**)outCertificates cancellable:(OGCancellable*)cancellable;
 
 /**
  * Returns the base directory under which to store user-specific mail cache.
@@ -472,7 +482,7 @@
  * @param errors the problems with @certificate
  * @return the user's trust level for @certificate
  */
-- (CamelCertTrust)trustPromptWithService:(OGCamelService*)service certificate:(GTlsCertificate*)certificate errors:(GTlsCertificateFlags)errors;
+- (CamelCertTrust)trustPromptWithService:(OGCamelService*)service certificate:(OGTlsCertificate*)certificate errors:(GTlsCertificateFlags)errors;
 
 /**
  * Emits a #CamelSession:user_alert signal from an idle source on the main

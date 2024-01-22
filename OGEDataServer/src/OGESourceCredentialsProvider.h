@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -9,8 +9,9 @@
 #import <OGObject/OGObject.h>
 
 @class OGESource;
-@class OGESourceRegistry;
 @class OGESourceCredentialsProviderImpl;
+@class OGESourceRegistry;
+@class OGCancellable;
 
 /**
  * Contains only private data that should be read and manipulated using the
@@ -32,7 +33,7 @@
  * Methods
  */
 
-- (ESourceCredentialsProvider*)SOURCECREDENTIALSPROVIDER;
+- (ESourceCredentialsProvider*)castedGObject;
 
 /**
  * Returns whether a credentials prompt can be shown for the @source.
@@ -64,7 +65,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)deleteWithSource:(OGESource*)source cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)deleteWithSource:(OGESource*)source cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_credentials_provider_delete().
@@ -72,10 +73,9 @@
  * If an error occurs, the function sets @error and returns %FALSE.
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)deleteFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)deleteFinish:(GAsyncResult*)result;
 
 /**
  * Deletes any previously stored credentials for @source.
@@ -84,10 +84,9 @@
  *
  * @param source an #ESource, to store credentials for
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)deleteSyncWithSource:(OGESource*)source cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)deleteSyncWithSource:(OGESource*)source cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously looks up for credentials for @source.
@@ -101,7 +100,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)lookupWithSource:(OGESource*)source cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)lookupWithSource:(OGESource*)source cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_credentials_provider_lookup().
@@ -110,10 +109,9 @@
  *
  * @param result a #GAsyncResult
  * @param outCredentials return location for the credentials
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)lookupFinishWithResult:(GAsyncResult*)result outCredentials:(ENamedParameters**)outCredentials err:(GError**)err;
+- (bool)lookupFinishWithResult:(GAsyncResult*)result outCredentials:(ENamedParameters**)outCredentials;
 
 /**
  * Looks up the credentials for @source.
@@ -123,10 +121,9 @@
  * @param source an #ESource, to lookup credentials for
  * @param cancellable optional #GCancellable object, or %NULL
  * @param outCredentials return location for the credentials
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)lookupSyncWithSource:(OGESource*)source cancellable:(GCancellable*)cancellable outCredentials:(ENamedParameters**)outCredentials err:(GError**)err;
+- (bool)lookupSyncWithSource:(OGESource*)source cancellable:(OGCancellable*)cancellable outCredentials:(ENamedParameters**)outCredentials;
 
 /**
  * Returns a referenced parent #ESource, which holds the credentials for
@@ -136,8 +133,9 @@
  * means the @source holds credentials for itself.
  *
  * @param source an #ESource
- * @return referenced parent #ESource, which holds credentials, or %NULL. Unref
- *    the returned non-NULL #ESource with g_object_unref(), when no longer needed.
+ * @return referenced parent #ESource, which holds
+ *    credentials, or %NULL. Unref the returned non-NULL #ESource with
+ *    g_object_unref(), when no longer needed.
  */
 - (OGESource*)refCredentialsSource:(OGESource*)source;
 
@@ -184,7 +182,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)storeWithSource:(OGESource*)source credentials:(const ENamedParameters*)credentials permanently:(bool)permanently cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)storeWithSource:(OGESource*)source credentials:(const ENamedParameters*)credentials permanently:(bool)permanently cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_credentials_provider_store().
@@ -192,10 +190,9 @@
  * If an error occurs, the function sets @error and returns %FALSE.
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)storeFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)storeFinish:(GAsyncResult*)result;
 
 /**
  * Stores the @credentials for @source. Note the actual stored values
@@ -208,10 +205,9 @@
  * @param credentials an #ENamedParameters with credentials to store
  * @param permanently store permanently or just for the session
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)storeSyncWithSource:(OGESource*)source credentials:(const ENamedParameters*)credentials permanently:(bool)permanently cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)storeSyncWithSource:(OGESource*)source credentials:(const ENamedParameters*)credentials permanently:(bool)permanently cancellable:(OGCancellable*)cancellable;
 
 /**
  * Unregisters previously registered @provider_impl with

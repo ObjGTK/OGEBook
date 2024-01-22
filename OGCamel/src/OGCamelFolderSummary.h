@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,11 +8,11 @@
 
 #import <OGObject/OGObject.h>
 
+@class OGCamelMessageInfo;
+@class OGCamelMimeMessage;
+@class OGCamelFolder;
 @class OGCamelIndex;
 @class OGCamelMimeParser;
-@class OGCamelMimeMessage;
-@class OGCamelMessageInfo;
-@class OGCamelFolder;
 @class OGCamelStore;
 
 @interface OGCamelFolderSummary : OGObject
@@ -40,7 +40,7 @@
  * Methods
  */
 
-- (CamelFolderSummary*)FOLDERSUMMARY;
+- (CamelFolderSummary*)castedGObject;
 
 /**
  * Adds a new @info record to the summary. If the @force_keep_uid is %FALSE,
@@ -67,10 +67,9 @@
 /**
  * Empty the summary contents.
  *
- * @param err
  * @return whether succeeded
  */
-- (bool)clear:(GError**)err;
+- (bool)clear;
 
 /**
  * Get the number of summary items stored in this summary.
@@ -90,7 +89,7 @@
  * 
  * See camel_folder_summary_get_info_flags().
  */
-- (OGCamelMessageInfo*)instance:(OFString*)uid;
+- (OGCamelMessageInfo*)get:(OFString*)uid;
 
 /**
  * Obtain a copy of the summary array.  This is done atomically,
@@ -214,19 +213,17 @@
  *
  * @param store a #CamelStore
  * @param folderName a folder name corresponding to @summary
- * @param err
  * @return whether succeeded
  */
-- (bool)headerLoadWithStore:(OGCamelStore*)store folderName:(OFString*)folderName err:(GError**)err;
+- (bool)headerLoadWithStore:(OGCamelStore*)store folderName:(OFString*)folderName;
 
 /**
  * Saves summary header information into the disk. The function does
  * nothing, if the summary doesn't support save to disk.
  *
- * @param err
  * @return whether succeeded
  */
-- (bool)headerSave:(GError**)err;
+- (bool)headerSave;
 
 /**
  * Create a new info record from a header.
@@ -270,10 +267,9 @@
  * Loads the summary from the disk. It also saves any pending
  * changes first.
  *
- * @param err
  * @return whether succeeded
  */
-- (bool)load:(GError**)err;
+- (bool)load;
 
 /**
  * Locks @summary. Unlock it with camel_folder_summary_unlock().
@@ -287,7 +283,7 @@
  *
  * @return the next unique uid value
  */
-- (guint32)generateNextUid;
+- (guint32)nextUid;
 
 /**
  * Retrieve the next uid, but as a formatted string.
@@ -312,9 +308,8 @@
  * before any mass operation or when all message infos will be needed,
  * for better performance.
  *
- * @param err
  */
-- (void)prepareFetchAll:(GError**)err;
+- (void)prepareFetchAll;
 
 /**
  * Remove a specific @info record from the summary.
@@ -353,10 +348,9 @@
  * when the summary is not changed or when it doesn't support
  * permanent save.
  *
- * @param err
  * @return whether succeeded
  */
-- (bool)save:(GError**)err;
+- (bool)save;
 
 /**
  * Sets flags of the @summary, a bit-or of #CamelFolderSummaryFlags.

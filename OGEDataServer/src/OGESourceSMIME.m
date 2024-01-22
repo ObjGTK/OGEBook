@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,84 +8,108 @@
 
 @implementation OGESourceSMIME
 
-- (ESourceSMIME*)SOURCESMIME
+- (ESourceSMIME*)castedGObject
 {
-	return E_SOURCE_SMIME([self GOBJECT]);
+	return E_SOURCE_SMIME([self gObject]);
 }
 
 - (OFString*)dupEncryptionCertificate
 {
-	return [OFString stringWithUTF8String:e_source_smime_dup_encryption_certificate([self SOURCESMIME])];
+	gchar* gobjectValue = e_source_smime_dup_encryption_certificate([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)dupSigningAlgorithm
 {
-	return [OFString stringWithUTF8String:e_source_smime_dup_signing_algorithm([self SOURCESMIME])];
+	gchar* gobjectValue = e_source_smime_dup_signing_algorithm([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)dupSigningCertificate
 {
-	return [OFString stringWithUTF8String:e_source_smime_dup_signing_certificate([self SOURCESMIME])];
+	gchar* gobjectValue = e_source_smime_dup_signing_certificate([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (bool)encryptByDefault
 {
-	return e_source_smime_get_encrypt_by_default([self SOURCESMIME]);
+	bool returnValue = e_source_smime_get_encrypt_by_default([self castedGObject]);
+
+	return returnValue;
 }
 
 - (bool)encryptToSelf
 {
-	return e_source_smime_get_encrypt_to_self([self SOURCESMIME]);
+	bool returnValue = e_source_smime_get_encrypt_to_self([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)encryptionCertificate
 {
-	return [OFString stringWithUTF8String:e_source_smime_get_encryption_certificate([self SOURCESMIME])];
+	const gchar* gobjectValue = e_source_smime_get_encryption_certificate([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (bool)signByDefault
 {
-	return e_source_smime_get_sign_by_default([self SOURCESMIME]);
+	bool returnValue = e_source_smime_get_sign_by_default([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)signingAlgorithm
 {
-	return [OFString stringWithUTF8String:e_source_smime_get_signing_algorithm([self SOURCESMIME])];
+	const gchar* gobjectValue = e_source_smime_get_signing_algorithm([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OFString*)signingCertificate
 {
-	return [OFString stringWithUTF8String:e_source_smime_get_signing_certificate([self SOURCESMIME])];
+	const gchar* gobjectValue = e_source_smime_get_signing_certificate([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (void)setEncryptByDefault:(bool)encryptByDefault
 {
-	e_source_smime_set_encrypt_by_default([self SOURCESMIME], encryptByDefault);
+	e_source_smime_set_encrypt_by_default([self castedGObject], encryptByDefault);
 }
 
 - (void)setEncryptToSelf:(bool)encryptToSelf
 {
-	e_source_smime_set_encrypt_to_self([self SOURCESMIME], encryptToSelf);
+	e_source_smime_set_encrypt_to_self([self castedGObject], encryptToSelf);
 }
 
 - (void)setEncryptionCertificate:(OFString*)encryptionCertificate
 {
-	e_source_smime_set_encryption_certificate([self SOURCESMIME], [encryptionCertificate UTF8String]);
+	e_source_smime_set_encryption_certificate([self castedGObject], [encryptionCertificate UTF8String]);
 }
 
 - (void)setSignByDefault:(bool)signByDefault
 {
-	e_source_smime_set_sign_by_default([self SOURCESMIME], signByDefault);
+	e_source_smime_set_sign_by_default([self castedGObject], signByDefault);
 }
 
 - (void)setSigningAlgorithm:(OFString*)signingAlgorithm
 {
-	e_source_smime_set_signing_algorithm([self SOURCESMIME], [signingAlgorithm UTF8String]);
+	e_source_smime_set_signing_algorithm([self castedGObject], [signingAlgorithm UTF8String]);
 }
 
 - (void)setSigningCertificate:(OFString*)signingCertificate
 {
-	e_source_smime_set_signing_certificate([self SOURCESMIME], [signingCertificate UTF8String]);
+	e_source_smime_set_signing_certificate([self castedGObject], [signingCertificate UTF8String]);
 }
 
 

@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -10,59 +10,89 @@
 
 - (instancetype)init
 {
-	self = [super initWithGObject:(GObject*)camel_address_new()];
+	CamelAddress* gobjectValue = CAMEL_ADDRESS(camel_address_new());
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (CamelAddress*)ADDRESS
+- (CamelAddress*)castedGObject
 {
-	return CAMEL_ADDRESS([self GOBJECT]);
+	return CAMEL_ADDRESS([self gObject]);
 }
 
 - (gint)cat:(OGCamelAddress*)source
 {
-	return camel_address_cat([self ADDRESS], [source ADDRESS]);
+	gint returnValue = camel_address_cat([self castedGObject], [source castedGObject]);
+
+	return returnValue;
 }
 
 - (gint)copy:(OGCamelAddress*)source
 {
-	return camel_address_copy([self ADDRESS], [source ADDRESS]);
+	gint returnValue = camel_address_copy([self castedGObject], [source castedGObject]);
+
+	return returnValue;
 }
 
 - (gint)decode:(OFString*)raw
 {
-	return camel_address_decode([self ADDRESS], [raw UTF8String]);
+	gint returnValue = camel_address_decode([self castedGObject], [raw UTF8String]);
+
+	return returnValue;
 }
 
 - (OFString*)encode
 {
-	return [OFString stringWithUTF8String:camel_address_encode([self ADDRESS])];
+	gchar* gobjectValue = camel_address_encode([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)format
 {
-	return [OFString stringWithUTF8String:camel_address_format([self ADDRESS])];
+	gchar* gobjectValue = camel_address_format([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (gint)length
 {
-	return camel_address_length([self ADDRESS]);
+	gint returnValue = camel_address_length([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OGCamelAddress*)newClone
 {
-	return [[[OGCamelAddress alloc] initWithGObject:(GObject*)camel_address_new_clone([self ADDRESS])] autorelease];
+	CamelAddress* gobjectValue = CAMEL_ADDRESS(camel_address_new_clone([self castedGObject]));
+
+	OGCamelAddress* returnValue = [OGCamelAddress wrapperFor:gobjectValue];
+	g_object_unref(gobjectValue);
+
+	return returnValue;
 }
 
 - (void)remove:(gint)index
 {
-	camel_address_remove([self ADDRESS], index);
+	camel_address_remove([self castedGObject], index);
 }
 
 - (gint)unformat:(OFString*)raw
 {
-	return camel_address_unformat([self ADDRESS], [raw UTF8String]);
+	gint returnValue = camel_address_unformat([self castedGObject], [raw UTF8String]);
+
+	return returnValue;
 }
 
 

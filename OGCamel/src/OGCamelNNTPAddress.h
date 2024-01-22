@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -21,7 +21,7 @@
  * Methods
  */
 
-- (CamelNNTPAddress*)NNTPADDRESS;
+- (CamelNNTPAddress*)castedGObject;
 
 /**
  * Add a new nntp address to the address object.  Duplicates are not added twice.
@@ -38,6 +38,6 @@
  * @param namep Holder for the returned address, or NULL, if not required.
  * @return TRUE if such an address exists, or FALSE otherwise.
  */
-- (bool)instanceWithIndex:(gint)index namep:(const gchar**)namep;
+- (bool)getWithIndex:(gint)index namep:(const gchar**)namep;
 
 @end

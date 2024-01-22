@@ -1,34 +1,27 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelObject.h"
 
 @class OGCamelSettings;
+@class OGCancellable;
 @class OGCamelSession;
+@class OGTask;
 
 @interface OGCamelService : OGCamelObject
 {
 
 }
 
-/**
- * Functions
- */
-
-/**
- *
- * @return
- */
-+ (GQuark)errorQuark;
 
 /**
  * Methods
  */
 
-- (CamelService*)SERVICE;
+- (CamelService*)castedGObject;
 
 /**
  * Asynchronously attempts to authenticate @service using @mechanism and,
@@ -48,7 +41,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)authenticateWithMechanism:(OFString*)mechanism ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)authenticateWithMechanism:(OFString*)mechanism ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_service_authenticate().
@@ -64,10 +57,9 @@
  * and returns #CAMEL_AUTHENTICATION_ERROR.
  *
  * @param result a #GAsyncResult
- * @param err
  * @return the authentication result
  */
-- (CamelAuthenticationResult)authenticateFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (CamelAuthenticationResult)authenticateFinish:(GAsyncResult*)result;
 
 /**
  * Attempts to authenticate @service using @mechanism and, if necessary,
@@ -89,10 +81,9 @@
  *
  * @param mechanism a SASL mechanism name, or %NULL
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return the authentication result
  */
-- (CamelAuthenticationResult)authenticateSyncWithMechanism:(OFString*)mechanism cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (CamelAuthenticationResult)authenticateSyncWithMechanism:(OFString*)mechanism cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously connects @service to a remote server using the information
@@ -113,16 +104,15 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)connectWithIoPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)connectWithIoPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_service_connect().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE if the connection was made or %FALSE otherwise
  */
-- (bool)connectFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)connectFinish:(GAsyncResult*)result;
 
 /**
  * Connects @service to a remote server using the information in its
@@ -132,10 +122,9 @@
  * called, its results will be reflected in this connect operation.
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE if the connection is made or %FALSE otherwise
  */
-- (bool)connectSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)connectSync:(OGCancellable*)cancellable;
 
 /**
  * If a disconnect operation is already in progress when this function is
@@ -154,16 +143,15 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)disconnectWithClean:(bool)clean ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)disconnectWithClean:(bool)clean ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_service_disconnect().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE if the connection was severed or %FALSE otherwise
  */
-- (bool)disconnectFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)disconnectFinish:(GAsyncResult*)result;
 
 /**
  * Disconnect from the service. If @clean is %FALSE, it should not
@@ -177,10 +165,9 @@
  *
  * @param clean whether or not to try to disconnect cleanly
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE if the connection was severed or %FALSE otherwise
  */
-- (bool)disconnectSyncWithClean:(bool)clean cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)disconnectSyncWithClean:(bool)clean cancellable:(OGCancellable*)cancellable;
 
 /**
  * Thread-safe variation of camel_service_get_display_name().
@@ -303,27 +290,25 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)queryAuthTypesWithIoPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)queryAuthTypesWithIoPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_service_query_auth_types().
  * Free the returned list with g_list_free().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return a list of #CamelServiceAuthType structs
  */
-- (GList*)queryAuthTypesFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (GList*)queryAuthTypesFinish:(GAsyncResult*)result;
 
 /**
  * Obtains a list of authentication types supported by @service.
  * Free the returned list with g_list_free().
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return a list of #CamelServiceAuthType structs
  */
-- (GList*)queryAuthTypesSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (GList*)queryAuthTypesSync:(OGCancellable*)cancellable;
 
 /**
  * Adds @task to a queue of waiting tasks with the same source object.
@@ -338,7 +323,7 @@
  * @param task a #GTask
  * @param taskFunc function to call when @task is dispatched
  */
-- (void)queueTaskWithTask:(GTask*)task taskFunc:(GTaskThreadFunc)taskFunc;
+- (void)queueTaskWithTask:(OGTask*)task taskFunc:(GTaskThreadFunc)taskFunc;
 
 /**
  * Returns the #GProxyResolver for @service.  If an application needs to

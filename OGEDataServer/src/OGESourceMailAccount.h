@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -21,7 +21,7 @@
  * Methods
  */
 
-- (ESourceMailAccount*)SOURCEMAILACCOUNT;
+- (ESourceMailAccount*)castedGObject;
 
 /**
  * Thread-safe variation of e_source_mail_account_get_archive_folder().
@@ -50,6 +50,14 @@
  * @return an identifier of the archive folder
  */
 - (OFString*)archiveFolder;
+
+/**
+ * Returns whether the mail account is a builtin account. The builtin
+ * account cannot be created by a user. The default value is %FALSE.
+ *
+ * @return %TRUE, when the account is a builtin account
+ */
+- (bool)builtin;
 
 /**
  * Returns the #ESource:uid of the #ESource that describes the mail
@@ -91,6 +99,14 @@
  * @param archiveFolder an identifier for the archive folder, or %NULL
  */
 - (void)setArchiveFolder:(OFString*)archiveFolder;
+
+/**
+ * Sets whether the account is a builtin account. See e_source_mail_account_get_builtin()
+ * for more information about what it means.
+ *
+ * @param builtin value to set
+ */
+- (void)setBuiltin:(gint)builtin;
 
 /**
  * Sets the #ESource:uid of the #ESource that describes the mail

@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -10,49 +10,79 @@
 
 + (OFString*)encodeAddressWithLen:(gint*)len name:(OFString*)name addr:(OFString*)addr
 {
-	return [OFString stringWithUTF8String:camel_internet_address_encode_address(len, [name UTF8String], [addr UTF8String])];
+	gchar* gobjectValue = camel_internet_address_encode_address(len, [name UTF8String], [addr UTF8String]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 + (OFString*)formatAddressWithName:(OFString*)name addr:(OFString*)addr
 {
-	return [OFString stringWithUTF8String:camel_internet_address_format_address([name UTF8String], [addr UTF8String])];
+	gchar* gobjectValue = camel_internet_address_format_address([name UTF8String], [addr UTF8String]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (instancetype)init
 {
-	self = [super initWithGObject:(GObject*)camel_internet_address_new()];
+	CamelInternetAddress* gobjectValue = CAMEL_INTERNET_ADDRESS(camel_internet_address_new());
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (CamelInternetAddress*)INTERNETADDRESS
+- (CamelInternetAddress*)castedGObject
 {
-	return CAMEL_INTERNET_ADDRESS([self GOBJECT]);
+	return CAMEL_INTERNET_ADDRESS([self gObject]);
 }
 
 - (gint)addWithName:(OFString*)name address:(OFString*)address
 {
-	return camel_internet_address_add([self INTERNETADDRESS], [name UTF8String], [address UTF8String]);
+	gint returnValue = camel_internet_address_add([self castedGObject], [name UTF8String], [address UTF8String]);
+
+	return returnValue;
 }
 
 - (void)ensureAsciiDomains
 {
-	camel_internet_address_ensure_ascii_domains([self INTERNETADDRESS]);
+	camel_internet_address_ensure_ascii_domains([self castedGObject]);
 }
 
 - (gint)findAddressWithAddress:(OFString*)address namep:(const gchar**)namep
 {
-	return camel_internet_address_find_address([self INTERNETADDRESS], [address UTF8String], namep);
+	gint returnValue = camel_internet_address_find_address([self castedGObject], [address UTF8String], namep);
+
+	return returnValue;
 }
 
 - (gint)findNameWithName:(OFString*)name addressp:(const gchar**)addressp
 {
-	return camel_internet_address_find_name([self INTERNETADDRESS], [name UTF8String], addressp);
+	gint returnValue = camel_internet_address_find_name([self castedGObject], [name UTF8String], addressp);
+
+	return returnValue;
 }
 
-- (bool)instanceWithIndex:(gint)index namep:(const gchar**)namep addressp:(const gchar**)addressp
+- (bool)getWithIndex:(gint)index namep:(const gchar**)namep addressp:(const gchar**)addressp
 {
-	return camel_internet_address_get([self INTERNETADDRESS], index, namep, addressp);
+	bool returnValue = camel_internet_address_get([self castedGObject], index, namep, addressp);
+
+	return returnValue;
+}
+
+- (bool)sanitizeAsciiDomain
+{
+	bool returnValue = camel_internet_address_sanitize_ascii_domain([self castedGObject]);
+
+	return returnValue;
 }
 
 

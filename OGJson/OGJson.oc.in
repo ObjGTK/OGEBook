@@ -1,0 +1,7 @@
+package_format 1
+package_depends_on OGObject
+package_depends_on OGio
+
+CPPFLAGS="$CPPFLAGS @OGJSON_CPPFLAGS@"
+LIBS="-logjson @OGJSON_LIBS@ $LIBS"
+FRAMEWORK_LIBS="-framework OGJson @OGJSON_LIBS@ $FRAMEWORK_LIBS"

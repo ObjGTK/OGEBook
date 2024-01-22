@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -47,7 +47,7 @@
  * Methods
  */
 
-- (CamelInternetAddress*)INTERNETADDRESS;
+- (CamelInternetAddress*)castedGObject;
 
 /**
  * Add a new internet address to @addr.
@@ -93,6 +93,16 @@
  * @param addressp holder for the returned address, or %NULL, if not required.
  * @return %TRUE if such an address exists, or %FALSE otherwise
  */
-- (bool)instanceWithIndex:(gint)index namep:(const gchar**)namep addressp:(const gchar**)addressp;
+- (bool)getWithIndex:(gint)index namep:(const gchar**)namep addressp:(const gchar**)addressp;
+
+/**
+ * Checks the addresses in @addr for any suspicious characters in the domain
+ * name and coverts those domains into their representation. In contrast to
+ * camel_internet_address_ensure_ascii_domains(), this converts the domains
+ * into ASCII only when needed, as returned by camel_hostname_utils_requires_ascii().
+ *
+ * @return %TRUE, when converted at least one address
+ */
+- (bool)sanitizeAsciiDomain;
 
 @end

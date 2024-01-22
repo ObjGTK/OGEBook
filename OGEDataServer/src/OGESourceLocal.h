@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -16,7 +16,7 @@
  * Methods
  */
 
-- (ESourceLocal*)SOURCELOCAL;
+- (ESourceLocal*)castedGObject;
 
 /**
  * A thread safe variant to get a custom file being set on the @extension.
@@ -28,6 +28,16 @@
 - (GFile*)dupCustomFile;
 
 /**
+ * Thread-safe variation of e_source_lcoal_get_email_address().
+ * Use this function when accessing @extension from multiple threads.
+ * 
+ * The returned string should be freed with g_free() when no longer needed.
+ *
+ * @return a newly-allocated copy of #ESourceLocal:email-address
+ */
+- (OFString*)dupEmailAddress;
+
+/**
  * Get the custom file being set on the @extension.
  * The returned #GFile is owned by the @extension.
  * 
@@ -36,6 +46,12 @@
  * @return the #GFile instance, or %NULL
  */
 - (GFile*)customFile;
+
+/**
+ *
+ * @return the email address for @extension
+ */
+- (OFString*)emailAddress;
 
 /**
  * Returns whether the backend should prefer to open the file
@@ -53,6 +69,17 @@
  * @param customFile a #GFile, or %NULL
  */
 - (void)setCustomFile:(GFile*)customFile;
+
+/**
+ * Sets the email address for @extension.
+ * 
+ * The internal copy of @email_address is automatically stripped of leading
+ * and trailing whitespace. If the resulting string is empty, %NULL is set
+ * instead.
+ *
+ * @param emailAddress an email address, or %NULL
+ */
+- (void)setEmailAddress:(OFString*)emailAddress;
 
 /**
  * Set whether the custom file should be opened in writable mode.

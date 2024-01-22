@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,24 +8,30 @@
 
 @implementation OGESourceResource
 
-- (ESourceResource*)SOURCERESOURCE
+- (ESourceResource*)castedGObject
 {
-	return E_SOURCE_RESOURCE([self GOBJECT]);
+	return E_SOURCE_RESOURCE([self gObject]);
 }
 
 - (OFString*)dupIdentity
 {
-	return [OFString stringWithUTF8String:e_source_resource_dup_identity([self SOURCERESOURCE])];
+	gchar* gobjectValue = e_source_resource_dup_identity([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)identity
 {
-	return [OFString stringWithUTF8String:e_source_resource_get_identity([self SOURCERESOURCE])];
+	const gchar* gobjectValue = e_source_resource_get_identity([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (void)setIdentity:(OFString*)identity
 {
-	e_source_resource_set_identity([self SOURCERESOURCE], [identity UTF8String]);
+	e_source_resource_set_identity([self castedGObject], [identity UTF8String]);
 }
 
 

@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -12,129 +12,170 @@
 
 - (instancetype)init
 {
-	self = [super initWithGObject:(GObject*)camel_mime_message_new()];
+	CamelMimeMessage* gobjectValue = CAMEL_MIME_MESSAGE(camel_mime_message_new());
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (CamelMimeMessage*)MIMEMESSAGE
+- (CamelMimeMessage*)castedGObject
 {
-	return CAMEL_MIME_MESSAGE([self GOBJECT]);
+	return CAMEL_MIME_MESSAGE([self gObject]);
 }
 
 - (OFString*)buildMboxFrom
 {
-	return [OFString stringWithUTF8String:camel_mime_message_build_mbox_from([self MIMEMESSAGE])];
+	gchar* gobjectValue = camel_mime_message_build_mbox_from([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (void)dump:(gint)body
 {
-	camel_mime_message_dump([self MIMEMESSAGE], body);
+	camel_mime_message_dump([self castedGObject], body);
 }
 
 - (void)encode8bitParts
 {
-	camel_mime_message_encode_8bit_parts([self MIMEMESSAGE]);
+	camel_mime_message_encode_8bit_parts([self castedGObject]);
 }
 
 - (void)foreachPartWithCallback:(CamelForeachPartFunc)callback userData:(gpointer)userData
 {
-	camel_mime_message_foreach_part([self MIMEMESSAGE], callback, userData);
+	camel_mime_message_foreach_part([self castedGObject], callback, userData);
 }
 
 - (time_t)date:(gint*)offset
 {
-	return camel_mime_message_get_date([self MIMEMESSAGE], offset);
+	time_t returnValue = camel_mime_message_get_date([self castedGObject], offset);
+
+	return returnValue;
 }
 
 - (time_t)dateReceived:(gint*)offset
 {
-	return camel_mime_message_get_date_received([self MIMEMESSAGE], offset);
+	time_t returnValue = camel_mime_message_get_date_received([self castedGObject], offset);
+
+	return returnValue;
 }
 
 - (OGCamelInternetAddress*)from
 {
-	return [[[OGCamelInternetAddress alloc] initWithGObject:(GObject*)camel_mime_message_get_from([self MIMEMESSAGE])] autorelease];
+	CamelInternetAddress* gobjectValue = CAMEL_INTERNET_ADDRESS(camel_mime_message_get_from([self castedGObject]));
+
+	OGCamelInternetAddress* returnValue = [OGCamelInternetAddress wrapperFor:gobjectValue];
+	return returnValue;
 }
 
 - (OFString*)messageId
 {
-	return [OFString stringWithUTF8String:camel_mime_message_get_message_id([self MIMEMESSAGE])];
+	const gchar* gobjectValue = camel_mime_message_get_message_id([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OGCamelMimePart*)partByContentId:(OFString*)contentId
 {
-	return [[[OGCamelMimePart alloc] initWithGObject:(GObject*)camel_mime_message_get_part_by_content_id([self MIMEMESSAGE], [contentId UTF8String])] autorelease];
+	CamelMimePart* gobjectValue = CAMEL_MIME_PART(camel_mime_message_get_part_by_content_id([self castedGObject], [contentId UTF8String]));
+
+	OGCamelMimePart* returnValue = [OGCamelMimePart wrapperFor:gobjectValue];
+	return returnValue;
 }
 
 - (OGCamelInternetAddress*)recipients:(OFString*)type
 {
-	return [[[OGCamelInternetAddress alloc] initWithGObject:(GObject*)camel_mime_message_get_recipients([self MIMEMESSAGE], [type UTF8String])] autorelease];
+	CamelInternetAddress* gobjectValue = CAMEL_INTERNET_ADDRESS(camel_mime_message_get_recipients([self castedGObject], [type UTF8String]));
+
+	OGCamelInternetAddress* returnValue = [OGCamelInternetAddress wrapperFor:gobjectValue];
+	return returnValue;
 }
 
 - (OGCamelInternetAddress*)replyTo
 {
-	return [[[OGCamelInternetAddress alloc] initWithGObject:(GObject*)camel_mime_message_get_reply_to([self MIMEMESSAGE])] autorelease];
+	CamelInternetAddress* gobjectValue = CAMEL_INTERNET_ADDRESS(camel_mime_message_get_reply_to([self castedGObject]));
+
+	OGCamelInternetAddress* returnValue = [OGCamelInternetAddress wrapperFor:gobjectValue];
+	return returnValue;
 }
 
 - (OFString*)source
 {
-	return [OFString stringWithUTF8String:camel_mime_message_get_source([self MIMEMESSAGE])];
+	const gchar* gobjectValue = camel_mime_message_get_source([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OFString*)subject
 {
-	return [OFString stringWithUTF8String:camel_mime_message_get_subject([self MIMEMESSAGE])];
+	const gchar* gobjectValue = camel_mime_message_get_subject([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (bool)has8bitParts
 {
-	return camel_mime_message_has_8bit_parts([self MIMEMESSAGE]);
+	bool returnValue = camel_mime_message_has_8bit_parts([self castedGObject]);
+
+	return returnValue;
 }
 
 - (bool)hasAttachment
 {
-	return camel_mime_message_has_attachment([self MIMEMESSAGE]);
+	bool returnValue = camel_mime_message_has_attachment([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)setBestEncodingWithRequired:(CamelBestencRequired)required enctype:(CamelBestencEncoding)enctype
 {
-	camel_mime_message_set_best_encoding([self MIMEMESSAGE], required, enctype);
+	camel_mime_message_set_best_encoding([self castedGObject], required, enctype);
 }
 
 - (void)setDateWithDate:(time_t)date offset:(gint)offset
 {
-	camel_mime_message_set_date([self MIMEMESSAGE], date, offset);
+	camel_mime_message_set_date([self castedGObject], date, offset);
 }
 
 - (void)setFrom:(OGCamelInternetAddress*)from
 {
-	camel_mime_message_set_from([self MIMEMESSAGE], [from INTERNETADDRESS]);
+	camel_mime_message_set_from([self castedGObject], [from castedGObject]);
 }
 
 - (void)setMessageId:(OFString*)messageId
 {
-	camel_mime_message_set_message_id([self MIMEMESSAGE], [messageId UTF8String]);
+	camel_mime_message_set_message_id([self castedGObject], [messageId UTF8String]);
 }
 
 - (void)setRecipientsWithType:(OFString*)type recipients:(OGCamelInternetAddress*)recipients
 {
-	camel_mime_message_set_recipients([self MIMEMESSAGE], [type UTF8String], [recipients INTERNETADDRESS]);
+	camel_mime_message_set_recipients([self castedGObject], [type UTF8String], [recipients castedGObject]);
 }
 
 - (void)setReplyTo:(OGCamelInternetAddress*)replyTo
 {
-	camel_mime_message_set_reply_to([self MIMEMESSAGE], [replyTo INTERNETADDRESS]);
+	camel_mime_message_set_reply_to([self castedGObject], [replyTo castedGObject]);
 }
 
 - (void)setSource:(OFString*)sourceUid
 {
-	camel_mime_message_set_source([self MIMEMESSAGE], [sourceUid UTF8String]);
+	camel_mime_message_set_source([self castedGObject], [sourceUid UTF8String]);
 }
 
 - (void)setSubject:(OFString*)subject
 {
-	camel_mime_message_set_subject([self MIMEMESSAGE], [subject UTF8String]);
+	camel_mime_message_set_subject([self castedGObject], [subject UTF8String]);
 }
 
 

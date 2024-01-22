@@ -1,10 +1,12 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGESourceExtension.h"
+
+@class OGTlsCertificate;
 
 /**
  * Contains only private data that should be read and manipulated using the
@@ -21,7 +23,7 @@
  * Methods
  */
 
-- (ESourceWebdav*)SOURCEWEBDAV;
+- (ESourceWebdav*)castedGObject;
 
 /**
  * Thread-safe variation of e_source_webdav_get_color().
@@ -74,16 +76,6 @@
 - (OFString*)dupResourceQuery;
 
 /**
- * This is a convenience function which returns a newly-allocated
- * #SoupURI, its contents assembled from the #ESourceAuthentication
- * extension, the #ESourceSecurity extension, and @extension itself.
- * Free the returned #SoupURI with soup_uri_free().
- *
- * @return a newly-allocated #SoupURI
- */
-- (SoupURI*)dupSoupUri;
-
-/**
  * Thread-safe variation of e_source_webdav_get_ssl_trust().
  * Use this function when accessing @extension from multiple threads.
  * 
@@ -92,6 +84,16 @@
  * @return the newly-allocated copy of #ESourceWebdav:ssl-trust
  */
 - (OFString*)dupSslTrust;
+
+/**
+ * This is a convenience function which returns a newly-allocated
+ * #GUri, its contents assembled from the #ESourceAuthentication
+ * extension, the #ESourceSecurity extension, and @extension itself.
+ * Free the returned #GUri with g_uri_unref().
+ *
+ * @return a newly-allocated #GUri
+ */
+- (GUri*)dupUri;
 
 /**
  * This setting works around a
@@ -142,6 +144,13 @@
 - (OFString*)emailAddress;
 
 /**
+ *
+ * @return the sorting order of the resource, if known. The default
+ *    is (guint) -1, which means unknown/unset.
+ */
+- (guint)order;
+
+/**
  * Returns the absolute path to a resource on a WebDAV server.
  *
  * @return the absolute path to a WebDAV resource
@@ -165,7 +174,7 @@
  * The value encodes three parameters, divided by a pipe '|',
  * the first is users preference, can be one of "reject", "accept",
  * "temporary-reject" and "temporary-accept". The second is a host
- * name for which the trust was set. Finally the last is a SHA1
+ * name for which the trust was set. Finally the last is a SHA256
  * hash of the certificate. This is not meant to be changed by a caller,
  * it is supposed to be manipulated with e_source_webdav_update_ssl_trust()
  * and e_source_webdav_verify_ssl_trust().
@@ -244,6 +253,13 @@
 - (void)setEmailAddress:(OFString*)emailAddress;
 
 /**
+ * Set the sorting order of the resource.
+ *
+ * @param order a sorting order
+ */
+- (void)setOrder:(guint)order;
+
+/**
  * Sets the absolute path to a resource on a WebDAV server.
  * 
  * The internal copy of @resource_path is automatically stripped of leading
@@ -273,16 +289,6 @@
 - (void)setResourceQuery:(OFString*)resourceQuery;
 
 /**
- * This is a convenience function which propagates the components of
- * @uri to the #ESourceAuthentication extension, the #ESourceSecurity
- * extension, and @extension itself.  (The "fragment" component of
- * @uri is ignored.)
- *
- * @param soupUri a #SoupURI
- */
-- (void)setSoupUri:(SoupURI*)soupUri;
-
-/**
  * Sets the SSL/TLS certificate trust. See e_source_webdav_get_ssl_trust()
  * for more infomation about its content and how to use it.
  *
@@ -301,6 +307,16 @@
 - (void)setSslTrustResponse:(ETrustPromptResponse)response;
 
 /**
+ * This is a convenience function which propagates the components of
+ * @uri to the #ESourceAuthentication extension, the #ESourceSecurity
+ * extension, and @extension itself.  (The "fragment" component of
+ * @uri is ignored.)
+ *
+ * @param uri a #GUri
+ */
+- (void)setUri:(GUri*)uri;
+
+/**
  * Unsets temporary trust set on this @extension, but keeps
  * it as is for other values.
  *
@@ -317,7 +333,7 @@
  *        to be sent
  * @param response user's response from a trust prompt for @cert
  */
-- (void)updateSslTrustWithHost:(OFString*)host cert:(GTlsCertificate*)cert response:(ETrustPromptResponse)response;
+- (void)updateSslTrustWithHost:(OFString*)host cert:(OGTlsCertificate*)cert response:(ETrustPromptResponse)response;
 
 /**
  * Verifies SSL/TLS trust for the given @host and @cert, as previously stored in the @extension
@@ -330,6 +346,6 @@
  *   for the @cert to be considered invalid
  * @return
  */
-- (ETrustPromptResponse)verifySslTrustWithHost:(OFString*)host cert:(GTlsCertificate*)cert certErrors:(GTlsCertificateFlags)certErrors;
+- (ETrustPromptResponse)verifySslTrustWithHost:(OFString*)host cert:(OGTlsCertificate*)cert certErrors:(GTlsCertificateFlags)certErrors;
 
 @end

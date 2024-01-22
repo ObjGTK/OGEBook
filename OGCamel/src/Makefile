@@ -76,6 +76,7 @@ SRCS = OGCamelAddress.m \
 	OGCamelSaslXOAuth2.m \
 	OGCamelSaslXOAuth2Google.m \
 	OGCamelSaslXOAuth2Outlook.m \
+	OGCamelSaslXOAuth2Yahoo.m \
 	OGCamelService.m \
 	OGCamelSession.m \
 	OGCamelSettings.m \

@@ -1,13 +1,14 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGEExtension.h"
 
-@class OGESource;
 @class OGESourceCredentialsProvider;
+@class OGESource;
+@class OGCancellable;
 
 /**
  * Credentials provider implementation base structure. The descendants
@@ -25,7 +26,7 @@
  * Methods
  */
 
-- (ESourceCredentialsProviderImpl*)SOURCECREDENTIALSPROVIDERIMPL;
+- (ESourceCredentialsProviderImpl*)castedGObject;
 
 /**
  * Returns whether the @provider_impl can process credentials for the @source.
@@ -58,10 +59,9 @@
  *
  * @param source an #ESource
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)deleteSyncWithSource:(OGESource*)source cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)deleteSyncWithSource:(OGESource*)source cancellable:(OGCancellable*)cancellable;
 
 /**
  * Returns an #ESourceCredentialsProvider with which the @provider_impl is associated.
@@ -83,10 +83,9 @@
  * @param source an #ESource
  * @param cancellable optional #GCancellable object, or %NULL
  * @param outCredentials an #ENamedParameters to be set with stored credentials
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)lookupSyncWithSource:(OGESource*)source cancellable:(GCancellable*)cancellable outCredentials:(ENamedParameters**)outCredentials err:(GError**)err;
+- (bool)lookupSyncWithSource:(OGESource*)source cancellable:(OGCancellable*)cancellable outCredentials:(ENamedParameters**)outCredentials;
 
 /**
  * Asks @provider_impl to store @credentials for @source.
@@ -99,9 +98,8 @@
  * @param credentials an #ENamedParameters containing credentials to store
  * @param permanently whether to store credentials permanently, or for the current session only
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)storeSyncWithSource:(OGESource*)source credentials:(const ENamedParameters*)credentials permanently:(bool)permanently cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)storeSyncWithSource:(OGESource*)source credentials:(const ENamedParameters*)credentials permanently:(bool)permanently cancellable:(OGCancellable*)cancellable;
 
 @end

@@ -1,12 +1,15 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #include <camel/camel.h>
 
 #import <OGObject/OGObject.h>
+
+@class OGIOStream;
+@class OGCancellable;
 
 @interface OGCamelStream : OGObject
 {
@@ -17,22 +20,21 @@
 /**
  * Constructors
  */
-- (instancetype)init:(GIOStream*)baseStream;
+- (instancetype)init:(OGIOStream*)baseStream;
 
 /**
  * Methods
  */
 
-- (CamelStream*)STREAM;
+- (CamelStream*)castedGObject;
 
 /**
  * Closes the stream.
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return 0 on success or -1 on error.
  */
-- (gint)closeWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (gint)close:(OGCancellable*)cancellable;
 
 /**
  * Tests if there are bytes left to read on the @stream object.
@@ -46,10 +48,9 @@
  * meaningful for writable streams.
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return 0 on success or -1 on fail along with setting @error
  */
-- (gint)flushWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (gint)flush:(OGCancellable*)cancellable;
 
 /**
  * Attempts to read up to @n bytes from @stream into @buffer.
@@ -57,11 +58,10 @@
  * @param buffer output buffer
  * @param n max number of bytes to read.
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return the number of bytes actually read, or -1 on error and set
  * errno.
  */
-- (gssize)readWithBuffer:(OFString*)buffer n:(gsize)n cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (gssize)readWithBuffer:(OFString*)buffer n:(gsize)n cancellable:(OGCancellable*)cancellable;
 
 /**
  * Returns the #GIOStream for @stream.  This is only valid if @stream was
@@ -73,7 +73,7 @@
  *
  * @return a #GIOStream, or %NULL
  */
-- (GIOStream*)refBaseStream;
+- (OGIOStream*)refBaseStream;
 
 /**
  * Replaces the #GIOStream passed to camel_stream_new() with @base_stream.
@@ -82,7 +82,7 @@
  *
  * @param baseStream a #GIOStream
  */
-- (void)setBaseStream:(GIOStream*)baseStream;
+- (void)setBaseStream:(OGIOStream*)baseStream;
 
 /**
  * Attempts to write up to @n bytes of @buffer into @stream.
@@ -90,21 +90,19 @@
  * @param buffer buffer to write.
  * @param n number of bytes to write
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return the number of bytes written to the stream, or -1 on error
  * along with setting errno.
  */
-- (gssize)writeWithBuffer:(OFString*)buffer n:(gsize)n cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (gssize)writeWithBuffer:(OFString*)buffer n:(gsize)n cancellable:(OGCancellable*)cancellable;
 
 /**
  * Writes the string to the stream.
  *
  * @param string a string
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return the number of characters written or -1 on error.
  */
-- (gssize)writeStringWithString:(OFString*)string cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (gssize)writeStringWithString:(OFString*)string cancellable:(OGCancellable*)cancellable;
 
 /**
  * Write all of a stream (until eos) into another stream, in a
@@ -112,10 +110,9 @@
  *
  * @param outputStream destination #CamelStream object
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
- * @return -1 on error, or the number of bytes succesfully
+ * @return -1 on error, or the number of bytes successfully
  * copied across streams.
  */
-- (gssize)writeToStreamWithOutputStream:(OGCamelStream*)outputStream cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (gssize)writeToStreamWithOutputStream:(OGCamelStream*)outputStream cancellable:(OGCancellable*)cancellable;
 
 @end

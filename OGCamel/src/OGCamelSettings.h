@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -23,10 +23,10 @@
  * Methods
  */
 
-- (CamelSettings*)SETTINGS;
+- (CamelSettings*)castedGObject;
 
 /**
- * Creates an copy of @settings, such that passing @settings and the
+ * Creates a copy of @settings, such that passing @settings and the
  * copied instance to camel_settings_equal() would return %TRUE.
  * 
  * By default, this creates a new settings instance with the same #GType

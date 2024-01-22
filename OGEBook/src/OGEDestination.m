@@ -1,19 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGEDestination.h"
 
-#import "OGEBookClient.h"
 #import <OGEBookContacts/OGEContact.h>
+#import "OGEBookClient.h"
 
 @implementation OGEDestination
 
 + (OFString*)exportv:(EDestination**)destv
 {
-	return [OFString stringWithUTF8String:e_destination_exportv(destv)];
+	gchar* gobjectValue = e_destination_exportv(destv);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 + (void)freev:(EDestination**)destv
@@ -23,174 +26,242 @@
 
 + (OFString*)textrepv:(EDestination**)destv
 {
-	return [OFString stringWithUTF8String:e_destination_get_textrepv(destv)];
+	gchar* gobjectValue = e_destination_get_textrepv(destv);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 + (OGEDestination*)import:(OFString*)str
 {
-	return [[[OGEDestination alloc] initWithGObject:(GObject*)e_destination_import([str UTF8String])] autorelease];
+	EDestination* gobjectValue = E_DESTINATION(e_destination_import([str UTF8String]));
+
+	OGEDestination* returnValue = [OGEDestination wrapperFor:gobjectValue];
+	g_object_unref(gobjectValue);
+
+	return returnValue;
 }
 
 + (EDestination**)importv:(OFString*)str
 {
-	return e_destination_importv([str UTF8String]);
+	EDestination** returnValue = E_DESTINATION(e_destination_importv([str UTF8String]));
+
+	return returnValue;
 }
 
 - (instancetype)init
 {
-	self = [super initWithGObject:(GObject*)e_destination_new()];
+	EDestination* gobjectValue = E_DESTINATION(e_destination_new());
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (EDestination*)DESTINATION
+- (EDestination*)castedGObject
 {
-	return E_DESTINATION([self GOBJECT]);
+	return E_DESTINATION([self gObject]);
 }
 
 - (OGEDestination*)copy
 {
-	return [[[OGEDestination alloc] initWithGObject:(GObject*)e_destination_copy([self DESTINATION])] autorelease];
+	EDestination* gobjectValue = E_DESTINATION(e_destination_copy([self castedGObject]));
+
+	OGEDestination* returnValue = [OGEDestination wrapperFor:gobjectValue];
+	g_object_unref(gobjectValue);
+
+	return returnValue;
 }
 
 - (bool)empty
 {
-	return e_destination_empty([self DESTINATION]);
+	bool returnValue = e_destination_empty([self castedGObject]);
+
+	return returnValue;
 }
 
 - (bool)equal:(const EDestination*)b
 {
-	return e_destination_equal([self DESTINATION], b);
+	bool returnValue = e_destination_equal([self castedGObject], b);
+
+	return returnValue;
 }
 
 - (OFString*)export
 {
-	return [OFString stringWithUTF8String:e_destination_export([self DESTINATION])];
+	gchar* gobjectValue = e_destination_export([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (void)exportToVcardAttribute:(EVCardAttribute*)attr
 {
-	e_destination_export_to_vcard_attribute([self DESTINATION], attr);
+	e_destination_export_to_vcard_attribute([self castedGObject], attr);
 }
 
 - (OFString*)address
 {
-	return [OFString stringWithUTF8String:e_destination_get_address([self DESTINATION])];
+	const gchar* gobjectValue = e_destination_get_address([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OGEContact*)contact
 {
-	return [[[OGEContact alloc] initWithGObject:(GObject*)e_destination_get_contact([self DESTINATION])] autorelease];
+	EContact* gobjectValue = E_CONTACT(e_destination_get_contact([self castedGObject]));
+
+	OGEContact* returnValue = [OGEContact wrapperFor:gobjectValue];
+	return returnValue;
 }
 
 - (OFString*)contactUid
 {
-	return [OFString stringWithUTF8String:e_destination_get_contact_uid([self DESTINATION])];
+	const gchar* gobjectValue = e_destination_get_contact_uid([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OFString*)email
 {
-	return [OFString stringWithUTF8String:e_destination_get_email([self DESTINATION])];
+	const gchar* gobjectValue = e_destination_get_email([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (gint)emailNum
 {
-	return e_destination_get_email_num([self DESTINATION]);
+	gint returnValue = e_destination_get_email_num([self castedGObject]);
+
+	return returnValue;
 }
 
 - (bool)htmlMailPref
 {
-	return e_destination_get_html_mail_pref([self DESTINATION]);
+	bool returnValue = e_destination_get_html_mail_pref([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)name
 {
-	return [OFString stringWithUTF8String:e_destination_get_name([self DESTINATION])];
+	const gchar* gobjectValue = e_destination_get_name([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OFString*)sourceUid
 {
-	return [OFString stringWithUTF8String:e_destination_get_source_uid([self DESTINATION])];
+	const gchar* gobjectValue = e_destination_get_source_uid([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OFString*)textrep:(bool)includeEmail
 {
-	return [OFString stringWithUTF8String:e_destination_get_textrep([self DESTINATION], includeEmail)];
+	const gchar* gobjectValue = e_destination_get_textrep([self castedGObject], includeEmail);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (bool)isAutoRecipient
 {
-	return e_destination_is_auto_recipient([self DESTINATION]);
+	bool returnValue = e_destination_is_auto_recipient([self castedGObject]);
+
+	return returnValue;
 }
 
 - (bool)isEvolutionList
 {
-	return e_destination_is_evolution_list([self DESTINATION]);
+	bool returnValue = e_destination_is_evolution_list([self castedGObject]);
+
+	return returnValue;
 }
 
 - (bool)isIgnored
 {
-	return e_destination_is_ignored([self DESTINATION]);
+	bool returnValue = e_destination_is_ignored([self castedGObject]);
+
+	return returnValue;
 }
 
 - (const GList*)listGetDests
 {
-	return e_destination_list_get_dests([self DESTINATION]);
+	const GList* returnValue = e_destination_list_get_dests([self castedGObject]);
+
+	return returnValue;
 }
 
 - (const GList*)listGetRootDests
 {
-	return e_destination_list_get_root_dests([self DESTINATION]);
+	const GList* returnValue = e_destination_list_get_root_dests([self castedGObject]);
+
+	return returnValue;
 }
 
 - (bool)listShowAddresses
 {
-	return e_destination_list_show_addresses([self DESTINATION]);
+	bool returnValue = e_destination_list_show_addresses([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)setAutoRecipient:(bool)value
 {
-	e_destination_set_auto_recipient([self DESTINATION], value);
+	e_destination_set_auto_recipient([self castedGObject], value);
 }
 
 - (void)setClient:(OGEBookClient*)client
 {
-	e_destination_set_client([self DESTINATION], [client BOOKCLIENT]);
+	e_destination_set_client([self castedGObject], [client castedGObject]);
 }
 
 - (void)setContactWithContact:(OGEContact*)contact emailNum:(gint)emailNum
 {
-	e_destination_set_contact([self DESTINATION], [contact CONTACT], emailNum);
+	e_destination_set_contact([self castedGObject], [contact castedGObject], emailNum);
 }
 
 - (void)setContactUidWithUid:(OFString*)uid emailNum:(gint)emailNum
 {
-	e_destination_set_contact_uid([self DESTINATION], [uid UTF8String], emailNum);
+	e_destination_set_contact_uid([self castedGObject], [uid UTF8String], emailNum);
 }
 
 - (void)setEmail:(OFString*)email
 {
-	e_destination_set_email([self DESTINATION], [email UTF8String]);
+	e_destination_set_email([self castedGObject], [email UTF8String]);
 }
 
 - (void)setHtmlMailPref:(bool)flag
 {
-	e_destination_set_html_mail_pref([self DESTINATION], flag);
+	e_destination_set_html_mail_pref([self castedGObject], flag);
 }
 
 - (void)setIgnored:(bool)ignored
 {
-	e_destination_set_ignored([self DESTINATION], ignored);
+	e_destination_set_ignored([self castedGObject], ignored);
 }
 
 - (void)setName:(OFString*)name
 {
-	e_destination_set_name([self DESTINATION], [name UTF8String]);
+	e_destination_set_name([self castedGObject], [name UTF8String]);
 }
 
 - (void)setRaw:(OFString*)raw
 {
-	e_destination_set_raw([self DESTINATION], [raw UTF8String]);
+	e_destination_set_raw([self castedGObject], [raw UTF8String]);
 }
 
 

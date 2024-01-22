@@ -1,89 +1,163 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGEBookClientCursor.h"
 
 #import "OGEBookClient.h"
+#import <OGio/OGCancellable.h>
 #import <OGEBookContacts/OGEContact.h>
 
 @implementation OGEBookClientCursor
 
-- (EBookClientCursor*)BOOKCLIENTCURSOR
+- (EBookClientCursor*)castedGObject
 {
-	return E_BOOK_CLIENT_CURSOR([self GOBJECT]);
+	return E_BOOK_CLIENT_CURSOR([self gObject]);
 }
 
 - (const gchar* const*)alphabetWithNlabels:(gint*)nlabels underflow:(gint*)underflow inflow:(gint*)inflow overflow:(gint*)overflow
 {
-	return e_book_client_cursor_get_alphabet([self BOOKCLIENTCURSOR], nlabels, underflow, inflow, overflow);
+	const gchar* const* returnValue = e_book_client_cursor_get_alphabet([self castedGObject], nlabels, underflow, inflow, overflow);
+
+	return returnValue;
 }
 
 - (gint)contactAlphabeticIndex:(OGEContact*)contact
 {
-	return e_book_client_cursor_get_contact_alphabetic_index([self BOOKCLIENTCURSOR], [contact CONTACT]);
+	gint returnValue = e_book_client_cursor_get_contact_alphabetic_index([self castedGObject], [contact castedGObject]);
+
+	return returnValue;
 }
 
 - (gint)position
 {
-	return e_book_client_cursor_get_position([self BOOKCLIENTCURSOR]);
+	gint returnValue = e_book_client_cursor_get_position([self castedGObject]);
+
+	return returnValue;
 }
 
 - (gint)total
 {
-	return e_book_client_cursor_get_total([self BOOKCLIENTCURSOR]);
+	gint returnValue = e_book_client_cursor_get_total([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OGEBookClient*)refClient
 {
-	return [[[OGEBookClient alloc] initWithGObject:(GObject*)e_book_client_cursor_ref_client([self BOOKCLIENTCURSOR])] autorelease];
+	EBookClient* gobjectValue = E_BOOK_CLIENT(e_book_client_cursor_ref_client([self castedGObject]));
+
+	OGEBookClient* returnValue = [OGEBookClient wrapperFor:gobjectValue];
+	g_object_unref(gobjectValue);
+
+	return returnValue;
 }
 
-- (void)setAlphabeticIndexWithIndex:(gint)index cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)setAlphabeticIndexWithIndex:(gint)index cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_book_client_cursor_set_alphabetic_index([self BOOKCLIENTCURSOR], index, cancellable, callback, userData);
+	e_book_client_cursor_set_alphabetic_index([self castedGObject], index, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)setAlphabeticIndexFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)setAlphabeticIndexFinish:(GAsyncResult*)result
 {
-	return e_book_client_cursor_set_alphabetic_index_finish([self BOOKCLIENTCURSOR], result, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_cursor_set_alphabetic_index_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)setAlphabeticIndexSyncWithIndex:(gint)index cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)setAlphabeticIndexSyncWithIndex:(gint)index cancellable:(OGCancellable*)cancellable
 {
-	return e_book_client_cursor_set_alphabetic_index_sync([self BOOKCLIENTCURSOR], index, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_cursor_set_alphabetic_index_sync([self castedGObject], index, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)setSexpWithSexp:(OFString*)sexp cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)setSexpWithSexp:(OFString*)sexp cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_book_client_cursor_set_sexp([self BOOKCLIENTCURSOR], [sexp UTF8String], cancellable, callback, userData);
+	e_book_client_cursor_set_sexp([self castedGObject], [sexp UTF8String], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)setSexpFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)setSexpFinish:(GAsyncResult*)result
 {
-	return e_book_client_cursor_set_sexp_finish([self BOOKCLIENTCURSOR], result, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_cursor_set_sexp_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)setSexpSyncWithSexp:(OFString*)sexp cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)setSexpSyncWithSexp:(OFString*)sexp cancellable:(OGCancellable*)cancellable
 {
-	return e_book_client_cursor_set_sexp_sync([self BOOKCLIENTCURSOR], [sexp UTF8String], cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_cursor_set_sexp_sync([self castedGObject], [sexp UTF8String], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)stepWithFlags:(EBookCursorStepFlags)flags origin:(EBookCursorOrigin)origin count:(gint)count cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)stepWithFlags:(EBookCursorStepFlags)flags origin:(EBookCursorOrigin)origin count:(gint)count cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_book_client_cursor_step([self BOOKCLIENTCURSOR], flags, origin, count, cancellable, callback, userData);
+	e_book_client_cursor_step([self castedGObject], flags, origin, count, [cancellable castedGObject], callback, userData);
 }
 
-- (gint)stepFinishWithResult:(GAsyncResult*)result outContacts:(GSList**)outContacts err:(GError**)err
+- (gint)stepFinishWithResult:(GAsyncResult*)result outContacts:(GSList**)outContacts
 {
-	return e_book_client_cursor_step_finish([self BOOKCLIENTCURSOR], result, outContacts, err);
+	GError* err = NULL;
+
+	gint returnValue = e_book_client_cursor_step_finish([self castedGObject], result, outContacts, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (gint)stepSyncWithFlags:(EBookCursorStepFlags)flags origin:(EBookCursorOrigin)origin count:(gint)count outContacts:(GSList**)outContacts cancellable:(GCancellable*)cancellable err:(GError**)err
+- (gint)stepSyncWithFlags:(EBookCursorStepFlags)flags origin:(EBookCursorOrigin)origin count:(gint)count outContacts:(GSList**)outContacts cancellable:(OGCancellable*)cancellable
 {
-	return e_book_client_cursor_step_sync([self BOOKCLIENTCURSOR], flags, origin, count, outContacts, cancellable, err);
+	GError* err = NULL;
+
+	gint returnValue = e_book_client_cursor_step_sync([self castedGObject], flags, origin, count, outContacts, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 

@@ -1,110 +1,199 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelSasl.h"
 
 #import "OGCamelService.h"
+#import <OGio/OGCancellable.h>
 
 @implementation OGCamelSasl
 
 + (CamelServiceAuthType*)authtype:(OFString*)mechanism
 {
-	return camel_sasl_authtype([mechanism UTF8String]);
+	CamelServiceAuthType* returnValue = camel_sasl_authtype([mechanism UTF8String]);
+
+	return returnValue;
 }
 
 + (GList*)authtypeList:(bool)includePlain
 {
-	return camel_sasl_authtype_list(includePlain);
+	GList* returnValue = camel_sasl_authtype_list(includePlain);
+
+	return returnValue;
 }
 
 + (bool)isXoauth2Alias:(OFString*)mechanism
 {
-	return camel_sasl_is_xoauth2_alias([mechanism UTF8String]);
+	bool returnValue = camel_sasl_is_xoauth2_alias([mechanism UTF8String]);
+
+	return returnValue;
 }
 
 - (instancetype)initWithServiceName:(OFString*)serviceName mechanism:(OFString*)mechanism service:(OGCamelService*)service
 {
-	self = [super initWithGObject:(GObject*)camel_sasl_new([serviceName UTF8String], [mechanism UTF8String], [service SERVICE])];
+	CamelSasl* gobjectValue = CAMEL_SASL(camel_sasl_new([serviceName UTF8String], [mechanism UTF8String], [service castedGObject]));
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (CamelSasl*)SASL
+- (CamelSasl*)castedGObject
 {
-	return CAMEL_SASL([self GOBJECT]);
+	return CAMEL_SASL([self gObject]);
 }
 
-- (void)challengeWithToken:(GByteArray*)token ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)challengeWithToken:(GByteArray*)token ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	camel_sasl_challenge([self SASL], token, ioPriority, cancellable, callback, userData);
+	camel_sasl_challenge([self castedGObject], token, ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (void)challengeBase64WithToken:(OFString*)token ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)challengeBase64WithToken:(OFString*)token ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	camel_sasl_challenge_base64([self SASL], [token UTF8String], ioPriority, cancellable, callback, userData);
+	camel_sasl_challenge_base64([self castedGObject], [token UTF8String], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (OFString*)challengeBase64FinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (OFString*)challengeBase64Finish:(GAsyncResult*)result
 {
-	return [OFString stringWithUTF8String:camel_sasl_challenge_base64_finish([self SASL], result, err)];
+	GError* err = NULL;
+
+	gchar* gobjectValue = camel_sasl_challenge_base64_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
-- (OFString*)challengeBase64SyncWithToken:(OFString*)token cancellable:(GCancellable*)cancellable err:(GError**)err
+- (OFString*)challengeBase64SyncWithToken:(OFString*)token cancellable:(OGCancellable*)cancellable
 {
-	return [OFString stringWithUTF8String:camel_sasl_challenge_base64_sync([self SASL], [token UTF8String], cancellable, err)];
+	GError* err = NULL;
+
+	gchar* gobjectValue = camel_sasl_challenge_base64_sync([self castedGObject], [token UTF8String], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
-- (GByteArray*)challengeFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (GByteArray*)challengeFinish:(GAsyncResult*)result
 {
-	return camel_sasl_challenge_finish([self SASL], result, err);
+	GError* err = NULL;
+
+	GByteArray* returnValue = camel_sasl_challenge_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (GByteArray*)challengeSyncWithToken:(GByteArray*)token cancellable:(GCancellable*)cancellable err:(GError**)err
+- (GByteArray*)challengeSyncWithToken:(GByteArray*)token cancellable:(OGCancellable*)cancellable
 {
-	return camel_sasl_challenge_sync([self SASL], token, cancellable, err);
+	GError* err = NULL;
+
+	GByteArray* returnValue = camel_sasl_challenge_sync([self castedGObject], token, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (bool)authenticated
 {
-	return camel_sasl_get_authenticated([self SASL]);
+	bool returnValue = camel_sasl_get_authenticated([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)mechanism
 {
-	return [OFString stringWithUTF8String:camel_sasl_get_mechanism([self SASL])];
+	const gchar* gobjectValue = camel_sasl_get_mechanism([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OGCamelService*)service
 {
-	return [[[OGCamelService alloc] initWithGObject:(GObject*)camel_sasl_get_service([self SASL])] autorelease];
+	CamelService* gobjectValue = CAMEL_SERVICE(camel_sasl_get_service([self castedGObject]));
+
+	OGCamelService* returnValue = [OGCamelService wrapperFor:gobjectValue];
+	return returnValue;
 }
 
 - (OFString*)serviceName
 {
-	return [OFString stringWithUTF8String:camel_sasl_get_service_name([self SASL])];
+	const gchar* gobjectValue = camel_sasl_get_service_name([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (void)setAuthenticated:(bool)authenticated
 {
-	camel_sasl_set_authenticated([self SASL], authenticated);
+	camel_sasl_set_authenticated([self castedGObject], authenticated);
 }
 
-- (void)tryEmptyPasswordWithIoPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)tryEmptyPasswordWithIoPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	camel_sasl_try_empty_password([self SASL], ioPriority, cancellable, callback, userData);
+	camel_sasl_try_empty_password([self castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)tryEmptyPasswordFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)tryEmptyPasswordFinish:(GAsyncResult*)result
 {
-	return camel_sasl_try_empty_password_finish([self SASL], result, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_sasl_try_empty_password_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)tryEmptyPasswordSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)tryEmptyPasswordSync:(OGCancellable*)cancellable
 {
-	return camel_sasl_try_empty_password_sync([self SASL], cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_sasl_try_empty_password_sync([self castedGObject], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 

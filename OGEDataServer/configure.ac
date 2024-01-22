@@ -54,19 +54,35 @@ AS_IF([test x"$enable_static" = x"yes" -o x"$enable_shared" = x"no"], [
 
 AC_MSG_CHECKING(for ObjFW package OGObject)
 AS_IF([$OBJFW_CONFIG --package OGObject], [AC_MSG_RESULT(yes)
-	OGEDATASERVER_CPPFLAGS="$OGEDATASERVER_CPPFLAGS $($OBJFW_CONFIG --package OGObject --cppflags)"
-	OGEDATASERVER_LIBS="$OGEDATASERVER_LIBS $($OBJFW_CONFIG --package OGObject --libs)"
+	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGObject --cppflags)"
+	LIBS="$LIBS $($OBJFW_CONFIG --package OGObject --libs)"
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGObject installed.)
+])
+AC_MSG_CHECKING(for ObjFW package OGJson)
+AS_IF([$OBJFW_CONFIG --package OGJson], [AC_MSG_RESULT(yes)
+	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGJson --cppflags)"
+	LIBS="$LIBS $($OBJFW_CONFIG --package OGJson --libs)"
+], [
+	AC_MSG_ERROR(You need ObjFW package OGJson installed.)
 ])
 
 AC_MSG_CHECKING(for ObjFW package OGCamel)
 AS_IF([$OBJFW_CONFIG --package OGCamel], [AC_MSG_RESULT(yes)
-	OGEDATASERVER_CPPFLAGS="$OGEDATASERVER_CPPFLAGS $($OBJFW_CONFIG --package OGCamel --cppflags)"
-	OGEDATASERVER_LIBS="$OGEDATASERVER_LIBS $($OBJFW_CONFIG --package OGCamel --libs)"
+	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGCamel --cppflags)"
+	LIBS="$LIBS $($OBJFW_CONFIG --package OGCamel --libs)"
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGCamel installed.)
 ])
+
+AC_MSG_CHECKING(for ObjFW package OGio)
+AS_IF([$OBJFW_CONFIG --package OGio], [AC_MSG_RESULT(yes)
+	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGio --cppflags)"
+	LIBS="$LIBS $($OBJFW_CONFIG --package OGio --libs)"
+], [
+	AC_MSG_ERROR(You need ObjFW package OGio installed.)
+])
+
 
 AC_ARG_WITH(libedataserver, AS_HELP_STRING([--with-libedataserver=PREFIX],
 	[build with libedataserver-1.2 in the specified prefix]))
@@ -77,6 +93,7 @@ AS_IF([test x"$with_libedataserver" != x"no" -a x"$with_libedataserver" != x""],
        LIBS="-L$with_libedataserver/lib $LIBS"
        FRAMEWORK_LIBS="-L$with_libedataserver/lib $FRAMEWORK_LIBS"
 ])
+
 
 PKG_CHECK_MODULES(libedataserver, [libedataserver-1.2 >= $(pkg-config --modversion libedataserver-1.2)], [
 	OGEDATASERVER_CPPFLAGS="$OGEDATASERVER_CPPFLAGS $libedataserver_CFLAGS"

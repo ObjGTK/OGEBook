@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -9,6 +9,7 @@
 #import <OGObject/OGObject.h>
 
 @class OGEBookClient;
+@class OGCancellable;
 @class OGEContact;
 
 /**
@@ -25,7 +26,7 @@
  * Methods
  */
 
-- (EBookClientCursor*)BOOKCLIENTCURSOR;
+- (EBookClientCursor*)castedGObject;
 
 /**
  * Fetches the array of displayable labels for the <link linkend="cursor-alphabet">active alphabet</link>.
@@ -122,16 +123,15 @@
  * @param callback callback to call when a result is ready
  * @param userData user data for the @callback
  */
-- (void)setAlphabeticIndexWithIndex:(gint)index cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)setAlphabeticIndexWithIndex:(gint)index cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Completes an asynchronous call initiated by e_book_client_cursor_set_alphabetic_index().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, otherwise %FALSE is returned and @error is set.
  */
-- (bool)setAlphabeticIndexFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)setAlphabeticIndexFinish:(GAsyncResult*)result;
 
 /**
  * Sets the cursor to point to an <link linkend="cursor-alphabet">Alphabetic Index</link>.
@@ -154,16 +154,15 @@
  * If this method completes with an %E_CLIENT_ERROR_OUT_OF_SYNC error, it is an
  * indication that the addressbook has been set into a new locale and it would be
  * unsafe to set the alphabetic index at this time. If you receive an out of sync
- * error from this method, then you should wait until a #EBookClientCursor:alphabet
+ * error from this method, then you should wait until an #EBookClientCursor:alphabet
  * property change notification is delivered and then proceed to load the new
  * alphabet before trying to set any alphabetic index.
  *
  * @param index the alphabetic index
  * @param cancellable a #GCancellable to optionally cancel this operation while in progress
- * @param err
  * @return %TRUE on success, otherwise %FALSE is returned and @error is set.
  */
-- (bool)setAlphabeticIndexSyncWithIndex:(gint)index cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)setAlphabeticIndexSyncWithIndex:(gint)index cancellable:(OGCancellable*)cancellable;
 
 /**
  * Sets the <link linkend="cursor-search">Search Expression</link> for the cursor.
@@ -178,17 +177,16 @@
  * @param callback callback to call when a result is ready
  * @param userData user data for the @callback
  */
-- (void)setSexpWithSexp:(OFString*)sexp cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)setSexpWithSexp:(OFString*)sexp cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Completes an asynchronous call initiated by e_book_client_cursor_set_sexp(), reporting
  * whether the new search expression was accepted.
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, otherwise %FALSE is returned and @error is set.
  */
-- (bool)setSexpFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)setSexpFinish:(GAsyncResult*)result;
 
 /**
  * Sets the <link linkend="cursor-search">Search Expression</link> for the cursor.
@@ -209,10 +207,9 @@
  *
  * @param sexp the new search expression for @cursor
  * @param cancellable a #GCancellable to optionally cancel this operation while in progress
- * @param err
  * @return %TRUE on success, otherwise %FALSE is returned and @error is set.
  */
-- (bool)setSexpSyncWithSexp:(OFString*)sexp cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)setSexpSyncWithSexp:(OFString*)sexp cancellable:(OGCancellable*)cancellable;
 
 /**
  * <link linkend="cursor-iteration">Steps the cursor through the results</link> by
@@ -230,7 +227,7 @@
  * @param callback callback to call when a result is ready
  * @param userData user data for the @callback
  */
-- (void)stepWithFlags:(EBookCursorStepFlags)flags origin:(EBookCursorOrigin)origin count:(gint)count cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)stepWithFlags:(EBookCursorStepFlags)flags origin:(EBookCursorOrigin)origin count:(gint)count cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Completes an asynchronous call initiated by e_book_client_cursor_step(), fetching
@@ -238,11 +235,10 @@
  *
  * @param result a #GAsyncResult
  * @param outContacts return location for a #GSList of #EContact
- * @param err
  * @return The number of contacts traversed if successful, otherwise -1 is
  * returned and @error is set.
  */
-- (gint)stepFinishWithResult:(GAsyncResult*)result outContacts:(GSList**)outContacts err:(GError**)err;
+- (gint)stepFinishWithResult:(GAsyncResult*)result outContacts:(GSList**)outContacts;
 
 /**
  * <link linkend="cursor-iteration">Steps the cursor through the results</link> by
@@ -281,10 +277,9 @@
  * @param count a positive or negative amount of contacts to try and fetch
  * @param outContacts return location for a #GSList of #EContact
  * @param cancellable a #GCancellable to optionally cancel this operation while in progress
- * @param err
  * @return The number of contacts traversed if successful, otherwise -1 is
  * returned and @error is set.
  */
-- (gint)stepSyncWithFlags:(EBookCursorStepFlags)flags origin:(EBookCursorOrigin)origin count:(gint)count outContacts:(GSList**)outContacts cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (gint)stepSyncWithFlags:(EBookCursorStepFlags)flags origin:(EBookCursorOrigin)origin count:(gint)count outContacts:(GSList**)outContacts cancellable:(OGCancellable*)cancellable;
 
 @end

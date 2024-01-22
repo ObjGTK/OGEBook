@@ -1,63 +1,173 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGEBookClientView.h"
 
+#import <OGio/OGDBusConnection.h>
 #import "OGEBookClient.h"
+#import <OGio/OGCancellable.h>
 
 @implementation OGEBookClientView
 
-- (EBookClientView*)BOOKCLIENTVIEW
+- (EBookClientView*)castedGObject
 {
-	return E_BOOK_CLIENT_VIEW([self GOBJECT]);
+	return E_BOOK_CLIENT_VIEW([self gObject]);
+}
+
+- (void)dupContactsWithRangeStart:(guint)rangeStart rangeLength:(guint)rangeLength cancellable:(OGCancellable*)cancellable cb:(GAsyncReadyCallback)cb userData:(gpointer)userData
+{
+	e_book_client_view_dup_contacts([self castedGObject], rangeStart, rangeLength, [cancellable castedGObject], cb, userData);
+}
+
+- (bool)dupContactsFinishWithResult:(GAsyncResult*)result outRangeStart:(guint*)outRangeStart outContacts:(GPtrArray**)outContacts
+{
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_view_dup_contacts_finish([self castedGObject], result, outRangeStart, outContacts, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
+}
+
+- (EBookIndices*)dupIndices
+{
+	EBookIndices* returnValue = e_book_client_view_dup_indices([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OGEBookClient*)client
 {
-	return [[[OGEBookClient alloc] initWithGObject:(GObject*)e_book_client_view_get_client([self BOOKCLIENTVIEW])] autorelease];
+	EBookClient* gobjectValue = E_BOOK_CLIENT(e_book_client_view_get_client([self castedGObject]));
+
+	OGEBookClient* returnValue = [OGEBookClient wrapperFor:gobjectValue];
+	return returnValue;
 }
 
-- (GDBusConnection*)connection
+- (OGDBusConnection*)connection
 {
-	return e_book_client_view_get_connection([self BOOKCLIENTVIEW]);
+	GDBusConnection* gobjectValue = G_DBUS_CONNECTION(e_book_client_view_get_connection([self castedGObject]));
+
+	OGDBusConnection* returnValue = [OGDBusConnection wrapperFor:gobjectValue];
+	return returnValue;
+}
+
+- (gsize)id
+{
+	gsize returnValue = e_book_client_view_get_id([self castedGObject]);
+
+	return returnValue;
+}
+
+- (guint)ntotal
+{
+	guint returnValue = e_book_client_view_get_n_total([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)objectPath
 {
-	return [OFString stringWithUTF8String:e_book_client_view_get_object_path([self BOOKCLIENTVIEW])];
+	const gchar* gobjectValue = e_book_client_view_get_object_path([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (bool)isRunning
 {
-	return e_book_client_view_is_running([self BOOKCLIENTVIEW]);
+	bool returnValue = e_book_client_view_is_running([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OGEBookClient*)refClient
 {
-	return [[[OGEBookClient alloc] initWithGObject:(GObject*)e_book_client_view_ref_client([self BOOKCLIENTVIEW])] autorelease];
+	EBookClient* gobjectValue = E_BOOK_CLIENT(e_book_client_view_ref_client([self castedGObject]));
+
+	OGEBookClient* returnValue = [OGEBookClient wrapperFor:gobjectValue];
+	g_object_unref(gobjectValue);
+
+	return returnValue;
 }
 
-- (void)setFieldsOfInterestWithFieldsOfInterest:(const GSList*)fieldsOfInterest err:(GError**)err
+- (void)setFieldsOfInterest:(const GSList*)fieldsOfInterest
 {
-	e_book_client_view_set_fields_of_interest([self BOOKCLIENTVIEW], fieldsOfInterest, err);
+	GError* err = NULL;
+
+	e_book_client_view_set_fields_of_interest([self castedGObject], fieldsOfInterest, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
 }
 
-- (void)setFlagsWithFlags:(EBookClientViewFlags)flags err:(GError**)err
+- (void)setFlags:(EBookClientViewFlags)flags
 {
-	e_book_client_view_set_flags([self BOOKCLIENTVIEW], flags, err);
+	GError* err = NULL;
+
+	e_book_client_view_set_flags([self castedGObject], flags, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
 }
 
-- (void)start:(GError**)err
+- (bool)setSortFieldsSyncWithFields:(const EBookClientViewSortFields*)fields cancellable:(OGCancellable*)cancellable
 {
-	e_book_client_view_start([self BOOKCLIENTVIEW], err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_view_set_sort_fields_sync([self castedGObject], fields, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)stop:(GError**)err
+- (void)start
 {
-	e_book_client_view_stop([self BOOKCLIENTVIEW], err);
+	GError* err = NULL;
+
+	e_book_client_view_start([self castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+}
+
+- (void)stop
+{
+	GError* err = NULL;
+
+	e_book_client_view_stop([self castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
 }
 
 

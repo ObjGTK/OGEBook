@@ -1,166 +1,237 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelMimeParser.h"
 
 #import "OGCamelStream.h"
+#import <OGio/OGInputStream.h>
 #import "OGCamelMimeFilter.h"
 
 @implementation OGCamelMimeParser
 
 - (instancetype)init
 {
-	self = [super initWithGObject:(GObject*)camel_mime_parser_new()];
+	CamelMimeParser* gobjectValue = CAMEL_MIME_PARSER(camel_mime_parser_new());
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (CamelMimeParser*)MIMEPARSER
+- (CamelMimeParser*)castedGObject
 {
-	return CAMEL_MIME_PARSER([self GOBJECT]);
+	return CAMEL_MIME_PARSER([self gObject]);
 }
 
 - (CamelContentType*)contentType
 {
-	return camel_mime_parser_content_type([self MIMEPARSER]);
+	CamelContentType* returnValue = camel_mime_parser_content_type([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)dropStep
 {
-	camel_mime_parser_drop_step([self MIMEPARSER]);
+	camel_mime_parser_drop_step([self castedGObject]);
 }
 
 - (CamelNameValueArray*)dupHeaders
 {
-	return camel_mime_parser_dup_headers([self MIMEPARSER]);
+	CamelNameValueArray* returnValue = camel_mime_parser_dup_headers([self castedGObject]);
+
+	return returnValue;
 }
 
 - (gint)errNo
 {
-	return camel_mime_parser_errno([self MIMEPARSER]);
+	gint returnValue = camel_mime_parser_errno([self castedGObject]);
+
+	return returnValue;
 }
 
 - (gint)filterAdd:(OGCamelMimeFilter*)mf
 {
-	return camel_mime_parser_filter_add([self MIMEPARSER], [mf MIMEFILTER]);
+	gint returnValue = camel_mime_parser_filter_add([self castedGObject], [mf castedGObject]);
+
+	return returnValue;
 }
 
 - (void)filterRemove:(gint)id
 {
-	camel_mime_parser_filter_remove([self MIMEPARSER], id);
+	camel_mime_parser_filter_remove([self castedGObject], id);
 }
 
 - (OFString*)fromLine
 {
-	return [OFString stringWithUTF8String:camel_mime_parser_from_line([self MIMEPARSER])];
+	const gchar* gobjectValue = camel_mime_parser_from_line([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OFString*)headerWithName:(OFString*)name offset:(gint*)offset
 {
-	return [OFString stringWithUTF8String:camel_mime_parser_header([self MIMEPARSER], [name UTF8String], offset)];
+	const gchar* gobjectValue = camel_mime_parser_header([self castedGObject], [name UTF8String], offset);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (void)initWithBytes:(GBytes*)bytes
 {
-	camel_mime_parser_init_with_bytes([self MIMEPARSER], bytes);
+	camel_mime_parser_init_with_bytes([self castedGObject], bytes);
 }
 
 - (gint)initWithFd:(gint)fd
 {
-	return camel_mime_parser_init_with_fd([self MIMEPARSER], fd);
+	gint returnValue = camel_mime_parser_init_with_fd([self castedGObject], fd);
+
+	return returnValue;
 }
 
-- (void)initWithInputStream:(GInputStream*)inputStream
+- (void)initWithInputStream:(OGInputStream*)inputStream
 {
-	camel_mime_parser_init_with_input_stream([self MIMEPARSER], inputStream);
+	camel_mime_parser_init_with_input_stream([self castedGObject], [inputStream castedGObject]);
 }
 
-- (gint)initWithStreamWithStream:(OGCamelStream*)stream err:(GError**)err
+- (gint)initWithStream:(OGCamelStream*)stream
 {
-	return camel_mime_parser_init_with_stream([self MIMEPARSER], [stream STREAM], err);
+	GError* err = NULL;
+
+	gint returnValue = camel_mime_parser_init_with_stream([self castedGObject], [stream castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (OFString*)postface
 {
-	return [OFString stringWithUTF8String:camel_mime_parser_postface([self MIMEPARSER])];
+	const gchar* gobjectValue = camel_mime_parser_postface([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OFString*)preface
 {
-	return [OFString stringWithUTF8String:camel_mime_parser_preface([self MIMEPARSER])];
+	const gchar* gobjectValue = camel_mime_parser_preface([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (void)pushStateWithNewstate:(CamelMimeParserState)newstate boundary:(OFString*)boundary
 {
-	camel_mime_parser_push_state([self MIMEPARSER], newstate, [boundary UTF8String]);
+	camel_mime_parser_push_state([self castedGObject], newstate, [boundary UTF8String]);
 }
 
-- (gssize)readWithDatabuffer:(const gchar**)databuffer len:(gssize)len err:(GError**)err
+- (gssize)readWithDatabuffer:(const gchar**)databuffer len:(gssize)len
 {
-	return camel_mime_parser_read([self MIMEPARSER], databuffer, len, err);
+	GError* err = NULL;
+
+	gssize returnValue = camel_mime_parser_read([self castedGObject], databuffer, len, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (void)scanFrom:(bool)scanFrom
 {
-	camel_mime_parser_scan_from([self MIMEPARSER], scanFrom);
+	camel_mime_parser_scan_from([self castedGObject], scanFrom);
 }
 
 - (void)scanPreFrom:(bool)scanPreFrom
 {
-	camel_mime_parser_scan_pre_from([self MIMEPARSER], scanPreFrom);
+	camel_mime_parser_scan_pre_from([self castedGObject], scanPreFrom);
 }
 
 - (goffset)seekWithOffset:(goffset)offset whence:(gint)whence
 {
-	return camel_mime_parser_seek([self MIMEPARSER], offset, whence);
+	goffset returnValue = camel_mime_parser_seek([self castedGObject], offset, whence);
+
+	return returnValue;
 }
 
 - (gint)setHeaderRegex:(OFString*)matchstr
 {
-	return camel_mime_parser_set_header_regex([self MIMEPARSER], (gchar*) [matchstr UTF8String]);
+	gint returnValue = camel_mime_parser_set_header_regex([self castedGObject], g_strdup([matchstr UTF8String]));
+
+	return returnValue;
 }
 
 - (CamelMimeParserState)state
 {
-	return camel_mime_parser_state([self MIMEPARSER]);
+	CamelMimeParserState returnValue = camel_mime_parser_state([self castedGObject]);
+
+	return returnValue;
 }
 
 - (CamelMimeParserState)stepWithDatabuffer:(gchar**)databuffer datalength:(gsize*)datalength
 {
-	return camel_mime_parser_step([self MIMEPARSER], databuffer, datalength);
+	CamelMimeParserState returnValue = camel_mime_parser_step([self castedGObject], databuffer, datalength);
+
+	return returnValue;
 }
 
 - (OGCamelStream*)stream
 {
-	return [[[OGCamelStream alloc] initWithGObject:(GObject*)camel_mime_parser_stream([self MIMEPARSER])] autorelease];
+	CamelStream* gobjectValue = CAMEL_STREAM(camel_mime_parser_stream([self castedGObject]));
+
+	OGCamelStream* returnValue = [OGCamelStream wrapperFor:gobjectValue];
+	return returnValue;
 }
 
 - (goffset)tell
 {
-	return camel_mime_parser_tell([self MIMEPARSER]);
+	goffset returnValue = camel_mime_parser_tell([self castedGObject]);
+
+	return returnValue;
 }
 
 - (goffset)tellStartBoundary
 {
-	return camel_mime_parser_tell_start_boundary([self MIMEPARSER]);
+	goffset returnValue = camel_mime_parser_tell_start_boundary([self castedGObject]);
+
+	return returnValue;
 }
 
 - (goffset)tellStartFrom
 {
-	return camel_mime_parser_tell_start_from([self MIMEPARSER]);
+	goffset returnValue = camel_mime_parser_tell_start_from([self castedGObject]);
+
+	return returnValue;
 }
 
 - (goffset)tellStartHeaders
 {
-	return camel_mime_parser_tell_start_headers([self MIMEPARSER]);
+	goffset returnValue = camel_mime_parser_tell_start_headers([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)unstep
 {
-	camel_mime_parser_unstep([self MIMEPARSER]);
+	camel_mime_parser_unstep([self castedGObject]);
 }
 
 

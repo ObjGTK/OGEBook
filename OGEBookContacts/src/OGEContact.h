@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -44,7 +44,7 @@
  * Gets the string representation of @field_id.
  *
  * @param fieldId an #EContactField
- * @return The string representation of @field_id, or %NULL if it doesn't exist.
+ * @return The string representation of @field_id
  */
 + (OFString*)fieldName:(EContactField)fieldId;
 
@@ -62,7 +62,7 @@
  * of @field_id.
  *
  * @param fieldId an #EContactField
- * @return The human-readable representation of @field_id, or %NULL if it doesn't exist.
+ * @return The human-readable representation of @field_id
  */
 + (OFString*)prettyName:(EContactField)fieldId;
 
@@ -70,7 +70,7 @@
  * Gets the vcard attribute corresponding to @field_id, as a string.
  *
  * @param fieldId an #EContactField
- * @return The vcard attribute corresponding to @field_id, or %NULL if it doesn't exist.
+ * @return The vcard attribute corresponding to @field_id
  */
 + (OFString*)vcardAttribute:(EContactField)fieldId;
 
@@ -85,7 +85,7 @@
  * Methods
  */
 
-- (EContact*)CONTACT;
+- (EContact*)castedGObject;
 
 /**
  * Creates a copy of @contact.
@@ -100,7 +100,7 @@
  * @param fieldId an #EContactField
  * @return Depends on the field's type, owned by the caller. This may be %NULL if the field isn't set.
  */
-- (gpointer)instance:(EContactField)fieldId;
+- (gpointer)get:(EContactField)fieldId;
 
 /**
  * Gets a list of the vcard attributes for @contact's @field_id.
@@ -137,11 +137,10 @@
  * stored on the local file system as type %E_CONTACT_PHOTO_TYPE_URI
  * to be inlined and stored as %E_CONTACT_PHOTO_TYPE_INLINED instead.
  *
- * @param err
  * @return %TRUE if there were no errors, upon error %FALSE is returned
  *    and @error is set.
  */
-- (bool)inlineLocalPhotos:(GError**)err;
+- (bool)inlineLocalPhotos;
 
 /**
  * Sets the value of @contact's field specified by @field_id to @value.

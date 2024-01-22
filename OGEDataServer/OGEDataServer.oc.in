@@ -1,4 +1,9 @@
 package_format 1
+package_depends_on OGObject
+package_depends_on OGJson
+package_depends_on OGCamel
+package_depends_on OGio
+
 CPPFLAGS="$CPPFLAGS @OGEDATASERVER_CPPFLAGS@"
 LIBS="-logedataserver @OGEDATASERVER_LIBS@ $LIBS"
 FRAMEWORK_LIBS="-framework OGEDataServer @OGEDATASERVER_LIBS@ $FRAMEWORK_LIBS"

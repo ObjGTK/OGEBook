@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -10,69 +10,91 @@
 
 + (OGCamelCertDB*)default
 {
-	return [[[OGCamelCertDB alloc] initWithGObject:(GObject*)camel_certdb_get_default()] autorelease];
+	CamelCertDB* gobjectValue = CAMEL_CERTDB(camel_certdb_get_default());
+
+	OGCamelCertDB* returnValue = [OGCamelCertDB wrapperFor:gobjectValue];
+	g_object_unref(gobjectValue);
+
+	return returnValue;
 }
 
 - (instancetype)init
 {
-	self = [super initWithGObject:(GObject*)camel_certdb_new()];
+	CamelCertDB* gobjectValue = CAMEL_CERTDB(camel_certdb_new());
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (CamelCertDB*)CERTDB
+- (CamelCertDB*)castedGObject
 {
-	return CAMEL_CERTDB([self GOBJECT]);
+	return CAMEL_CERTDB([self gObject]);
 }
 
 - (void)clear
 {
-	camel_certdb_clear([self CERTDB]);
+	camel_certdb_clear([self castedGObject]);
 }
 
 - (CamelCert*)hostWithHostname:(OFString*)hostname fingerprint:(OFString*)fingerprint
 {
-	return camel_certdb_get_host([self CERTDB], [hostname UTF8String], [fingerprint UTF8String]);
+	CamelCert* returnValue = camel_certdb_get_host([self castedGObject], [hostname UTF8String], [fingerprint UTF8String]);
+
+	return returnValue;
 }
 
 - (GSList*)listCerts
 {
-	return camel_certdb_list_certs([self CERTDB]);
+	GSList* returnValue = camel_certdb_list_certs([self castedGObject]);
+
+	return returnValue;
 }
 
 - (gint)load
 {
-	return camel_certdb_load([self CERTDB]);
+	gint returnValue = camel_certdb_load([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)put:(CamelCert*)cert
 {
-	camel_certdb_put([self CERTDB], cert);
+	camel_certdb_put([self castedGObject], cert);
 }
 
 - (void)removeHostWithHostname:(OFString*)hostname fingerprint:(OFString*)fingerprint
 {
-	camel_certdb_remove_host([self CERTDB], [hostname UTF8String], [fingerprint UTF8String]);
+	camel_certdb_remove_host([self castedGObject], [hostname UTF8String], [fingerprint UTF8String]);
 }
 
 - (gint)save
 {
-	return camel_certdb_save([self CERTDB]);
+	gint returnValue = camel_certdb_save([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)setDefault
 {
-	camel_certdb_set_default([self CERTDB]);
+	camel_certdb_set_default([self castedGObject]);
 }
 
 - (void)setFilename:(OFString*)filename
 {
-	camel_certdb_set_filename([self CERTDB], [filename UTF8String]);
+	camel_certdb_set_filename([self castedGObject], [filename UTF8String]);
 }
 
 - (void)touch
 {
-	camel_certdb_touch([self CERTDB]);
+	camel_certdb_touch([self castedGObject]);
 }
 
 

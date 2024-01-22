@@ -1,12 +1,14 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #include <camel/camel.h>
 
 #import <OGObject/OGObject.h>
+
+@class OGIOStream;
 
 @interface OGCamelDataCache : OGObject
 {
@@ -17,13 +19,13 @@
 /**
  * Constructors
  */
-- (instancetype)initWithPath:(OFString*)path err:(GError**)err;
+- (instancetype)init:(OFString*)path;
 
 /**
  * Methods
  */
 
-- (CamelDataCache*)DATACACHE;
+- (CamelDataCache*)castedGObject;
 
 /**
  * Add a new item to the cache, returning a #GIOStream to the new item.
@@ -38,10 +40,9 @@
  *
  * @param path Relative path of item to add.
  * @param key Key of item to add.
- * @param err
- * @return a #GIOStream for the new cache item, or %NULL
+ * @return a #GIOStream for the new cache item, or %NULL on error
  */
-- (GIOStream*)addWithPath:(OFString*)path key:(OFString*)key err:(GError**)err;
+- (OGIOStream*)addWithPath:(OFString*)path key:(OFString*)key;
 
 /**
  * Clear cache's content in @path.
@@ -70,10 +71,9 @@
  *
  * @param path Path to the (sub) cache the item exists in.
  * @param key Key for the cache item.
- * @param err
- * @return a #GIOStream for the requested cache item, or %NULL
+ * @return a #GIOStream for the requested cache item, or %NULL on error
  */
-- (GIOStream*)instanceWithPath:(OFString*)path key:(OFString*)key err:(GError**)err;
+- (OGIOStream*)getWithPath:(OFString*)path key:(OFString*)key;
 
 /**
  * Gets whether expire of cache data is enabled.
@@ -108,10 +108,9 @@
  *
  * @param path Path to the (sub) cache the item exists in.
  * @param key Key for the cache item.
- * @param err
  * @return 0 on success, -1 on error
  */
-- (gint)removeWithPath:(OFString*)path key:(OFString*)key err:(GError**)err;
+- (gint)removeWithPath:(OFString*)path key:(OFString*)key;
 
 /**
  * Set the cache expiration policy for access times.

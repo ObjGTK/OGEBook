@@ -1,10 +1,12 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelOperation.h"
+
+#import <OGio/OGCancellable.h>
 
 @implementation OGCamelOperation
 
@@ -13,33 +15,51 @@
 	camel_operation_cancel_all();
 }
 
-+ (void)popMessage:(GCancellable*)cancellable
++ (void)popMessage:(OGCancellable*)cancellable
 {
-	camel_operation_pop_message(cancellable);
+	camel_operation_pop_message([cancellable castedGObject]);
 }
 
-+ (void)progressWithCancellable:(GCancellable*)cancellable percent:(gint)percent
++ (void)progressWithCancellable:(OGCancellable*)cancellable percent:(gint)percent
 {
-	camel_operation_progress(cancellable, percent);
+	camel_operation_progress([cancellable castedGObject], percent);
 }
 
 - (instancetype)init
 {
-	self = [super initWithGObject:(GObject*)camel_operation_new()];
+	CamelOperation* gobjectValue = CAMEL_OPERATION(camel_operation_new());
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (instancetype)initProxy:(GCancellable*)cancellable
+- (instancetype)initProxy:(OGCancellable*)cancellable
 {
-	self = [super initWithGObject:(GObject*)camel_operation_new_proxy(cancellable)];
+	CamelOperation* gobjectValue = CAMEL_OPERATION(camel_operation_new_proxy([cancellable castedGObject]));
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (CamelOperation*)OPERATION
+- (CamelOperation*)castedGObject
 {
-	return CAMEL_OPERATION([self GOBJECT]);
+	return CAMEL_OPERATION([self gObject]);
 }
 
 

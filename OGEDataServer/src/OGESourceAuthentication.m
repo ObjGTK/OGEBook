@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,124 +8,164 @@
 
 @implementation OGESourceAuthentication
 
-- (ESourceAuthentication*)SOURCEAUTHENTICATION
+- (ESourceAuthentication*)castedGObject
 {
-	return E_SOURCE_AUTHENTICATION([self GOBJECT]);
+	return E_SOURCE_AUTHENTICATION([self gObject]);
 }
 
 - (OFString*)dupCredentialName
 {
-	return [OFString stringWithUTF8String:e_source_authentication_dup_credential_name([self SOURCEAUTHENTICATION])];
+	gchar* gobjectValue = e_source_authentication_dup_credential_name([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)dupHost
 {
-	return [OFString stringWithUTF8String:e_source_authentication_dup_host([self SOURCEAUTHENTICATION])];
+	gchar* gobjectValue = e_source_authentication_dup_host([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)dupMethod
 {
-	return [OFString stringWithUTF8String:e_source_authentication_dup_method([self SOURCEAUTHENTICATION])];
+	gchar* gobjectValue = e_source_authentication_dup_method([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)dupProxyUid
 {
-	return [OFString stringWithUTF8String:e_source_authentication_dup_proxy_uid([self SOURCEAUTHENTICATION])];
+	gchar* gobjectValue = e_source_authentication_dup_proxy_uid([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)dupUser
 {
-	return [OFString stringWithUTF8String:e_source_authentication_dup_user([self SOURCEAUTHENTICATION])];
+	gchar* gobjectValue = e_source_authentication_dup_user([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)credentialName
 {
-	return [OFString stringWithUTF8String:e_source_authentication_get_credential_name([self SOURCEAUTHENTICATION])];
+	const gchar* gobjectValue = e_source_authentication_get_credential_name([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OFString*)host
 {
-	return [OFString stringWithUTF8String:e_source_authentication_get_host([self SOURCEAUTHENTICATION])];
+	const gchar* gobjectValue = e_source_authentication_get_host([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (bool)isExternal
 {
-	return e_source_authentication_get_is_external([self SOURCEAUTHENTICATION]);
+	bool returnValue = e_source_authentication_get_is_external([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)method
 {
-	return [OFString stringWithUTF8String:e_source_authentication_get_method([self SOURCEAUTHENTICATION])];
+	const gchar* gobjectValue = e_source_authentication_get_method([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (guint16)port
 {
-	return e_source_authentication_get_port([self SOURCEAUTHENTICATION]);
+	guint16 returnValue = e_source_authentication_get_port([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)proxyUid
 {
-	return [OFString stringWithUTF8String:e_source_authentication_get_proxy_uid([self SOURCEAUTHENTICATION])];
+	const gchar* gobjectValue = e_source_authentication_get_proxy_uid([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (bool)rememberPassword
 {
-	return e_source_authentication_get_remember_password([self SOURCEAUTHENTICATION]);
+	bool returnValue = e_source_authentication_get_remember_password([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)user
 {
-	return [OFString stringWithUTF8String:e_source_authentication_get_user([self SOURCEAUTHENTICATION])];
+	const gchar* gobjectValue = e_source_authentication_get_user([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (GSocketConnectable*)refConnectable
 {
-	return e_source_authentication_ref_connectable([self SOURCEAUTHENTICATION]);
+	GSocketConnectable* returnValue = e_source_authentication_ref_connectable([self castedGObject]);
+
+	return returnValue;
 }
 
 - (bool)required
 {
-	return e_source_authentication_required([self SOURCEAUTHENTICATION]);
+	bool returnValue = e_source_authentication_required([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)setCredentialName:(OFString*)credentialName
 {
-	e_source_authentication_set_credential_name([self SOURCEAUTHENTICATION], [credentialName UTF8String]);
+	e_source_authentication_set_credential_name([self castedGObject], [credentialName UTF8String]);
 }
 
 - (void)setHost:(OFString*)host
 {
-	e_source_authentication_set_host([self SOURCEAUTHENTICATION], [host UTF8String]);
+	e_source_authentication_set_host([self castedGObject], [host UTF8String]);
 }
 
 - (void)setIsExternal:(bool)isExternal
 {
-	e_source_authentication_set_is_external([self SOURCEAUTHENTICATION], isExternal);
+	e_source_authentication_set_is_external([self castedGObject], isExternal);
 }
 
 - (void)setMethod:(OFString*)method
 {
-	e_source_authentication_set_method([self SOURCEAUTHENTICATION], [method UTF8String]);
+	e_source_authentication_set_method([self castedGObject], [method UTF8String]);
 }
 
 - (void)setPort:(guint16)port
 {
-	e_source_authentication_set_port([self SOURCEAUTHENTICATION], port);
+	e_source_authentication_set_port([self castedGObject], port);
 }
 
 - (void)setProxyUid:(OFString*)proxyUid
 {
-	e_source_authentication_set_proxy_uid([self SOURCEAUTHENTICATION], [proxyUid UTF8String]);
+	e_source_authentication_set_proxy_uid([self castedGObject], [proxyUid UTF8String]);
 }
 
 - (void)setRememberPassword:(bool)rememberPassword
 {
-	e_source_authentication_set_remember_password([self SOURCEAUTHENTICATION], rememberPassword);
+	e_source_authentication_set_remember_password([self castedGObject], rememberPassword);
 }
 
 - (void)setUser:(OFString*)user
 {
-	e_source_authentication_set_user([self SOURCEAUTHENTICATION], [user UTF8String]);
+	e_source_authentication_set_user([self castedGObject], [user UTF8String]);
 }
 
 

@@ -1,101 +1,206 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelCipherContext.h"
 
-#import "OGCamelMimePart.h"
 #import "OGCamelSession.h"
+#import "OGCamelMimePart.h"
+#import <OGio/OGCancellable.h>
 
 @implementation OGCamelCipherContext
 
++ (GQuark)errorQuark
+{
+	GQuark returnValue = camel_cipher_context_error_quark();
+
+	return returnValue;
+}
+
 - (instancetype)init:(OGCamelSession*)session
 {
-	self = [super initWithGObject:(GObject*)camel_cipher_context_new([session SESSION])];
+	CamelCipherContext* gobjectValue = CAMEL_CIPHER_CONTEXT(camel_cipher_context_new([session castedGObject]));
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (CamelCipherContext*)CIPHERCONTEXT
+- (CamelCipherContext*)castedGObject
 {
-	return CAMEL_CIPHER_CONTEXT([self GOBJECT]);
+	return CAMEL_CIPHER_CONTEXT([self gObject]);
 }
 
-- (void)decryptWithIpart:(OGCamelMimePart*)ipart opart:(OGCamelMimePart*)opart ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)decryptWithIpart:(OGCamelMimePart*)ipart opart:(OGCamelMimePart*)opart ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	camel_cipher_context_decrypt([self CIPHERCONTEXT], [ipart MIMEPART], [opart MIMEPART], ioPriority, cancellable, callback, userData);
+	camel_cipher_context_decrypt([self castedGObject], [ipart castedGObject], [opart castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (CamelCipherValidity*)decryptFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (CamelCipherValidity*)decryptFinish:(GAsyncResult*)result
 {
-	return camel_cipher_context_decrypt_finish([self CIPHERCONTEXT], result, err);
+	GError* err = NULL;
+
+	CamelCipherValidity* returnValue = camel_cipher_context_decrypt_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (CamelCipherValidity*)decryptSyncWithIpart:(OGCamelMimePart*)ipart opart:(OGCamelMimePart*)opart cancellable:(GCancellable*)cancellable err:(GError**)err
+- (CamelCipherValidity*)decryptSyncWithIpart:(OGCamelMimePart*)ipart opart:(OGCamelMimePart*)opart cancellable:(OGCancellable*)cancellable
 {
-	return camel_cipher_context_decrypt_sync([self CIPHERCONTEXT], [ipart MIMEPART], [opart MIMEPART], cancellable, err);
+	GError* err = NULL;
+
+	CamelCipherValidity* returnValue = camel_cipher_context_decrypt_sync([self castedGObject], [ipart castedGObject], [opart castedGObject], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)encryptWithUserid:(OFString*)userid recipients:(GPtrArray*)recipients ipart:(OGCamelMimePart*)ipart opart:(OGCamelMimePart*)opart ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)encryptWithUserid:(OFString*)userid recipients:(GPtrArray*)recipients ipart:(OGCamelMimePart*)ipart opart:(OGCamelMimePart*)opart ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	camel_cipher_context_encrypt([self CIPHERCONTEXT], [userid UTF8String], recipients, [ipart MIMEPART], [opart MIMEPART], ioPriority, cancellable, callback, userData);
+	camel_cipher_context_encrypt([self castedGObject], [userid UTF8String], recipients, [ipart castedGObject], [opart castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)encryptFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)encryptFinish:(GAsyncResult*)result
 {
-	return camel_cipher_context_encrypt_finish([self CIPHERCONTEXT], result, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_cipher_context_encrypt_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)encryptSyncWithUserid:(OFString*)userid recipients:(GPtrArray*)recipients ipart:(OGCamelMimePart*)ipart opart:(OGCamelMimePart*)opart cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)encryptSyncWithUserid:(OFString*)userid recipients:(GPtrArray*)recipients ipart:(OGCamelMimePart*)ipart opart:(OGCamelMimePart*)opart cancellable:(OGCancellable*)cancellable
 {
-	return camel_cipher_context_encrypt_sync([self CIPHERCONTEXT], [userid UTF8String], recipients, [ipart MIMEPART], [opart MIMEPART], cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_cipher_context_encrypt_sync([self castedGObject], [userid UTF8String], recipients, [ipart castedGObject], [opart castedGObject], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (OGCamelSession*)session
 {
-	return [[[OGCamelSession alloc] initWithGObject:(GObject*)camel_cipher_context_get_session([self CIPHERCONTEXT])] autorelease];
+	CamelSession* gobjectValue = CAMEL_SESSION(camel_cipher_context_get_session([self castedGObject]));
+
+	OGCamelSession* returnValue = [OGCamelSession wrapperFor:gobjectValue];
+	return returnValue;
 }
 
 - (OFString*)hashToId:(CamelCipherHash)hash
 {
-	return [OFString stringWithUTF8String:camel_cipher_context_hash_to_id([self CIPHERCONTEXT], hash)];
+	const gchar* gobjectValue = camel_cipher_context_hash_to_id([self castedGObject], hash);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (CamelCipherHash)idToHash:(OFString*)id
 {
-	return camel_cipher_context_id_to_hash([self CIPHERCONTEXT], [id UTF8String]);
+	CamelCipherHash returnValue = camel_cipher_context_id_to_hash([self castedGObject], [id UTF8String]);
+
+	return returnValue;
 }
 
-- (void)signWithUserid:(OFString*)userid hash:(CamelCipherHash)hash ipart:(OGCamelMimePart*)ipart opart:(OGCamelMimePart*)opart ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)signWithUserid:(OFString*)userid hash:(CamelCipherHash)hash ipart:(OGCamelMimePart*)ipart opart:(OGCamelMimePart*)opart ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	camel_cipher_context_sign([self CIPHERCONTEXT], [userid UTF8String], hash, [ipart MIMEPART], [opart MIMEPART], ioPriority, cancellable, callback, userData);
+	camel_cipher_context_sign([self castedGObject], [userid UTF8String], hash, [ipart castedGObject], [opart castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)signFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)signFinish:(GAsyncResult*)result
 {
-	return camel_cipher_context_sign_finish([self CIPHERCONTEXT], result, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_cipher_context_sign_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)signSyncWithUserid:(OFString*)userid hash:(CamelCipherHash)hash ipart:(OGCamelMimePart*)ipart opart:(OGCamelMimePart*)opart cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)signSyncWithUserid:(OFString*)userid hash:(CamelCipherHash)hash ipart:(OGCamelMimePart*)ipart opart:(OGCamelMimePart*)opart cancellable:(OGCancellable*)cancellable
 {
-	return camel_cipher_context_sign_sync([self CIPHERCONTEXT], [userid UTF8String], hash, [ipart MIMEPART], [opart MIMEPART], cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = camel_cipher_context_sign_sync([self castedGObject], [userid UTF8String], hash, [ipart castedGObject], [opart castedGObject], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)verifyWithIpart:(OGCamelMimePart*)ipart ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)verifyWithIpart:(OGCamelMimePart*)ipart ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	camel_cipher_context_verify([self CIPHERCONTEXT], [ipart MIMEPART], ioPriority, cancellable, callback, userData);
+	camel_cipher_context_verify([self castedGObject], [ipart castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (CamelCipherValidity*)verifyFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (CamelCipherValidity*)verifyFinish:(GAsyncResult*)result
 {
-	return camel_cipher_context_verify_finish([self CIPHERCONTEXT], result, err);
+	GError* err = NULL;
+
+	CamelCipherValidity* returnValue = camel_cipher_context_verify_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (CamelCipherValidity*)verifySyncWithIpart:(OGCamelMimePart*)ipart cancellable:(GCancellable*)cancellable err:(GError**)err
+- (CamelCipherValidity*)verifySyncWithIpart:(OGCamelMimePart*)ipart cancellable:(OGCancellable*)cancellable
 {
-	return camel_cipher_context_verify_sync([self CIPHERCONTEXT], [ipart MIMEPART], cancellable, err);
+	GError* err = NULL;
+
+	CamelCipherValidity* returnValue = camel_cipher_context_verify_sync([self castedGObject], [ipart castedGObject], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 

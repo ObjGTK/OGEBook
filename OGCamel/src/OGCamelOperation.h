@@ -1,12 +1,14 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #include <camel/camel.h>
 
 #import <OGObject/OGObject.h>
+
+@class OGCancellable;
 
 @interface OGCamelOperation : OGObject
 {
@@ -32,7 +34,7 @@
  *
  * @param cancellable a #GCancellable
  */
-+ (void)popMessage:(GCancellable*)cancellable;
++ (void)popMessage:(OGCancellable*)cancellable;
 
 /**
  * Report progress on the current operation.  @percent reports the current
@@ -45,18 +47,18 @@
  * @param cancellable a #GCancellable or %NULL
  * @param percent percent complete, 0 to 100.
  */
-+ (void)progressWithCancellable:(GCancellable*)cancellable percent:(gint)percent;
++ (void)progressWithCancellable:(OGCancellable*)cancellable percent:(gint)percent;
 
 /**
  * Constructors
  */
 - (instancetype)init;
-- (instancetype)initProxy:(GCancellable*)cancellable;
+- (instancetype)initProxy:(OGCancellable*)cancellable;
 
 /**
  * Methods
  */
 
-- (CamelOperation*)OPERATION;
+- (CamelOperation*)castedGObject;
 
 @end

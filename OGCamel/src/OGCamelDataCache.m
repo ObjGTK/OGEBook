@@ -1,83 +1,152 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelDataCache.h"
 
+#import <OGio/OGIOStream.h>
+
 @implementation OGCamelDataCache
 
-- (instancetype)initWithPath:(OFString*)path err:(GError**)err
+- (instancetype)init:(OFString*)path
 {
-	self = [super initWithGObject:(GObject*)camel_data_cache_new([path UTF8String], err)];
+	GError* err = NULL;
 
+	CamelDataCache* gobjectValue = CAMEL_DATA_CACHE(camel_data_cache_new([path UTF8String], &err));
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		if(gobjectValue != NULL)
+			g_object_unref(gobjectValue);
+		@throw exception;
+	}
+
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (CamelDataCache*)DATACACHE
+- (CamelDataCache*)castedGObject
 {
-	return CAMEL_DATA_CACHE([self GOBJECT]);
+	return CAMEL_DATA_CACHE([self gObject]);
 }
 
-- (GIOStream*)addWithPath:(OFString*)path key:(OFString*)key err:(GError**)err
+- (OGIOStream*)addWithPath:(OFString*)path key:(OFString*)key
 {
-	return camel_data_cache_add([self DATACACHE], [path UTF8String], [key UTF8String], err);
+	GError* err = NULL;
+
+	GIOStream* gobjectValue = G_IO_STREAM(camel_data_cache_add([self castedGObject], [path UTF8String], [key UTF8String], &err));
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		if(gobjectValue != NULL)
+			g_object_unref(gobjectValue);
+		@throw exception;
+	}
+
+	OGIOStream* returnValue = [OGIOStream wrapperFor:gobjectValue];
+	g_object_unref(gobjectValue);
+
+	return returnValue;
 }
 
 - (void)clear:(OFString*)path
 {
-	camel_data_cache_clear([self DATACACHE], [path UTF8String]);
+	camel_data_cache_clear([self castedGObject], [path UTF8String]);
 }
 
 - (void)foreachRemoveWithPath:(OFString*)path func:(CamelDataCacheRemoveFunc)func userData:(gpointer)userData
 {
-	camel_data_cache_foreach_remove([self DATACACHE], [path UTF8String], func, userData);
+	camel_data_cache_foreach_remove([self castedGObject], [path UTF8String], func, userData);
 }
 
-- (GIOStream*)instanceWithPath:(OFString*)path key:(OFString*)key err:(GError**)err
+- (OGIOStream*)getWithPath:(OFString*)path key:(OFString*)key
 {
-	return camel_data_cache_get([self DATACACHE], [path UTF8String], [key UTF8String], err);
+	GError* err = NULL;
+
+	GIOStream* gobjectValue = G_IO_STREAM(camel_data_cache_get([self castedGObject], [path UTF8String], [key UTF8String], &err));
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		if(gobjectValue != NULL)
+			g_object_unref(gobjectValue);
+		@throw exception;
+	}
+
+	OGIOStream* returnValue = [OGIOStream wrapperFor:gobjectValue];
+	g_object_unref(gobjectValue);
+
+	return returnValue;
 }
 
 - (bool)expireEnabled
 {
-	return camel_data_cache_get_expire_enabled([self DATACACHE]);
+	bool returnValue = camel_data_cache_get_expire_enabled([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)filenameWithPath:(OFString*)path key:(OFString*)key
 {
-	return [OFString stringWithUTF8String:camel_data_cache_get_filename([self DATACACHE], [path UTF8String], [key UTF8String])];
+	gchar* gobjectValue = camel_data_cache_get_filename([self castedGObject], [path UTF8String], [key UTF8String]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)path
 {
-	return [OFString stringWithUTF8String:camel_data_cache_get_path([self DATACACHE])];
+	const gchar* gobjectValue = camel_data_cache_get_path([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
-- (gint)removeWithPath:(OFString*)path key:(OFString*)key err:(GError**)err
+- (gint)removeWithPath:(OFString*)path key:(OFString*)key
 {
-	return camel_data_cache_remove([self DATACACHE], [path UTF8String], [key UTF8String], err);
+	GError* err = NULL;
+
+	gint returnValue = camel_data_cache_remove([self castedGObject], [path UTF8String], [key UTF8String], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (void)setExpireAccess:(time_t)when
 {
-	camel_data_cache_set_expire_access([self DATACACHE], when);
+	camel_data_cache_set_expire_access([self castedGObject], when);
 }
 
 - (void)setExpireAge:(time_t)when
 {
-	camel_data_cache_set_expire_age([self DATACACHE], when);
+	camel_data_cache_set_expire_age([self castedGObject], when);
 }
 
 - (void)setExpireEnabled:(bool)expireEnabled
 {
-	camel_data_cache_set_expire_enabled([self DATACACHE], expireEnabled);
+	camel_data_cache_set_expire_enabled([self castedGObject], expireEnabled);
 }
 
 - (void)setPath:(OFString*)path
 {
-	camel_data_cache_set_path([self DATACACHE], [path UTF8String]);
+	camel_data_cache_set_path([self castedGObject], [path UTF8String]);
 }
 
 

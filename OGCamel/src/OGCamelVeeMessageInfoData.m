@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -12,29 +12,47 @@
 
 - (instancetype)initWithSubfolderData:(OGCamelVeeSubfolderData*)subfolderData origMessageUid:(OFString*)origMessageUid
 {
-	self = [super initWithGObject:(GObject*)camel_vee_message_info_data_new([subfolderData VEESUBFOLDERDATA], [origMessageUid UTF8String])];
+	CamelVeeMessageInfoData* gobjectValue = CAMEL_VEE_MESSAGE_INFO_DATA(camel_vee_message_info_data_new([subfolderData castedGObject], [origMessageUid UTF8String]));
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (CamelVeeMessageInfoData*)VEEMESSAGEINFODATA
+- (CamelVeeMessageInfoData*)castedGObject
 {
-	return CAMEL_VEE_MESSAGE_INFO_DATA([self GOBJECT]);
+	return CAMEL_VEE_MESSAGE_INFO_DATA([self gObject]);
 }
 
 - (OFString*)origMessageUid
 {
-	return [OFString stringWithUTF8String:camel_vee_message_info_data_get_orig_message_uid([self VEEMESSAGEINFODATA])];
+	const gchar* gobjectValue = camel_vee_message_info_data_get_orig_message_uid([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OGCamelVeeSubfolderData*)subfolderData
 {
-	return [[[OGCamelVeeSubfolderData alloc] initWithGObject:(GObject*)camel_vee_message_info_data_get_subfolder_data([self VEEMESSAGEINFODATA])] autorelease];
+	CamelVeeSubfolderData* gobjectValue = CAMEL_VEE_SUBFOLDER_DATA(camel_vee_message_info_data_get_subfolder_data([self castedGObject]));
+
+	OGCamelVeeSubfolderData* returnValue = [OGCamelVeeSubfolderData wrapperFor:gobjectValue];
+	return returnValue;
 }
 
 - (OFString*)veeMessageUid
 {
-	return [OFString stringWithUTF8String:camel_vee_message_info_data_get_vee_message_uid([self VEEMESSAGEINFODATA])];
+	const gchar* gobjectValue = camel_vee_message_info_data_get_vee_message_uid([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 

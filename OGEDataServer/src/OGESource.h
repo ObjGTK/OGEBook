@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -9,6 +9,7 @@
 #import <OGObject/OGObject.h>
 
 @class OGCamelService;
+@class OGCancellable;
 
 /**
  * Contains only private data that should be read and manipulated using the
@@ -39,14 +40,14 @@
 /**
  * Constructors
  */
-- (instancetype)initWithDbusObject:(GDBusObject*)dbusObject mainContext:(GMainContext*)mainContext err:(GError**)err;
-- (instancetype)initWithUidWithUid:(OFString*)uid mainContext:(GMainContext*)mainContext err:(GError**)err;
+- (instancetype)initWithDbusObject:(GDBusObject*)dbusObject mainContext:(GMainContext*)mainContext;
+- (instancetype)initWithUidWithUid:(OFString*)uid mainContext:(GMainContext*)mainContext;
 
 /**
  * Methods
  */
 
-- (ESource*)SOURCE;
+- (ESource*)castedGObject;
 
 /**
  * This function essentially glues together @source and @serivce so their
@@ -93,7 +94,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)deletePasswordWithCancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)deletePasswordWithCancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_delete_password().
@@ -104,10 +105,9 @@
  * %TRUE.  If an error occurs, the function sets @error and returns %FALSE.
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)deletePasswordFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)deletePasswordFinish:(GAsyncResult*)result;
 
 /**
  * Deletes the password for @source from either the default keyring or
@@ -120,10 +120,9 @@
  * %TRUE.  If an error occurs, the function sets @error and returns %FALSE.
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)deletePasswordSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)deletePasswordSync:(OGCancellable*)cancellable;
 
 /**
  * Thread-safe variation of e_source_get_display_name().
@@ -164,7 +163,7 @@
 - (OFString*)dupUid;
 
 /**
- * Emits localy (in this process only) the ESource::credentials-required
+ * Emits locally (in this process only) the ESource::credentials-required
  * signal with given parameters. That's the difference with e_source_invoke_credentials_required(),
  * which calls the signal globally, within each client.
  *
@@ -251,7 +250,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)lastCredentialsRequiredArgumentsWithCancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)lastCredentialsRequiredArgumentsWithCancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_get_last_credentials_required_arguments().
@@ -265,10 +264,9 @@
  * @param outCertificatePem PEM-encoded secure connection certificate, or an empty string
  * @param outCertificateErrors a bit-or of #GTlsCertificateFlags for secure connection certificate
  * @param outOpError a #GError with a description of the previous credentials error
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)lastCredentialsRequiredArgumentsFinishWithResult:(GAsyncResult*)result outReason:(ESourceCredentialsReason*)outReason outCertificatePem:(gchar**)outCertificatePem outCertificateErrors:(GTlsCertificateFlags*)outCertificateErrors outOpError:(GError**)outOpError err:(GError**)err;
+- (bool)lastCredentialsRequiredArgumentsFinishWithResult:(GAsyncResult*)result outReason:(ESourceCredentialsReason*)outReason outCertificatePem:(gchar**)outCertificatePem outCertificateErrors:(GTlsCertificateFlags*)outCertificateErrors outOpError:(GError**)outOpError;
 
 /**
  * Retrieves the last used arguments of the 'credentials-required' signal emission.
@@ -284,10 +282,9 @@
  * @param outCertificateErrors a bit-or of #GTlsCertificateFlags for secure connection certificate
  * @param outOpError a #GError with a description of the previous credentials error
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)lastCredentialsRequiredArgumentsSyncWithOutReason:(ESourceCredentialsReason*)outReason outCertificatePem:(gchar**)outCertificatePem outCertificateErrors:(GTlsCertificateFlags*)outCertificateErrors outOpError:(GError**)outOpError cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)lastCredentialsRequiredArgumentsSyncWithOutReason:(ESourceCredentialsReason*)outReason outCertificatePem:(gchar**)outCertificatePem outCertificateErrors:(GTlsCertificateFlags*)outCertificateErrors outOpError:(GError**)outOpError cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously obtains the OAuth 2.0 access token for @source along
@@ -302,7 +299,7 @@
  *            is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)oauth2AccessTokenWithCancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)oauth2AccessTokenWithCancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_get_oauth2_access_token().
@@ -315,10 +312,9 @@
  *                    or %NULL
  * @param outExpiresIn return location for the token expiry,
  *                  or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)oauth2AccessTokenFinishWithResult:(GAsyncResult*)result outAccessToken:(gchar**)outAccessToken outExpiresIn:(gint*)outExpiresIn err:(GError**)err;
+- (bool)oauth2AccessTokenFinishWithResult:(GAsyncResult*)result outAccessToken:(gchar**)outAccessToken outExpiresIn:(gint*)outExpiresIn;
 
 /**
  * Obtains the OAuth 2.0 access token for @source along with its expiry
@@ -332,10 +328,9 @@
  *                    or %NULL
  * @param outExpiresIn return location for the token expiry,
  *                  or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)oauth2AccessTokenSyncWithCancellable:(GCancellable*)cancellable outAccessToken:(gchar**)outAccessToken outExpiresIn:(gint*)outExpiresIn err:(GError**)err;
+- (bool)oauth2AccessTokenSyncWithCancellable:(OGCancellable*)cancellable outAccessToken:(gchar**)outAccessToken outExpiresIn:(gint*)outExpiresIn;
 
 /**
  * Returns the unique identifier string of the parent #ESource.
@@ -425,7 +420,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)invokeAuthenticateWithCredentials:(const ENamedParameters*)credentials cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)invokeAuthenticateWithCredentials:(const ENamedParameters*)credentials cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_invoke_authenticate().
@@ -433,10 +428,9 @@
  * If an error occurs, the function sets @error and returns %FALSE.
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)invokeAuthenticateFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)invokeAuthenticateFinish:(GAsyncResult*)result;
 
 /**
  * Calls the InvokeAuthenticate method on the server side, thus the backend
@@ -447,10 +441,9 @@
  * @param credentials an #ENamedParameters structure with credentials to use; can be %NULL
  *    to use those from the last call
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)invokeAuthenticateSyncWithCredentials:(const ENamedParameters*)credentials cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)invokeAuthenticateSyncWithCredentials:(const ENamedParameters*)credentials cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously calls the InvokeCredentialsRequired method on the server side,
@@ -467,7 +460,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)invokeCredentialsRequiredWithReason:(ESourceCredentialsReason)reason certificatePem:(OFString*)certificatePem certificateErrors:(GTlsCertificateFlags)certificateErrors opError:(const GError*)opError cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)invokeCredentialsRequiredWithReason:(ESourceCredentialsReason)reason certificatePem:(OFString*)certificatePem certificateErrors:(GTlsCertificateFlags)certificateErrors opError:(const GError*)opError cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_invoke_credentials_required().
@@ -475,10 +468,9 @@
  * If an error occurs, the function sets @error and returns %FALSE.
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)invokeCredentialsRequiredFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)invokeCredentialsRequiredFinish:(GAsyncResult*)result;
 
 /**
  * Let's the client-side know that credentials are required. The @reason defines which
@@ -505,10 +497,9 @@
  * @param certificateErrors a bit-or of #GTlsCertificateFlags for secure connection certificate
  * @param opError a #GError with a description of the previous credentials error, or %NULL
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)invokeCredentialsRequiredSyncWithReason:(ESourceCredentialsReason)reason certificatePem:(OFString*)certificatePem certificateErrors:(GTlsCertificateFlags)certificateErrors opError:(const GError*)opError cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)invokeCredentialsRequiredSyncWithReason:(ESourceCredentialsReason)reason certificatePem:(OFString*)certificatePem certificateErrors:(GTlsCertificateFlags)certificateErrors opError:(const GError*)opError cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously looks up a password for @source.  Both the default and
@@ -523,7 +514,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)lookupPasswordWithCancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)lookupPasswordWithCancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_lookup_password().
@@ -536,10 +527,9 @@
  *
  * @param result a #GAsyncResult
  * @param outPassword return location for the password, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)lookupPasswordFinishWithResult:(GAsyncResult*)result outPassword:(gchar**)outPassword err:(GError**)err;
+- (bool)lookupPasswordFinishWithResult:(GAsyncResult*)result outPassword:(gchar**)outPassword;
 
 /**
  * Looks up a password for @source.  Both the default and session keyrings
@@ -554,10 +544,9 @@
  *
  * @param cancellable optional #GCancellable object, or %NULL
  * @param outPassword return location for the password, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)lookupPasswordSyncWithCancellable:(GCancellable*)cancellable outPassword:(gchar**)outPassword err:(GError**)err;
+- (bool)lookupPasswordSyncWithCancellable:(OGCancellable*)cancellable outPassword:(gchar**)outPassword;
 
 /**
  * Asynchronously loads a signature from the signature file for @source,
@@ -573,11 +562,10 @@
  *
  * @param ioPriority the I/O priority of the request
  * @param cancellable optional #GCancellable object, or %NULL
- * @param callback a #GAsyncReadyCallback to call when the request
- *            is satisfied
+ * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)mailSignatureLoadWithIoPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)mailSignatureLoadWithIoPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes an operation started with e_source_mail_signature_load().  The
@@ -589,10 +577,9 @@
  * @param contents return location for the signature content
  * @param length return location for the length of the signature
  *          content, or %NULL if the length is not needed
- * @param err
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)mailSignatureLoadFinishWithResult:(GAsyncResult*)result contents:(gchar**)contents length:(gsize*)length err:(GError**)err;
+- (bool)mailSignatureLoadFinishWithResult:(GAsyncResult*)result contents:(gchar**)contents length:(gsize*)length;
 
 /**
  * Loads a signature from the signature file for @source, which is
@@ -609,10 +596,9 @@
  * @param length return location for the length of the signature
  *          content, or %NULL if the length is not needed
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)mailSignatureLoadSyncWithContents:(gchar**)contents length:(gsize*)length cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)mailSignatureLoadSyncWithContents:(gchar**)contents length:(gsize*)length cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchrously replaces the signature file for @source with the given
@@ -627,20 +613,18 @@
  * @param length the length of @contents in bytes
  * @param ioPriority the I/O priority of the request
  * @param cancellable optional #GCancellable object, or %NULL
- * @param callback a #GAsyncReadyCallback to call when the request
- *            is satisfied
+ * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)mailSignatureReplaceWithContents:(OFString*)contents length:(gsize)length ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)mailSignatureReplaceWithContents:(OFString*)contents length:(gsize)length ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes an operation started with e_source_mail_signature_replace().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)mailSignatureReplaceFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)mailSignatureReplaceFinish:(GAsyncResult*)result;
 
 /**
  * Replaces the signature file for @source with the given @contents
@@ -650,10 +634,9 @@
  * @param contents the signature contents
  * @param length the length of @contents in bytes
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)mailSignatureReplaceSyncWithContents:(OFString*)contents length:(gsize)length cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)mailSignatureReplaceSyncWithContents:(OFString*)contents length:(gsize)length cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously replaces the signature file for @source with a symbolic
@@ -668,20 +651,18 @@
  * @param symlinkTarget executable filename to link to
  * @param ioPriority the I/O priority of the request
  * @param cancellable optional #GCancellable object, or %NULL
- * @param callback a #GAsyncReadyCallback to call when the request
- *            is satisfied
+ * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)mailSignatureSymlinkWithSymlinkTarget:(OFString*)symlinkTarget ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)mailSignatureSymlinkWithSymlinkTarget:(OFString*)symlinkTarget ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes an operation started with e_source_mail_signature_symlink().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)mailSignatureSymlinkFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)mailSignatureSymlinkFinish:(GAsyncResult*)result;
 
 /**
  * Replaces the signature file for @source with a symbolic link to
@@ -691,10 +672,9 @@
  *
  * @param symlinkTarget executable filename to link to
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)mailSignatureSymlinkSyncWithSymlinkTarget:(OFString*)symlinkTarget cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)mailSignatureSymlinkSyncWithSymlinkTarget:(OFString*)symlinkTarget cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously determines what proxy, if any, to use to connect to @uri.
@@ -705,11 +685,10 @@
  *
  * @param uri a URI representing the destination to connect to
  * @param cancellable optional #GCancellable object, or %NULL
- * @param callback a #GAsyncReadyCallback to call when the request
- *            is satisfied
+ * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)proxyLookupWithUri:(OFString*)uri cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)proxyLookupWithUri:(OFString*)uri cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_proxy_lookup().
@@ -717,10 +696,10 @@
  * Free the returned proxy URIs with g_strfreev() when finished with them.
  *
  * @param result a #GAsyncResult
- * @param err
- * @return a %NULL-terminated array of proxy URIs, or %NULL
+ * @return a %NULL-terminated array of proxy
+ *    URIs, or %NULL
  */
-- (gchar**)proxyLookupFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (gchar**)proxyLookupFinish:(GAsyncResult*)result;
 
 /**
  * Looks into @source's #ESourceProxy extension to determine what proxy,
@@ -750,10 +729,10 @@
  *
  * @param uri a URI representing the destination to connect to
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
- * @return a %NULL-terminated array of proxy URIs, or %NULL
+ * @return a %NULL-terminated array of proxy URIs,
+ *    or %NULL
  */
-- (gchar**)proxyLookupSyncWithUri:(OFString*)uri cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (gchar**)proxyLookupSyncWithUri:(OFString*)uri cancellable:(OGCancellable*)cancellable;
 
 /**
  * Returns the #GDBusObject that was passed to e_source_new().
@@ -843,21 +822,19 @@
  *
  * @param scratchSource an #ESource describing the resource to create
  * @param cancellable optional #GCancellable object, or %NULL
- * @param callback a #GAsyncReadyCallback to call when the request
- *            is satisfied
+ * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)remoteCreateWithScratchSource:(OGESource*)scratchSource cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)remoteCreateWithScratchSource:(OGESource*)scratchSource cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_remote_create().  If
  * an error occurred, the function will set @error and return %FALSE.
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)remoteCreateFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)remoteCreateFinish:(GAsyncResult*)result;
 
 /**
  * Creates a new remote resource by picking out relevant details from
@@ -873,10 +850,9 @@
  *
  * @param scratchSource an #ESource describing the resource to create
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)remoteCreateSyncWithScratchSource:(OGESource*)scratchSource cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)remoteCreateSyncWithScratchSource:(OGESource*)scratchSource cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously deletes the resource represented by @source from a remote
@@ -888,21 +864,19 @@
  * call e_source_remote_delete_finish() to get the result of the operation.
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param callback a #GAsyncReadyCallback to call when the request
- *            is satisfied
+ * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)remoteDeleteWithCancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)remoteDeleteWithCancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_remote_delete().  If
  * an error occurred, the function will set @error and return %FALSE.
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)remoteDeleteFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)remoteDeleteFinish:(GAsyncResult*)result;
 
 /**
  * Deletes the resource represented by @source from a remote server.
@@ -913,10 +887,9 @@
  * If an error occurs, the function will set @error and return %FALSE.
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)remoteDeleteSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)remoteDeleteSync:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously requests the D-Bus service to delete the key files for
@@ -927,21 +900,19 @@
  * call e_source_remove_finish() to get the result of the operation.
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param callback a #GAsyncReadyCallback to call when the request
- *            is satisfied
+ * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)removeWithCancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)removeWithCancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_remove().  If an
  * error occurred, the function will set @error and return %FALSE.
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE of failure
  */
-- (bool)removeFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)removeFinish:(GAsyncResult*)result;
 
 /**
  * Requests the D-Bus service to delete the key files for @source and all of
@@ -951,10 +922,9 @@
  * If an error occurs, the functon will set @error and return %FALSE.
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)removeSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)removeSync:(OGCancellable*)cancellable;
 
 /**
  * Set's current connection status of the @source.
@@ -1016,16 +986,15 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)storePasswordWithPassword:(OFString*)password permanently:(bool)permanently cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)storePasswordWithPassword:(OFString*)password permanently:(bool)permanently cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_store_password().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)storePasswordFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)storePasswordFinish:(GAsyncResult*)result;
 
 /**
  * Stores a password for @source.  This operation does not rely on the
@@ -1039,10 +1008,9 @@
  * @param password the password to store
  * @param permanently store permanently or just for the session
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)storePasswordSyncWithPassword:(OFString*)password permanently:(bool)permanently cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)storePasswordSyncWithPassword:(OFString*)password permanently:(bool)permanently cancellable:(OGCancellable*)cancellable;
 
 /**
  * Outputs the current contents of @source as a key file string.
@@ -1067,7 +1035,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)unsetLastCredentialsRequiredArgumentsWithCancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)unsetLastCredentialsRequiredArgumentsWithCancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_unset_last_credentials_required_arguments().
@@ -1075,10 +1043,9 @@
  * If an error occurs, the function sets @error and returns %FALSE.
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)unsetLastCredentialsRequiredArgumentsFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)unsetLastCredentialsRequiredArgumentsFinish:(GAsyncResult*)result;
 
 /**
  * Unsets the last used arguments of the 'credentials-required' signal emission.
@@ -1086,10 +1053,9 @@
  * If an error occurs, the function sets @error and returns %FALSE.
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)unsetLastCredentialsRequiredArgumentsSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)unsetLastCredentialsRequiredArgumentsSync:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously submits the current contents of @source to the D-Bus
@@ -1100,21 +1066,19 @@
  * call e_source_write_finish() to get the result of the operation.
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param callback a #GAsyncReadyCallback to call when the request
- *            is satisfied
+ * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)writeWithCancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)writeWithCancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_write().  If an
  * error occurred, the function will set @error and return %FALSE.
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)writeFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)writeFinish:(GAsyncResult*)result;
 
 /**
  * Submits the current contents of @source to the D-Bus service to be
@@ -1124,9 +1088,8 @@
  * If an error occurs, the functon will set @error and return %FALSE.
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)writeSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)writeSync:(OGCancellable*)cancellable;
 
 @end

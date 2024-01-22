@@ -54,12 +54,18 @@ AS_IF([test x"$enable_static" = x"yes" -o x"$enable_shared" = x"no"], [
 
 AC_MSG_CHECKING(for ObjFW package OGObject)
 AS_IF([$OBJFW_CONFIG --package OGObject], [AC_MSG_RESULT(yes)
-	OGCAMEL_CPPFLAGS="$OGCAMEL_CPPFLAGS $($OBJFW_CONFIG --package OGObject --cppflags)"
-	OGCAMEL_LIBS="$OGCAMEL_LIBS $($OBJFW_CONFIG --package OGObject --libs)"
+	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGObject --cppflags)"
+	LIBS="$LIBS $($OBJFW_CONFIG --package OGObject --libs)"
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGObject installed.)
 ])
-
+AC_MSG_CHECKING(for ObjFW package OGio)
+AS_IF([$OBJFW_CONFIG --package OGio], [AC_MSG_RESULT(yes)
+	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGio --cppflags)"
+	LIBS="$LIBS $($OBJFW_CONFIG --package OGio --libs)"
+], [
+	AC_MSG_ERROR(You need ObjFW package OGio installed.)
+])
 
 
 AC_ARG_WITH(camel, AS_HELP_STRING([--with-camel=PREFIX],
@@ -71,6 +77,7 @@ AS_IF([test x"$with_camel" != x"no" -a x"$with_camel" != x""], [
        LIBS="-L$with_camel/lib $LIBS"
        FRAMEWORK_LIBS="-L$with_camel/lib $FRAMEWORK_LIBS"
 ])
+
 
 PKG_CHECK_MODULES(camel, [camel-1.2 >= $(pkg-config --modversion camel-1.2)], [
 	OGCAMEL_CPPFLAGS="$OGCAMEL_CPPFLAGS $camel_CFLAGS"

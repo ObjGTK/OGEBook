@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,9 +8,10 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCamelFolder;
-@class OGCamelIndex;
 @class OGCamelMessageInfo;
+@class OGCamelIndex;
+@class OGCamelFolder;
+@class OGCancellable;
 
 @interface OGCamelFolderSearch : OGObject
 {
@@ -43,6 +44,15 @@
 + (gint)utilCompareDateWithDatetime1:(gint64)datetime1 datetime2:(gint64)datetime2;
 
 /**
+ * Calculates a hash of the Message-ID header value @message_id.
+ *
+ * @param messageId a raw Message-ID header value
+ * @param needsDecode whether the @message_id requires camel_header_msgid_decode() first
+ * @return hash of the @message_id, or 0 on any error.
+ */
++ (guint64)utilHashMessageIdWithMessageId:(OFString*)messageId needsDecode:(bool)needsDecode;
+
+/**
  * Implementation of 'make-time' function, which expects one argument,
  * a string or an integer, to be converted into time_t.
  *
@@ -61,7 +71,7 @@
  * Methods
  */
 
-- (CamelFolderSearch*)FOLDERSEARCH;
+- (CamelFolderSearch*)castedGObject;
 
 /**
  * Run a search.  Search must have had Folder already set on it, and
@@ -69,10 +79,9 @@
  *
  * @param expr a search expression to run
  * @param cancellable a #GCancellable
- * @param err
  * @return Number of messages that match the query.
  */
-- (guint32)countWithExpr:(OFString*)expr cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (guint32)countWithExpr:(OFString*)expr cancellable:(OGCancellable*)cancellable;
 
 /**
  * Frees result of camel_folder_search_search() call.
@@ -129,12 +138,11 @@
  * @param expr a search expression to run
  * @param uids to search against, NULL for all uid's.
  * @param cancellable a #GCancellable
- * @param err
  * @return a #GPtrArray with matching UIDs,
  *    or %NULL on error. Use camel_folder_search_free_result() to free it when
  *    no longer needed.
  */
-- (GPtrArray*)searchWithExpr:(OFString*)expr uids:(GPtrArray*)uids cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (GPtrArray*)searchWithExpr:(OFString*)expr uids:(GPtrArray*)uids cancellable:(OGCancellable*)cancellable;
 
 /**
  * Set the index representing the contents of all messages

@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,8 +8,8 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGEBookClient;
 @class OGEContact;
+@class OGEBookClient;
 
 @interface OGEDestination : OGObject
 {
@@ -72,7 +72,7 @@
  * Methods
  */
 
-- (EDestination*)DESTINATION;
+- (EDestination*)castedGObject;
 
 /**
  * Creates a new #EDestination identical to @dest.
@@ -212,7 +212,8 @@
  * Everything returned from this function belongs to @dest and
  * thus should not be freed.
  *
- * @return A list of elements of type #EDestination, or %NULL.
+ * @return A list of elements of type
+ * #EDestination, or %NULL.
  */
 - (const GList*)listGetDests;
 
@@ -221,7 +222,8 @@
  * to @dest.
  * The list and its elements belong to @dest, and should not be freed.
  *
- * @return A list of elements of type #EDestination, or %NULL.
+ * @return A list of elements of type
+ * #EDestination, or %NULL.
  */
 - (const GList*)listGetRootDests;
 
@@ -283,7 +285,7 @@
 - (void)setHtmlMailPref:(bool)flag;
 
 /**
- * Set the ignore flag on a #EDestination.
+ * Set the ignore flag on an #EDestination.
  *
  * @param ignored %TRUE if this #EDestination should be ignored.
  */

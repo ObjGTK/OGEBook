@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -10,14 +10,23 @@
 
 - (instancetype)init:(CamelMimeFilterBasicType)type
 {
-	self = [super initWithGObject:(GObject*)camel_mime_filter_basic_new(type)];
+	CamelMimeFilterBasic* gobjectValue = CAMEL_MIME_FILTER_BASIC(camel_mime_filter_basic_new(type));
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (CamelMimeFilterBasic*)MIMEFILTERBASIC
+- (CamelMimeFilterBasic*)castedGObject
 {
-	return CAMEL_MIME_FILTER_BASIC([self GOBJECT]);
+	return CAMEL_MIME_FILTER_BASIC([self gObject]);
 }
 
 

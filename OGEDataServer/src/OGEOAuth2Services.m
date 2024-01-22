@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -12,54 +12,75 @@
 
 + (bool)isOauth2AliasStatic:(OFString*)authMethod
 {
-	return e_oauth2_services_is_oauth2_alias_static([authMethod UTF8String]);
+	bool returnValue = e_oauth2_services_is_oauth2_alias_static([authMethod UTF8String]);
+
+	return returnValue;
 }
 
 + (bool)isSupported
 {
-	return e_oauth2_services_is_supported();
+	bool returnValue = e_oauth2_services_is_supported();
+
+	return returnValue;
 }
 
 - (instancetype)init
 {
-	self = [super initWithGObject:(GObject*)e_oauth2_services_new()];
+	EOAuth2Services* gobjectValue = E_OAUTH2_SERVICES(e_oauth2_services_new());
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (EOAuth2Services*)OAUTH2SERVICES
+- (EOAuth2Services*)castedGObject
 {
-	return E_OAUTH2_SERVICES([self GOBJECT]);
+	return E_OAUTH2_SERVICES([self gObject]);
 }
 
 - (void)add:(EOAuth2Service*)service
 {
-	e_oauth2_services_add([self OAUTH2SERVICES], service);
+	e_oauth2_services_add([self castedGObject], service);
 }
 
 - (EOAuth2Service*)find:(OGESource*)source
 {
-	return e_oauth2_services_find([self OAUTH2SERVICES], [source SOURCE]);
+	EOAuth2Service* returnValue = e_oauth2_services_find([self castedGObject], [source castedGObject]);
+
+	return returnValue;
 }
 
 - (EOAuth2Service*)guessWithProtocol:(OFString*)protocol hostname:(OFString*)hostname
 {
-	return e_oauth2_services_guess([self OAUTH2SERVICES], [protocol UTF8String], [hostname UTF8String]);
+	EOAuth2Service* returnValue = e_oauth2_services_guess([self castedGObject], [protocol UTF8String], [hostname UTF8String]);
+
+	return returnValue;
 }
 
 - (bool)isOauth2Alias:(OFString*)authMethod
 {
-	return e_oauth2_services_is_oauth2_alias([self OAUTH2SERVICES], [authMethod UTF8String]);
+	bool returnValue = e_oauth2_services_is_oauth2_alias([self castedGObject], [authMethod UTF8String]);
+
+	return returnValue;
 }
 
 - (GSList*)list
 {
-	return e_oauth2_services_list([self OAUTH2SERVICES]);
+	GSList* returnValue = e_oauth2_services_list([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)remove:(EOAuth2Service*)service
 {
-	e_oauth2_services_remove([self OAUTH2SERVICES], service);
+	e_oauth2_services_remove([self castedGObject], service);
 }
 
 

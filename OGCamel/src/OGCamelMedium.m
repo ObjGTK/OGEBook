@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,49 +8,59 @@
 
 @implementation OGCamelMedium
 
-- (CamelMedium*)MEDIUM
+- (CamelMedium*)castedGObject
 {
-	return CAMEL_MEDIUM([self GOBJECT]);
+	return CAMEL_MEDIUM([self gObject]);
 }
 
 - (void)addHeaderWithName:(OFString*)name value:(OFString*)value
 {
-	camel_medium_add_header([self MEDIUM], [name UTF8String], [value UTF8String]);
+	camel_medium_add_header([self castedGObject], [name UTF8String], [value UTF8String]);
 }
 
 - (CamelNameValueArray*)dupHeaders
 {
-	return camel_medium_dup_headers([self MEDIUM]);
+	CamelNameValueArray* returnValue = camel_medium_dup_headers([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OGCamelDataWrapper*)content
 {
-	return [[[OGCamelDataWrapper alloc] initWithGObject:(GObject*)camel_medium_get_content([self MEDIUM])] autorelease];
+	CamelDataWrapper* gobjectValue = CAMEL_DATA_WRAPPER(camel_medium_get_content([self castedGObject]));
+
+	OGCamelDataWrapper* returnValue = [OGCamelDataWrapper wrapperFor:gobjectValue];
+	return returnValue;
 }
 
 - (OFString*)header:(OFString*)name
 {
-	return [OFString stringWithUTF8String:camel_medium_get_header([self MEDIUM], [name UTF8String])];
+	const gchar* gobjectValue = camel_medium_get_header([self castedGObject], [name UTF8String]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (const CamelNameValueArray*)headers
 {
-	return camel_medium_get_headers([self MEDIUM]);
+	const CamelNameValueArray* returnValue = camel_medium_get_headers([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)removeHeader:(OFString*)name
 {
-	camel_medium_remove_header([self MEDIUM], [name UTF8String]);
+	camel_medium_remove_header([self castedGObject], [name UTF8String]);
 }
 
 - (void)setContent:(OGCamelDataWrapper*)content
 {
-	camel_medium_set_content([self MEDIUM], [content DATAWRAPPER]);
+	camel_medium_set_content([self castedGObject], [content castedGObject]);
 }
 
 - (void)setHeaderWithName:(OFString*)name value:(OFString*)value
 {
-	camel_medium_set_header([self MEDIUM], [name UTF8String], [value UTF8String]);
+	camel_medium_set_header([self castedGObject], [name UTF8String], [value UTF8String]);
 }
 
 

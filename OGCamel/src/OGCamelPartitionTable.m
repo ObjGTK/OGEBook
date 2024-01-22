@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -12,34 +12,51 @@
 
 - (instancetype)initWithBs:(OGCamelBlockFile*)bs root:(camel_block_t)root
 {
-	self = [super initWithGObject:(GObject*)camel_partition_table_new([bs BLOCKFILE], root)];
+	CamelPartitionTable* gobjectValue = CAMEL_PARTITION_TABLE(camel_partition_table_new([bs castedGObject], root));
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (CamelPartitionTable*)PARTITIONTABLE
+- (CamelPartitionTable*)castedGObject
 {
-	return CAMEL_PARTITION_TABLE([self GOBJECT]);
+	return CAMEL_PARTITION_TABLE([self gObject]);
 }
 
 - (gint)addWithKey:(OFString*)key keyid:(camel_key_t)keyid
 {
-	return camel_partition_table_add([self PARTITIONTABLE], [key UTF8String], keyid);
+	gint returnValue = camel_partition_table_add([self castedGObject], [key UTF8String], keyid);
+
+	return returnValue;
 }
 
 - (camel_key_t)lookup:(OFString*)key
 {
-	return camel_partition_table_lookup([self PARTITIONTABLE], [key UTF8String]);
+	camel_key_t returnValue = camel_partition_table_lookup([self castedGObject], [key UTF8String]);
+
+	return returnValue;
 }
 
 - (bool)remove:(OFString*)key
 {
-	return camel_partition_table_remove([self PARTITIONTABLE], [key UTF8String]);
+	bool returnValue = camel_partition_table_remove([self castedGObject], [key UTF8String]);
+
+	return returnValue;
 }
 
 - (gint)sync
 {
-	return camel_partition_table_sync([self PARTITIONTABLE]);
+	gint returnValue = camel_partition_table_sync([self castedGObject]);
+
+	return returnValue;
 }
 
 

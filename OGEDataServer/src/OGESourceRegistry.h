@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,8 +8,9 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGESource;
+@class OGCancellable;
 @class OGEOAuth2Services;
+@class OGESource;
 
 /**
  * Contains only private data that should be read and manipulated using the
@@ -51,23 +52,22 @@
  * internally, so it is the caller's responsibility to keep one.
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param callback a #GAsyncReadyCallback to call when the request
- *            is satisfied
+ * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-+ (void)newWithCancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
++ (void)newWithCancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Constructors
  */
-- (instancetype)initFinishWithResult:(GAsyncResult*)result err:(GError**)err;
-- (instancetype)initSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (instancetype)initFinish:(GAsyncResult*)result;
+- (instancetype)initSync:(OGCancellable*)cancellable;
 
 /**
  * Methods
  */
 
-- (ESourceRegistry*)SOURCEREGISTRY;
+- (ESourceRegistry*)castedGObject;
 
 /**
  * Returns a single #GNode tree of registered sources that can be used to
@@ -117,11 +117,10 @@
  *
  * @param source an #ESource with changes to commit
  * @param cancellable optional #GCancellable object, or %NULL
- * @param callback a #GAsyncReadyCallback to call when the request
- *            is satisfied
+ * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)commitSourceWithSource:(OGESource*)source cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)commitSourceWithSource:(OGESource*)source cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_registry_commit_source().
@@ -129,10 +128,9 @@
  * If an error occurred, the function will set @error and return %FALSE.
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)commitSourceFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)commitSourceFinish:(GAsyncResult*)result;
 
 /**
  * This is a convenience function intended for use with graphical
@@ -152,10 +150,9 @@
  *
  * @param source an #ESource with changes to commit
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)commitSourceSyncWithSource:(OGESource*)source cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)commitSourceSyncWithSource:(OGESource*)source cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously requests the D-Bus service create new key files for each
@@ -169,11 +166,10 @@
  * @param listOfSources a list of #ESource instances with
  * no #GDBusObject
  * @param cancellable optional #GCancellable object, or %NULL
- * @param callback a #GAsyncReadyCallback to call when the request
- *            is satisfied
+ * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)createSourcesWithListOfSources:(GList*)listOfSources cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)createSourcesWithListOfSources:(GList*)listOfSources cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_registry_create_sources().
@@ -181,10 +177,9 @@
  * If an error occurred, the function will set @error and return %FALSE.
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)createSourcesFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)createSourcesFinish:(GAsyncResult*)result;
 
 /**
  * Requests the D-Bus service create new key files for each #ESource in
@@ -196,10 +191,9 @@
  * @param listOfSources a list of #ESource instances with
  * no #GDBusObject
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)createSourcesSyncWithListOfSources:(GList*)listOfSources cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)createSourcesSyncWithListOfSources:(GList*)listOfSources cancellable:(OGCancellable*)cancellable;
 
 /**
  * Handy debugging function that uses e_source_registry_build_display_tree()
@@ -456,7 +450,8 @@
  * The returned #ESource is referenced for thread-safety and must be
  * unreferenced with g_object_unref() when finished with it.
  *
- * @return the default mail identity #ESource, or %NULL
+ * @return the default mail identity #ESource,
+ *    or %NULL
  */
 - (OGESource*)refDefaultMailIdentity;
 
@@ -507,11 +502,10 @@
  *
  * @param sourceUid UID of a collection #ESource whose backend to refresh
  * @param cancellable optional #GCancellable object, or %NULL
- * @param callback a #GAsyncReadyCallback to call when the request
- *            is satisfied
+ * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)refreshBackendWithSourceUid:(OFString*)sourceUid cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)refreshBackendWithSourceUid:(OFString*)sourceUid cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_registry_refresh_backend().
@@ -519,10 +513,9 @@
  * If an error occurred, the function will set @error and return %FALSE.
  *
  * @param result a #GAsyncResult
- * @param err
  * @return Whether succeeded
  */
-- (bool)refreshBackendFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)refreshBackendFinish:(GAsyncResult*)result;
 
 /**
  * Requests the D-Bus service to refresh collection backend for an #ESource
@@ -534,10 +527,9 @@
  *
  * @param sourceUid UID of a collection #ESource whose backend to refresh
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return Whether succeeded
  */
-- (bool)refreshBackendSyncWithSourceUid:(OFString*)sourceUid cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)refreshBackendSyncWithSourceUid:(OFString*)sourceUid cancellable:(OGCancellable*)cancellable;
 
 /**
  * Sets @default_source as the default address book.  If @default_source

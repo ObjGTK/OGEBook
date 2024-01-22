@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,34 +8,42 @@
 
 @implementation OGESourceSecurity
 
-- (ESourceSecurity*)SOURCESECURITY
+- (ESourceSecurity*)castedGObject
 {
-	return E_SOURCE_SECURITY([self GOBJECT]);
+	return E_SOURCE_SECURITY([self gObject]);
 }
 
 - (OFString*)dupMethod
 {
-	return [OFString stringWithUTF8String:e_source_security_dup_method([self SOURCESECURITY])];
+	gchar* gobjectValue = e_source_security_dup_method([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)method
 {
-	return [OFString stringWithUTF8String:e_source_security_get_method([self SOURCESECURITY])];
+	const gchar* gobjectValue = e_source_security_get_method([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (bool)secure
 {
-	return e_source_security_get_secure([self SOURCESECURITY]);
+	bool returnValue = e_source_security_get_secure([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)setMethod:(OFString*)method
 {
-	e_source_security_set_method([self SOURCESECURITY], [method UTF8String]);
+	e_source_security_set_method([self castedGObject], [method UTF8String]);
 }
 
 - (void)setSecure:(bool)secure
 {
-	e_source_security_set_secure([self SOURCESECURITY], secure);
+	e_source_security_set_secure([self castedGObject], secure);
 }
 
 

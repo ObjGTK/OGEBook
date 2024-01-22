@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -23,7 +23,7 @@
  * Methods
  */
 
-- (ESourceBackendSummarySetup*)SOURCEBACKENDSUMMARYSETUP;
+- (ESourceBackendSummarySetup*)castedGObject;
 
 /**
  * Fetches the #EContactFields configured to be indexed, with thier respective #EBookIndexTypes.
@@ -50,9 +50,9 @@
  * 
  * The same #EContactField may be specified multiple times to create multiple indexes
  * with different characteristics. If an #E_BOOK_INDEX_PREFIX index is created it will
- * be used for #E_BOOK_QUERY_BEGINS_WITH queries. A #E_BOOK_INDEX_SUFFIX index
+ * be used for #E_BOOK_QUERY_BEGINS_WITH queries. An #E_BOOK_INDEX_SUFFIX index
  * will be constructed efficiently for suffix matching and will be used for
- * #E_BOOK_QUERY_ENDS_WITH queries. Similar a #E_BOOK_INDEX_PHONE index will optimize
+ * #E_BOOK_QUERY_ENDS_WITH queries. Similar an #E_BOOK_INDEX_PHONE index will optimize
  * #E_BOOK_QUERY_EQUALS_PHONE_NUMBER searches.
  * 
  * <note><para>The specified indexed fields must also be a part of the summary, any indexed fields

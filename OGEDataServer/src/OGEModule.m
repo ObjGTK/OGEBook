@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -10,29 +10,55 @@
 
 + (GList*)loadAllInDirectory:(OFString*)dirname
 {
-	return e_module_load_all_in_directory([dirname UTF8String]);
+	GList* returnValue = e_module_load_all_in_directory([dirname UTF8String]);
+
+	return returnValue;
+}
+
++ (GList*)loadAllInDirectoryAndPrefixesWithDirname:(OFString*)dirname dirprefix:(OFString*)dirprefix
+{
+	GList* returnValue = e_module_load_all_in_directory_and_prefixes([dirname UTF8String], [dirprefix UTF8String]);
+
+	return returnValue;
 }
 
 + (OGEModule*)loadFile:(OFString*)filename
 {
-	return [[[OGEModule alloc] initWithGObject:(GObject*)e_module_load_file([filename UTF8String])] autorelease];
+	EModule* gobjectValue = E_MODULE(e_module_load_file([filename UTF8String]));
+
+	OGEModule* returnValue = [OGEModule wrapperFor:gobjectValue];
+	g_object_unref(gobjectValue);
+
+	return returnValue;
 }
 
 - (instancetype)init:(OFString*)filename
 {
-	self = [super initWithGObject:(GObject*)e_module_new([filename UTF8String])];
+	EModule* gobjectValue = E_MODULE(e_module_new([filename UTF8String]));
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (EModule*)MODULE
+- (EModule*)castedGObject
 {
-	return E_MODULE([self GOBJECT]);
+	return E_MODULE([self gObject]);
 }
 
 - (OFString*)filename
 {
-	return [OFString stringWithUTF8String:e_module_get_filename([self MODULE])];
+	const gchar* gobjectValue = e_module_get_filename([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 

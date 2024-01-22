@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -21,7 +21,7 @@
  * Methods
  */
 
-- (ESourceOpenPGP*)SOURCEOPENPGP;
+- (ESourceOpenPGP*)castedGObject;
 
 /**
  * Thread-safe variation of e_source_openpgp_get_key_id().
@@ -74,11 +74,36 @@
 - (OFString*)keyId;
 
 /**
+ * Returns, whether gpg can locate keys using Web Key Directory (WKD) lookup
+ * when encrypting messages. The default is %TRUE.
+ *
+ * @return whether gpg can locate keys using Web Key Directory (WKD) lookup
+ *    when encrypting messages.
+ */
+- (bool)locateKeys;
+
+/**
  * Returns whether to prefer inline sign/encrypt of the text/plain messages.
  *
  * @return whether to prefer inline sign/encrypt of the text/plain messages
  */
 - (bool)preferInline;
+
+/**
+ * Returns, whether should claim the encryption is preferred when sending
+ * public key in messages. The default is %TRUE.
+ *
+ * @return whether should claim the encryption is preferred when sending
+ *    public key in messages
+ */
+- (bool)sendPreferEncrypt;
+
+/**
+ * Returns, whether should send GPG public key in messages. The default is %TRUE.
+ *
+ * @return whether should send GPG public key in messages
+ */
+- (bool)sendPublicKey;
 
 /**
  * Returns whether to digitally sign outgoing messages by default using
@@ -131,11 +156,37 @@
 - (void)setKeyId:(OFString*)keyId;
 
 /**
+ * Sets the @locate_keys on the @extension, which is used to instruct
+ * gpg to locate keys using Web Key Directory (WKD) lookup when encrypting
+ * messages.
+ *
+ * @param locateKeys value to set
+ */
+- (void)setLocateKeys:(bool)locateKeys;
+
+/**
  * Sets whether to prefer inline sign/encrypt of the text/plain messages.
  *
  * @param preferInline whether to prefer inline sign/encrypt of the text/plain messages
  */
 - (void)setPreferInline:(bool)preferInline;
+
+/**
+ * Sets the @send_prefer_encrypt on the @extension, which tells the client to
+ * claim the user prefer encryption when also sending its public key in
+ * the messages (e_source_openpgp_set_send_public_key()).
+ *
+ * @param sendPreferEncrypt value to set
+ */
+- (void)setSendPreferEncrypt:(bool)sendPreferEncrypt;
+
+/**
+ * Sets the @send_public_key on the @extension, which tells the client to
+ * include user's public key in the messages in an Autocrypt header.
+ *
+ * @param sendPublicKey value to set
+ */
+- (void)setSendPublicKey:(bool)sendPublicKey;
 
 /**
  * Sets whether to digitally sign outgoing messages by default using

@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -21,7 +21,7 @@
  * Methods
  */
 
-- (ESourceRefresh*)SOURCEREFRESH;
+- (ESourceRefresh*)castedGObject;
 
 /**
  * Returns whether to periodically fetch updates from a remote server.
@@ -32,6 +32,18 @@
  * @return whether periodic refresh is enabled
  */
 - (bool)enabled;
+
+/**
+ * Returns whether can refresh content on metered network.
+ * 
+ * The @extension itself doesn't use this option, it's up to
+ * the @extension user to determine what kind of connection is used
+ * and then decide whether refresh, or other expensive network
+ * operations, can be done.
+ *
+ * @return whether can refresh content on metered network
+ */
+- (bool)enabledOnMeteredNetwork;
 
 /**
  * Returns the interval for fetching updates from a remote server.
@@ -52,6 +64,16 @@
  * @param enabled whether to enable periodic refresh
  */
 - (void)setEnabled:(bool)enabled;
+
+/**
+ * Sets whether can refresh content on metered network.
+ * 
+ * See e_source_refresh_get_enabled_on_metered_network() for more information
+ * about what it means.
+ *
+ * @param enabled whether can refresh content on metered network
+ */
+- (void)setEnabledOnMeteredNetwork:(bool)enabled;
 
 /**
  * Sets the interval for fetching updates from a remote server.

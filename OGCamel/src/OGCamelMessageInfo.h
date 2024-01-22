@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -26,7 +26,7 @@
  * Methods
  */
 
-- (CamelMessageInfo*)MESSAGEINFO;
+- (CamelMessageInfo*)castedGObject;
 
 /**
  * Clones the @mi as a new #CamelMessageInfo and eventually assigns
@@ -55,6 +55,14 @@
 - (CamelNameValueArray*)dupHeaders;
 
 /**
+ *
+ * @return Body preview of the associated
+ *    message, or %NULL, when not available. Free the returned string
+ *    with g_free(), when no longer needed.
+ */
+- (OFString*)dupPreview;
+
+/**
  * Duplicates encoded In-Reply-To and References headers of the associated
  * message as an array of guint64 numbers, partial MD5 sums. Each value
  * can be cast to #CamelSummaryMessageID.
@@ -67,11 +75,29 @@
 
 /**
  *
- * @return A newly allocated #CamelNamedFlags with all the currently set
- *   user flags on the @mi. Free the returned structure with camel_named_flags_free()
- *   when no londer needed.
+ * @return A newly allocated #CamelNamedFlags with
+ *   all the currently set user flags on the @mi. Free the returned structure
+ *   with camel_named_flags_free() when no londer needed.
  */
 - (CamelNamedFlags*)dupUserFlags;
+
+/**
+ *
+ * @param name header name
+ * @return Value of the header named @name from
+ *    the user-defined message headers of the associated message, or %NULL,
+ *    when not available. Free the returned string with g_free(), when no longer
+ *    needed.
+ */
+- (OFString*)dupUserHeader:(OFString*)name;
+
+/**
+ *
+ * @return All the user-defined message headers
+ *    of the associated message, or %NULL, when none are available. Free returned
+ *    array with camel_name_value_array_free() when no longer needed.
+ */
+- (CamelNameValueArray*)dupUserHeaders;
 
 /**
  *
@@ -194,6 +220,13 @@
 - (bool)notificationsFrozen;
 
 /**
+ *
+ * @return Body preview of the associated
+ *    message, or %NULL, when not available.
+ */
+- (OFString*)preview;
+
+/**
  * Gets encoded In-Reply-To and References headers of the associated
  * message as an array of guint64 numbers, partial MD5 sums. Each value
  * can be cast to #CamelSummaryMessageID.
@@ -241,6 +274,22 @@
  *   user flags on the @mi. Do not modify it.
  */
 - (const CamelNamedFlags*)userFlags;
+
+/**
+ *
+ * @param name header name
+ * @return Value of the header named @name from
+ *    the user-defined message headers of the associated message, or %NULL,
+ *    when not available.
+ */
+- (OFString*)userHeader:(OFString*)name;
+
+/**
+ *
+ * @return All the user-defined message headers
+ *    of the associated message, or %NULL, when none are available.
+ */
+- (const CamelNameValueArray*)userHeaders;
 
 /**
  *
@@ -303,8 +352,9 @@
 
 /**
  *
- * @return Referenced #CamelFolderSummary to which the @mi belongs, or %NULL,
- * if there is none. Use g_object_unref() for non-NULL returned values when done with it.
+ * @return Referenced #CamelFolderSummary to which
+ * the @mi belongs, or %NULL, if there is none. Use g_object_unref() for
+ * non-NULL returned values when done with it.
  */
 - (OGCamelFolderSummary*)refSummary;
 
@@ -464,6 +514,18 @@
 - (bool)setMlist:(OFString*)mlist;
 
 /**
+ * Set @preview as the body preview of the associated message. Use %NULL or an empty
+ * string to unset the value.
+ * 
+ * If the @mi changed, the 'dirty' flag is set automatically, unless the @mi is
+ * aborting notifications. There is not emitted folder's "changed" signal for this @mi.
+ *
+ * @param preview message body preview, or %NULL
+ * @return Whether the value changed.
+ */
+- (bool)setPreview:(OFString*)preview;
+
+/**
  * Sets size of the associated message.
  * 
  * This property is considered static, in a meaning that it should
@@ -536,6 +598,20 @@
 - (bool)setUserFlagWithName:(OFString*)name state:(bool)state;
 
 /**
+ * Set @value for a single user-defined message header of the associated message.
+ * When the @value is %NULL, the header @name is removed from the user-defined
+ * headers.
+ * 
+ * If the @mi changed, the 'dirty' flag is set automatically, unless the @mi is
+ * aborting notifications. There is not emitted folder's "changed" signal for this @mi.
+ *
+ * @param name header name
+ * @param value header value, or %NULL
+ * @return Whether the value changed.
+ */
+- (bool)setUserHeaderWithName:(OFString*)name value:(OFString*)value;
+
+/**
  * Set user tag @name to @value, or remove it, if @value is %NULL.
  * 
  * If the @mi changed, the 'dirty' flag and the 'folder-flagged' flag are
@@ -604,6 +680,20 @@
  * @return Whether the message info changed.
  */
 - (bool)takeUserFlags:(CamelNamedFlags*)userFlags;
+
+/**
+ * Takes user-defined message headers of the associated message.
+ * 
+ * If the @mi changed, the 'dirty' flag is set automatically, unless the @mi is
+ * aborting notifications. There is not emitted folder's "changed" signal for this @mi.
+ * 
+ * Note that it's not safe to use the @headers after the call to this function,
+ * because it can be freed due to no change.
+ *
+ * @param headers headers to set, as #CamelNameValueArray, or %NULL
+ * @return Whether the value changed.
+ */
+- (bool)takeUserHeaders:(CamelNameValueArray*)headers;
 
 /**
  * Takes all the @user_tags, which replaces any current user tags on the @mi.

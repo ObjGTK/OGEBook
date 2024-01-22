@@ -1,259 +1,639 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGEBookClient.h"
 
-#import "OGEBookClientView.h"
-#import <OGEBookContacts/OGEContact.h>
-#import "OGEBookClientCursor.h"
 #import <OGEDataServer/OGESourceRegistry.h>
+#import "OGEBookClientView.h"
 #import <OGEDataServer/OGESource.h>
+#import "OGEBookClientCursor.h"
+#import <OGio/OGCancellable.h>
+#import <OGEBookContacts/OGEContact.h>
 
 @implementation OGEBookClient
 
-+ (void)connectWithSource:(OGESource*)source waitForConnectedSeconds:(guint32)waitForConnectedSeconds cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
++ (void)connectWithSource:(OGESource*)source waitForConnectedSeconds:(guint32)waitForConnectedSeconds cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_book_client_connect([source SOURCE], waitForConnectedSeconds, cancellable, callback, userData);
+	e_book_client_connect([source castedGObject], waitForConnectedSeconds, [cancellable castedGObject], callback, userData);
 }
 
-+ (void)connectDirectWithSource:(OGESource*)source waitForConnectedSeconds:(guint32)waitForConnectedSeconds cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
++ (void)connectDirectWithSource:(OGESource*)source waitForConnectedSeconds:(guint32)waitForConnectedSeconds cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_book_client_connect_direct([source SOURCE], waitForConnectedSeconds, cancellable, callback, userData);
+	e_book_client_connect_direct([source castedGObject], waitForConnectedSeconds, [cancellable castedGObject], callback, userData);
 }
 
-+ (OGEClient*)connectDirectFinishWithResult:(GAsyncResult*)result err:(GError**)err
++ (OGEClient*)connectDirectFinish:(GAsyncResult*)result
 {
-	return [[[OGEClient alloc] initWithGObject:(GObject*)e_book_client_connect_direct_finish(result, err)] autorelease];
+	GError* err = NULL;
+
+	EClient* gobjectValue = E_CLIENT(e_book_client_connect_direct_finish(result, &err));
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		if(gobjectValue != NULL)
+			g_object_unref(gobjectValue);
+		@throw exception;
+	}
+
+	OGEClient* returnValue = [OGEClient wrapperFor:gobjectValue];
+	g_object_unref(gobjectValue);
+
+	return returnValue;
 }
 
-+ (OGEClient*)connectDirectSyncWithRegistry:(OGESourceRegistry*)registry source:(OGESource*)source waitForConnectedSeconds:(guint32)waitForConnectedSeconds cancellable:(GCancellable*)cancellable err:(GError**)err
++ (OGEClient*)connectDirectSyncWithRegistry:(OGESourceRegistry*)registry source:(OGESource*)source waitForConnectedSeconds:(guint32)waitForConnectedSeconds cancellable:(OGCancellable*)cancellable
 {
-	return [[[OGEClient alloc] initWithGObject:(GObject*)e_book_client_connect_direct_sync([registry SOURCEREGISTRY], [source SOURCE], waitForConnectedSeconds, cancellable, err)] autorelease];
+	GError* err = NULL;
+
+	EClient* gobjectValue = E_CLIENT(e_book_client_connect_direct_sync([registry castedGObject], [source castedGObject], waitForConnectedSeconds, [cancellable castedGObject], &err));
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		if(gobjectValue != NULL)
+			g_object_unref(gobjectValue);
+		@throw exception;
+	}
+
+	OGEClient* returnValue = [OGEClient wrapperFor:gobjectValue];
+	g_object_unref(gobjectValue);
+
+	return returnValue;
 }
 
-+ (OGEClient*)connectFinishWithResult:(GAsyncResult*)result err:(GError**)err
++ (OGEClient*)connectFinish:(GAsyncResult*)result
 {
-	return [[[OGEClient alloc] initWithGObject:(GObject*)e_book_client_connect_finish(result, err)] autorelease];
+	GError* err = NULL;
+
+	EClient* gobjectValue = E_CLIENT(e_book_client_connect_finish(result, &err));
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		if(gobjectValue != NULL)
+			g_object_unref(gobjectValue);
+		@throw exception;
+	}
+
+	OGEClient* returnValue = [OGEClient wrapperFor:gobjectValue];
+	g_object_unref(gobjectValue);
+
+	return returnValue;
 }
 
-+ (OGEClient*)connectSyncWithSource:(OGESource*)source waitForConnectedSeconds:(guint32)waitForConnectedSeconds cancellable:(GCancellable*)cancellable err:(GError**)err
++ (OGEClient*)connectSyncWithSource:(OGESource*)source waitForConnectedSeconds:(guint32)waitForConnectedSeconds cancellable:(OGCancellable*)cancellable
 {
-	return [[[OGEClient alloc] initWithGObject:(GObject*)e_book_client_connect_sync([source SOURCE], waitForConnectedSeconds, cancellable, err)] autorelease];
+	GError* err = NULL;
+
+	EClient* gobjectValue = E_CLIENT(e_book_client_connect_sync([source castedGObject], waitForConnectedSeconds, [cancellable castedGObject], &err));
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		if(gobjectValue != NULL)
+			g_object_unref(gobjectValue);
+		@throw exception;
+	}
+
+	OGEClient* returnValue = [OGEClient wrapperFor:gobjectValue];
+	g_object_unref(gobjectValue);
+
+	return returnValue;
 }
 
-+ (bool)selfWithRegistry:(OGESourceRegistry*)registry outContact:(EContact**)outContact outClient:(EBookClient**)outClient err:(GError**)err
++ (bool)selfWithRegistry:(OGESourceRegistry*)registry outContact:(EContact**)outContact outClient:(EBookClient**)outClient
 {
-	return e_book_client_get_self([registry SOURCEREGISTRY], outContact, outClient, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_get_self([registry castedGObject], outContact, outClient, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 + (bool)isSelf:(OGEContact*)contact
 {
-	return e_book_client_is_self([contact CONTACT]);
+	bool returnValue = e_book_client_is_self([contact castedGObject]);
+
+	return returnValue;
 }
 
-- (instancetype)initWithSource:(OGESource*)source err:(GError**)err
+- (instancetype)init:(OGESource*)source
 {
-	self = [super initWithGObject:(GObject*)e_book_client_new([source SOURCE], err)];
+	GError* err = NULL;
 
+	EBookClient* gobjectValue = E_BOOK_CLIENT(e_book_client_new([source castedGObject], &err));
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		if(gobjectValue != NULL)
+			g_object_unref(gobjectValue);
+		@throw exception;
+	}
+
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (EBookClient*)BOOKCLIENT
+- (EBookClient*)castedGObject
 {
-	return E_BOOK_CLIENT([self GOBJECT]);
+	return E_BOOK_CLIENT([self gObject]);
 }
 
-- (void)addContactWithContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)addContactWithContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_book_client_add_contact([self BOOKCLIENT], [contact CONTACT], opflags, cancellable, callback, userData);
+	e_book_client_add_contact([self castedGObject], [contact castedGObject], opflags, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)addContactFinishWithResult:(GAsyncResult*)result outAddedUid:(gchar**)outAddedUid err:(GError**)err
+- (bool)addContactFinishWithResult:(GAsyncResult*)result outAddedUid:(gchar**)outAddedUid
 {
-	return e_book_client_add_contact_finish([self BOOKCLIENT], result, outAddedUid, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_add_contact_finish([self castedGObject], result, outAddedUid, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)addContactSyncWithContact:(OGEContact*)contact opflags:(guint32)opflags outAddedUid:(gchar**)outAddedUid cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)addContactSyncWithContact:(OGEContact*)contact opflags:(guint32)opflags outAddedUid:(gchar**)outAddedUid cancellable:(OGCancellable*)cancellable
 {
-	return e_book_client_add_contact_sync([self BOOKCLIENT], [contact CONTACT], opflags, outAddedUid, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_add_contact_sync([self castedGObject], [contact castedGObject], opflags, outAddedUid, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)addContactsWithContacts:(GSList*)contacts opflags:(guint32)opflags cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)addContactsWithContacts:(GSList*)contacts opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_book_client_add_contacts([self BOOKCLIENT], contacts, opflags, cancellable, callback, userData);
+	e_book_client_add_contacts([self castedGObject], contacts, opflags, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)addContactsFinishWithResult:(GAsyncResult*)result outAddedUids:(GSList**)outAddedUids err:(GError**)err
+- (bool)addContactsFinishWithResult:(GAsyncResult*)result outAddedUids:(GSList**)outAddedUids
 {
-	return e_book_client_add_contacts_finish([self BOOKCLIENT], result, outAddedUids, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_add_contacts_finish([self castedGObject], result, outAddedUids, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)addContactsSyncWithContacts:(GSList*)contacts opflags:(guint32)opflags outAddedUids:(GSList**)outAddedUids cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)addContactsSyncWithContacts:(GSList*)contacts opflags:(guint32)opflags outAddedUids:(GSList**)outAddedUids cancellable:(OGCancellable*)cancellable
 {
-	return e_book_client_add_contacts_sync([self BOOKCLIENT], contacts, opflags, outAddedUids, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_add_contacts_sync([self castedGObject], contacts, opflags, outAddedUids, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)contactWithUid:(OFString*)uid cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)containsEmailWithEmailAddress:(OFString*)emailAddress cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_book_client_get_contact([self BOOKCLIENT], [uid UTF8String], cancellable, callback, userData);
+	e_book_client_contains_email([self castedGObject], [emailAddress UTF8String], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)contactFinishWithResult:(GAsyncResult*)result outContact:(EContact**)outContact err:(GError**)err
+- (bool)containsEmailFinish:(GAsyncResult*)result
 {
-	return e_book_client_get_contact_finish([self BOOKCLIENT], result, outContact, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_contains_email_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)contactSyncWithUid:(OFString*)uid outContact:(EContact**)outContact cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)containsEmailSyncWithEmailAddress:(OFString*)emailAddress cancellable:(OGCancellable*)cancellable
 {
-	return e_book_client_get_contact_sync([self BOOKCLIENT], [uid UTF8String], outContact, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_contains_email_sync([self castedGObject], [emailAddress UTF8String], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)contactsWithSexp:(OFString*)sexp cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)contactWithUid:(OFString*)uid cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_book_client_get_contacts([self BOOKCLIENT], [sexp UTF8String], cancellable, callback, userData);
+	e_book_client_get_contact([self castedGObject], [uid UTF8String], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)contactsFinishWithResult:(GAsyncResult*)result outContacts:(GSList**)outContacts err:(GError**)err
+- (bool)contactFinishWithResult:(GAsyncResult*)result outContact:(EContact**)outContact
 {
-	return e_book_client_get_contacts_finish([self BOOKCLIENT], result, outContacts, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_get_contact_finish([self castedGObject], result, outContact, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)contactsSyncWithSexp:(OFString*)sexp outContacts:(GSList**)outContacts cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)contactSyncWithUid:(OFString*)uid outContact:(EContact**)outContact cancellable:(OGCancellable*)cancellable
 {
-	return e_book_client_get_contacts_sync([self BOOKCLIENT], [sexp UTF8String], outContacts, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_get_contact_sync([self castedGObject], [uid UTF8String], outContact, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)contactsUidsWithSexp:(OFString*)sexp cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)contactsWithSexp:(OFString*)sexp cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_book_client_get_contacts_uids([self BOOKCLIENT], [sexp UTF8String], cancellable, callback, userData);
+	e_book_client_get_contacts([self castedGObject], [sexp UTF8String], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)contactsUidsFinishWithResult:(GAsyncResult*)result outContactUids:(GSList**)outContactUids err:(GError**)err
+- (bool)contactsFinishWithResult:(GAsyncResult*)result outContacts:(GSList**)outContacts
 {
-	return e_book_client_get_contacts_uids_finish([self BOOKCLIENT], result, outContactUids, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_get_contacts_finish([self castedGObject], result, outContacts, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)contactsUidsSyncWithSexp:(OFString*)sexp outContactUids:(GSList**)outContactUids cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)contactsSyncWithSexp:(OFString*)sexp outContacts:(GSList**)outContacts cancellable:(OGCancellable*)cancellable
 {
-	return e_book_client_get_contacts_uids_sync([self BOOKCLIENT], [sexp UTF8String], outContactUids, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_get_contacts_sync([self castedGObject], [sexp UTF8String], outContacts, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)cursorWithSexp:(OFString*)sexp sortFields:(const EContactField*)sortFields sortTypes:(const EBookCursorSortType*)sortTypes nfields:(guint)nfields cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)contactsUidsWithSexp:(OFString*)sexp cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_book_client_get_cursor([self BOOKCLIENT], [sexp UTF8String], sortFields, sortTypes, nfields, cancellable, callback, userData);
+	e_book_client_get_contacts_uids([self castedGObject], [sexp UTF8String], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)cursorFinishWithResult:(GAsyncResult*)result outCursor:(EBookClientCursor**)outCursor err:(GError**)err
+- (bool)contactsUidsFinishWithResult:(GAsyncResult*)result outContactUids:(GSList**)outContactUids
 {
-	return e_book_client_get_cursor_finish([self BOOKCLIENT], result, outCursor, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_get_contacts_uids_finish([self castedGObject], result, outContactUids, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)cursorSyncWithSexp:(OFString*)sexp sortFields:(const EContactField*)sortFields sortTypes:(const EBookCursorSortType*)sortTypes nfields:(guint)nfields outCursor:(EBookClientCursor**)outCursor cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)contactsUidsSyncWithSexp:(OFString*)sexp outContactUids:(GSList**)outContactUids cancellable:(OGCancellable*)cancellable
 {
-	return e_book_client_get_cursor_sync([self BOOKCLIENT], [sexp UTF8String], sortFields, sortTypes, nfields, outCursor, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_get_contacts_uids_sync([self castedGObject], [sexp UTF8String], outContactUids, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
+}
+
+- (void)cursorWithSexp:(OFString*)sexp sortFields:(const EContactField*)sortFields sortTypes:(const EBookCursorSortType*)sortTypes nfields:(guint)nfields cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+{
+	e_book_client_get_cursor([self castedGObject], [sexp UTF8String], sortFields, sortTypes, nfields, [cancellable castedGObject], callback, userData);
+}
+
+- (bool)cursorFinishWithResult:(GAsyncResult*)result outCursor:(EBookClientCursor**)outCursor
+{
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_get_cursor_finish([self castedGObject], result, outCursor, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
+}
+
+- (bool)cursorSyncWithSexp:(OFString*)sexp sortFields:(const EContactField*)sortFields sortTypes:(const EBookCursorSortType*)sortTypes nfields:(guint)nfields outCursor:(EBookClientCursor**)outCursor cancellable:(OGCancellable*)cancellable
+{
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_get_cursor_sync([self castedGObject], [sexp UTF8String], sortFields, sortTypes, nfields, outCursor, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (OFString*)locale
 {
-	return [OFString stringWithUTF8String:e_book_client_get_locale([self BOOKCLIENT])];
+	const gchar* gobjectValue = e_book_client_get_locale([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
-- (void)viewWithSexp:(OFString*)sexp cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)viewWithSexp:(OFString*)sexp cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_book_client_get_view([self BOOKCLIENT], [sexp UTF8String], cancellable, callback, userData);
+	e_book_client_get_view([self castedGObject], [sexp UTF8String], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)viewFinishWithResult:(GAsyncResult*)result outView:(EBookClientView**)outView err:(GError**)err
+- (bool)viewFinishWithResult:(GAsyncResult*)result outView:(EBookClientView**)outView
 {
-	return e_book_client_get_view_finish([self BOOKCLIENT], result, outView, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_get_view_finish([self castedGObject], result, outView, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)viewSyncWithSexp:(OFString*)sexp outView:(EBookClientView**)outView cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)viewSyncWithSexp:(OFString*)sexp outView:(EBookClientView**)outView cancellable:(OGCancellable*)cancellable
 {
-	return e_book_client_get_view_sync([self BOOKCLIENT], [sexp UTF8String], outView, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_get_view_sync([self castedGObject], [sexp UTF8String], outView, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)modifyContactWithContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)modifyContactWithContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_book_client_modify_contact([self BOOKCLIENT], [contact CONTACT], opflags, cancellable, callback, userData);
+	e_book_client_modify_contact([self castedGObject], [contact castedGObject], opflags, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)modifyContactFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)modifyContactFinish:(GAsyncResult*)result
 {
-	return e_book_client_modify_contact_finish([self BOOKCLIENT], result, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_modify_contact_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)modifyContactSyncWithContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)modifyContactSyncWithContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable
 {
-	return e_book_client_modify_contact_sync([self BOOKCLIENT], [contact CONTACT], opflags, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_modify_contact_sync([self castedGObject], [contact castedGObject], opflags, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)modifyContactsWithContacts:(GSList*)contacts opflags:(guint32)opflags cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)modifyContactsWithContacts:(GSList*)contacts opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_book_client_modify_contacts([self BOOKCLIENT], contacts, opflags, cancellable, callback, userData);
+	e_book_client_modify_contacts([self castedGObject], contacts, opflags, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)modifyContactsFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)modifyContactsFinish:(GAsyncResult*)result
 {
-	return e_book_client_modify_contacts_finish([self BOOKCLIENT], result, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_modify_contacts_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)modifyContactsSyncWithContacts:(GSList*)contacts opflags:(guint32)opflags cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)modifyContactsSyncWithContacts:(GSList*)contacts opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable
 {
-	return e_book_client_modify_contacts_sync([self BOOKCLIENT], contacts, opflags, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_modify_contacts_sync([self castedGObject], contacts, opflags, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)removeContactWithContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)removeContactWithContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_book_client_remove_contact([self BOOKCLIENT], [contact CONTACT], opflags, cancellable, callback, userData);
+	e_book_client_remove_contact([self castedGObject], [contact castedGObject], opflags, [cancellable castedGObject], callback, userData);
 }
 
-- (void)removeContactByUidWithUid:(OFString*)uid opflags:(guint32)opflags cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)removeContactByUidWithUid:(OFString*)uid opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_book_client_remove_contact_by_uid([self BOOKCLIENT], [uid UTF8String], opflags, cancellable, callback, userData);
+	e_book_client_remove_contact_by_uid([self castedGObject], [uid UTF8String], opflags, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)removeContactByUidFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)removeContactByUidFinish:(GAsyncResult*)result
 {
-	return e_book_client_remove_contact_by_uid_finish([self BOOKCLIENT], result, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_remove_contact_by_uid_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)removeContactByUidSyncWithUid:(OFString*)uid opflags:(guint32)opflags cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)removeContactByUidSyncWithUid:(OFString*)uid opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable
 {
-	return e_book_client_remove_contact_by_uid_sync([self BOOKCLIENT], [uid UTF8String], opflags, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_remove_contact_by_uid_sync([self castedGObject], [uid UTF8String], opflags, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)removeContactFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)removeContactFinish:(GAsyncResult*)result
 {
-	return e_book_client_remove_contact_finish([self BOOKCLIENT], result, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_remove_contact_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)removeContactSyncWithContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)removeContactSyncWithContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable
 {
-	return e_book_client_remove_contact_sync([self BOOKCLIENT], [contact CONTACT], opflags, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_remove_contact_sync([self castedGObject], [contact castedGObject], opflags, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (void)removeContactsWithUids:(const GSList*)uids opflags:(guint32)opflags cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)removeContactsWithUids:(const GSList*)uids opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
-	e_book_client_remove_contacts([self BOOKCLIENT], uids, opflags, cancellable, callback, userData);
+	e_book_client_remove_contacts([self castedGObject], uids, opflags, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)removeContactsFinishWithResult:(GAsyncResult*)result err:(GError**)err
+- (bool)removeContactsFinish:(GAsyncResult*)result
 {
-	return e_book_client_remove_contacts_finish([self BOOKCLIENT], result, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_remove_contacts_finish([self castedGObject], result, &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)removeContactsSyncWithUids:(const GSList*)uids opflags:(guint32)opflags cancellable:(GCancellable*)cancellable err:(GError**)err
+- (bool)removeContactsSyncWithUids:(const GSList*)uids opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable
 {
-	return e_book_client_remove_contacts_sync([self BOOKCLIENT], uids, opflags, cancellable, err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_remove_contacts_sync([self castedGObject], uids, opflags, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
-- (bool)setSelfWithContact:(OGEContact*)contact err:(GError**)err
+- (bool)setSelf:(OGEContact*)contact
 {
-	return e_book_client_set_self([self BOOKCLIENT], [contact CONTACT], err);
+	GError* err = NULL;
+
+	bool returnValue = e_book_client_set_self([self castedGObject], [contact castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 

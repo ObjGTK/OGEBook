@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,189 +8,247 @@
 
 @implementation OGESourceProxy
 
-- (ESourceProxy*)SOURCEPROXY
+- (ESourceProxy*)castedGObject
 {
-	return E_SOURCE_PROXY([self GOBJECT]);
+	return E_SOURCE_PROXY([self gObject]);
 }
 
 - (OFString*)dupAutoconfigUrl
 {
-	return [OFString stringWithUTF8String:e_source_proxy_dup_autoconfig_url([self SOURCEPROXY])];
+	gchar* gobjectValue = e_source_proxy_dup_autoconfig_url([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)dupFtpHost
 {
-	return [OFString stringWithUTF8String:e_source_proxy_dup_ftp_host([self SOURCEPROXY])];
+	gchar* gobjectValue = e_source_proxy_dup_ftp_host([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)dupHttpAuthPassword
 {
-	return [OFString stringWithUTF8String:e_source_proxy_dup_http_auth_password([self SOURCEPROXY])];
+	gchar* gobjectValue = e_source_proxy_dup_http_auth_password([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)dupHttpAuthUser
 {
-	return [OFString stringWithUTF8String:e_source_proxy_dup_http_auth_user([self SOURCEPROXY])];
+	gchar* gobjectValue = e_source_proxy_dup_http_auth_user([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)dupHttpHost
 {
-	return [OFString stringWithUTF8String:e_source_proxy_dup_http_host([self SOURCEPROXY])];
+	gchar* gobjectValue = e_source_proxy_dup_http_host([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)dupHttpsHost
 {
-	return [OFString stringWithUTF8String:e_source_proxy_dup_https_host([self SOURCEPROXY])];
+	gchar* gobjectValue = e_source_proxy_dup_https_host([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (gchar**)dupIgnoreHosts
 {
-	return e_source_proxy_dup_ignore_hosts([self SOURCEPROXY]);
+	gchar** returnValue = e_source_proxy_dup_ignore_hosts([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)dupSocksHost
 {
-	return [OFString stringWithUTF8String:e_source_proxy_dup_socks_host([self SOURCEPROXY])];
+	gchar* gobjectValue = e_source_proxy_dup_socks_host([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)autoconfigUrl
 {
-	return [OFString stringWithUTF8String:e_source_proxy_get_autoconfig_url([self SOURCEPROXY])];
+	const gchar* gobjectValue = e_source_proxy_get_autoconfig_url([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OFString*)ftpHost
 {
-	return [OFString stringWithUTF8String:e_source_proxy_get_ftp_host([self SOURCEPROXY])];
+	const gchar* gobjectValue = e_source_proxy_get_ftp_host([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (guint16)ftpPort
 {
-	return e_source_proxy_get_ftp_port([self SOURCEPROXY]);
+	guint16 returnValue = e_source_proxy_get_ftp_port([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)httpAuthPassword
 {
-	return [OFString stringWithUTF8String:e_source_proxy_get_http_auth_password([self SOURCEPROXY])];
+	const gchar* gobjectValue = e_source_proxy_get_http_auth_password([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OFString*)httpAuthUser
 {
-	return [OFString stringWithUTF8String:e_source_proxy_get_http_auth_user([self SOURCEPROXY])];
+	const gchar* gobjectValue = e_source_proxy_get_http_auth_user([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OFString*)httpHost
 {
-	return [OFString stringWithUTF8String:e_source_proxy_get_http_host([self SOURCEPROXY])];
+	const gchar* gobjectValue = e_source_proxy_get_http_host([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (guint16)httpPort
 {
-	return e_source_proxy_get_http_port([self SOURCEPROXY]);
+	guint16 returnValue = e_source_proxy_get_http_port([self castedGObject]);
+
+	return returnValue;
 }
 
 - (bool)httpUseAuth
 {
-	return e_source_proxy_get_http_use_auth([self SOURCEPROXY]);
+	bool returnValue = e_source_proxy_get_http_use_auth([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)httpsHost
 {
-	return [OFString stringWithUTF8String:e_source_proxy_get_https_host([self SOURCEPROXY])];
+	const gchar* gobjectValue = e_source_proxy_get_https_host([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (guint16)httpsPort
 {
-	return e_source_proxy_get_https_port([self SOURCEPROXY]);
+	guint16 returnValue = e_source_proxy_get_https_port([self castedGObject]);
+
+	return returnValue;
 }
 
 - (const gchar* const*)ignoreHosts
 {
-	return e_source_proxy_get_ignore_hosts([self SOURCEPROXY]);
+	const gchar* const* returnValue = e_source_proxy_get_ignore_hosts([self castedGObject]);
+
+	return returnValue;
 }
 
 - (EProxyMethod)method
 {
-	return e_source_proxy_get_method([self SOURCEPROXY]);
+	EProxyMethod returnValue = e_source_proxy_get_method([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)socksHost
 {
-	return [OFString stringWithUTF8String:e_source_proxy_get_socks_host([self SOURCEPROXY])];
+	const gchar* gobjectValue = e_source_proxy_get_socks_host([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (guint16)socksPort
 {
-	return e_source_proxy_get_socks_port([self SOURCEPROXY]);
+	guint16 returnValue = e_source_proxy_get_socks_port([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)setAutoconfigUrl:(OFString*)autoconfigUrl
 {
-	e_source_proxy_set_autoconfig_url([self SOURCEPROXY], [autoconfigUrl UTF8String]);
+	e_source_proxy_set_autoconfig_url([self castedGObject], [autoconfigUrl UTF8String]);
 }
 
 - (void)setFtpHost:(OFString*)ftpHost
 {
-	e_source_proxy_set_ftp_host([self SOURCEPROXY], [ftpHost UTF8String]);
+	e_source_proxy_set_ftp_host([self castedGObject], [ftpHost UTF8String]);
 }
 
 - (void)setFtpPort:(guint16)ftpPort
 {
-	e_source_proxy_set_ftp_port([self SOURCEPROXY], ftpPort);
+	e_source_proxy_set_ftp_port([self castedGObject], ftpPort);
 }
 
 - (void)setHttpAuthPassword:(OFString*)httpAuthPassword
 {
-	e_source_proxy_set_http_auth_password([self SOURCEPROXY], [httpAuthPassword UTF8String]);
+	e_source_proxy_set_http_auth_password([self castedGObject], [httpAuthPassword UTF8String]);
 }
 
 - (void)setHttpAuthUser:(OFString*)httpAuthUser
 {
-	e_source_proxy_set_http_auth_user([self SOURCEPROXY], [httpAuthUser UTF8String]);
+	e_source_proxy_set_http_auth_user([self castedGObject], [httpAuthUser UTF8String]);
 }
 
 - (void)setHttpHost:(OFString*)httpHost
 {
-	e_source_proxy_set_http_host([self SOURCEPROXY], [httpHost UTF8String]);
+	e_source_proxy_set_http_host([self castedGObject], [httpHost UTF8String]);
 }
 
 - (void)setHttpPort:(guint16)httpPort
 {
-	e_source_proxy_set_http_port([self SOURCEPROXY], httpPort);
+	e_source_proxy_set_http_port([self castedGObject], httpPort);
 }
 
 - (void)setHttpUseAuth:(bool)httpUseAuth
 {
-	e_source_proxy_set_http_use_auth([self SOURCEPROXY], httpUseAuth);
+	e_source_proxy_set_http_use_auth([self castedGObject], httpUseAuth);
 }
 
 - (void)setHttpsHost:(OFString*)httpsHost
 {
-	e_source_proxy_set_https_host([self SOURCEPROXY], [httpsHost UTF8String]);
+	e_source_proxy_set_https_host([self castedGObject], [httpsHost UTF8String]);
 }
 
 - (void)setHttpsPort:(guint16)httpsPort
 {
-	e_source_proxy_set_https_port([self SOURCEPROXY], httpsPort);
+	e_source_proxy_set_https_port([self castedGObject], httpsPort);
 }
 
 - (void)setIgnoreHosts:(const gchar* const*)ignoreHosts
 {
-	e_source_proxy_set_ignore_hosts([self SOURCEPROXY], ignoreHosts);
+	e_source_proxy_set_ignore_hosts([self castedGObject], ignoreHosts);
 }
 
 - (void)setMethod:(EProxyMethod)method
 {
-	e_source_proxy_set_method([self SOURCEPROXY], method);
+	e_source_proxy_set_method([self castedGObject], method);
 }
 
 - (void)setSocksHost:(OFString*)socksHost
 {
-	e_source_proxy_set_socks_host([self SOURCEPROXY], [socksHost UTF8String]);
+	e_source_proxy_set_socks_host([self castedGObject], [socksHost UTF8String]);
 }
 
 - (void)setSocksPort:(guint16)socksPort
 {
-	e_source_proxy_set_socks_port([self SOURCEPROXY], socksPort);
+	e_source_proxy_set_socks_port([self castedGObject], socksPort);
 }
 
 

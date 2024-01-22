@@ -1,11 +1,12 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelMedium.h"
 
+@class OGCancellable;
 @class OGCamelMimeParser;
 
 @interface OGCamelMimePart : OGCamelMedium
@@ -23,17 +24,16 @@
  * Methods
  */
 
-- (CamelMimePart*)MIMEPART;
+- (CamelMimePart*)castedGObject;
 
 /**
  * Constructs the contnet of @mime_part from the given mime parser.
  *
  * @param mp a #CamelMimeParser
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return whether succeeded
  */
-- (bool)constructContentFromParserWithMp:(OGCamelMimeParser*)mp cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)constructContentFromParserWithMp:(OGCamelMimeParser*)mp cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously constructs a MIME part from a parser.
@@ -48,26 +48,24 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)constructFromParserWithParser:(OGCamelMimeParser*)parser ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)constructFromParserWithParser:(OGCamelMimeParser*)parser ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_mime_part_construct_from_parser().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)constructFromParserFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)constructFromParserFinish:(GAsyncResult*)result;
 
 /**
  * Constructs a MIME part from a parser.
  *
  * @param parser a #CamelMimeParser
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)constructFromParserSyncWithParser:(OGCamelMimeParser*)parser cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)constructFromParserSyncWithParser:(OGCamelMimeParser*)parser cancellable:(OGCancellable*)cancellable;
 
 /**
  * Get the disposition of the MIME part as a structure.

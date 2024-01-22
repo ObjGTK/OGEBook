@@ -54,43 +54,52 @@ AS_IF([test x"$enable_static" = x"yes" -o x"$enable_shared" = x"no"], [
 
 AC_MSG_CHECKING(for ObjFW package OGObject)
 AS_IF([$OBJFW_CONFIG --package OGObject], [AC_MSG_RESULT(yes)
-	OGEBOOKCONTACTS_CPPFLAGS="$OGEBOOKCONTACTS_CPPFLAGS $($OBJFW_CONFIG --package OGObject --cppflags)"
-	OGEBOOKCONTACTS_LIBS="$OGEBOOKCONTACTS_LIBS $($OBJFW_CONFIG --package OGObject --libs)"
+	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGObject --cppflags)"
+	LIBS="$LIBS $($OBJFW_CONFIG --package OGObject --libs)"
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGObject installed.)
 ])
-
-AC_MSG_CHECKING(for ObjFW package OGCamel)
-AS_IF([$OBJFW_CONFIG --package OGCamel], [AC_MSG_RESULT(yes)
-	OGEBOOKCONTACTS_CPPFLAGS="$OGEBOOKCONTACTS_CPPFLAGS $($OBJFW_CONFIG --package OGCamel --cppflags)"
-	OGEBOOKCONTACTS_LIBS="$OGEBOOKCONTACTS_LIBS $($OBJFW_CONFIG --package OGCamel --libs)"
+AC_MSG_CHECKING(for ObjFW package OGio)
+AS_IF([$OBJFW_CONFIG --package OGio], [AC_MSG_RESULT(yes)
+	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGio --cppflags)"
+	LIBS="$LIBS $($OBJFW_CONFIG --package OGio --libs)"
 ], [
-	AC_MSG_ERROR(You need ObjFW package OGCamel installed.)
+	AC_MSG_ERROR(You need ObjFW package OGio installed.)
 ])
 
 AC_MSG_CHECKING(for ObjFW package OGEDataServer)
 AS_IF([$OBJFW_CONFIG --package OGEDataServer], [AC_MSG_RESULT(yes)
-	OGEBOOKCONTACTS_CPPFLAGS="$OGEBOOKCONTACTS_CPPFLAGS $($OBJFW_CONFIG --package OGEDataServer --cppflags)"
-	OGEBOOKCONTACTS_LIBS="$OGEBOOKCONTACTS_LIBS $($OBJFW_CONFIG --package OGEDataServer --libs)"
+	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGEDataServer --cppflags)"
+	LIBS="$LIBS $($OBJFW_CONFIG --package OGEDataServer --libs)"
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGEDataServer installed.)
 ])
 
-AC_ARG_WITH(libebook, AS_HELP_STRING([--with-libebook=PREFIX],
-	[build with libebook-contacts-1.2 in the specified prefix]))
-AS_IF([test x"$with_libebook" != x"no" -a x"$with_libebook" != x""], [
-       OGEBOOKCONTACTS_CPPFLAGS="$OGEBOOKCONTACTS_CPPFLAGS -I$with_libebook/include"
-       OGEBOOKCONTACTS_LIBS="$OGEBOOKCONTACTS_LIBS -L$with_libebook/lib"
-       CPPFLAGS="-I$with_libebook/include $CPPFLAGS"
-       LIBS="-L$with_libebook/lib $LIBS"
-       FRAMEWORK_LIBS="-L$with_libebook/lib $FRAMEWORK_LIBS"
+AC_MSG_CHECKING(for ObjFW package OGCamel)
+AS_IF([$OBJFW_CONFIG --package OGCamel], [AC_MSG_RESULT(yes)
+	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGCamel --cppflags)"
+	LIBS="$LIBS $($OBJFW_CONFIG --package OGCamel --libs)"
+], [
+	AC_MSG_ERROR(You need ObjFW package OGCamel installed.)
 ])
 
-PKG_CHECK_MODULES(libebook, [libebook-contacts-1.2 >= $(pkg-config --modversion libebook-contacts-1.2)], [
-	OGEBOOKCONTACTS_CPPFLAGS="$OGEBOOKCONTACTS_CPPFLAGS $libebook_CFLAGS"
-	OGEBOOKCONTACTS_LIBS="$OGEBOOKCONTACTS_LIBS $libebook_LIBS"
-	CPPFLAGS="$CPPFLAGS $libebook_CFLAGS"
-	LIBS="$LIBS $libebook_LIBS"
+
+AC_ARG_WITH(libebookcontacts, AS_HELP_STRING([--with-libebookcontacts=PREFIX],
+	[build with libebook-contacts-1.2 in the specified prefix]))
+AS_IF([test x"$with_libebookcontacts" != x"no" -a x"$with_libebookcontacts" != x""], [
+       OGEBOOKCONTACTS_CPPFLAGS="$OGEBOOKCONTACTS_CPPFLAGS -I$with_libebookcontacts/include"
+       OGEBOOKCONTACTS_LIBS="$OGEBOOKCONTACTS_LIBS -L$with_libebookcontacts/lib"
+       CPPFLAGS="-I$with_libebookcontacts/include $CPPFLAGS"
+       LIBS="-L$with_libebookcontacts/lib $LIBS"
+       FRAMEWORK_LIBS="-L$with_libebookcontacts/lib $FRAMEWORK_LIBS"
+])
+
+
+PKG_CHECK_MODULES(libebookcontacts, [libebook-contacts-1.2 >= $(pkg-config --modversion libebook-contacts-1.2)], [
+	OGEBOOKCONTACTS_CPPFLAGS="$OGEBOOKCONTACTS_CPPFLAGS $libebookcontacts_CFLAGS"
+	OGEBOOKCONTACTS_LIBS="$OGEBOOKCONTACTS_LIBS $libebookcontacts_LIBS"
+	CPPFLAGS="$CPPFLAGS $libebookcontacts_CFLAGS"
+	LIBS="$LIBS $libebookcontacts_LIBS"
 ], [
 	AC_MSG_ERROR(You need libebook-contacts-1.2 >= $(pkg-config --modversion libebook-contacts-1.2) installed!)
 ])

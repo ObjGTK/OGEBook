@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,29 +8,33 @@
 
 @implementation OGCamelStoreSettings
 
-- (CamelStoreSettings*)STORESETTINGS
+- (CamelStoreSettings*)castedGObject
 {
-	return CAMEL_STORE_SETTINGS([self GOBJECT]);
+	return CAMEL_STORE_SETTINGS([self gObject]);
 }
 
 - (bool)filterInbox
 {
-	return camel_store_settings_get_filter_inbox([self STORESETTINGS]);
+	bool returnValue = camel_store_settings_get_filter_inbox([self castedGObject]);
+
+	return returnValue;
 }
 
 - (gint)storeChangesInterval
 {
-	return camel_store_settings_get_store_changes_interval([self STORESETTINGS]);
+	gint returnValue = camel_store_settings_get_store_changes_interval([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)setFilterInbox:(bool)filterInbox
 {
-	camel_store_settings_set_filter_inbox([self STORESETTINGS], filterInbox);
+	camel_store_settings_set_filter_inbox([self castedGObject], filterInbox);
 }
 
 - (void)setStoreChangesInterval:(gint)interval
 {
-	camel_store_settings_set_store_changes_interval([self STORESETTINGS], interval);
+	camel_store_settings_set_store_changes_interval([self castedGObject], interval);
 }
 
 

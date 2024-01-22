@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -9,6 +9,7 @@
 #import <OGObject/OGObject.h>
 
 @class OGCamelMimeFilter;
+@class OGOutputStream;
 
 @interface OGCamelFilterOutputStream : OGObject
 {
@@ -19,13 +20,13 @@
 /**
  * Constructors
  */
-- (instancetype)initWithBaseStream:(GOutputStream*)baseStream filter:(OGCamelMimeFilter*)filter;
+- (instancetype)initWithBaseStream:(OGOutputStream*)baseStream filter:(OGCamelMimeFilter*)filter;
 
 /**
  * Methods
  */
 
-- (CamelFilterOutputStream*)FILTEROUTPUTSTREAM;
+- (CamelFilterOutputStream*)castedGObject;
 
 /**
  * Gets the #CamelMimeFilter that is used by @filter_stream.

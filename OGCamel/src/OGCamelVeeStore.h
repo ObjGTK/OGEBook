@@ -1,15 +1,16 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelStore.h"
 
-@class OGCamelVeeMessageInfoData;
 @class OGCamelVeeDataCache;
-@class OGCamelVeeFolder;
+@class OGCancellable;
 @class OGCamelFolder;
+@class OGCamelVeeMessageInfoData;
+@class OGCamelVeeFolder;
 
 @interface OGCamelVeeStore : OGCamelStore
 {
@@ -26,7 +27,7 @@
  * Methods
  */
 
-- (CamelVeeStore*)VEESTORE;
+- (CamelVeeStore*)castedGObject;
 
 /**
  *
@@ -36,8 +37,8 @@
 
 /**
  *
- * @return the Unmatched folder instance, or %NULL,
- *    when it's disabled.
+ * @return the Unmatched folder instance,
+ *    or %NULL, when it's disabled.
  */
 - (OGCamelVeeFolder*)unmatchedFolder;
 
@@ -92,9 +93,8 @@
  * synchronously.
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  */
-- (void)rebuildUnmatchedFolderWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (void)rebuildUnmatchedFolder:(OGCancellable*)cancellable;
 
 /**
  * Sets whether the Unmatched folder processing is enabled.

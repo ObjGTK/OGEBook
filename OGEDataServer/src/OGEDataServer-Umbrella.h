@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -10,12 +10,13 @@
 // Generated classes
 #import "OGEClient.h"
 #import "OGEExtension.h"
-#import "OGEGDataOAuth2Authorizer.h"
+#import "OGEGDataSession.h"
 #import "OGEModule.h"
 #import "OGENetworkMonitor.h"
 #import "OGEOAuth2ServiceBase.h"
 #import "OGEOAuth2ServiceGoogle.h"
 #import "OGEOAuth2ServiceOutlook.h"
+#import "OGEOAuth2ServiceYahoo.h"
 #import "OGEOAuth2Services.h"
 #import "OGESoupAuthBearer.h"
 #import "OGESoupSession.h"
@@ -60,6 +61,7 @@
 #import "OGESourceTaskList.h"
 #import "OGESourceUoa.h"
 #import "OGESourceWeather.h"
+#import "OGESourceWebDAVNotes.h"
 #import "OGESourceWebdav.h"
 #import "OGEWebDAVSession.h"
 #import "OGEXmlDocument.h"

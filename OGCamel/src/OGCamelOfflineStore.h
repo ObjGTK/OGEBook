@@ -1,10 +1,12 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelStore.h"
+
+@class OGCancellable;
 
 @interface OGCamelOfflineStore : OGCamelStore
 {
@@ -16,7 +18,7 @@
  * Methods
  */
 
-- (CamelOfflineStore*)OFFLINESTORE;
+- (CamelOfflineStore*)castedGObject;
 
 /**
  * Returns a #GPtrArray of #CamelFolder objects which should be checked
@@ -45,10 +47,9 @@
  * the host is reachable.
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return whether succeeded
  */
-- (bool)prepareForOfflineSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)prepareForOfflineSync:(OGCancellable*)cancellable;
 
 /**
  * Check whether the @store requires synchronization for offline usage.
@@ -71,27 +72,25 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)setOnlineWithOnline:(bool)online ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)setOnlineWithOnline:(bool)online ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_offline_store_set_online().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return Whether succeeded.
  */
-- (bool)setOnlineFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)setOnlineFinish:(GAsyncResult*)result;
 
 /**
  * Sets the online/offline state of @store according to @online.
  *
  * @param online %TRUE for online, %FALSE for offline
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return Whether succeeded.
  * 
  * See: camel_offline_store_set_online
  */
-- (bool)setOnlineSyncWithOnline:(bool)online cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)setOnlineSyncWithOnline:(bool)online cancellable:(OGCancellable*)cancellable;
 
 @end

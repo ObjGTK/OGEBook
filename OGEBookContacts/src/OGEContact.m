@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -10,103 +10,170 @@
 
 + (EContactField)fieldId:(OFString*)fieldName
 {
-	return e_contact_field_id([fieldName UTF8String]);
+	EContactField returnValue = e_contact_field_id([fieldName UTF8String]);
+
+	return returnValue;
 }
 
 + (EContactField)fieldIdFromVcard:(OFString*)vcardField
 {
-	return e_contact_field_id_from_vcard([vcardField UTF8String]);
+	EContactField returnValue = e_contact_field_id_from_vcard([vcardField UTF8String]);
+
+	return returnValue;
 }
 
 + (bool)fieldIsString:(EContactField)fieldId
 {
-	return e_contact_field_is_string(fieldId);
+	bool returnValue = e_contact_field_is_string(fieldId);
+
+	return returnValue;
 }
 
 + (OFString*)fieldName:(EContactField)fieldId
 {
-	return [OFString stringWithUTF8String:e_contact_field_name(fieldId)];
+	const gchar* gobjectValue = e_contact_field_name(fieldId);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 + (GType)fieldType:(EContactField)fieldId
 {
-	return e_contact_field_type(fieldId);
+	GType returnValue = e_contact_field_type(fieldId);
+
+	return returnValue;
 }
 
 + (OFString*)prettyName:(EContactField)fieldId
 {
-	return [OFString stringWithUTF8String:e_contact_pretty_name(fieldId)];
+	const gchar* gobjectValue = e_contact_pretty_name(fieldId);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 + (OFString*)vcardAttribute:(EContactField)fieldId
 {
-	return [OFString stringWithUTF8String:e_contact_vcard_attribute(fieldId)];
+	const gchar* gobjectValue = e_contact_vcard_attribute(fieldId);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (instancetype)init
 {
-	self = [super initWithGObject:(GObject*)e_contact_new()];
+	EContact* gobjectValue = E_CONTACT(e_contact_new());
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
 - (instancetype)initFromVcard:(OFString*)vcard
 {
-	self = [super initWithGObject:(GObject*)e_contact_new_from_vcard([vcard UTF8String])];
+	EContact* gobjectValue = E_CONTACT(e_contact_new_from_vcard([vcard UTF8String]));
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
 - (instancetype)initFromVcardWithUidWithVcard:(OFString*)vcard uid:(OFString*)uid
 {
-	self = [super initWithGObject:(GObject*)e_contact_new_from_vcard_with_uid([vcard UTF8String], [uid UTF8String])];
+	EContact* gobjectValue = E_CONTACT(e_contact_new_from_vcard_with_uid([vcard UTF8String], [uid UTF8String]));
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (EContact*)CONTACT
+- (EContact*)castedGObject
 {
-	return E_CONTACT([self GOBJECT]);
+	return E_CONTACT([self gObject]);
 }
 
 - (OGEContact*)duplicate
 {
-	return [[[OGEContact alloc] initWithGObject:(GObject*)e_contact_duplicate([self CONTACT])] autorelease];
+	EContact* gobjectValue = E_CONTACT(e_contact_duplicate([self castedGObject]));
+
+	OGEContact* returnValue = [OGEContact wrapperFor:gobjectValue];
+	g_object_unref(gobjectValue);
+
+	return returnValue;
 }
 
-- (gpointer)instance:(EContactField)fieldId
+- (gpointer)get:(EContactField)fieldId
 {
-	return e_contact_get([self CONTACT], fieldId);
+	gpointer returnValue = e_contact_get([self castedGObject], fieldId);
+
+	return returnValue;
 }
 
 - (GList*)attributes:(EContactField)fieldId
 {
-	return e_contact_get_attributes([self CONTACT], fieldId);
+	GList* returnValue = e_contact_get_attributes([self castedGObject], fieldId);
+
+	return returnValue;
 }
 
 - (GList*)attributesSetWithFieldIds:(const EContactField*)fieldIds size:(gint)size
 {
-	return e_contact_get_attributes_set([self CONTACT], fieldIds, size);
+	GList* returnValue = e_contact_get_attributes_set([self castedGObject], fieldIds, size);
+
+	return returnValue;
 }
 
 - (gconstpointer)const:(EContactField)fieldId
 {
-	return e_contact_get_const([self CONTACT], fieldId);
+	gconstpointer returnValue = e_contact_get_const([self castedGObject], fieldId);
+
+	return returnValue;
 }
 
-- (bool)inlineLocalPhotos:(GError**)err
+- (bool)inlineLocalPhotos
 {
-	return e_contact_inline_local_photos([self CONTACT], err);
+	GError* err = NULL;
+
+	bool returnValue = e_contact_inline_local_photos([self castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (void)setWithFieldId:(EContactField)fieldId value:(gconstpointer)value
 {
-	e_contact_set([self CONTACT], fieldId, value);
+	e_contact_set([self castedGObject], fieldId, value);
 }
 
 - (void)setAttributesWithFieldId:(EContactField)fieldId attributes:(GList*)attributes
 {
-	e_contact_set_attributes([self CONTACT], fieldId, attributes);
+	e_contact_set_attributes([self castedGObject], fieldId, attributes);
 }
 
 

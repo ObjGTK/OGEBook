@@ -1,117 +1,174 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelFolderSearch.h"
 
-#import "OGCamelFolder.h"
-#import "OGCamelIndex.h"
 #import "OGCamelMessageInfo.h"
+#import "OGCamelIndex.h"
+#import "OGCamelFolder.h"
+#import <OGio/OGCancellable.h>
 
 @implementation OGCamelFolderSearch
 
 + (time_t)utilAddMonthsWithT:(time_t)t months:(gint)months
 {
-	return camel_folder_search_util_add_months(t, months);
+	time_t returnValue = camel_folder_search_util_add_months(t, months);
+
+	return returnValue;
 }
 
 + (gint)utilCompareDateWithDatetime1:(gint64)datetime1 datetime2:(gint64)datetime2
 {
-	return camel_folder_search_util_compare_date(datetime1, datetime2);
+	gint returnValue = camel_folder_search_util_compare_date(datetime1, datetime2);
+
+	return returnValue;
+}
+
++ (guint64)utilHashMessageIdWithMessageId:(OFString*)messageId needsDecode:(bool)needsDecode
+{
+	guint64 returnValue = camel_folder_search_util_hash_message_id([messageId UTF8String], needsDecode);
+
+	return returnValue;
 }
 
 + (time_t)utilMakeTimeWithArgc:(gint)argc argv:(CamelSExpResult**)argv
 {
-	return camel_folder_search_util_make_time(argc, argv);
+	time_t returnValue = camel_folder_search_util_make_time(argc, argv);
+
+	return returnValue;
 }
 
 - (instancetype)init
 {
-	self = [super initWithGObject:(GObject*)camel_folder_search_new()];
+	CamelFolderSearch* gobjectValue = CAMEL_FOLDER_SEARCH(camel_folder_search_new());
 
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
 	return self;
 }
 
-- (CamelFolderSearch*)FOLDERSEARCH
+- (CamelFolderSearch*)castedGObject
 {
-	return CAMEL_FOLDER_SEARCH([self GOBJECT]);
+	return CAMEL_FOLDER_SEARCH([self gObject]);
 }
 
-- (guint32)countWithExpr:(OFString*)expr cancellable:(GCancellable*)cancellable err:(GError**)err
+- (guint32)countWithExpr:(OFString*)expr cancellable:(OGCancellable*)cancellable
 {
-	return camel_folder_search_count([self FOLDERSEARCH], [expr UTF8String], cancellable, err);
+	GError* err = NULL;
+
+	guint32 returnValue = camel_folder_search_count([self castedGObject], [expr UTF8String], [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (void)freeResult:(GPtrArray*)result
 {
-	camel_folder_search_free_result([self FOLDERSEARCH], result);
+	camel_folder_search_free_result([self castedGObject], result);
 }
 
 - (OGCamelMessageInfo*)currentMessageInfo
 {
-	return [[[OGCamelMessageInfo alloc] initWithGObject:(GObject*)camel_folder_search_get_current_message_info([self FOLDERSEARCH])] autorelease];
+	CamelMessageInfo* gobjectValue = CAMEL_MESSAGE_INFO(camel_folder_search_get_current_message_info([self castedGObject]));
+
+	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo wrapperFor:gobjectValue];
+	return returnValue;
 }
 
 - (GPtrArray*)currentSummary
 {
-	return camel_folder_search_get_current_summary([self FOLDERSEARCH]);
+	GPtrArray* returnValue = camel_folder_search_get_current_summary([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OGCamelFolder*)folder
 {
-	return [[[OGCamelFolder alloc] initWithGObject:(GObject*)camel_folder_search_get_folder([self FOLDERSEARCH])] autorelease];
+	CamelFolder* gobjectValue = CAMEL_FOLDER(camel_folder_search_get_folder([self castedGObject]));
+
+	OGCamelFolder* returnValue = [OGCamelFolder wrapperFor:gobjectValue];
+	return returnValue;
 }
 
 - (bool)onlyCachedMessages
 {
-	return camel_folder_search_get_only_cached_messages([self FOLDERSEARCH]);
+	bool returnValue = camel_folder_search_get_only_cached_messages([self castedGObject]);
+
+	return returnValue;
 }
 
 - (GPtrArray*)summary
 {
-	return camel_folder_search_get_summary([self FOLDERSEARCH]);
+	GPtrArray* returnValue = camel_folder_search_get_summary([self castedGObject]);
+
+	return returnValue;
 }
 
 - (bool)summaryEmpty
 {
-	return camel_folder_search_get_summary_empty([self FOLDERSEARCH]);
+	bool returnValue = camel_folder_search_get_summary_empty([self castedGObject]);
+
+	return returnValue;
 }
 
-- (GPtrArray*)searchWithExpr:(OFString*)expr uids:(GPtrArray*)uids cancellable:(GCancellable*)cancellable err:(GError**)err
+- (GPtrArray*)searchWithExpr:(OFString*)expr uids:(GPtrArray*)uids cancellable:(OGCancellable*)cancellable
 {
-	return camel_folder_search_search([self FOLDERSEARCH], [expr UTF8String], uids, cancellable, err);
+	GError* err = NULL;
+
+	GPtrArray* returnValue = camel_folder_search_search([self castedGObject], [expr UTF8String], uids, [cancellable castedGObject], &err);
+
+	if(err != NULL) {
+		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
+		g_error_free(err);
+		@throw exception;
+	}
+
+	return returnValue;
 }
 
 - (void)setBodyIndex:(OGCamelIndex*)bodyIndex
 {
-	camel_folder_search_set_body_index([self FOLDERSEARCH], [bodyIndex INDEX]);
+	camel_folder_search_set_body_index([self castedGObject], [bodyIndex castedGObject]);
 }
 
 - (void)setCurrentMessageInfo:(OGCamelMessageInfo*)info
 {
-	camel_folder_search_set_current_message_info([self FOLDERSEARCH], [info MESSAGEINFO]);
+	camel_folder_search_set_current_message_info([self castedGObject], [info castedGObject]);
 }
 
 - (void)setFolder:(OGCamelFolder*)folder
 {
-	camel_folder_search_set_folder([self FOLDERSEARCH], [folder FOLDER]);
+	camel_folder_search_set_folder([self castedGObject], [folder castedGObject]);
 }
 
 - (void)setOnlyCachedMessages:(bool)onlyCachedMessages
 {
-	camel_folder_search_set_only_cached_messages([self FOLDERSEARCH], onlyCachedMessages);
+	camel_folder_search_set_only_cached_messages([self castedGObject], onlyCachedMessages);
 }
 
 - (void)setSummary:(GPtrArray*)summary
 {
-	camel_folder_search_set_summary([self FOLDERSEARCH], summary);
+	camel_folder_search_set_summary([self castedGObject], summary);
 }
 
 - (void)takeCurrentMessageInfo:(OGCamelMessageInfo*)info
 {
-	camel_folder_search_take_current_message_info([self FOLDERSEARCH], [info MESSAGEINFO]);
+	camel_folder_search_take_current_message_info([self castedGObject], [info castedGObject]);
 }
 
 

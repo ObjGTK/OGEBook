@@ -8,12 +8,13 @@ LIB_MINOR = 2
 
 SRCS = OGEClient.m \
 	OGEExtension.m \
-	OGEGDataOAuth2Authorizer.m \
+	OGEGDataSession.m \
 	OGEModule.m \
 	OGENetworkMonitor.m \
 	OGEOAuth2ServiceBase.m \
 	OGEOAuth2ServiceGoogle.m \
 	OGEOAuth2ServiceOutlook.m \
+	OGEOAuth2ServiceYahoo.m \
 	OGEOAuth2Services.m \
 	OGESoupAuthBearer.m \
 	OGESoupSession.m \
@@ -58,6 +59,7 @@ SRCS = OGEClient.m \
 	OGESourceTaskList.m \
 	OGESourceUoa.m \
 	OGESourceWeather.m \
+	OGESourceWebDAVNotes.m \
 	OGESourceWebdav.m \
 	OGEWebDAVSession.m \
 	OGEXmlDocument.m \

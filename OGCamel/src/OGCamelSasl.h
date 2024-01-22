@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -9,6 +9,7 @@
 #import <OGObject/OGObject.h>
 
 @class OGCamelService;
+@class OGCancellable;
 
 @interface OGCamelSasl : OGObject
 {
@@ -55,7 +56,7 @@
  * Methods
  */
 
-- (CamelSasl*)SASL;
+- (CamelSasl*)castedGObject;
 
 /**
  * If @token is %NULL, asynchronously generate the initial SASL message
@@ -72,7 +73,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)challengeWithToken:(GByteArray*)token ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)challengeWithToken:(GByteArray*)token ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * As with camel_sasl_challenge(), but the challenge @token and the
@@ -88,16 +89,15 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)challengeBase64WithToken:(OFString*)token ioPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)challengeBase64WithToken:(OFString*)token ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_sasl_challenge_base64().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return the base64-encoded response
  */
-- (OFString*)challengeBase64FinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (OFString*)challengeBase64Finish:(GAsyncResult*)result;
 
 /**
  * As with camel_sasl_challenge_sync(), but the challenge @token and the
@@ -105,21 +105,19 @@
  *
  * @param token a base64-encoded token
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return the base64-encoded response
  */
-- (OFString*)challengeBase64SyncWithToken:(OFString*)token cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (OFString*)challengeBase64SyncWithToken:(OFString*)token cancellable:(OGCancellable*)cancellable;
 
 /**
  * Finishes the operation started with camel_sasl_challenge().  Free the
  * returned #GByteArray with g_byte_array_free().
  *
  * @param result a #GAsyncResult
- * @param err
- * @return the SASL response or %NULL.  If an error occurred, @error will
- * also be set.
+ * @return the SASL response or %NULL.  If an
+ * error occurred, @error will also be set.
  */
-- (GByteArray*)challengeFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (GByteArray*)challengeFinish:(GAsyncResult*)result;
 
 /**
  * If @token is %NULL, generate the initial SASL message to send to
@@ -131,11 +129,10 @@
  *
  * @param token a token, or %NULL
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
- * @return the SASL response or %NULL. If an error occurred, @error will
- * also be set.
+ * @return the SASL response or %NULL. If an error
+ * occurred, @error will also be set.
  */
-- (GByteArray*)challengeSyncWithToken:(GByteArray*)token cancellable:(GCancellable*)cancellable err:(GError**)err;
+- (GByteArray*)challengeSyncWithToken:(GByteArray*)token cancellable:(OGCancellable*)cancellable;
 
 /**
  *
@@ -183,27 +180,25 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)tryEmptyPasswordWithIoPriority:(gint)ioPriority cancellable:(GCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)tryEmptyPasswordWithIoPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_sasl_try_empty_password().
  *
  * @param result a #GAsyncResult
- * @param err
  * @return the SASL response.  If an error occurred, @error will also be set.
  */
-- (bool)tryEmptyPasswordFinishWithResult:(GAsyncResult*)result err:(GError**)err;
+- (bool)tryEmptyPasswordFinish:(GAsyncResult*)result;
 
 /**
  *
  * @param cancellable optional #GCancellable object, or %NULL
- * @param err
  * @return whether or not @sasl can attempt to authenticate without a
  * password being provided by the caller. This will be %TRUE for an
  * authentication method which can attempt to use single-sign-on
  * credentials, but which can fall back to using a provided password
  * so it still has the @need_password flag set in its description.
  */
-- (bool)tryEmptyPasswordSyncWithCancellable:(GCancellable*)cancellable err:(GError**)err;
+- (bool)tryEmptyPasswordSync:(OGCancellable*)cancellable;
 
 @end

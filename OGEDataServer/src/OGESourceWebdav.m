@@ -1,161 +1,221 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2022 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGESourceWebdav.h"
 
+#import <OGio/OGTlsCertificate.h>
+
 @implementation OGESourceWebdav
 
-- (ESourceWebdav*)SOURCEWEBDAV
+- (ESourceWebdav*)castedGObject
 {
-	return E_SOURCE_WEBDAV([self GOBJECT]);
+	return E_SOURCE_WEBDAV([self gObject]);
 }
 
 - (OFString*)dupColor
 {
-	return [OFString stringWithUTF8String:e_source_webdav_dup_color([self SOURCEWEBDAV])];
+	gchar* gobjectValue = e_source_webdav_dup_color([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)dupDisplayName
 {
-	return [OFString stringWithUTF8String:e_source_webdav_dup_display_name([self SOURCEWEBDAV])];
+	gchar* gobjectValue = e_source_webdav_dup_display_name([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)dupEmailAddress
 {
-	return [OFString stringWithUTF8String:e_source_webdav_dup_email_address([self SOURCEWEBDAV])];
+	gchar* gobjectValue = e_source_webdav_dup_email_address([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)dupResourcePath
 {
-	return [OFString stringWithUTF8String:e_source_webdav_dup_resource_path([self SOURCEWEBDAV])];
+	gchar* gobjectValue = e_source_webdav_dup_resource_path([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)dupResourceQuery
 {
-	return [OFString stringWithUTF8String:e_source_webdav_dup_resource_query([self SOURCEWEBDAV])];
-}
+	gchar* gobjectValue = e_source_webdav_dup_resource_query([self castedGObject]);
 
-- (SoupURI*)dupSoupUri
-{
-	return e_source_webdav_dup_soup_uri([self SOURCEWEBDAV]);
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
 }
 
 - (OFString*)dupSslTrust
 {
-	return [OFString stringWithUTF8String:e_source_webdav_dup_ssl_trust([self SOURCEWEBDAV])];
+	gchar* gobjectValue = e_source_webdav_dup_ssl_trust([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
+}
+
+- (GUri*)dupUri
+{
+	GUri* returnValue = e_source_webdav_dup_uri([self castedGObject]);
+
+	return returnValue;
 }
 
 - (bool)avoidIfmatch
 {
-	return e_source_webdav_get_avoid_ifmatch([self SOURCEWEBDAV]);
+	bool returnValue = e_source_webdav_get_avoid_ifmatch([self castedGObject]);
+
+	return returnValue;
 }
 
 - (bool)calendarAutoSchedule
 {
-	return e_source_webdav_get_calendar_auto_schedule([self SOURCEWEBDAV]);
+	bool returnValue = e_source_webdav_get_calendar_auto_schedule([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)color
 {
-	return [OFString stringWithUTF8String:e_source_webdav_get_color([self SOURCEWEBDAV])];
+	const gchar* gobjectValue = e_source_webdav_get_color([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OFString*)displayName
 {
-	return [OFString stringWithUTF8String:e_source_webdav_get_display_name([self SOURCEWEBDAV])];
+	const gchar* gobjectValue = e_source_webdav_get_display_name([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OFString*)emailAddress
 {
-	return [OFString stringWithUTF8String:e_source_webdav_get_email_address([self SOURCEWEBDAV])];
+	const gchar* gobjectValue = e_source_webdav_get_email_address([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
+}
+
+- (guint)order
+{
+	guint returnValue = e_source_webdav_get_order([self castedGObject]);
+
+	return returnValue;
 }
 
 - (OFString*)resourcePath
 {
-	return [OFString stringWithUTF8String:e_source_webdav_get_resource_path([self SOURCEWEBDAV])];
+	const gchar* gobjectValue = e_source_webdav_get_resource_path([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OFString*)resourceQuery
 {
-	return [OFString stringWithUTF8String:e_source_webdav_get_resource_query([self SOURCEWEBDAV])];
+	const gchar* gobjectValue = e_source_webdav_get_resource_query([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (OFString*)sslTrust
 {
-	return [OFString stringWithUTF8String:e_source_webdav_get_ssl_trust([self SOURCEWEBDAV])];
+	const gchar* gobjectValue = e_source_webdav_get_ssl_trust([self castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
 }
 
 - (ETrustPromptResponse)sslTrustResponse
 {
-	return e_source_webdav_get_ssl_trust_response([self SOURCEWEBDAV]);
+	ETrustPromptResponse returnValue = e_source_webdav_get_ssl_trust_response([self castedGObject]);
+
+	return returnValue;
 }
 
 - (void)setAvoidIfmatch:(bool)avoidIfmatch
 {
-	e_source_webdav_set_avoid_ifmatch([self SOURCEWEBDAV], avoidIfmatch);
+	e_source_webdav_set_avoid_ifmatch([self castedGObject], avoidIfmatch);
 }
 
 - (void)setCalendarAutoSchedule:(bool)calendarAutoSchedule
 {
-	e_source_webdav_set_calendar_auto_schedule([self SOURCEWEBDAV], calendarAutoSchedule);
+	e_source_webdav_set_calendar_auto_schedule([self castedGObject], calendarAutoSchedule);
 }
 
 - (void)setColor:(OFString*)color
 {
-	e_source_webdav_set_color([self SOURCEWEBDAV], [color UTF8String]);
+	e_source_webdav_set_color([self castedGObject], [color UTF8String]);
 }
 
 - (void)setDisplayName:(OFString*)displayName
 {
-	e_source_webdav_set_display_name([self SOURCEWEBDAV], [displayName UTF8String]);
+	e_source_webdav_set_display_name([self castedGObject], [displayName UTF8String]);
 }
 
 - (void)setEmailAddress:(OFString*)emailAddress
 {
-	e_source_webdav_set_email_address([self SOURCEWEBDAV], [emailAddress UTF8String]);
+	e_source_webdav_set_email_address([self castedGObject], [emailAddress UTF8String]);
+}
+
+- (void)setOrder:(guint)order
+{
+	e_source_webdav_set_order([self castedGObject], order);
 }
 
 - (void)setResourcePath:(OFString*)resourcePath
 {
-	e_source_webdav_set_resource_path([self SOURCEWEBDAV], [resourcePath UTF8String]);
+	e_source_webdav_set_resource_path([self castedGObject], [resourcePath UTF8String]);
 }
 
 - (void)setResourceQuery:(OFString*)resourceQuery
 {
-	e_source_webdav_set_resource_query([self SOURCEWEBDAV], [resourceQuery UTF8String]);
-}
-
-- (void)setSoupUri:(SoupURI*)soupUri
-{
-	e_source_webdav_set_soup_uri([self SOURCEWEBDAV], soupUri);
+	e_source_webdav_set_resource_query([self castedGObject], [resourceQuery UTF8String]);
 }
 
 - (void)setSslTrust:(OFString*)sslTrust
 {
-	e_source_webdav_set_ssl_trust([self SOURCEWEBDAV], [sslTrust UTF8String]);
+	e_source_webdav_set_ssl_trust([self castedGObject], [sslTrust UTF8String]);
 }
 
 - (void)setSslTrustResponse:(ETrustPromptResponse)response
 {
-	e_source_webdav_set_ssl_trust_response([self SOURCEWEBDAV], response);
+	e_source_webdav_set_ssl_trust_response([self castedGObject], response);
+}
+
+- (void)setUri:(GUri*)uri
+{
+	e_source_webdav_set_uri([self castedGObject], uri);
 }
 
 - (void)unsetTemporarySslTrust
 {
-	e_source_webdav_unset_temporary_ssl_trust([self SOURCEWEBDAV]);
+	e_source_webdav_unset_temporary_ssl_trust([self castedGObject]);
 }
 
-- (void)updateSslTrustWithHost:(OFString*)host cert:(GTlsCertificate*)cert response:(ETrustPromptResponse)response
+- (void)updateSslTrustWithHost:(OFString*)host cert:(OGTlsCertificate*)cert response:(ETrustPromptResponse)response
 {
-	e_source_webdav_update_ssl_trust([self SOURCEWEBDAV], [host UTF8String], cert, response);
+	e_source_webdav_update_ssl_trust([self castedGObject], [host UTF8String], [cert castedGObject], response);
 }
 
-- (ETrustPromptResponse)verifySslTrustWithHost:(OFString*)host cert:(GTlsCertificate*)cert certErrors:(GTlsCertificateFlags)certErrors
+- (ETrustPromptResponse)verifySslTrustWithHost:(OFString*)host cert:(OGTlsCertificate*)cert certErrors:(GTlsCertificateFlags)certErrors
 {
-	return e_source_webdav_verify_ssl_trust([self SOURCEWEBDAV], [host UTF8String], cert, certErrors);
+	ETrustPromptResponse returnValue = e_source_webdav_verify_ssl_trust([self castedGObject], [host UTF8String], [cert castedGObject], certErrors);
+
+	return returnValue;
 }
 
 

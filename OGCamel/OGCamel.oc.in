@@ -1,4 +1,7 @@
 package_format 1
+package_depends_on OGObject
+package_depends_on OGio
+
 CPPFLAGS="$CPPFLAGS @OGCAMEL_CPPFLAGS@"
 LIBS="-logcamel @OGCAMEL_LIBS@ $LIBS"
 FRAMEWORK_LIBS="-framework OGCamel @OGCAMEL_LIBS@ $FRAMEWORK_LIBS"
