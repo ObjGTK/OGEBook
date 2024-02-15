@@ -44,7 +44,7 @@
 {
 	GInputStream* gobjectValue = G_INPUT_STREAM(e_soup_session_util_ref_message_request_body(message, outLength));
 
-	OGInputStream* returnValue = [OGInputStream wrapperFor:gobjectValue];
+	OGInputStream* returnValue = [OGInputStream withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -136,7 +136,7 @@
 {
 	ESource* gobjectValue = E_SOURCE(e_soup_session_get_source([self castedGObject]));
 
-	OGESource* returnValue = [OGESource wrapperFor:gobjectValue];
+	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -225,7 +225,7 @@
 		@throw exception;
 	}
 
-	OGInputStream* returnValue = [OGInputStream wrapperFor:gobjectValue];
+	OGInputStream* returnValue = [OGInputStream withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -260,7 +260,7 @@
 		@throw exception;
 	}
 
-	OGInputStream* returnValue = [OGInputStream wrapperFor:gobjectValue];
+	OGInputStream* returnValue = [OGInputStream withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;

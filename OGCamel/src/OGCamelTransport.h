@@ -7,8 +7,8 @@
 #import "OGCamelService.h"
 
 @class OGCancellable;
-@class OGCamelMimeMessage;
 @class OGCamelAddress;
+@class OGCamelMimeMessage;
 
 @interface OGCamelTransport : OGCamelService
 {

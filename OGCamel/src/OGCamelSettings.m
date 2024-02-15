@@ -17,7 +17,7 @@
 {
 	CamelSettings* gobjectValue = CAMEL_SETTINGS(camel_settings_clone([self castedGObject]));
 
-	OGCamelSettings* returnValue = [OGCamelSettings wrapperFor:gobjectValue];
+	OGCamelSettings* returnValue = [OGCamelSettings withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;

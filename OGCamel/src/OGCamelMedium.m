@@ -29,7 +29,7 @@
 {
 	CamelDataWrapper* gobjectValue = CAMEL_DATA_WRAPPER(camel_medium_get_content([self castedGObject]));
 
-	OGCamelDataWrapper* returnValue = [OGCamelDataWrapper wrapperFor:gobjectValue];
+	OGCamelDataWrapper* returnValue = [OGCamelDataWrapper withGObject:gobjectValue];
 	return returnValue;
 }
 

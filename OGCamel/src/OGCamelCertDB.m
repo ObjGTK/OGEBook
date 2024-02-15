@@ -12,7 +12,7 @@
 {
 	CamelCertDB* gobjectValue = CAMEL_CERTDB(camel_certdb_get_default());
 
-	OGCamelCertDB* returnValue = [OGCamelCertDB wrapperFor:gobjectValue];
+	OGCamelCertDB* returnValue = [OGCamelCertDB withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;

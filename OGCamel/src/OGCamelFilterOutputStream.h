@@ -6,12 +6,12 @@
 
 #include <camel/camel.h>
 
-#import <OGObject/OGObject.h>
+#import <OGio/OGFilterOutputStream.h>
 
 @class OGCamelMimeFilter;
 @class OGOutputStream;
 
-@interface OGCamelFilterOutputStream : OGObject
+@interface OGCamelFilterOutputStream : OGFilterOutputStream
 {
 
 }

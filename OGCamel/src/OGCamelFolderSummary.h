@@ -9,11 +9,11 @@
 #import <OGObject/OGObject.h>
 
 @class OGCamelMessageInfo;
-@class OGCamelMimeMessage;
 @class OGCamelFolder;
-@class OGCamelIndex;
 @class OGCamelMimeParser;
 @class OGCamelStore;
+@class OGCamelMimeMessage;
+@class OGCamelIndex;
 
 @interface OGCamelFolderSummary : OGObject
 {
@@ -283,7 +283,7 @@
  *
  * @return the next unique uid value
  */
-- (guint32)generateNextUid;
+- (guint32)nextUid;
 
 /**
  * Retrieve the next uid, but as a formatted string.

@@ -8,9 +8,9 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCamelSession;
-@class OGCamelMimePart;
 @class OGCancellable;
+@class OGCamelMimePart;
+@class OGCamelSession;
 
 @interface OGCamelCipherContext : OGObject
 {

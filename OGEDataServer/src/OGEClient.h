@@ -78,7 +78,7 @@
 + (void)utilFreeObjectSlist:(GSList*)objects;
 
 /**
- * Frees memory previously allocated by e_client_util_strv_to_slist().
+ * Use g_slist_free_full() instead.
  *
  * @param strings a #GSList of strings (gchar *)
  */
@@ -95,7 +95,7 @@
 + (GSList*)utilParseCommaStrings:(OFString*)strings;
 
 /**
- * Convert a list of strings into a %NULL-terminated array of strings.
+ * Use e_util_slist_to_strv() instead.
  *
  * @param strings a #GSList of strings (const gchar *)
  * @return Newly allocated %NULL-terminated array of strings.
@@ -106,7 +106,7 @@
 + (gchar**)utilSlistToStrv:(const GSList*)strings;
 
 /**
- * Use e_util_strv_to_slist() instead.
+ * Convert a %NULL-terminated array of strings to a list of strings.
  *
  * @param strv a %NULL-terminated array of strings (const gchar *)
  * @return Newly allocated #GSList of
@@ -118,16 +118,7 @@
 + (GSList*)utilStrvToSlist:(const gchar* const*)strv;
 
 /**
- * The function takes a @dbus_error and tries to find a match in @known_errors
- * for it, if it is a G_IO_ERROR, G_IO_ERROR_DBUS_ERROR. If it is anything else
- * then the @dbus_error is moved to @client_error.
- * 
- * The @fail_when_none_matched influences behaviour. If it's %TRUE, and none of
- * @known_errors matches, or this is not a G_IO_ERROR_DBUS_ERROR, then %FALSE
- * is returned and the @client_error is left without change. Otherwise, the
- * @fail_when_none_matched is %FALSE, the error is always processed and will
- * result in E_CLIENT_ERROR, E_CLIENT_ERROR_OTHER_ERROR if none of @known_error
- * matches.
+ * This function is no longer used.
  *
  * @param dbusError DBus #GError to unwrap
  * @param clientError Resulting #GError; can be %NULL

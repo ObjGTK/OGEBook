@@ -6,9 +6,9 @@
 
 #import "OGCamelFolderSummary.h"
 
-@class OGCamelVeeMessageInfoData;
-@class OGCamelVeeMessageInfo;
 @class OGCamelFolder;
+@class OGCamelVeeMessageInfo;
+@class OGCamelVeeMessageInfoData;
 
 @interface OGCamelVeeSummary : OGCamelFolderSummary
 {

@@ -6,8 +6,8 @@
 
 #import "OGCamelCipherContext.h"
 
-@class OGCamelSession;
 @class OGCancellable;
+@class OGCamelSession;
 
 @interface OGCamelGpgContext : OGCamelCipherContext
 {

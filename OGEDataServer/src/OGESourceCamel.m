@@ -47,7 +47,7 @@
 {
 	CamelSettings* gobjectValue = CAMEL_SETTINGS(e_source_camel_get_settings([self castedGObject]));
 
-	OGCamelSettings* returnValue = [OGCamelSettings wrapperFor:gobjectValue];
+	OGCamelSettings* returnValue = [OGCamelSettings withGObject:gobjectValue];
 	return returnValue;
 }
 

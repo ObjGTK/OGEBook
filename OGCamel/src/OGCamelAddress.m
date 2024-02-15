@@ -77,7 +77,7 @@
 {
 	CamelAddress* gobjectValue = CAMEL_ADDRESS(camel_address_new_clone([self castedGObject]));
 
-	OGCamelAddress* returnValue = [OGCamelAddress wrapperFor:gobjectValue];
+	OGCamelAddress* returnValue = [OGCamelAddress withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;

@@ -6,10 +6,10 @@
 
 #import "OGCamelFolderSearch.h"
 
-#import "OGCamelMessageInfo.h"
 #import "OGCamelIndex.h"
-#import "OGCamelFolder.h"
 #import <OGio/OGCancellable.h>
+#import "OGCamelMessageInfo.h"
+#import "OGCamelFolder.h"
 
 @implementation OGCamelFolderSearch
 
@@ -86,7 +86,7 @@
 {
 	CamelMessageInfo* gobjectValue = CAMEL_MESSAGE_INFO(camel_folder_search_get_current_message_info([self castedGObject]));
 
-	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo wrapperFor:gobjectValue];
+	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -101,7 +101,7 @@
 {
 	CamelFolder* gobjectValue = CAMEL_FOLDER(camel_folder_search_get_folder([self castedGObject]));
 
-	OGCamelFolder* returnValue = [OGCamelFolder wrapperFor:gobjectValue];
+	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
 	return returnValue;
 }
 

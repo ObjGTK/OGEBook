@@ -63,7 +63,7 @@
 {
 	CamelMimePart* gobjectValue = CAMEL_MIME_PART(camel_multipart_get_part([self castedGObject], index));
 
-	OGCamelMimePart* returnValue = [OGCamelMimePart wrapperFor:gobjectValue];
+	OGCamelMimePart* returnValue = [OGCamelMimePart withGObject:gobjectValue];
 	return returnValue;
 }
 

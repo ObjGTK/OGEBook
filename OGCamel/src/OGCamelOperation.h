@@ -6,11 +6,9 @@
 
 #include <camel/camel.h>
 
-#import <OGObject/OGObject.h>
+#import <OGio/OGCancellable.h>
 
-@class OGCancellable;
-
-@interface OGCamelOperation : OGObject
+@interface OGCamelOperation : OGCancellable
 {
 
 }

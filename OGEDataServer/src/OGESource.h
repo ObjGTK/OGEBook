@@ -8,8 +8,8 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCamelService;
 @class OGCancellable;
+@class OGCamelService;
 
 /**
  * Contains only private data that should be read and manipulated using the

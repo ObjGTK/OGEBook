@@ -8,8 +8,8 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCancellable;
 @class OGInputStream;
+@class OGCancellable;
 
 /**
  * `JsonParser` provides an object for parsing a JSON data stream, either

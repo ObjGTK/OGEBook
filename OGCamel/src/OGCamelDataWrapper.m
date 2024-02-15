@@ -6,10 +6,10 @@
 
 #import "OGCamelDataWrapper.h"
 
-#import <OGio/OGCancellable.h>
-#import <OGio/OGOutputStream.h>
 #import "OGCamelStream.h"
 #import <OGio/OGInputStream.h>
+#import <OGio/OGCancellable.h>
+#import <OGio/OGOutputStream.h>
 
 @implementation OGCamelDataWrapper
 

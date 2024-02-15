@@ -43,7 +43,7 @@
 {
 	CamelVeeSubfolderData* gobjectValue = CAMEL_VEE_SUBFOLDER_DATA(camel_vee_message_info_data_get_subfolder_data([self castedGObject]));
 
-	OGCamelVeeSubfolderData* returnValue = [OGCamelVeeSubfolderData wrapperFor:gobjectValue];
+	OGCamelVeeSubfolderData* returnValue = [OGCamelVeeSubfolderData withGObject:gobjectValue];
 	return returnValue;
 }
 

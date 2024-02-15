@@ -8,8 +8,8 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGEContact;
 @class OGEBookClient;
+@class OGEContact;
 
 @interface OGEDestination : OGObject
 {

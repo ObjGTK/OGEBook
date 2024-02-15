@@ -6,8 +6,8 @@
 
 #import "OGCamelMimeFilterIndex.h"
 
-#import "OGCamelIndexName.h"
 #import "OGCamelIndex.h"
+#import "OGCamelIndexName.h"
 
 @implementation OGCamelMimeFilterIndex
 

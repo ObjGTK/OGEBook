@@ -6,8 +6,6 @@
 
 #import "OGCamelOperation.h"
 
-#import <OGio/OGCancellable.h>
-
 @implementation OGCamelOperation
 
 + (void)cancelAll

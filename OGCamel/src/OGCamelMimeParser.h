@@ -239,6 +239,13 @@
 - (goffset)seekWithOffset:(goffset)offset whence:(gint)whence;
 
 /**
+ *
+ * @param matchstr
+ * @return
+ */
+- (gint)setHeaderRegex:(OFString*)matchstr;
+
+/**
  * Get the current parser state.
  *
  * @return The current parser state.

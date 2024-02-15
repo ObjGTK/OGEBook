@@ -51,7 +51,7 @@
 {
 	CamelMessageInfo* gobjectValue = CAMEL_MESSAGE_INFO(camel_message_info_clone([self castedGObject], [assignSummary castedGObject]));
 
-	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo wrapperFor:gobjectValue];
+	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -73,7 +73,7 @@
 {
 	gchar* gobjectValue = camel_message_info_dup_preview([self castedGObject]);
 
-	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	OFString* returnValue = gobjectValue;
 	return returnValue;
 }
 
@@ -339,7 +339,7 @@
 {
 	CamelFolderSummary* gobjectValue = CAMEL_FOLDER_SUMMARY(camel_message_info_ref_summary([self castedGObject]));
 
-	OGCamelFolderSummary* returnValue = [OGCamelFolderSummary wrapperFor:gobjectValue];
+	OGCamelFolderSummary* returnValue = [OGCamelFolderSummary withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;

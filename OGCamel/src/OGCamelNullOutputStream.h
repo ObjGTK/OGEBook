@@ -6,11 +6,9 @@
 
 #include <camel/camel.h>
 
-#import <OGObject/OGObject.h>
+#import <OGio/OGOutputStream.h>
 
-@class OGOutputStream;
-
-@interface OGCamelNullOutputStream : OGObject
+@interface OGCamelNullOutputStream : OGOutputStream
 {
 
 }

@@ -8,12 +8,12 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCancellable;
-@class OGCamelFolder;
+@class OGTlsCertificate;
 @class OGCamelMimeMessage;
 @class OGCamelFilterDriver;
+@class OGCancellable;
 @class OGCamelService;
-@class OGTlsCertificate;
+@class OGCamelFolder;
 
 @interface OGCamelSession : OGObject
 {

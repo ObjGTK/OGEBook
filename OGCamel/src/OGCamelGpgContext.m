@@ -6,8 +6,8 @@
 
 #import "OGCamelGpgContext.h"
 
-#import "OGCamelSession.h"
 #import <OGio/OGCancellable.h>
+#import "OGCamelSession.h"
 
 @implementation OGCamelGpgContext
 

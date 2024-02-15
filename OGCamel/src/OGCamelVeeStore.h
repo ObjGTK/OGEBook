@@ -7,9 +7,9 @@
 #import "OGCamelStore.h"
 
 @class OGCamelVeeDataCache;
-@class OGCancellable;
 @class OGCamelFolder;
 @class OGCamelVeeMessageInfoData;
+@class OGCancellable;
 @class OGCamelVeeFolder;
 
 @interface OGCamelVeeStore : OGCamelStore

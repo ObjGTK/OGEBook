@@ -8,8 +8,8 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGDBusConnection;
 @class OGEBookClient;
+@class OGDBusConnection;
 @class OGCancellable;
 
 /**
@@ -116,6 +116,12 @@
  * @return the object path
  */
 - (OFString*)objectPath;
+
+/**
+ *
+ * @return
+ */
+- (bool)isRunning;
 
 /**
  * Returns the #EBookClientView:client associated with @client_view.

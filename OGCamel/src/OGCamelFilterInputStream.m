@@ -6,8 +6,8 @@
 
 #import "OGCamelFilterInputStream.h"
 
-#import "OGCamelMimeFilter.h"
 #import <OGio/OGInputStream.h>
+#import "OGCamelMimeFilter.h"
 
 @implementation OGCamelFilterInputStream
 
@@ -36,7 +36,7 @@
 {
 	CamelMimeFilter* gobjectValue = CAMEL_MIME_FILTER(camel_filter_input_stream_get_filter([self castedGObject]));
 
-	OGCamelMimeFilter* returnValue = [OGCamelMimeFilter wrapperFor:gobjectValue];
+	OGCamelMimeFilter* returnValue = [OGCamelMimeFilter withGObject:gobjectValue];
 	return returnValue;
 }
 

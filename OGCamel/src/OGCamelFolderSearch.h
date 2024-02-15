@@ -8,10 +8,10 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCamelMessageInfo;
 @class OGCamelIndex;
-@class OGCamelFolder;
 @class OGCancellable;
+@class OGCamelMessageInfo;
+@class OGCamelFolder;
 
 @interface OGCamelFolderSearch : OGObject
 {

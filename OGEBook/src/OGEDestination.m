@@ -6,8 +6,8 @@
 
 #import "OGEDestination.h"
 
-#import <OGEBookContacts/OGEContact.h>
 #import "OGEBookClient.h"
+#import <OGEBookContacts/OGEContact.h>
 
 @implementation OGEDestination
 
@@ -36,7 +36,7 @@
 {
 	EDestination* gobjectValue = E_DESTINATION(e_destination_import([str UTF8String]));
 
-	OGEDestination* returnValue = [OGEDestination wrapperFor:gobjectValue];
+	OGEDestination* returnValue = [OGEDestination withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -44,7 +44,7 @@
 
 + (EDestination**)importv:(OFString*)str
 {
-	EDestination** returnValue = e_destination_importv([str UTF8String]);
+	EDestination** returnValue = E_DESTINATION(e_destination_importv([str UTF8String]));
 
 	return returnValue;
 }
@@ -74,7 +74,7 @@
 {
 	EDestination* gobjectValue = E_DESTINATION(e_destination_copy([self castedGObject]));
 
-	OGEDestination* returnValue = [OGEDestination wrapperFor:gobjectValue];
+	OGEDestination* returnValue = [OGEDestination withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -119,7 +119,7 @@
 {
 	EContact* gobjectValue = E_CONTACT(e_destination_get_contact([self castedGObject]));
 
-	OGEContact* returnValue = [OGEContact wrapperFor:gobjectValue];
+	OGEContact* returnValue = [OGEContact withGObject:gobjectValue];
 	return returnValue;
 }
 

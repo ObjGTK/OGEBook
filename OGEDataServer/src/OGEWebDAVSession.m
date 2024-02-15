@@ -6,10 +6,10 @@
 
 #import "OGEWebDAVSession.h"
 
-#import <OGio/OGCancellable.h>
 #import "OGESource.h"
 #import <OGio/OGInputStream.h>
 #import <OGio/OGOutputStream.h>
+#import <OGio/OGCancellable.h>
 
 @implementation OGEWebDAVSession
 

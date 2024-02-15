@@ -6,8 +6,6 @@
 
 #import "OGCamelNullOutputStream.h"
 
-#import <OGio/OGOutputStream.h>
-
 @implementation OGCamelNullOutputStream
 
 - (instancetype)init

@@ -35,7 +35,7 @@
 {
 	CamelFolder* gobjectValue = CAMEL_FOLDER(camel_vee_subfolder_data_get_folder([self castedGObject]));
 
-	OGCamelFolder* returnValue = [OGCamelFolder wrapperFor:gobjectValue];
+	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
 	return returnValue;
 }
 

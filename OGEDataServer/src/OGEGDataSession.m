@@ -7,8 +7,8 @@
 #import "OGEGDataSession.h"
 
 #import "OGESource.h"
-#import <OGJson/OGJsonBuilder.h>
 #import <OGio/OGCancellable.h>
+#import <OGJson/OGJsonBuilder.h>
 
 @implementation OGEGDataSession
 

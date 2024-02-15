@@ -88,7 +88,7 @@
 {
 	GIOStream* gobjectValue = G_IO_STREAM(camel_stream_ref_base_stream([self castedGObject]));
 
-	OGIOStream* returnValue = [OGIOStream wrapperFor:gobjectValue];
+	OGIOStream* returnValue = [OGIOStream withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;

@@ -163,7 +163,7 @@
 {
 	ESource* gobjectValue = E_SOURCE(e_client_get_source([self castedGObject]));
 
-	OGESource* returnValue = [OGESource wrapperFor:gobjectValue];
+	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	return returnValue;
 }
 

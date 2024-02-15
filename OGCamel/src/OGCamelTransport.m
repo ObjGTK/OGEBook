@@ -7,8 +7,8 @@
 #import "OGCamelTransport.h"
 
 #import <OGio/OGCancellable.h>
-#import "OGCamelMimeMessage.h"
 #import "OGCamelAddress.h"
+#import "OGCamelMimeMessage.h"
 
 @implementation OGCamelTransport
 

@@ -8,8 +8,8 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCamelService;
 @class OGCancellable;
+@class OGCamelService;
 
 @interface OGCamelSasl : OGObject
 {

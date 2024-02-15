@@ -6,8 +6,8 @@
 
 #import "OGJsonGenerator.h"
 
-#import <OGio/OGOutputStream.h>
 #import <OGio/OGCancellable.h>
+#import <OGio/OGOutputStream.h>
 
 @implementation OGJsonGenerator
 

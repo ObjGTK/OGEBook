@@ -6,11 +6,11 @@
 
 #import "OGCamelFolder.h"
 
+#import <OGio/OGCancellable.h>
+#import "OGCamelMessageInfo.h"
+#import "OGCamelMimeMessage.h"
 #import "OGCamelFolderSummary.h"
 #import "OGCamelStore.h"
-#import "OGCamelMessageInfo.h"
-#import <OGio/OGCancellable.h>
-#import "OGCamelMimeMessage.h"
 
 @implementation OGCamelFolder
 
@@ -227,7 +227,7 @@
 {
 	CamelFolderSummary* gobjectValue = CAMEL_FOLDER_SUMMARY(camel_folder_get_folder_summary([self castedGObject]));
 
-	OGCamelFolderSummary* returnValue = [OGCamelFolderSummary wrapperFor:gobjectValue];
+	OGCamelFolderSummary* returnValue = [OGCamelFolderSummary withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -277,7 +277,7 @@
 {
 	CamelMimeMessage* gobjectValue = CAMEL_MIME_MESSAGE(camel_folder_get_message_cached([self castedGObject], [messageUid UTF8String], [cancellable castedGObject]));
 
-	OGCamelMimeMessage* returnValue = [OGCamelMimeMessage wrapperFor:gobjectValue];
+	OGCamelMimeMessage* returnValue = [OGCamelMimeMessage withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -302,7 +302,7 @@
 		@throw exception;
 	}
 
-	OGCamelMimeMessage* returnValue = [OGCamelMimeMessage wrapperFor:gobjectValue];
+	OGCamelMimeMessage* returnValue = [OGCamelMimeMessage withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -317,7 +317,7 @@
 {
 	CamelMessageInfo* gobjectValue = CAMEL_MESSAGE_INFO(camel_folder_get_message_info([self castedGObject], [uid UTF8String]));
 
-	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo wrapperFor:gobjectValue];
+	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -335,7 +335,7 @@
 		@throw exception;
 	}
 
-	OGCamelMimeMessage* returnValue = [OGCamelMimeMessage wrapperFor:gobjectValue];
+	OGCamelMimeMessage* returnValue = [OGCamelMimeMessage withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -358,7 +358,7 @@
 {
 	CamelStore* gobjectValue = CAMEL_STORE(camel_folder_get_parent_store([self castedGObject]));
 
-	OGCamelStore* returnValue = [OGCamelStore wrapperFor:gobjectValue];
+	OGCamelStore* returnValue = [OGCamelStore withGObject:gobjectValue];
 	return returnValue;
 }
 

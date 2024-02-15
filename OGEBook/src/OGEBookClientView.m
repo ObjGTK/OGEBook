@@ -6,8 +6,8 @@
 
 #import "OGEBookClientView.h"
 
-#import <OGio/OGDBusConnection.h>
 #import "OGEBookClient.h"
+#import <OGio/OGDBusConnection.h>
 #import <OGio/OGCancellable.h>
 
 @implementation OGEBookClientView
@@ -48,7 +48,7 @@
 {
 	EBookClient* gobjectValue = E_BOOK_CLIENT(e_book_client_view_get_client([self castedGObject]));
 
-	OGEBookClient* returnValue = [OGEBookClient wrapperFor:gobjectValue];
+	OGEBookClient* returnValue = [OGEBookClient withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -56,7 +56,7 @@
 {
 	GDBusConnection* gobjectValue = G_DBUS_CONNECTION(e_book_client_view_get_connection([self castedGObject]));
 
-	OGDBusConnection* returnValue = [OGDBusConnection wrapperFor:gobjectValue];
+	OGDBusConnection* returnValue = [OGDBusConnection withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -82,11 +82,18 @@
 	return returnValue;
 }
 
+- (bool)isRunning
+{
+	bool returnValue = e_book_client_view_is_running([self castedGObject]);
+
+	return returnValue;
+}
+
 - (OGEBookClient*)refClient
 {
 	EBookClient* gobjectValue = E_BOOK_CLIENT(e_book_client_view_ref_client([self castedGObject]));
 
-	OGEBookClient* returnValue = [OGEBookClient wrapperFor:gobjectValue];
+	OGEBookClient* returnValue = [OGEBookClient withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;

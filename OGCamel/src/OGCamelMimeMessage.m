@@ -72,7 +72,7 @@
 {
 	CamelInternetAddress* gobjectValue = CAMEL_INTERNET_ADDRESS(camel_mime_message_get_from([self castedGObject]));
 
-	OGCamelInternetAddress* returnValue = [OGCamelInternetAddress wrapperFor:gobjectValue];
+	OGCamelInternetAddress* returnValue = [OGCamelInternetAddress withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -88,7 +88,7 @@
 {
 	CamelMimePart* gobjectValue = CAMEL_MIME_PART(camel_mime_message_get_part_by_content_id([self castedGObject], [contentId UTF8String]));
 
-	OGCamelMimePart* returnValue = [OGCamelMimePart wrapperFor:gobjectValue];
+	OGCamelMimePart* returnValue = [OGCamelMimePart withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -96,7 +96,7 @@
 {
 	CamelInternetAddress* gobjectValue = CAMEL_INTERNET_ADDRESS(camel_mime_message_get_recipients([self castedGObject], [type UTF8String]));
 
-	OGCamelInternetAddress* returnValue = [OGCamelInternetAddress wrapperFor:gobjectValue];
+	OGCamelInternetAddress* returnValue = [OGCamelInternetAddress withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -104,7 +104,7 @@
 {
 	CamelInternetAddress* gobjectValue = CAMEL_INTERNET_ADDRESS(camel_mime_message_get_reply_to([self castedGObject]));
 
-	OGCamelInternetAddress* returnValue = [OGCamelInternetAddress wrapperFor:gobjectValue];
+	OGCamelInternetAddress* returnValue = [OGCamelInternetAddress withGObject:gobjectValue];
 	return returnValue;
 }
 

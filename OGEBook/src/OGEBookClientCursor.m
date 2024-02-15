@@ -49,7 +49,7 @@
 {
 	EBookClient* gobjectValue = E_BOOK_CLIENT(e_book_client_cursor_ref_client([self castedGObject]));
 
-	OGEBookClient* returnValue = [OGEBookClient wrapperFor:gobjectValue];
+	OGEBookClient* returnValue = [OGEBookClient withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;

@@ -6,8 +6,8 @@
 
 #import "OGCamelIndex.h"
 
-#import "OGCamelIndexCursor.h"
 #import "OGCamelIndexName.h"
+#import "OGCamelIndexCursor.h"
 
 @implementation OGCamelIndex
 
@@ -20,7 +20,7 @@
 {
 	CamelIndexName* gobjectValue = CAMEL_INDEX_NAME(camel_index_add_name([self castedGObject], [name UTF8String]));
 
-	OGCamelIndexName* returnValue = [OGCamelIndexName wrapperFor:gobjectValue];
+	OGCamelIndexName* returnValue = [OGCamelIndexName withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -52,7 +52,7 @@
 {
 	CamelIndexCursor* gobjectValue = CAMEL_INDEX_CURSOR(camel_index_find([self castedGObject], [word UTF8String]));
 
-	OGCamelIndexCursor* returnValue = [OGCamelIndexCursor wrapperFor:gobjectValue];
+	OGCamelIndexCursor* returnValue = [OGCamelIndexCursor withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -60,7 +60,7 @@
 {
 	CamelIndexCursor* gobjectValue = CAMEL_INDEX_CURSOR(camel_index_find_name([self castedGObject], [name UTF8String]));
 
-	OGCamelIndexCursor* returnValue = [OGCamelIndexCursor wrapperFor:gobjectValue];
+	OGCamelIndexCursor* returnValue = [OGCamelIndexCursor withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -94,7 +94,7 @@
 {
 	CamelIndexCursor* gobjectValue = CAMEL_INDEX_CURSOR(camel_index_words([self castedGObject]));
 
-	OGCamelIndexCursor* returnValue = [OGCamelIndexCursor wrapperFor:gobjectValue];
+	OGCamelIndexCursor* returnValue = [OGCamelIndexCursor withGObject:gobjectValue];
 	return returnValue;
 }
 

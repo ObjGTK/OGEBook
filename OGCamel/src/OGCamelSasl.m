@@ -6,8 +6,8 @@
 
 #import "OGCamelSasl.h"
 
-#import "OGCamelService.h"
 #import <OGio/OGCancellable.h>
+#import "OGCamelService.h"
 
 @implementation OGCamelSasl
 
@@ -144,7 +144,7 @@
 {
 	CamelService* gobjectValue = CAMEL_SERVICE(camel_sasl_get_service([self castedGObject]));
 
-	OGCamelService* returnValue = [OGCamelService wrapperFor:gobjectValue];
+	OGCamelService* returnValue = [OGCamelService withGObject:gobjectValue];
 	return returnValue;
 }
 

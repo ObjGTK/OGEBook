@@ -6,9 +6,9 @@
 
 #import "OGCamelService.h"
 
+#import "OGCamelSession.h"
 #import "OGCamelSettings.h"
 #import <OGio/OGCancellable.h>
-#import "OGCamelSession.h"
 #import <OGio/OGTask.h>
 
 @implementation OGCamelService
@@ -264,7 +264,7 @@
 {
 	CamelSession* gobjectValue = CAMEL_SESSION(camel_service_ref_session([self castedGObject]));
 
-	OGCamelSession* returnValue = [OGCamelSession wrapperFor:gobjectValue];
+	OGCamelSession* returnValue = [OGCamelSession withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -274,7 +274,7 @@
 {
 	CamelSettings* gobjectValue = CAMEL_SETTINGS(camel_service_ref_settings([self castedGObject]));
 
-	OGCamelSettings* returnValue = [OGCamelSettings wrapperFor:gobjectValue];
+	OGCamelSettings* returnValue = [OGCamelSettings withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;

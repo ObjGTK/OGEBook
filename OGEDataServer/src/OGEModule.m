@@ -26,7 +26,7 @@
 {
 	EModule* gobjectValue = E_MODULE(e_module_load_file([filename UTF8String]));
 
-	OGEModule* returnValue = [OGEModule wrapperFor:gobjectValue];
+	OGEModule* returnValue = [OGEModule withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;

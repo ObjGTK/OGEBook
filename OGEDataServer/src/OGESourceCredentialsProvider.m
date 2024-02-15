@@ -7,9 +7,9 @@
 #import "OGESourceCredentialsProvider.h"
 
 #import "OGESource.h"
-#import "OGESourceCredentialsProviderImpl.h"
 #import "OGESourceRegistry.h"
 #import <OGio/OGCancellable.h>
+#import "OGESourceCredentialsProviderImpl.h"
 
 @implementation OGESourceCredentialsProvider
 
@@ -122,7 +122,7 @@
 {
 	ESource* gobjectValue = E_SOURCE(e_source_credentials_provider_ref_credentials_source([self castedGObject], [source castedGObject]));
 
-	OGESource* returnValue = [OGESource wrapperFor:gobjectValue];
+	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -139,7 +139,7 @@
 {
 	ESource* gobjectValue = E_SOURCE(e_source_credentials_provider_ref_source([self castedGObject], [uid UTF8String]));
 
-	OGESource* returnValue = [OGESource wrapperFor:gobjectValue];
+	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;

@@ -7,8 +7,8 @@
 #import "OGESoupSession.h"
 
 @class OGESource;
-@class OGJsonBuilder;
 @class OGCancellable;
+@class OGJsonBuilder;
 
 /**
  * Contains only private data that should be read and manipulated using the

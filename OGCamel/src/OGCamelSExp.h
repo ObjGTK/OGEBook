@@ -37,6 +37,17 @@
 + (void)encodeStringWithString:(GString*)string vstring:(OFString*)vstring;
 
 /**
+ * Converts a search expression to an SQL 'WHERE' part statement,
+ * without the 'WHERE' keyword.
+ *
+ * @param sexp a search expression to convert
+ * @return a newly allocated string, an SQL
+ *    'WHERE' part statement, or %NULL, when could not convert it. Free it with
+ *    g_free(), when done with it.
+ */
++ (OFString*)toSqlSexp:(OFString*)sexp;
+
+/**
  * Constructors
  */
 - (instancetype)init;

@@ -55,7 +55,7 @@
 		@throw exception;
 	}
 
-	OGIOStream* returnValue = [OGIOStream wrapperFor:gobjectValue];
+	OGIOStream* returnValue = [OGIOStream withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -85,7 +85,7 @@
 		@throw exception;
 	}
 
-	OGIOStream* returnValue = [OGIOStream wrapperFor:gobjectValue];
+	OGIOStream* returnValue = [OGIOStream withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;

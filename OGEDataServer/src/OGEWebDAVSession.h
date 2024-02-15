@@ -6,10 +6,10 @@
 
 #import "OGESoupSession.h"
 
-@class OGCancellable;
 @class OGESource;
 @class OGInputStream;
 @class OGOutputStream;
+@class OGCancellable;
 
 /**
  * Contains only private data that should be read and manipulated using the

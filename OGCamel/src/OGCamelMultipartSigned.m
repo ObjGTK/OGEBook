@@ -46,7 +46,7 @@
 		@throw exception;
 	}
 
-	OGCamelStream* returnValue = [OGCamelStream wrapperFor:gobjectValue];
+	OGCamelStream* returnValue = [OGCamelStream withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;

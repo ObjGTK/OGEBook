@@ -6,9 +6,9 @@
 
 #import "OGCamelStore.h"
 
-#import "OGCamelDB.h"
 #import <OGio/OGCancellable.h>
 #import "OGCamelFolder.h"
+#import "OGCamelDB.h"
 
 @implementation OGCamelStore
 
@@ -150,7 +150,7 @@
 {
 	CamelDB* gobjectValue = CAMEL_DB(camel_store_get_db([self castedGObject]));
 
-	OGCamelDB* returnValue = [OGCamelDB wrapperFor:gobjectValue];
+	OGCamelDB* returnValue = [OGCamelDB withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -180,7 +180,7 @@
 		@throw exception;
 	}
 
-	OGCamelFolder* returnValue = [OGCamelFolder wrapperFor:gobjectValue];
+	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -235,7 +235,7 @@
 		@throw exception;
 	}
 
-	OGCamelFolder* returnValue = [OGCamelFolder wrapperFor:gobjectValue];
+	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -267,7 +267,7 @@
 		@throw exception;
 	}
 
-	OGCamelFolder* returnValue = [OGCamelFolder wrapperFor:gobjectValue];
+	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -287,7 +287,7 @@
 		@throw exception;
 	}
 
-	OGCamelFolder* returnValue = [OGCamelFolder wrapperFor:gobjectValue];
+	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -312,7 +312,7 @@
 		@throw exception;
 	}
 
-	OGCamelFolder* returnValue = [OGCamelFolder wrapperFor:gobjectValue];
+	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -332,7 +332,7 @@
 		@throw exception;
 	}
 
-	OGCamelFolder* returnValue = [OGCamelFolder wrapperFor:gobjectValue];
+	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -364,7 +364,7 @@
 		@throw exception;
 	}
 
-	OGCamelFolder* returnValue = [OGCamelFolder wrapperFor:gobjectValue];
+	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -384,7 +384,7 @@
 		@throw exception;
 	}
 
-	OGCamelFolder* returnValue = [OGCamelFolder wrapperFor:gobjectValue];
+	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;

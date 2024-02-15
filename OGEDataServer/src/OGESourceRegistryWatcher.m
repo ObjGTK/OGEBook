@@ -43,7 +43,7 @@
 {
 	ESourceRegistry* gobjectValue = E_SOURCE_REGISTRY(e_source_registry_watcher_get_registry([self castedGObject]));
 
-	OGESourceRegistry* returnValue = [OGESourceRegistry wrapperFor:gobjectValue];
+	OGESourceRegistry* returnValue = [OGESourceRegistry withGObject:gobjectValue];
 	return returnValue;
 }
 

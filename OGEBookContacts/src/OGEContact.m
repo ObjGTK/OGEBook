@@ -117,7 +117,7 @@
 {
 	EContact* gobjectValue = E_CONTACT(e_contact_duplicate([self castedGObject]));
 
-	OGEContact* returnValue = [OGEContact wrapperFor:gobjectValue];
+	OGEContact* returnValue = [OGEContact withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;

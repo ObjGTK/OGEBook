@@ -6,9 +6,9 @@
 
 #import "OGCamelVeeDataCache.h"
 
-#import "OGCamelVeeMessageInfoData.h"
 #import "OGCamelVeeSubfolderData.h"
 #import "OGCamelFolder.h"
+#import "OGCamelVeeMessageInfoData.h"
 
 @implementation OGCamelVeeDataCache
 
@@ -54,7 +54,7 @@
 {
 	CamelVeeMessageInfoData* gobjectValue = CAMEL_VEE_MESSAGE_INFO_DATA(camel_vee_data_cache_get_message_info_data([self castedGObject], [folder castedGObject], [origMessageUid UTF8String]));
 
-	OGCamelVeeMessageInfoData* returnValue = [OGCamelVeeMessageInfoData wrapperFor:gobjectValue];
+	OGCamelVeeMessageInfoData* returnValue = [OGCamelVeeMessageInfoData withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -64,7 +64,7 @@
 {
 	CamelVeeMessageInfoData* gobjectValue = CAMEL_VEE_MESSAGE_INFO_DATA(camel_vee_data_cache_get_message_info_data_by_vuid([self castedGObject], [veeMessageUid UTF8String]));
 
-	OGCamelVeeMessageInfoData* returnValue = [OGCamelVeeMessageInfoData wrapperFor:gobjectValue];
+	OGCamelVeeMessageInfoData* returnValue = [OGCamelVeeMessageInfoData withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -74,7 +74,7 @@
 {
 	CamelVeeSubfolderData* gobjectValue = CAMEL_VEE_SUBFOLDER_DATA(camel_vee_data_cache_get_subfolder_data([self castedGObject], [folder castedGObject]));
 
-	OGCamelVeeSubfolderData* returnValue = [OGCamelVeeSubfolderData wrapperFor:gobjectValue];
+	OGCamelVeeSubfolderData* returnValue = [OGCamelVeeSubfolderData withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;

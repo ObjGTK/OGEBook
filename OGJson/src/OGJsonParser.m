@@ -6,8 +6,8 @@
 
 #import "OGJsonParser.h"
 
-#import <OGio/OGCancellable.h>
 #import <OGio/OGInputStream.h>
+#import <OGio/OGCancellable.h>
 
 @implementation OGJsonParser
 

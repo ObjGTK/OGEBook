@@ -36,7 +36,7 @@
 {
 	CamelFolder* gobjectValue = CAMEL_FOLDER(camel_vee_message_info_get_original_folder([self castedGObject]));
 
-	OGCamelFolder* returnValue = [OGCamelFolder wrapperFor:gobjectValue];
+	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -44,7 +44,7 @@
 {
 	CamelFolderSummary* gobjectValue = CAMEL_FOLDER_SUMMARY(camel_vee_message_info_get_original_summary([self castedGObject]));
 
-	OGCamelFolderSummary* returnValue = [OGCamelFolderSummary wrapperFor:gobjectValue];
+	OGCamelFolderSummary* returnValue = [OGCamelFolderSummary withGObject:gobjectValue];
 	return returnValue;
 }
 

@@ -7,9 +7,9 @@
 #import "OGCamelVeeStore.h"
 
 #import "OGCamelVeeDataCache.h"
-#import <OGio/OGCancellable.h>
 #import "OGCamelFolder.h"
 #import "OGCamelVeeMessageInfoData.h"
+#import <OGio/OGCancellable.h>
 #import "OGCamelVeeFolder.h"
 
 @implementation OGCamelVeeStore
@@ -46,7 +46,7 @@
 {
 	CamelVeeFolder* gobjectValue = CAMEL_VEE_FOLDER(camel_vee_store_get_unmatched_folder([self castedGObject]));
 
-	OGCamelVeeFolder* returnValue = [OGCamelVeeFolder wrapperFor:gobjectValue];
+	OGCamelVeeFolder* returnValue = [OGCamelVeeFolder withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -54,7 +54,7 @@
 {
 	CamelVeeDataCache* gobjectValue = CAMEL_VEE_DATA_CACHE(camel_vee_store_get_vee_data_cache([self castedGObject]));
 
-	OGCamelVeeDataCache* returnValue = [OGCamelVeeDataCache wrapperFor:gobjectValue];
+	OGCamelVeeDataCache* returnValue = [OGCamelVeeDataCache withGObject:gobjectValue];
 	return returnValue;
 }
 

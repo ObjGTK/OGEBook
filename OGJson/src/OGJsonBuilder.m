@@ -49,7 +49,7 @@
 {
 	JsonBuilder* gobjectValue = JSON_BUILDER(json_builder_add_boolean_value([self castedGObject], value));
 
-	OGJsonBuilder* returnValue = [OGJsonBuilder wrapperFor:gobjectValue];
+	OGJsonBuilder* returnValue = [OGJsonBuilder withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -57,7 +57,7 @@
 {
 	JsonBuilder* gobjectValue = JSON_BUILDER(json_builder_add_double_value([self castedGObject], value));
 
-	OGJsonBuilder* returnValue = [OGJsonBuilder wrapperFor:gobjectValue];
+	OGJsonBuilder* returnValue = [OGJsonBuilder withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -65,7 +65,7 @@
 {
 	JsonBuilder* gobjectValue = JSON_BUILDER(json_builder_add_int_value([self castedGObject], value));
 
-	OGJsonBuilder* returnValue = [OGJsonBuilder wrapperFor:gobjectValue];
+	OGJsonBuilder* returnValue = [OGJsonBuilder withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -73,7 +73,7 @@
 {
 	JsonBuilder* gobjectValue = JSON_BUILDER(json_builder_add_null_value([self castedGObject]));
 
-	OGJsonBuilder* returnValue = [OGJsonBuilder wrapperFor:gobjectValue];
+	OGJsonBuilder* returnValue = [OGJsonBuilder withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -81,7 +81,7 @@
 {
 	JsonBuilder* gobjectValue = JSON_BUILDER(json_builder_add_string_value([self castedGObject], [value UTF8String]));
 
-	OGJsonBuilder* returnValue = [OGJsonBuilder wrapperFor:gobjectValue];
+	OGJsonBuilder* returnValue = [OGJsonBuilder withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -89,7 +89,7 @@
 {
 	JsonBuilder* gobjectValue = JSON_BUILDER(json_builder_add_value([self castedGObject], node));
 
-	OGJsonBuilder* returnValue = [OGJsonBuilder wrapperFor:gobjectValue];
+	OGJsonBuilder* returnValue = [OGJsonBuilder withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -97,7 +97,7 @@
 {
 	JsonBuilder* gobjectValue = JSON_BUILDER(json_builder_begin_array([self castedGObject]));
 
-	OGJsonBuilder* returnValue = [OGJsonBuilder wrapperFor:gobjectValue];
+	OGJsonBuilder* returnValue = [OGJsonBuilder withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -105,7 +105,7 @@
 {
 	JsonBuilder* gobjectValue = JSON_BUILDER(json_builder_begin_object([self castedGObject]));
 
-	OGJsonBuilder* returnValue = [OGJsonBuilder wrapperFor:gobjectValue];
+	OGJsonBuilder* returnValue = [OGJsonBuilder withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -113,7 +113,7 @@
 {
 	JsonBuilder* gobjectValue = JSON_BUILDER(json_builder_end_array([self castedGObject]));
 
-	OGJsonBuilder* returnValue = [OGJsonBuilder wrapperFor:gobjectValue];
+	OGJsonBuilder* returnValue = [OGJsonBuilder withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -121,7 +121,7 @@
 {
 	JsonBuilder* gobjectValue = JSON_BUILDER(json_builder_end_object([self castedGObject]));
 
-	OGJsonBuilder* returnValue = [OGJsonBuilder wrapperFor:gobjectValue];
+	OGJsonBuilder* returnValue = [OGJsonBuilder withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -141,7 +141,7 @@
 {
 	JsonBuilder* gobjectValue = JSON_BUILDER(json_builder_set_member_name([self castedGObject], [memberName UTF8String]));
 
-	OGJsonBuilder* returnValue = [OGJsonBuilder wrapperFor:gobjectValue];
+	OGJsonBuilder* returnValue = [OGJsonBuilder withGObject:gobjectValue];
 	return returnValue;
 }
 

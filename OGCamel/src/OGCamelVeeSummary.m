@@ -6,9 +6,9 @@
 
 #import "OGCamelVeeSummary.h"
 
-#import "OGCamelVeeMessageInfoData.h"
-#import "OGCamelVeeMessageInfo.h"
 #import "OGCamelFolder.h"
+#import "OGCamelVeeMessageInfo.h"
+#import "OGCamelVeeMessageInfoData.h"
 
 @implementation OGCamelVeeSummary
 
@@ -37,7 +37,7 @@
 {
 	CamelVeeMessageInfo* gobjectValue = CAMEL_VEE_MESSAGE_INFO(camel_vee_summary_add([self castedGObject], [miData castedGObject]));
 
-	OGCamelVeeMessageInfo* returnValue = [OGCamelVeeMessageInfo wrapperFor:gobjectValue];
+	OGCamelVeeMessageInfo* returnValue = [OGCamelVeeMessageInfo withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;

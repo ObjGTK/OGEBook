@@ -172,6 +172,13 @@
 	return returnValue;
 }
 
+- (gint)setHeaderRegex:(OFString*)matchstr
+{
+	gint returnValue = camel_mime_parser_set_header_regex([self castedGObject], g_strdup([matchstr UTF8String]));
+
+	return returnValue;
+}
+
 - (CamelMimeParserState)state
 {
 	CamelMimeParserState returnValue = camel_mime_parser_state([self castedGObject]);
@@ -190,7 +197,7 @@
 {
 	CamelStream* gobjectValue = CAMEL_STREAM(camel_mime_parser_stream([self castedGObject]));
 
-	OGCamelStream* returnValue = [OGCamelStream wrapperFor:gobjectValue];
+	OGCamelStream* returnValue = [OGCamelStream withGObject:gobjectValue];
 	return returnValue;
 }
 

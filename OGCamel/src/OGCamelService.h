@@ -6,9 +6,9 @@
 
 #import "OGCamelObject.h"
 
+@class OGCamelSession;
 @class OGCamelSettings;
 @class OGCancellable;
-@class OGCamelSession;
 @class OGTask;
 
 @interface OGCamelService : OGCamelObject

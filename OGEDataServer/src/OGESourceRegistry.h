@@ -8,9 +8,9 @@
 
 #import <OGObject/OGObject.h>
 
+@class OGESource;
 @class OGCancellable;
 @class OGEOAuth2Services;
-@class OGESource;
 
 /**
  * Contains only private data that should be read and manipulated using the

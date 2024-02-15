@@ -57,7 +57,7 @@
 {
 	ESourceCredentialsProvider* gobjectValue = E_SOURCE_CREDENTIALS_PROVIDER(e_source_credentials_provider_impl_get_provider([self castedGObject]));
 
-	OGESourceCredentialsProvider* returnValue = [OGESourceCredentialsProvider wrapperFor:gobjectValue];
+	OGESourceCredentialsProvider* returnValue = [OGESourceCredentialsProvider withGObject:gobjectValue];
 	return returnValue;
 }
 

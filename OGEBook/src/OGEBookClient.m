@@ -6,12 +6,12 @@
 
 #import "OGEBookClient.h"
 
-#import <OGEDataServer/OGESourceRegistry.h>
-#import "OGEBookClientView.h"
 #import <OGEDataServer/OGESource.h>
 #import "OGEBookClientCursor.h"
 #import <OGio/OGCancellable.h>
+#import "OGEBookClientView.h"
 #import <OGEBookContacts/OGEContact.h>
+#import <OGEDataServer/OGESourceRegistry.h>
 
 @implementation OGEBookClient
 
@@ -25,11 +25,11 @@
 	e_book_client_connect_direct([source castedGObject], waitForConnectedSeconds, [cancellable castedGObject], callback, userData);
 }
 
-+ (instancetype)connectDirectFinish:(GAsyncResult*)result
++ (OGEClient*)connectDirectFinish:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
-	EBookClient* gobjectValue = E_BOOK_CLIENT(e_book_client_connect_direct_finish(result, &err));
+	EClient* gobjectValue = E_CLIENT(e_book_client_connect_direct_finish(result, &err));
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -39,17 +39,17 @@
 		@throw exception;
 	}
 
-	OGEBookClient* returnValue = [OGEBookClient wrapperFor:gobjectValue];
+	OGEClient* returnValue = [OGEClient withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
 }
 
-+ (instancetype)connectDirectSyncWithRegistry:(OGESourceRegistry*)registry source:(OGESource*)source waitForConnectedSeconds:(guint32)waitForConnectedSeconds cancellable:(OGCancellable*)cancellable
++ (OGEClient*)connectDirectSyncWithRegistry:(OGESourceRegistry*)registry source:(OGESource*)source waitForConnectedSeconds:(guint32)waitForConnectedSeconds cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
-	EBookClient* gobjectValue = E_BOOK_CLIENT(e_book_client_connect_direct_sync([registry castedGObject], [source castedGObject], waitForConnectedSeconds, [cancellable castedGObject], &err));
+	EClient* gobjectValue = E_CLIENT(e_book_client_connect_direct_sync([registry castedGObject], [source castedGObject], waitForConnectedSeconds, [cancellable castedGObject], &err));
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -59,17 +59,17 @@
 		@throw exception;
 	}
 
-	OGEBookClient* returnValue = [OGEBookClient wrapperFor:gobjectValue];
+	OGEClient* returnValue = [OGEClient withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
 }
 
-+ (instancetype)connectFinish:(GAsyncResult*)result
++ (OGEClient*)connectFinish:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
-	EBookClient* gobjectValue = E_BOOK_CLIENT(e_book_client_connect_finish(result, &err));
+	EClient* gobjectValue = E_CLIENT(e_book_client_connect_finish(result, &err));
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -79,17 +79,17 @@
 		@throw exception;
 	}
 
-	OGEBookClient* returnValue = [OGEBookClient wrapperFor:gobjectValue];
+	OGEClient* returnValue = [OGEClient withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
 }
 
-+ (instancetype)connectSyncWithSource:(OGESource*)source waitForConnectedSeconds:(guint32)waitForConnectedSeconds cancellable:(OGCancellable*)cancellable
++ (OGEClient*)connectSyncWithSource:(OGESource*)source waitForConnectedSeconds:(guint32)waitForConnectedSeconds cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
-	EBookClient* gobjectValue = E_BOOK_CLIENT(e_book_client_connect_sync([source castedGObject], waitForConnectedSeconds, [cancellable castedGObject], &err));
+	EClient* gobjectValue = E_CLIENT(e_book_client_connect_sync([source castedGObject], waitForConnectedSeconds, [cancellable castedGObject], &err));
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -99,7 +99,7 @@
 		@throw exception;
 	}
 
-	OGEBookClient* returnValue = [OGEBookClient wrapperFor:gobjectValue];
+	OGEClient* returnValue = [OGEClient withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;

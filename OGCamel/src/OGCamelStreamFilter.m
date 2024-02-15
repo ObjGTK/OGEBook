@@ -42,7 +42,7 @@
 {
 	CamelStream* gobjectValue = CAMEL_STREAM(camel_stream_filter_get_source([self castedGObject]));
 
-	OGCamelStream* returnValue = [OGCamelStream wrapperFor:gobjectValue];
+	OGCamelStream* returnValue = [OGCamelStream withGObject:gobjectValue];
 	return returnValue;
 }
 

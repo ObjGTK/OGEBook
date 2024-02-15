@@ -19,7 +19,7 @@
 {
 	ESource* gobjectValue = E_SOURCE(e_source_extension_get_source([self castedGObject]));
 
-	OGESource* returnValue = [OGESource wrapperFor:gobjectValue];
+	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -37,7 +37,7 @@
 {
 	ESource* gobjectValue = E_SOURCE(e_source_extension_ref_source([self castedGObject]));
 
-	OGESource* returnValue = [OGESource wrapperFor:gobjectValue];
+	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;

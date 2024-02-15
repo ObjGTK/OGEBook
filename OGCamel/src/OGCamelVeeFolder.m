@@ -6,9 +6,9 @@
 
 #import "OGCamelVeeFolder.h"
 
-#import "OGCamelStore.h"
 #import <OGio/OGCancellable.h>
 #import "OGCamelVeeMessageInfoData.h"
+#import "OGCamelStore.h"
 
 @implementation OGCamelVeeFolder
 
@@ -74,7 +74,7 @@
 {
 	CamelFolder* gobjectValue = CAMEL_FOLDER(camel_vee_folder_get_location([self castedGObject], vinfo, realuid));
 
-	OGCamelFolder* returnValue = [OGCamelFolder wrapperFor:gobjectValue];
+	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -82,7 +82,7 @@
 {
 	CamelFolder* gobjectValue = CAMEL_FOLDER(camel_vee_folder_get_vee_uid_folder([self castedGObject], [veeMessageUid UTF8String]));
 
-	OGCamelFolder* returnValue = [OGCamelFolder wrapperFor:gobjectValue];
+	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
 	return returnValue;
 }
 

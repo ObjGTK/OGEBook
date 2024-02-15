@@ -6,9 +6,9 @@
 
 #import "OGCamelCipherContext.h"
 
-#import "OGCamelSession.h"
-#import "OGCamelMimePart.h"
 #import <OGio/OGCancellable.h>
+#import "OGCamelMimePart.h"
+#import "OGCamelSession.h"
 
 @implementation OGCamelCipherContext
 
@@ -114,7 +114,7 @@
 {
 	CamelSession* gobjectValue = CAMEL_SESSION(camel_cipher_context_get_session([self castedGObject]));
 
-	OGCamelSession* returnValue = [OGCamelSession wrapperFor:gobjectValue];
+	OGCamelSession* returnValue = [OGCamelSession withGObject:gobjectValue];
 	return returnValue;
 }
 

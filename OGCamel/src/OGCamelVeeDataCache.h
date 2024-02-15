@@ -8,9 +8,9 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCamelVeeMessageInfoData;
 @class OGCamelVeeSubfolderData;
 @class OGCamelFolder;
+@class OGCamelVeeMessageInfoData;
 
 /**
  * Contains only private data that should be read and manipulated using the

@@ -8,11 +8,11 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCamelMimeMessage;
-@class OGCamelSession;
-@class OGCancellable;
-@class OGCamelFolder;
 @class OGCamelMessageInfo;
+@class OGCamelFolder;
+@class OGCancellable;
+@class OGCamelSession;
+@class OGCamelMimeMessage;
 
 @interface OGCamelFilterDriver : OGObject
 {

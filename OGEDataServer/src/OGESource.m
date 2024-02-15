@@ -6,8 +6,8 @@
 
 #import "OGESource.h"
 
-#import <OGCamel/OGCamelService.h>
 #import <OGio/OGCancellable.h>
+#import <OGCamel/OGCamelService.h>
 
 @implementation OGESource
 

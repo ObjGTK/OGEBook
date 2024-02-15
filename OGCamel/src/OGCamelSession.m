@@ -6,12 +6,12 @@
 
 #import "OGCamelSession.h"
 
-#import <OGio/OGCancellable.h>
-#import "OGCamelFolder.h"
+#import <OGio/OGTlsCertificate.h>
 #import "OGCamelMimeMessage.h"
 #import "OGCamelFilterDriver.h"
+#import <OGio/OGCancellable.h>
 #import "OGCamelService.h"
-#import <OGio/OGTlsCertificate.h>
+#import "OGCamelFolder.h"
 
 @implementation OGCamelSession
 
@@ -34,7 +34,7 @@
 		@throw exception;
 	}
 
-	OGCamelService* returnValue = [OGCamelService wrapperFor:gobjectValue];
+	OGCamelService* returnValue = [OGCamelService withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -152,7 +152,7 @@
 		@throw exception;
 	}
 
-	OGCamelFilterDriver* returnValue = [OGCamelFilterDriver wrapperFor:gobjectValue];
+	OGCamelFilterDriver* returnValue = [OGCamelFilterDriver withGObject:gobjectValue];
 	return returnValue;
 }
 
@@ -278,7 +278,7 @@
 {
 	CamelService* gobjectValue = CAMEL_SERVICE(camel_session_ref_service([self castedGObject], [uid UTF8String]));
 
-	OGCamelService* returnValue = [OGCamelService wrapperFor:gobjectValue];
+	OGCamelService* returnValue = [OGCamelService withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -288,7 +288,7 @@
 {
 	CamelService* gobjectValue = CAMEL_SERVICE(camel_session_ref_service_by_url([self castedGObject], url, type));
 
-	OGCamelService* returnValue = [OGCamelService wrapperFor:gobjectValue];
+	OGCamelService* returnValue = [OGCamelService withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
 
 	return returnValue;
