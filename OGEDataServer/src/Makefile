@@ -57,7 +57,6 @@ SRCS = OGEClient.m \
 	OGESourceWeather.m \
 	OGESourceWebDAVNotes.m \
 	OGESourceWebdav.m \
-	OGEWebDAVSession.m \
 	OGEXmlDocument.m \
 	
 
