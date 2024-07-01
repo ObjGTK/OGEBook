@@ -6,8 +6,8 @@
 
 #import "OGCamelMultipartSigned.h"
 
-#import "OGCamelMimePart.h"
 #import "OGCamelStream.h"
+#import "OGCamelMimePart.h"
 
 @implementation OGCamelMultipartSigned
 

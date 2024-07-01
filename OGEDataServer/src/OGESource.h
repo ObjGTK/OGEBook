@@ -8,8 +8,8 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCancellable;
 @class OGCamelService;
+@class OGCancellable;
 
 /**
  * Contains only private data that should be read and manipulated using the
@@ -163,7 +163,7 @@
 - (OFString*)dupUid;
 
 /**
- * Emits locally (in this process only) the ESource::credentials-required
+ * Emits localy (in this process only) the ESource::credentials-required
  * signal with given parameters. That's the difference with e_source_invoke_credentials_required(),
  * which calls the signal globally, within each client.
  *

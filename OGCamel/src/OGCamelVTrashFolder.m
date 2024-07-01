@@ -6,8 +6,8 @@
 
 #import "OGCamelVTrashFolder.h"
 
-#import "OGCamelFolder.h"
 #import "OGCamelStore.h"
+#import "OGCamelFolder.h"
 
 @implementation OGCamelVTrashFolder
 

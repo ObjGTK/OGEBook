@@ -4,16 +4,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
-#include <camel/camel.h>
-
-#import <OGio/OGSettings.h>
+#import "OGCamelSettings.h"
 
 /**
  * Contains only private data that should be read and manipulated using the
  * functions below.
  *
  */
-@interface OGCamelStoreSettings : OGSettings
+@interface OGCamelStoreSettings : OGCamelSettings
 {
 
 }

@@ -8,7 +8,6 @@
 
 
 // Generated classes
-#import "OGEBookIndicesUpdater.h"
 #import "OGEContact.h"
 #import "OGESourceBackendSummarySetup.h"
 #import "OGEVCard.h"

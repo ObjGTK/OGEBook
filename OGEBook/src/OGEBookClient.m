@@ -6,12 +6,12 @@
 
 #import "OGEBookClient.h"
 
-#import <OGEDataServer/OGESource.h>
-#import "OGEBookClientCursor.h"
 #import <OGio/OGCancellable.h>
+#import <OGEDataServer/OGESource.h>
 #import "OGEBookClientView.h"
-#import <OGEBookContacts/OGEContact.h>
+#import "OGEBookClientCursor.h"
 #import <OGEDataServer/OGESourceRegistry.h>
+#import <OGEBookContacts/OGEContact.h>
 
 @implementation OGEBookClient
 

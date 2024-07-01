@@ -72,20 +72,6 @@
 	return returnValue;
 }
 
-- (bool)sendPreferEncrypt
-{
-	bool returnValue = e_source_openpgp_get_send_prefer_encrypt([self castedGObject]);
-
-	return returnValue;
-}
-
-- (bool)sendPublicKey
-{
-	bool returnValue = e_source_openpgp_get_send_public_key([self castedGObject]);
-
-	return returnValue;
-}
-
 - (bool)signByDefault
 {
 	bool returnValue = e_source_openpgp_get_sign_by_default([self castedGObject]);
@@ -129,16 +115,6 @@
 - (void)setPreferInline:(bool)preferInline
 {
 	e_source_openpgp_set_prefer_inline([self castedGObject], preferInline);
-}
-
-- (void)setSendPreferEncrypt:(bool)sendPreferEncrypt
-{
-	e_source_openpgp_set_send_prefer_encrypt([self castedGObject], sendPreferEncrypt);
-}
-
-- (void)setSendPublicKey:(bool)sendPublicKey
-{
-	e_source_openpgp_set_send_public_key([self castedGObject], sendPublicKey);
 }
 
 - (void)setSignByDefault:(bool)signByDefault

@@ -8,9 +8,9 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGESource;
-@class OGESourceRegistry;
 @class OGCancellable;
+@class OGESourceRegistry;
+@class OGESource;
 @class OGESourceCredentialsProviderImpl;
 
 /**

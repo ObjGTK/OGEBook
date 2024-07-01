@@ -17,13 +17,6 @@
 	return CAMEL_TRANSPORT([self gObject]);
 }
 
-- (bool)requestDsn
-{
-	bool returnValue = camel_transport_get_request_dsn([self castedGObject]);
-
-	return returnValue;
-}
-
 - (void)sendToWithMessage:(OGCamelMimeMessage*)message from:(OGCamelAddress*)from recipients:(OGCamelAddress*)recipients ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	camel_transport_send_to([self castedGObject], [message castedGObject], [from castedGObject], [recipients castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
@@ -57,11 +50,6 @@
 	}
 
 	return returnValue;
-}
-
-- (void)setRequestDsn:(bool)requestDsn
-{
-	camel_transport_set_request_dsn([self castedGObject], requestDsn);
 }
 
 

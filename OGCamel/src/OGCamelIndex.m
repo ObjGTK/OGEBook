@@ -6,8 +6,8 @@
 
 #import "OGCamelIndex.h"
 
-#import "OGCamelIndexName.h"
 #import "OGCamelIndexCursor.h"
+#import "OGCamelIndexName.h"
 
 @implementation OGCamelIndex
 

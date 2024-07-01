@@ -8,10 +8,10 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCamelStream;
-@class OGInputStream;
 @class OGCancellable;
 @class OGOutputStream;
+@class OGCamelStream;
+@class OGInputStream;
 
 @interface OGCamelDataWrapper : OGObject
 {

@@ -8,8 +8,8 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCamelIndexName;
 @class OGCamelIndexCursor;
+@class OGCamelIndexName;
 
 @interface OGCamelIndex : OGObject
 {

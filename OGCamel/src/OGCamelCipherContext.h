@@ -9,23 +9,14 @@
 #import <OGObject/OGObject.h>
 
 @class OGCancellable;
-@class OGCamelMimePart;
 @class OGCamelSession;
+@class OGCamelMimePart;
 
 @interface OGCamelCipherContext : OGObject
 {
 
 }
 
-/**
- * Functions
- */
-
-/**
- *
- * @return
- */
-+ (GQuark)errorQuark;
 
 /**
  * Constructors
@@ -73,16 +64,14 @@
 - (CamelCipherValidity*)decryptSyncWithIpart:(OGCamelMimePart*)ipart opart:(OGCamelMimePart*)opart cancellable:(OGCancellable*)cancellable;
 
 /**
- * Asynchronously encrypts the clear-text @ipart and
+ * Asynchronously encrypts (and optionally signs) the clear-text @ipart and
  * writes the resulting cipher-text to @opart.
  * 
  * When the operation is finished, @callback will be called.  You can
  * then call camel_cipher_context_encrypt_finish() to get the result of
  * the operation.
- * 
- * Note: The @userid is unused, %NULL should be passed for it.
  *
- * @param userid unused
+ * @param userid key id (or email address) to use when signing, or %NULL to not sign
  * @param recipients an array of recipient key IDs and/or email addresses
  * @param ipart clear-text #CamelMimePart
  * @param opart cipher-text #CamelMimePart
@@ -102,11 +91,10 @@
 - (bool)encryptFinish:(GAsyncResult*)result;
 
 /**
- * Encrypts the clear-text @ipart and writes the resulting cipher-text to @opart.
- * 
- * Note: The @userid is unused, %NULL should be passed for it.
+ * Encrypts (and optionally signs) the clear-text @ipart and writes the
+ * resulting cipher-text to @opart.
  *
- * @param userid unused
+ * @param userid key ID (or email address) to use when signing, or %NULL to not sign
  * @param recipients an array of recipient key IDs and/or email addresses
  * @param ipart clear-text #CamelMimePart
  * @param opart cipher-text #CamelMimePart
@@ -117,7 +105,7 @@
 
 /**
  *
- * @return a #CamelSession the @context had been created with
+ * @return
  */
 - (OGCamelSession*)session;
 

@@ -6,10 +6,10 @@
 
 #import "OGEWebDAVSession.h"
 
-#import "OGESource.h"
-#import <OGio/OGInputStream.h>
 #import <OGio/OGOutputStream.h>
+#import "OGESource.h"
 #import <OGio/OGCancellable.h>
+#import <OGio/OGInputStream.h>
 
 @implementation OGEWebDAVSession
 
@@ -99,21 +99,6 @@
 	return returnValue;
 }
 
-- (bool)deleteWithHeadersSyncWithUri:(OFString*)uri depth:(OFString*)depth etag:(OFString*)etag inHeaders:(SoupMessageHeaders*)inHeaders cancellable:(OGCancellable*)cancellable
-{
-	GError* err = NULL;
-
-	bool returnValue = e_webdav_session_delete_with_headers_sync([self castedGObject], [uri UTF8String], [depth UTF8String], [etag UTF8String], inHeaders, [cancellable castedGObject], &err);
-
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
-
-	return returnValue;
-}
-
 - (OFString*)ensureFullUriWithRequestUri:(const GUri*)requestUri href:(OFString*)href
 {
 	gchar* gobjectValue = e_webdav_session_ensure_full_uri([self castedGObject], requestUri, [href UTF8String]);
@@ -142,21 +127,6 @@
 	GError* err = NULL;
 
 	bool returnValue = e_webdav_session_get_acl_sync([self castedGObject], [uri UTF8String], outEntries, [cancellable castedGObject], &err);
-
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
-
-	return returnValue;
-}
-
-- (bool)currentUserPrivilegeSetFullSyncWithUri:(OFString*)uri outPrivileges:(GSList**)outPrivileges outCapabilities:(GHashTable**)outCapabilities outAllows:(GHashTable**)outAllows cancellable:(OGCancellable*)cancellable
-{
-	GError* err = NULL;
-
-	bool returnValue = e_webdav_session_get_current_user_privilege_set_full_sync([self castedGObject], [uri UTF8String], outPrivileges, outCapabilities, outAllows, [cancellable castedGObject], &err);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];

@@ -8,12 +8,12 @@
 
 #import <OGEDataServer/OGEClient.h>
 
-@class OGESource;
-@class OGEBookClientCursor;
 @class OGCancellable;
+@class OGESource;
 @class OGEBookClientView;
-@class OGEContact;
+@class OGEBookClientCursor;
 @class OGESourceRegistry;
+@class OGEContact;
 
 /**
  * Contains only private data that should be read and manipulated using the

@@ -6,8 +6,8 @@
 
 #import "OGEBookClientCursor.h"
 
-#import "OGEBookClient.h"
 #import <OGio/OGCancellable.h>
+#import "OGEBookClient.h"
 #import <OGEBookContacts/OGEContact.h>
 
 @implementation OGEBookClientCursor

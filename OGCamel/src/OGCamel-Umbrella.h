@@ -16,8 +16,6 @@
 #import "OGCamelDataCache.h"
 #import "OGCamelDataWrapper.h"
 #import "OGCamelFilterDriver.h"
-#import "OGCamelFilterInputStream.h"
-#import "OGCamelFilterOutputStream.h"
 #import "OGCamelFolder.h"
 #import "OGCamelFolderSearch.h"
 #import "OGCamelFolderSummary.h"

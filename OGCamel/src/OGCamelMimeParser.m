@@ -6,8 +6,8 @@
 
 #import "OGCamelMimeParser.h"
 
-#import "OGCamelStream.h"
 #import <OGio/OGInputStream.h>
+#import "OGCamelStream.h"
 #import "OGCamelMimeFilter.h"
 
 @implementation OGCamelMimeParser

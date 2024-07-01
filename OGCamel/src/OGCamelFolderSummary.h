@@ -8,12 +8,12 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCamelMessageInfo;
-@class OGCamelFolder;
-@class OGCamelMimeParser;
 @class OGCamelStore;
-@class OGCamelMimeMessage;
+@class OGCamelFolder;
 @class OGCamelIndex;
+@class OGCamelMimeMessage;
+@class OGCamelMimeParser;
+@class OGCamelMessageInfo;
 
 @interface OGCamelFolderSummary : OGObject
 {

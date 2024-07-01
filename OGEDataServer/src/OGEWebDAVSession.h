@@ -4,19 +4,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
-#import "OGESoupSession.h"
+#include <libedataserver/libedataserver.h>
 
-@class OGESource;
-@class OGInputStream;
+
 @class OGOutputStream;
+@class OGESource;
 @class OGCancellable;
+@class OGInputStream;
 
 /**
  * Contains only private data that should be read and manipulated using the
  * functions below.
  *
  */
-@interface OGEWebDAVSession : OGESoupSession
+@interface OGEWebDAVSession : ESoupSession
 {
 
 }
@@ -118,32 +119,6 @@
 - (bool)deleteSyncWithUri:(OFString*)uri depth:(OFString*)depth etag:(OFString*)etag cancellable:(OGCancellable*)cancellable;
 
 /**
- * Deletes a resource identified by @uri on the server. The URI can
- * reference a collection, in which case @depth should be %E_WEBDAV_DEPTH_INFINITY.
- * Use @depth %E_WEBDAV_DEPTH_THIS when deleting a regular resource, or %NULL,
- * to let the server use default Depth.
- * 
- * The @etag argument is used to avoid clashes when overwriting existing resources.
- * Use %NULL @etag when deleting collection resources or to force the deletion,
- * otherwise provide a valid ETag of a non-collection resource to verify that
- * the version requested to delete is the same as on the server.
- * 
- * The optional @in_headers can contain additional headers to be added to the request.
- * These headers replace any existing in the request headers, without support for the list-values headers.
- * 
- * Note that the actual usage of @etag is also influenced by #ESourceWebdav:avoid-ifmatch
- * property of the associated #ESource.
- *
- * @param uri URI of the resource to delete
- * @param depth optional requested depth, can be one of %E_WEBDAV_DEPTH_THIS or %E_WEBDAV_DEPTH_INFINITY, or %NULL
- * @param etag an optional ETag of the resource, or %NULL
- * @param inHeaders additional #SoupMessageHeaders to be added to the request, or %NULL
- * @param cancellable optional #GCancellable object, or %NULL
- * @return Whether succeeded.
- */
-- (bool)deleteWithHeadersSyncWithUri:(OFString*)uri depth:(OFString*)depth etag:(OFString*)etag inHeaders:(SoupMessageHeaders*)inHeaders cancellable:(OGCancellable*)cancellable;
-
-/**
  * Converts possibly path-only @href into a full URI under the @request_uri.
  * When the @request_uri is %NULL, the URI defined in associated #ESource is
  * used instead, taken from the #ESourceWebdav extension, if defined.
@@ -192,25 +167,6 @@
  * @return Whether succeeded.
  */
 - (bool)aclSyncWithUri:(OFString*)uri outEntries:(GSList**)outEntries cancellable:(OGCancellable*)cancellable;
-
-/**
- * Gets current user privileges for the @uri, or, in case it's %NULL, for the URI
- * defined in associated #ESource, with optional read of the capabilities
- * and what the user is allowed. See e_webdav_session_options_sync() for
- * more information about the @out_capabilities and @out_allows values.
- * 
- * Free the returned @out_privileges with
- * g_slist_free_full (privileges, e_webdav_privilege_free);
- * when no longer needed.
- *
- * @param uri URI to issue the request for, or %NULL to read from #ESource
- * @param outPrivileges return location for a %GSList of #EWebDAVPrivilege
- * @param outCapabilities return location for DAV capabilities, or %NULL
- * @param outAllows return location for allowed operations, or %NULL
- * @param cancellable optional #GCancellable object, or %NULL
- * @return Whether succeeded.
- */
-- (bool)currentUserPrivilegeSetFullSyncWithUri:(OFString*)uri outPrivileges:(GSList**)outPrivileges outCapabilities:(GHashTable**)outCapabilities outAllows:(GHashTable**)outAllows cancellable:(OGCancellable*)cancellable;
 
 /**
  * Gets current user privileges for the @uri, or, in case it's %NULL, for the URI

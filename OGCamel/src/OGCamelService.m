@@ -6,10 +6,10 @@
 
 #import "OGCamelService.h"
 
-#import "OGCamelSession.h"
 #import "OGCamelSettings.h"
-#import <OGio/OGCancellable.h>
 #import <OGio/OGTask.h>
+#import <OGio/OGCancellable.h>
+#import "OGCamelSession.h"
 
 @implementation OGCamelService
 

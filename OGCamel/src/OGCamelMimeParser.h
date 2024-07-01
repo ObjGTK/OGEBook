@@ -8,8 +8,8 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCamelStream;
 @class OGInputStream;
+@class OGCamelStream;
 @class OGCamelMimeFilter;
 
 @interface OGCamelMimeParser : OGObject

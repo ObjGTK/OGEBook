@@ -6,11 +6,11 @@
 
 #import "OGCamelObject.h"
 
-@class OGCancellable;
-@class OGCamelMessageInfo;
-@class OGCamelMimeMessage;
-@class OGCamelFolderSummary;
 @class OGCamelStore;
+@class OGCamelMimeMessage;
+@class OGCancellable;
+@class OGCamelFolderSummary;
+@class OGCamelMessageInfo;
 
 @interface OGCamelFolder : OGCamelObject
 {
@@ -720,7 +720,7 @@
  * Finishes the operation started with camel_folder_synchronize().
  *
  * @param result a #GAsyncResult
- * @return %TRUE on success, %FALSE on error
+ * @return %TRUE on sucess, %FALSE on error
  */
 - (bool)synchronizeFinish:(GAsyncResult*)result;
 

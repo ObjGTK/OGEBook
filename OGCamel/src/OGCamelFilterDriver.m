@@ -6,11 +6,11 @@
 
 #import "OGCamelFilterDriver.h"
 
-#import "OGCamelMessageInfo.h"
 #import "OGCamelFolder.h"
-#import <OGio/OGCancellable.h>
-#import "OGCamelSession.h"
 #import "OGCamelMimeMessage.h"
+#import <OGio/OGCancellable.h>
+#import "OGCamelMessageInfo.h"
+#import "OGCamelSession.h"
 
 @implementation OGCamelFilterDriver
 

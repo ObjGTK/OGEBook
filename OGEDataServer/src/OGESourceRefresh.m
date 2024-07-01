@@ -20,13 +20,6 @@
 	return returnValue;
 }
 
-- (bool)enabledOnMeteredNetwork
-{
-	bool returnValue = e_source_refresh_get_enabled_on_metered_network([self castedGObject]);
-
-	return returnValue;
-}
-
 - (guint)intervalMinutes
 {
 	guint returnValue = e_source_refresh_get_interval_minutes([self castedGObject]);
@@ -37,11 +30,6 @@
 - (void)setEnabled:(bool)enabled
 {
 	e_source_refresh_set_enabled([self castedGObject], enabled);
-}
-
-- (void)setEnabledOnMeteredNetwork:(bool)enabled
-{
-	e_source_refresh_set_enabled_on_metered_network([self castedGObject], enabled);
 }
 
 - (void)setIntervalMinutes:(guint)intervalMinutes

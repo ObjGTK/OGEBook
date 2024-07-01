@@ -6,12 +6,12 @@
 
 #import "OGCamelFolderSummary.h"
 
-#import "OGCamelMessageInfo.h"
-#import "OGCamelFolder.h"
-#import "OGCamelMimeParser.h"
 #import "OGCamelStore.h"
-#import "OGCamelMimeMessage.h"
+#import "OGCamelFolder.h"
 #import "OGCamelIndex.h"
+#import "OGCamelMimeMessage.h"
+#import "OGCamelMimeParser.h"
+#import "OGCamelMessageInfo.h"
 
 @implementation OGCamelFolderSummary
 

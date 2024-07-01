@@ -6,8 +6,8 @@
 
 #import "OGEClient.h"
 
-#import "OGESource.h"
 #import <OGio/OGCancellable.h>
+#import "OGESource.h"
 
 @implementation OGEClient
 

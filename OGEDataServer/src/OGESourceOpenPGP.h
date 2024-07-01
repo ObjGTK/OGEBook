@@ -90,22 +90,6 @@
 - (bool)preferInline;
 
 /**
- * Returns, whether should claim the encryption is preferred when sending
- * public key in messages. The default is %TRUE.
- *
- * @return whether should claim the encryption is preferred when sending
- *    public key in messages
- */
-- (bool)sendPreferEncrypt;
-
-/**
- * Returns, whether should send GPG public key in messages. The default is %TRUE.
- *
- * @return whether should send GPG public key in messages
- */
-- (bool)sendPublicKey;
-
-/**
  * Returns whether to digitally sign outgoing messages by default using
  * OpenPGP-compliant software such as GNU Privacy Guard (GnuPG).
  *
@@ -170,23 +154,6 @@
  * @param preferInline whether to prefer inline sign/encrypt of the text/plain messages
  */
 - (void)setPreferInline:(bool)preferInline;
-
-/**
- * Sets the @send_prefer_encrypt on the @extension, which tells the client to
- * claim the user prefer encryption when also sending its public key in
- * the messages (e_source_openpgp_set_send_public_key()).
- *
- * @param sendPreferEncrypt value to set
- */
-- (void)setSendPreferEncrypt:(bool)sendPreferEncrypt;
-
-/**
- * Sets the @send_public_key on the @extension, which tells the client to
- * include user's public key in the messages in an Autocrypt header.
- *
- * @param sendPublicKey value to set
- */
-- (void)setSendPublicKey:(bool)sendPublicKey;
 
 /**
  * Sets whether to digitally sign outgoing messages by default using

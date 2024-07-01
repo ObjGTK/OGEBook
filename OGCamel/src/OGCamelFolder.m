@@ -6,11 +6,11 @@
 
 #import "OGCamelFolder.h"
 
-#import <OGio/OGCancellable.h>
-#import "OGCamelMessageInfo.h"
-#import "OGCamelMimeMessage.h"
-#import "OGCamelFolderSummary.h"
 #import "OGCamelStore.h"
+#import "OGCamelMimeMessage.h"
+#import <OGio/OGCancellable.h>
+#import "OGCamelFolderSummary.h"
+#import "OGCamelMessageInfo.h"
 
 @implementation OGCamelFolder
 

@@ -6,10 +6,10 @@
 
 #import "OGCamelFolderSearch.h"
 
-#import "OGCamelIndex.h"
+#import "OGCamelFolder.h"
 #import <OGio/OGCancellable.h>
 #import "OGCamelMessageInfo.h"
-#import "OGCamelFolder.h"
+#import "OGCamelIndex.h"
 
 @implementation OGCamelFolderSearch
 

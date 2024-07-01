@@ -6,8 +6,8 @@
 
 #import "OGCamelSMIMEContext.h"
 
-#import "OGCamelMimePart.h"
 #import "OGCamelSession.h"
+#import "OGCamelMimePart.h"
 
 @implementation OGCamelSMIMEContext
 

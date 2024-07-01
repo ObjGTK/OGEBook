@@ -153,7 +153,7 @@
  * Writes the summary to disk.  The summary is only written if changes
  * have occurred.
  *
- * @return 0 on success or -1 on fail
+ * @return 0 on succes or -1 on fail
  */
 - (gint)save;
 

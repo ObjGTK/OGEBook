@@ -7,8 +7,8 @@
 #import "OGCamelVeeFolder.h"
 
 #import <OGio/OGCancellable.h>
-#import "OGCamelVeeMessageInfoData.h"
 #import "OGCamelStore.h"
+#import "OGCamelVeeMessageInfoData.h"
 
 @implementation OGCamelVeeFolder
 

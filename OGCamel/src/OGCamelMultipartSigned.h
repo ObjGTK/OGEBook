@@ -6,8 +6,8 @@
 
 #import "OGCamelMultipart.h"
 
-@class OGCamelMimePart;
 @class OGCamelStream;
+@class OGCamelMimePart;
 
 @interface OGCamelMultipartSigned : OGCamelMultipart
 {

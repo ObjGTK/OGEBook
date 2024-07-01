@@ -110,7 +110,7 @@
  *
  * @param outputStream destination #CamelStream object
  * @param cancellable optional #GCancellable object, or %NULL
- * @return -1 on error, or the number of bytes successfully
+ * @return -1 on error, or the number of bytes succesfully
  * copied across streams.
  */
 - (gssize)writeToStreamWithOutputStream:(OGCamelStream*)outputStream cancellable:(OGCancellable*)cancellable;

@@ -6,12 +6,12 @@
 
 #import "OGCamelSession.h"
 
-#import <OGio/OGTlsCertificate.h>
 #import "OGCamelMimeMessage.h"
-#import "OGCamelFilterDriver.h"
 #import <OGio/OGCancellable.h>
-#import "OGCamelService.h"
+#import <OGio/OGTlsCertificate.h>
 #import "OGCamelFolder.h"
+#import "OGCamelService.h"
+#import "OGCamelFilterDriver.h"
 
 @implementation OGCamelSession
 

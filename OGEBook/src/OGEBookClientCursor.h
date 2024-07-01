@@ -8,8 +8,8 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGEBookClient;
 @class OGCancellable;
+@class OGEBookClient;
 @class OGEContact;
 
 /**

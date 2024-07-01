@@ -6,8 +6,8 @@
 
 #import "OGCamelCipherContext.h"
 
-@class OGCamelMimePart;
 @class OGCamelSession;
+@class OGCamelMimePart;
 
 @interface OGCamelSMIMEContext : OGCamelCipherContext
 {

@@ -6,9 +6,9 @@
 
 #import "OGESourceCredentialsProviderImpl.h"
 
-#import "OGESourceCredentialsProvider.h"
 #import "OGESource.h"
 #import <OGio/OGCancellable.h>
+#import "OGESourceCredentialsProvider.h"
 
 @implementation OGESourceCredentialsProviderImpl
 

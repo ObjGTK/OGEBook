@@ -34,18 +34,6 @@
 - (bool)enabled;
 
 /**
- * Returns whether can refresh content on metered network.
- * 
- * The @extension itself doesn't use this option, it's up to
- * the @extension user to determine what kind of connection is used
- * and then decide whether refresh, or other expensive network
- * operations, can be done.
- *
- * @return whether can refresh content on metered network
- */
-- (bool)enabledOnMeteredNetwork;
-
-/**
  * Returns the interval for fetching updates from a remote server.
  * 
  * Note this value is only effective when the #ESourceRefresh:enabled
@@ -64,16 +52,6 @@
  * @param enabled whether to enable periodic refresh
  */
 - (void)setEnabled:(bool)enabled;
-
-/**
- * Sets whether can refresh content on metered network.
- * 
- * See e_source_refresh_get_enabled_on_metered_network() for more information
- * about what it means.
- *
- * @param enabled whether can refresh content on metered network
- */
-- (void)setEnabledOnMeteredNetwork:(bool)enabled;
 
 /**
  * Sets the interval for fetching updates from a remote server.

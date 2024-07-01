@@ -6,8 +6,8 @@
 
 #import "OGCamelVeeSummary.h"
 
-#import "OGCamelFolder.h"
 #import "OGCamelVeeMessageInfo.h"
+#import "OGCamelFolder.h"
 #import "OGCamelVeeMessageInfoData.h"
 
 @implementation OGCamelVeeSummary

@@ -7,10 +7,10 @@
 #import "OGCamelVeeStore.h"
 
 #import "OGCamelVeeDataCache.h"
-#import "OGCamelFolder.h"
 #import "OGCamelVeeMessageInfoData.h"
-#import <OGio/OGCancellable.h>
+#import "OGCamelFolder.h"
 #import "OGCamelVeeFolder.h"
+#import <OGio/OGCancellable.h>
 
 @implementation OGCamelVeeStore
 

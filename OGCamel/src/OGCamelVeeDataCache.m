@@ -7,8 +7,8 @@
 #import "OGCamelVeeDataCache.h"
 
 #import "OGCamelVeeSubfolderData.h"
-#import "OGCamelFolder.h"
 #import "OGCamelVeeMessageInfoData.h"
+#import "OGCamelFolder.h"
 
 @implementation OGCamelVeeDataCache
 

@@ -7,17 +7,10 @@
 #import "OGCamelCipherContext.h"
 
 #import <OGio/OGCancellable.h>
-#import "OGCamelMimePart.h"
 #import "OGCamelSession.h"
+#import "OGCamelMimePart.h"
 
 @implementation OGCamelCipherContext
-
-+ (GQuark)errorQuark
-{
-	GQuark returnValue = camel_cipher_context_error_quark();
-
-	return returnValue;
-}
 
 - (instancetype)init:(OGCamelSession*)session
 {

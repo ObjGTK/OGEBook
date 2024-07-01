@@ -6,8 +6,8 @@
 
 #import "OGCamelVeeFolder.h"
 
-@class OGCamelFolder;
 @class OGCamelStore;
+@class OGCamelFolder;
 
 @interface OGCamelVTrashFolder : OGCamelVeeFolder
 {

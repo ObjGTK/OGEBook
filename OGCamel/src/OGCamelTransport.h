@@ -23,14 +23,6 @@
 - (CamelTransport*)castedGObject;
 
 /**
- * Returns whether should request Delivery Status Notification
- * in the "send_to" operation.
- *
- * @return whether should request Delivery Status Notification
- */
-- (bool)requestDsn;
-
-/**
  * Sends the message asynchronously to the given recipients, regardless of
  * the contents of @message.  If the message contains a "Bcc" header, the
  * transport is responsible for stripping it.
@@ -70,13 +62,5 @@
  * @return %TRUE on success or %FALSE on error
  */
 - (bool)sendToSyncWithMessage:(OGCamelMimeMessage*)message from:(OGCamelAddress*)from recipients:(OGCamelAddress*)recipients outSentMessageSaved:(gboolean*)outSentMessageSaved cancellable:(OGCancellable*)cancellable;
-
-/**
- * Sets whether should request Delivery Status Notification
- * during the "send_to" operation.
- *
- * @param requestDsn a value to set
- */
-- (void)setRequestDsn:(bool)requestDsn;
 
 @end

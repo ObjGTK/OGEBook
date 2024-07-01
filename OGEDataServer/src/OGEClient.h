@@ -8,8 +8,8 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGESource;
 @class OGCancellable;
+@class OGESource;
 
 /**
  * Contains only private data that should be read and manipulated using the
@@ -51,7 +51,7 @@
 + (OFString*)errorToString:(EClientError)code;
 
 /**
- * Use e_util_copy_object_slist() instead.
+ * Copies a #GSList of #GObject<!-- -->s to the end of @copy_to.
  *
  * @param copyTo Where to copy; may be %NULL
  * @param objects #GSList of #GObject<!-- -->s to be copied
@@ -61,7 +61,7 @@
 + (GSList*)utilCopyObjectSlistWithCopyTo:(GSList*)copyTo objects:(const GSList*)objects;
 
 /**
- * Use e_util_copy_string_slist() instead.
+ * Copies the #GSList of strings to the end of @copy_to.
  *
  * @param copyTo Where to copy; may be %NULL
  * @param strings #GSList of strings to be copied
@@ -106,7 +106,7 @@
 + (gchar**)utilSlistToStrv:(const GSList*)strings;
 
 /**
- * Convert a %NULL-terminated array of strings to a list of strings.
+ * Use e_util_strv_to_slist() instead.
  *
  * @param strv a %NULL-terminated array of strings (const gchar *)
  * @return Newly allocated #GSList of

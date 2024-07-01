@@ -6,42 +6,14 @@
 
 #import "OGEBookClientView.h"
 
-#import "OGEBookClient.h"
 #import <OGio/OGDBusConnection.h>
-#import <OGio/OGCancellable.h>
+#import "OGEBookClient.h"
 
 @implementation OGEBookClientView
 
 - (EBookClientView*)castedGObject
 {
 	return E_BOOK_CLIENT_VIEW([self gObject]);
-}
-
-- (void)dupContactsWithRangeStart:(guint)rangeStart rangeLength:(guint)rangeLength cancellable:(OGCancellable*)cancellable cb:(GAsyncReadyCallback)cb userData:(gpointer)userData
-{
-	e_book_client_view_dup_contacts([self castedGObject], rangeStart, rangeLength, [cancellable castedGObject], cb, userData);
-}
-
-- (bool)dupContactsFinishWithResult:(GAsyncResult*)result outRangeStart:(guint*)outRangeStart outContacts:(GPtrArray**)outContacts
-{
-	GError* err = NULL;
-
-	bool returnValue = e_book_client_view_dup_contacts_finish([self castedGObject], result, outRangeStart, outContacts, &err);
-
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
-
-	return returnValue;
-}
-
-- (EBookIndices*)dupIndices
-{
-	EBookIndices* returnValue = e_book_client_view_dup_indices([self castedGObject]);
-
-	return returnValue;
 }
 
 - (OGEBookClient*)client
@@ -57,20 +29,6 @@
 	GDBusConnection* gobjectValue = G_DBUS_CONNECTION(e_book_client_view_get_connection([self castedGObject]));
 
 	OGDBusConnection* returnValue = [OGDBusConnection withGObject:gobjectValue];
-	return returnValue;
-}
-
-- (gsize)id
-{
-	gsize returnValue = e_book_client_view_get_id([self castedGObject]);
-
-	return returnValue;
-}
-
-- (guint)ntotal
-{
-	guint returnValue = e_book_client_view_get_n_total([self castedGObject]);
-
 	return returnValue;
 }
 
@@ -125,21 +83,6 @@
 		@throw exception;
 	}
 
-}
-
-- (bool)setSortFieldsSyncWithFields:(const EBookClientViewSortFields*)fields cancellable:(OGCancellable*)cancellable
-{
-	GError* err = NULL;
-
-	bool returnValue = e_book_client_view_set_sort_fields_sync([self castedGObject], fields, [cancellable castedGObject], &err);
-
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
-
-	return returnValue;
 }
 
 - (void)start
