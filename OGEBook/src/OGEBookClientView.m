@@ -82,13 +82,6 @@
 	return returnValue;
 }
 
-- (bool)isRunning
-{
-	bool returnValue = e_book_client_view_is_running([self castedGObject]);
-
-	return returnValue;
-}
-
 - (OGEBookClient*)refClient
 {
 	EBookClient* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_book_client_view_ref_client([self castedGObject]), EBookClient, EBookClient);
