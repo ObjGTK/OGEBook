@@ -82,7 +82,7 @@
  * @param result a #GAsyncResult
  * @return a new #EBookClient, or %NULL on error
  */
-+ (OGEClient*)connectDirectFinish:(GAsyncResult*)result;
++ (instancetype)connectDirectFinish:(GAsyncResult*)result;
 
 /**
  * Like e_book_client_connect_sync(), except creates the book client for
@@ -94,7 +94,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return a new but unopened #EBookClient or %NULL on error.
  */
-+ (OGEClient*)connectDirectSyncWithRegistry:(OGESourceRegistry*)registry source:(OGESource*)source waitForConnectedSeconds:(guint32)waitForConnectedSeconds cancellable:(OGCancellable*)cancellable;
++ (instancetype)connectDirectSyncWithRegistry:(OGESourceRegistry*)registry source:(OGESource*)source waitForConnectedSeconds:(guint32)waitForConnectedSeconds cancellable:(OGCancellable*)cancellable;
 
 /**
  * Finishes the operation started with e_book_client_connect().  If an
@@ -109,7 +109,7 @@
  * @return a new #EBookClient,
  * or %NULL on error
  */
-+ (OGEClient*)connectFinish:(GAsyncResult*)result;
++ (instancetype)connectFinish:(GAsyncResult*)result;
 
 /**
  * Creates a new #EBookClient for @source.  If an error occurs, the function
@@ -137,7 +137,7 @@
  * @return a new #EBookClient,
  *    or %NULL on error
  */
-+ (OGEClient*)connectSyncWithSource:(OGESource*)source waitForConnectedSeconds:(guint32)waitForConnectedSeconds cancellable:(OGCancellable*)cancellable;
++ (instancetype)connectSyncWithSource:(OGESource*)source waitForConnectedSeconds:(guint32)waitForConnectedSeconds cancellable:(OGCancellable*)cancellable;
 
 /**
  * Get the #EContact referring to the user of the address book

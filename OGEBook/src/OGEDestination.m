@@ -44,7 +44,7 @@
 
 + (EDestination**)importv:(OFString*)str
 {
-	EDestination** returnValue = E_DESTINATION(e_destination_importv([str UTF8String]));
+	EDestination** returnValue = e_destination_importv([str UTF8String]);
 
 	return returnValue;
 }

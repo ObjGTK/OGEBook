@@ -50,12 +50,6 @@
 - (OFString*)objectPath;
 
 /**
- *
- * @return
- */
-- (bool)isRunning;
-
-/**
  * Returns the #EBookClientView:client associated with @client_view.
  * 
  * The returned #EBookClient is referenced for thread-safety.  Unreference

@@ -279,7 +279,7 @@
 	camel_folder_summary_lock([self castedGObject]);
 }
 
-- (guint32)nextUid
+- (guint32)generateNextUid
 {
 	guint32 returnValue = camel_folder_summary_next_uid([self castedGObject]);
 
