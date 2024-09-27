@@ -6,6 +6,7 @@
 
 #include <libedataserver/libedataserver.h>
 
+#import "OGESoupSession.h"
 
 @class OGInputStream;
 @class OGOutputStream;
@@ -17,7 +18,7 @@
  * functions below.
  *
  */
-@interface OGEWebDAVSession : ESoupSession
+@interface OGEWebDAVSession : OGESoupSession
 {
 
 }

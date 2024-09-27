@@ -6,6 +6,7 @@
 
 #include <libedataserver/libedataserver.h>
 
+#import "OGESoupSession.h"
 
 @class OGESource;
 @class OGJsonBuilder;
@@ -16,7 +17,7 @@
  * functions below.
  *
  */
-@interface OGEGDataSession : ESoupSession
+@interface OGEGDataSession : OGESoupSession
 {
 
 }
