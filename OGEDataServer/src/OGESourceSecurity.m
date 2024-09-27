@@ -10,7 +10,7 @@
 
 - (ESourceSecurity*)castedGObject
 {
-	return E_SOURCE_SECURITY([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceSecurity, ESourceSecurity);
 }
 
 - (OFString*)dupMethod

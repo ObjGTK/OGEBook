@@ -51,7 +51,7 @@
 + (OFString*)errorToString:(EClientError)code;
 
 /**
- * Use e_util_copy_object_slist() instead.
+ * Copies a #GSList of #GObject<!-- -->s to the end of @copy_to.
  *
  * @param copyTo Where to copy; may be %NULL
  * @param objects #GSList of #GObject<!-- -->s to be copied
@@ -71,14 +71,15 @@
 + (GSList*)utilCopyStringSlistWithCopyTo:(GSList*)copyTo strings:(const GSList*)strings;
 
 /**
- * Use g_slist_free_full() instead.
+ * Calls g_object_unref() on each member of @objects and then frees @objects
+ * itself.
  *
  * @param objects a #GSList of #GObject<!-- -->s
  */
 + (void)utilFreeObjectSlist:(GSList*)objects;
 
 /**
- * Use g_slist_free_full() instead.
+ * Frees memory previously allocated by e_client_util_strv_to_slist().
  *
  * @param strings a #GSList of strings (gchar *)
  */
@@ -106,7 +107,7 @@
 + (gchar**)utilSlistToStrv:(const GSList*)strings;
 
 /**
- * Convert a %NULL-terminated array of strings to a list of strings.
+ * Use e_util_strv_to_slist() instead.
  *
  * @param strv a %NULL-terminated array of strings (const gchar *)
  * @return Newly allocated #GSList of

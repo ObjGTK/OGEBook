@@ -6,15 +6,15 @@
 
 #import "OGCamelStore.h"
 
+#import "OGCamelDB.h"
 #import <OGio/OGCancellable.h>
 #import "OGCamelFolder.h"
-#import "OGCamelDB.h"
 
 @implementation OGCamelStore
 
 - (CamelStore*)castedGObject
 {
-	return CAMEL_STORE([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelStore, CamelStore);
 }
 
 - (bool)canRefreshFolder:(CamelFolderInfo*)info
@@ -148,7 +148,7 @@
 
 - (OGCamelDB*)db
 {
-	CamelDB* gobjectValue = CAMEL_DB(camel_store_get_db([self castedGObject]));
+	CamelDB* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_store_get_db([self castedGObject]), CamelDB, CamelDB);
 
 	OGCamelDB* returnValue = [OGCamelDB withGObject:gobjectValue];
 	return returnValue;
@@ -170,7 +170,7 @@
 {
 	GError* err = NULL;
 
-	CamelFolder* gobjectValue = CAMEL_FOLDER(camel_store_get_folder_finish([self castedGObject], result, &err));
+	CamelFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_store_get_folder_finish([self castedGObject], result, &err), CamelFolder, CamelFolder);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -225,7 +225,7 @@
 {
 	GError* err = NULL;
 
-	CamelFolder* gobjectValue = CAMEL_FOLDER(camel_store_get_folder_sync([self castedGObject], [folderName UTF8String], flags, [cancellable castedGObject], &err));
+	CamelFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_store_get_folder_sync([self castedGObject], [folderName UTF8String], flags, [cancellable castedGObject], &err), CamelFolder, CamelFolder);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -257,7 +257,7 @@
 {
 	GError* err = NULL;
 
-	CamelFolder* gobjectValue = CAMEL_FOLDER(camel_store_get_inbox_folder_finish([self castedGObject], result, &err));
+	CamelFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_store_get_inbox_folder_finish([self castedGObject], result, &err), CamelFolder, CamelFolder);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -277,7 +277,7 @@
 {
 	GError* err = NULL;
 
-	CamelFolder* gobjectValue = CAMEL_FOLDER(camel_store_get_inbox_folder_sync([self castedGObject], [cancellable castedGObject], &err));
+	CamelFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_store_get_inbox_folder_sync([self castedGObject], [cancellable castedGObject], &err), CamelFolder, CamelFolder);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -302,7 +302,7 @@
 {
 	GError* err = NULL;
 
-	CamelFolder* gobjectValue = CAMEL_FOLDER(camel_store_get_junk_folder_finish([self castedGObject], result, &err));
+	CamelFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_store_get_junk_folder_finish([self castedGObject], result, &err), CamelFolder, CamelFolder);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -322,7 +322,7 @@
 {
 	GError* err = NULL;
 
-	CamelFolder* gobjectValue = CAMEL_FOLDER(camel_store_get_junk_folder_sync([self castedGObject], [cancellable castedGObject], &err));
+	CamelFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_store_get_junk_folder_sync([self castedGObject], [cancellable castedGObject], &err), CamelFolder, CamelFolder);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -354,7 +354,7 @@
 {
 	GError* err = NULL;
 
-	CamelFolder* gobjectValue = CAMEL_FOLDER(camel_store_get_trash_folder_finish([self castedGObject], result, &err));
+	CamelFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_store_get_trash_folder_finish([self castedGObject], result, &err), CamelFolder, CamelFolder);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -374,7 +374,7 @@
 {
 	GError* err = NULL;
 
-	CamelFolder* gobjectValue = CAMEL_FOLDER(camel_store_get_trash_folder_sync([self castedGObject], [cancellable castedGObject], &err));
+	CamelFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_store_get_trash_folder_sync([self castedGObject], [cancellable castedGObject], &err), CamelFolder, CamelFolder);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];

@@ -52,6 +52,13 @@
 - (bool)alwaysTrust;
 
 /**
+ * Returns, whether should ask before sending PGP public key in messages. The default is %TRUE.
+ *
+ * @return whether should ask before sending PGP public key in messages
+ */
+- (bool)askSendPublicKey;
+
+/**
  * Returns whether to digitally encrypt outgoing messages by default using
  * OpenPGP-compliant software such as GNU Privacy Guard (GnuPG).
  *
@@ -99,9 +106,9 @@
 - (bool)sendPreferEncrypt;
 
 /**
- * Returns, whether should send GPG public key in messages. The default is %TRUE.
+ * Returns, whether should send PGP public key in messages. The default is %TRUE.
  *
- * @return whether should send GPG public key in messages
+ * @return whether should send PGP public key in messages
  */
 - (bool)sendPublicKey;
 
@@ -128,6 +135,14 @@
  * @param alwaysTrust whether used keys are always fully trusted
  */
 - (void)setAlwaysTrust:(bool)alwaysTrust;
+
+/**
+ * Sets the @ask_send_public_key on the @extension, which tells the client to
+ * ask before user sends public key in the messages in an Autocrypt header.
+ *
+ * @param askSendPublicKey value to set
+ */
+- (void)setAskSendPublicKey:(bool)askSendPublicKey;
 
 /**
  * Sets whether to digitally encrypt outgoing messages by default using

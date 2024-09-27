@@ -13,7 +13,7 @@
 
 - (instancetype)initWithSummary:(OGCamelFolderSummary*)summary originalSummary:(OGCamelFolderSummary*)originalSummary vuid:(OFString*)vuid
 {
-	CamelVeeMessageInfo* gobjectValue = CAMEL_VEE_MESSAGE_INFO(camel_vee_message_info_new([summary castedGObject], [originalSummary castedGObject], [vuid UTF8String]));
+	CamelVeeMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_message_info_new([summary castedGObject], [originalSummary castedGObject], [vuid UTF8String]), CamelVeeMessageInfo, CamelVeeMessageInfo);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -29,12 +29,12 @@
 
 - (CamelVeeMessageInfo*)castedGObject
 {
-	return CAMEL_VEE_MESSAGE_INFO([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelVeeMessageInfo, CamelVeeMessageInfo);
 }
 
 - (OGCamelFolder*)originalFolder
 {
-	CamelFolder* gobjectValue = CAMEL_FOLDER(camel_vee_message_info_get_original_folder([self castedGObject]));
+	CamelFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_message_info_get_original_folder([self castedGObject]), CamelFolder, CamelFolder);
 
 	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
 	return returnValue;
@@ -42,7 +42,7 @@
 
 - (OGCamelFolderSummary*)originalSummary
 {
-	CamelFolderSummary* gobjectValue = CAMEL_FOLDER_SUMMARY(camel_vee_message_info_get_original_summary([self castedGObject]));
+	CamelFolderSummary* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_message_info_get_original_summary([self castedGObject]), CamelFolderSummary, CamelFolderSummary);
 
 	OGCamelFolderSummary* returnValue = [OGCamelFolderSummary withGObject:gobjectValue];
 	return returnValue;

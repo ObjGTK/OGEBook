@@ -12,7 +12,7 @@
 
 - (instancetype)initWithRegistry:(OGESourceRegistry*)registry extensionName:(OFString*)extensionName
 {
-	ESourceRegistryWatcher* gobjectValue = E_SOURCE_REGISTRY_WATCHER(e_source_registry_watcher_new([registry castedGObject], [extensionName UTF8String]));
+	ESourceRegistryWatcher* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_watcher_new([registry castedGObject], [extensionName UTF8String]), ESourceRegistryWatcher, ESourceRegistryWatcher);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -28,7 +28,7 @@
 
 - (ESourceRegistryWatcher*)castedGObject
 {
-	return E_SOURCE_REGISTRY_WATCHER([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceRegistryWatcher, ESourceRegistryWatcher);
 }
 
 - (OFString*)extensionName
@@ -41,7 +41,7 @@
 
 - (OGESourceRegistry*)registry
 {
-	ESourceRegistry* gobjectValue = E_SOURCE_REGISTRY(e_source_registry_watcher_get_registry([self castedGObject]));
+	ESourceRegistry* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_watcher_get_registry([self castedGObject]), ESourceRegistry, ESourceRegistry);
 
 	OGESourceRegistry* returnValue = [OGESourceRegistry withGObject:gobjectValue];
 	return returnValue;

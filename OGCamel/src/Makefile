@@ -44,6 +44,7 @@ SRCS = OGCamelAddress.m \
 	OGCamelMimeFilterIndex.m \
 	OGCamelMimeFilterLinewrap.m \
 	OGCamelMimeFilterPgp.m \
+	OGCamelMimeFilterPreview.m \
 	OGCamelMimeFilterProgress.m \
 	OGCamelMimeFilterToHTML.m \
 	OGCamelMimeFilterWindows.m \

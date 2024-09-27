@@ -12,7 +12,7 @@
 
 - (instancetype)init:(OGCamelFolder*)folder
 {
-	CamelVeeSubfolderData* gobjectValue = CAMEL_VEE_SUBFOLDER_DATA(camel_vee_subfolder_data_new([folder castedGObject]));
+	CamelVeeSubfolderData* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_subfolder_data_new([folder castedGObject]), CamelVeeSubfolderData, CamelVeeSubfolderData);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -28,12 +28,12 @@
 
 - (CamelVeeSubfolderData*)castedGObject
 {
-	return CAMEL_VEE_SUBFOLDER_DATA([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelVeeSubfolderData, CamelVeeSubfolderData);
 }
 
 - (OGCamelFolder*)folder
 {
-	CamelFolder* gobjectValue = CAMEL_FOLDER(camel_vee_subfolder_data_get_folder([self castedGObject]));
+	CamelFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_subfolder_data_get_folder([self castedGObject]), CamelFolder, CamelFolder);
 
 	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
 	return returnValue;

@@ -10,7 +10,7 @@
 
 - (ESourceOpenPGP*)castedGObject
 {
-	return E_SOURCE_OPENPGP([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceOpenPGP, ESourceOpenPGP);
 }
 
 - (OFString*)dupKeyId
@@ -32,6 +32,13 @@
 - (bool)alwaysTrust
 {
 	bool returnValue = e_source_openpgp_get_always_trust([self castedGObject]);
+
+	return returnValue;
+}
+
+- (bool)askSendPublicKey
+{
+	bool returnValue = e_source_openpgp_get_ask_send_public_key([self castedGObject]);
 
 	return returnValue;
 }
@@ -104,6 +111,11 @@
 - (void)setAlwaysTrust:(bool)alwaysTrust
 {
 	e_source_openpgp_set_always_trust([self castedGObject], alwaysTrust);
+}
+
+- (void)setAskSendPublicKey:(bool)askSendPublicKey
+{
+	e_source_openpgp_set_ask_send_public_key([self castedGObject], askSendPublicKey);
 }
 
 - (void)setEncryptByDefault:(bool)encryptByDefault

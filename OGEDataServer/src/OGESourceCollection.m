@@ -10,7 +10,7 @@
 
 - (ESourceCollection*)castedGObject
 {
-	return E_SOURCE_COLLECTION([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceCollection, ESourceCollection);
 }
 
 - (OFString*)dupCalendarUrl

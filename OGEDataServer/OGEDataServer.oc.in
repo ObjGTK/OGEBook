@@ -4,6 +4,7 @@ package_depends_on OGJson
 package_depends_on OGCamel
 package_depends_on OGio
 
-CPPFLAGS="$CPPFLAGS @OGEDATASERVER_CPPFLAGS@"
-LIBS="-logedataserver @OGEDATASERVER_LIBS@ $LIBS"
-FRAMEWORK_LIBS="-framework OGEDataServer @OGEDATASERVER_LIBS@ $FRAMEWORK_LIBS"
+CPPFLAGS="$CPPFLAGS -I@includedir@ @OGEDATASERVER_CPPFLAGS@"
+LIBS="-L@libdir@ -logedataserver @OGEDATASERVER_LIBS@ $LIBS"
+FRAMEWORK_LIBS="-L@libdir@ -logedataserver @OGEDATASERVER_LIBS@ $FRAMEWORK_LIBS"
+STATIC_LIBS="@libdir@/libogedataserver.a @OGEDATASERVER_LIBS@ $STATIC_LIBS"

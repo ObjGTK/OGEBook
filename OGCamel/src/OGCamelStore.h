@@ -6,9 +6,9 @@
 
 #import "OGCamelService.h"
 
+@class OGCamelDB;
 @class OGCancellable;
 @class OGCamelFolder;
-@class OGCamelDB;
 
 @interface OGCamelStore : OGCamelService
 {

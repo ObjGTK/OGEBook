@@ -10,7 +10,7 @@
 
 - (CamelLocalSettings*)castedGObject
 {
-	return CAMEL_LOCAL_SETTINGS([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelLocalSettings, CamelLocalSettings);
 }
 
 - (OFString*)dupPath

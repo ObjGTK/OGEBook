@@ -6,14 +6,14 @@
 
 #import "OGCamelStream.h"
 
-#import <OGio/OGIOStream.h>
 #import <OGio/OGCancellable.h>
+#import <OGio/OGIOStream.h>
 
 @implementation OGCamelStream
 
 - (instancetype)init:(OGIOStream*)baseStream
 {
-	CamelStream* gobjectValue = CAMEL_STREAM(camel_stream_new([baseStream castedGObject]));
+	CamelStream* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_new([baseStream castedGObject]), CamelStream, CamelStream);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -29,7 +29,7 @@
 
 - (CamelStream*)castedGObject
 {
-	return CAMEL_STREAM([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelStream, CamelStream);
 }
 
 - (gint)close:(OGCancellable*)cancellable
@@ -86,7 +86,7 @@
 
 - (OGIOStream*)refBaseStream
 {
-	GIOStream* gobjectValue = G_IO_STREAM(camel_stream_ref_base_stream([self castedGObject]));
+	GIOStream* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_ref_base_stream([self castedGObject]), GIOStream, GIOStream);
 
 	OGIOStream* returnValue = [OGIOStream withGObject:gobjectValue];
 	g_object_unref(gobjectValue);

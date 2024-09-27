@@ -7,14 +7,14 @@
 #import "OGESourceCredentialsProviderImpl.h"
 
 #import "OGESourceCredentialsProvider.h"
-#import "OGESource.h"
 #import <OGio/OGCancellable.h>
+#import "OGESource.h"
 
 @implementation OGESourceCredentialsProviderImpl
 
 - (ESourceCredentialsProviderImpl*)castedGObject
 {
-	return E_SOURCE_CREDENTIALS_PROVIDER_IMPL([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceCredentialsProviderImpl, ESourceCredentialsProviderImpl);
 }
 
 - (bool)canProcess:(OGESource*)source
@@ -55,7 +55,7 @@
 
 - (OGESourceCredentialsProvider*)provider
 {
-	ESourceCredentialsProvider* gobjectValue = E_SOURCE_CREDENTIALS_PROVIDER(e_source_credentials_provider_impl_get_provider([self castedGObject]));
+	ESourceCredentialsProvider* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_credentials_provider_impl_get_provider([self castedGObject]), ESourceCredentialsProvider, ESourceCredentialsProvider);
 
 	OGESourceCredentialsProvider* returnValue = [OGESourceCredentialsProvider withGObject:gobjectValue];
 	return returnValue;

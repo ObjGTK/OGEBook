@@ -17,7 +17,7 @@
 
 - (ENetworkMonitor*)castedGObject
 {
-	return E_NETWORK_MONITOR([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ENetworkMonitor, ENetworkMonitor);
 }
 
 - (OFString*)dupGioName

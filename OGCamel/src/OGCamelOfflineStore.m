@@ -12,7 +12,7 @@
 
 - (CamelOfflineStore*)castedGObject
 {
-	return CAMEL_OFFLINE_STORE([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelOfflineStore, CamelOfflineStore);
 }
 
 - (GPtrArray*)dupDownsyncFolders

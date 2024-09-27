@@ -10,7 +10,7 @@
 
 - (instancetype)init
 {
-	CamelMimeFilterPgp* gobjectValue = CAMEL_MIME_FILTER_PGP(camel_mime_filter_pgp_new());
+	CamelMimeFilterPgp* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_pgp_new(), CamelMimeFilterPgp, CamelMimeFilterPgp);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (CamelMimeFilterPgp*)castedGObject
 {
-	return CAMEL_MIME_FILTER_PGP([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMimeFilterPgp, CamelMimeFilterPgp);
 }
 
 

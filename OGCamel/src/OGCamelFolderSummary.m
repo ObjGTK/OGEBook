@@ -6,12 +6,12 @@
 
 #import "OGCamelFolderSummary.h"
 
-#import "OGCamelMessageInfo.h"
+#import "OGCamelIndex.h"
+#import "OGCamelMimeMessage.h"
 #import "OGCamelFolder.h"
 #import "OGCamelMimeParser.h"
+#import "OGCamelMessageInfo.h"
 #import "OGCamelStore.h"
-#import "OGCamelMimeMessage.h"
-#import "OGCamelIndex.h"
 
 @implementation OGCamelFolderSummary
 
@@ -22,7 +22,7 @@
 
 - (instancetype)init:(OGCamelFolder*)folder
 {
-	CamelFolderSummary* gobjectValue = CAMEL_FOLDER_SUMMARY(camel_folder_summary_new([folder castedGObject]));
+	CamelFolderSummary* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_summary_new([folder castedGObject]), CamelFolderSummary, CamelFolderSummary);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -38,7 +38,7 @@
 
 - (CamelFolderSummary*)castedGObject
 {
-	return CAMEL_FOLDER_SUMMARY([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelFolderSummary, CamelFolderSummary);
 }
 
 - (void)addWithInfo:(OGCamelMessageInfo*)info forceKeepUid:(bool)forceKeepUid
@@ -77,7 +77,7 @@
 
 - (OGCamelMessageInfo*)get:(OFString*)uid
 {
-	CamelMessageInfo* gobjectValue = CAMEL_MESSAGE_INFO(camel_folder_summary_get([self castedGObject], [uid UTF8String]));
+	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_summary_get([self castedGObject], [uid UTF8String]), CamelMessageInfo, CamelMessageInfo);
 
 	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -115,7 +115,7 @@
 
 - (OGCamelFolder*)folder
 {
-	CamelFolder* gobjectValue = CAMEL_FOLDER(camel_folder_summary_get_folder([self castedGObject]));
+	CamelFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_summary_get_folder([self castedGObject]), CamelFolder, CamelFolder);
 
 	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
 	return returnValue;
@@ -130,7 +130,7 @@
 
 - (OGCamelIndex*)index
 {
-	CamelIndex* gobjectValue = CAMEL_INDEX(camel_folder_summary_get_index([self castedGObject]));
+	CamelIndex* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_summary_get_index([self castedGObject]), CamelIndex, CamelIndex);
 
 	OGCamelIndex* returnValue = [OGCamelIndex withGObject:gobjectValue];
 	return returnValue;
@@ -231,7 +231,7 @@
 
 - (OGCamelMessageInfo*)infoNewFromHeaders:(const CamelNameValueArray*)headers
 {
-	CamelMessageInfo* gobjectValue = CAMEL_MESSAGE_INFO(camel_folder_summary_info_new_from_headers([self castedGObject], headers));
+	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_summary_info_new_from_headers([self castedGObject], headers), CamelMessageInfo, CamelMessageInfo);
 
 	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -241,7 +241,7 @@
 
 - (OGCamelMessageInfo*)infoNewFromMessage:(OGCamelMimeMessage*)message
 {
-	CamelMessageInfo* gobjectValue = CAMEL_MESSAGE_INFO(camel_folder_summary_info_new_from_message([self castedGObject], [message castedGObject]));
+	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_summary_info_new_from_message([self castedGObject], [message castedGObject]), CamelMessageInfo, CamelMessageInfo);
 
 	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -251,7 +251,7 @@
 
 - (OGCamelMessageInfo*)infoNewFromParser:(OGCamelMimeParser*)parser
 {
-	CamelMessageInfo* gobjectValue = CAMEL_MESSAGE_INFO(camel_folder_summary_info_new_from_parser([self castedGObject], [parser castedGObject]));
+	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_summary_info_new_from_parser([self castedGObject], [parser castedGObject]), CamelMessageInfo, CamelMessageInfo);
 
 	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -279,7 +279,7 @@
 	camel_folder_summary_lock([self castedGObject]);
 }
 
-- (guint32)generateNextUid
+- (guint32)nextUid
 {
 	guint32 returnValue = camel_folder_summary_next_uid([self castedGObject]);
 
@@ -296,7 +296,7 @@
 
 - (OGCamelMessageInfo*)peekLoaded:(OFString*)uid
 {
-	CamelMessageInfo* gobjectValue = CAMEL_MESSAGE_INFO(camel_folder_summary_peek_loaded([self castedGObject], [uid UTF8String]));
+	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_summary_peek_loaded([self castedGObject], [uid UTF8String]), CamelMessageInfo, CamelMessageInfo);
 
 	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo withGObject:gobjectValue];
 	g_object_unref(gobjectValue);

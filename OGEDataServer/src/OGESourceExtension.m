@@ -12,12 +12,12 @@
 
 - (ESourceExtension*)castedGObject
 {
-	return E_SOURCE_EXTENSION([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceExtension, ESourceExtension);
 }
 
 - (OGESource*)source
 {
-	ESource* gobjectValue = E_SOURCE(e_source_extension_get_source([self castedGObject]));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_extension_get_source([self castedGObject]), ESource, ESource);
 
 	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	return returnValue;
@@ -35,7 +35,7 @@
 
 - (OGESource*)refSource
 {
-	ESource* gobjectValue = E_SOURCE(e_source_extension_ref_source([self castedGObject]));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_extension_ref_source([self castedGObject]), ESource, ESource);
 
 	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);

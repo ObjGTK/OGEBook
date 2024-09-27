@@ -10,7 +10,7 @@
 
 - (CamelMessageInfoBase*)castedGObject
 {
-	return CAMEL_MESSAGE_INFO_BASE([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMessageInfoBase, CamelMessageInfoBase);
 }
 
 

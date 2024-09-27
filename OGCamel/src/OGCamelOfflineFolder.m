@@ -12,7 +12,7 @@
 
 - (CamelOfflineFolder*)castedGObject
 {
-	return CAMEL_OFFLINE_FOLDER([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelOfflineFolder, CamelOfflineFolder);
 }
 
 - (bool)canDownsync

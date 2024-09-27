@@ -9,15 +9,12 @@ LIB_MINOR = 2
 SRCS = OGEClient.m \
 	OGEExtension.m \
 	OGEGDataSession.m \
-	OGEModule.m \
 	OGENetworkMonitor.m \
 	OGEOAuth2ServiceBase.m \
 	OGEOAuth2ServiceGoogle.m \
 	OGEOAuth2ServiceOutlook.m \
 	OGEOAuth2ServiceYahoo.m \
 	OGEOAuth2Services.m \
-	OGESoupAuthBearer.m \
-	OGESoupSession.m \
 	OGESource.m \
 	OGESourceAddressBook.m \
 	OGESourceAlarms.m \

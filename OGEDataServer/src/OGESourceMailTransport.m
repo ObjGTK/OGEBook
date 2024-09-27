@@ -10,7 +10,7 @@
 
 - (ESourceMailTransport*)castedGObject
 {
-	return E_SOURCE_MAIL_TRANSPORT([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceMailTransport, ESourceMailTransport);
 }
 
 

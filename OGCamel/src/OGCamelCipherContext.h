@@ -8,8 +8,8 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCancellable;
 @class OGCamelMimePart;
+@class OGCancellable;
 @class OGCamelSession;
 
 @interface OGCamelCipherContext : OGObject

@@ -7,14 +7,14 @@
 #import "OGCamelVeeDataCache.h"
 
 #import "OGCamelVeeSubfolderData.h"
-#import "OGCamelFolder.h"
 #import "OGCamelVeeMessageInfoData.h"
+#import "OGCamelFolder.h"
 
 @implementation OGCamelVeeDataCache
 
 - (instancetype)init
 {
-	CamelVeeDataCache* gobjectValue = CAMEL_VEE_DATA_CACHE(camel_vee_data_cache_new());
+	CamelVeeDataCache* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_data_cache_new(), CamelVeeDataCache, CamelVeeDataCache);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -30,7 +30,7 @@
 
 - (CamelVeeDataCache*)castedGObject
 {
-	return CAMEL_VEE_DATA_CACHE([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelVeeDataCache, CamelVeeDataCache);
 }
 
 - (void)addSubfolder:(OGCamelFolder*)subfolder
@@ -52,7 +52,7 @@
 
 - (OGCamelVeeMessageInfoData*)messageInfoDataWithFolder:(OGCamelFolder*)folder origMessageUid:(OFString*)origMessageUid
 {
-	CamelVeeMessageInfoData* gobjectValue = CAMEL_VEE_MESSAGE_INFO_DATA(camel_vee_data_cache_get_message_info_data([self castedGObject], [folder castedGObject], [origMessageUid UTF8String]));
+	CamelVeeMessageInfoData* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_data_cache_get_message_info_data([self castedGObject], [folder castedGObject], [origMessageUid UTF8String]), CamelVeeMessageInfoData, CamelVeeMessageInfoData);
 
 	OGCamelVeeMessageInfoData* returnValue = [OGCamelVeeMessageInfoData withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -62,7 +62,7 @@
 
 - (OGCamelVeeMessageInfoData*)messageInfoDataByVuid:(OFString*)veeMessageUid
 {
-	CamelVeeMessageInfoData* gobjectValue = CAMEL_VEE_MESSAGE_INFO_DATA(camel_vee_data_cache_get_message_info_data_by_vuid([self castedGObject], [veeMessageUid UTF8String]));
+	CamelVeeMessageInfoData* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_data_cache_get_message_info_data_by_vuid([self castedGObject], [veeMessageUid UTF8String]), CamelVeeMessageInfoData, CamelVeeMessageInfoData);
 
 	OGCamelVeeMessageInfoData* returnValue = [OGCamelVeeMessageInfoData withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -72,7 +72,7 @@
 
 - (OGCamelVeeSubfolderData*)subfolderData:(OGCamelFolder*)folder
 {
-	CamelVeeSubfolderData* gobjectValue = CAMEL_VEE_SUBFOLDER_DATA(camel_vee_data_cache_get_subfolder_data([self castedGObject], [folder castedGObject]));
+	CamelVeeSubfolderData* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_data_cache_get_subfolder_data([self castedGObject], [folder castedGObject]), CamelVeeSubfolderData, CamelVeeSubfolderData);
 
 	OGCamelVeeSubfolderData* returnValue = [OGCamelVeeSubfolderData withGObject:gobjectValue];
 	g_object_unref(gobjectValue);

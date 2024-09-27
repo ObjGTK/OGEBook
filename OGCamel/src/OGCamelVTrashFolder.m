@@ -6,14 +6,14 @@
 
 #import "OGCamelVTrashFolder.h"
 
-#import "OGCamelFolder.h"
 #import "OGCamelStore.h"
+#import "OGCamelFolder.h"
 
 @implementation OGCamelVTrashFolder
 
 - (instancetype)initWithParentStore:(OGCamelStore*)parentStore type:(CamelVTrashFolderType)type
 {
-	CamelVTrashFolder* gobjectValue = CAMEL_VTRASH_FOLDER(camel_vtrash_folder_new([parentStore castedGObject], type));
+	CamelVTrashFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vtrash_folder_new([parentStore castedGObject], type), CamelVTrashFolder, CamelVTrashFolder);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -29,7 +29,7 @@
 
 - (CamelVTrashFolder*)castedGObject
 {
-	return CAMEL_VTRASH_FOLDER([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelVTrashFolder, CamelVTrashFolder);
 }
 
 - (CamelVTrashFolderType)folderType

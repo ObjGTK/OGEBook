@@ -57,7 +57,7 @@
 {
 	GError* err = NULL;
 
-	CamelDB* gobjectValue = CAMEL_DB(camel_db_new([filename UTF8String], &err));
+	CamelDB* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_db_new([filename UTF8String], &err), CamelDB, CamelDB);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -81,7 +81,7 @@
 
 - (CamelDB*)castedGObject
 {
-	return CAMEL_DB([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelDB, CamelDB);
 }
 
 - (gint)abortTransaction

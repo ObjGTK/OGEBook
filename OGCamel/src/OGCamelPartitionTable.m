@@ -12,7 +12,7 @@
 
 - (instancetype)initWithBs:(OGCamelBlockFile*)bs root:(camel_block_t)root
 {
-	CamelPartitionTable* gobjectValue = CAMEL_PARTITION_TABLE(camel_partition_table_new([bs castedGObject], root));
+	CamelPartitionTable* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_partition_table_new([bs castedGObject], root), CamelPartitionTable, CamelPartitionTable);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -28,7 +28,7 @@
 
 - (CamelPartitionTable*)castedGObject
 {
-	return CAMEL_PARTITION_TABLE([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelPartitionTable, CamelPartitionTable);
 }
 
 - (gint)addWithKey:(OFString*)key keyid:(camel_key_t)keyid

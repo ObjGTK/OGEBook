@@ -6,16 +6,16 @@
 
 #import "OGCamelDataWrapper.h"
 
-#import "OGCamelStream.h"
 #import <OGio/OGInputStream.h>
 #import <OGio/OGCancellable.h>
+#import "OGCamelStream.h"
 #import <OGio/OGOutputStream.h>
 
 @implementation OGCamelDataWrapper
 
 - (instancetype)init
 {
-	CamelDataWrapper* gobjectValue = CAMEL_DATA_WRAPPER(camel_data_wrapper_new());
+	CamelDataWrapper* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_data_wrapper_new(), CamelDataWrapper, CamelDataWrapper);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -31,7 +31,7 @@
 
 - (CamelDataWrapper*)castedGObject
 {
-	return CAMEL_DATA_WRAPPER([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelDataWrapper, CamelDataWrapper);
 }
 
 - (gsize)calculateDecodedSizeSync:(OGCancellable*)cancellable

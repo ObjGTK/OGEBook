@@ -26,7 +26,7 @@
 
 - (instancetype)init
 {
-	EOAuth2Services* gobjectValue = E_OAUTH2_SERVICES(e_oauth2_services_new());
+	EOAuth2Services* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_oauth2_services_new(), EOAuth2Services, EOAuth2Services);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -42,7 +42,7 @@
 
 - (EOAuth2Services*)castedGObject
 {
-	return E_OAUTH2_SERVICES([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], EOAuth2Services, EOAuth2Services);
 }
 
 - (void)add:(EOAuth2Service*)service

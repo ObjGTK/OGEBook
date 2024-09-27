@@ -7,14 +7,14 @@
 #import "OGEGDataSession.h"
 
 #import "OGESource.h"
-#import <OGio/OGCancellable.h>
 #import <OGJson/OGJsonBuilder.h>
+#import <OGio/OGCancellable.h>
 
 @implementation OGEGDataSession
 
 - (instancetype)init:(OGESource*)source
 {
-	EGDataSession* gobjectValue = E_GDATA_SESSION(e_gdata_session_new([source castedGObject]));
+	EGDataSession* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_gdata_session_new([source castedGObject]), EGDataSession, EGDataSession);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -30,7 +30,7 @@
 
 - (EGDataSession*)castedGObject
 {
-	return E_GDATA_SESSION([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], EGDataSession, EGDataSession);
 }
 
 - (bool)tasklistsDeleteSyncWithTasklistId:(OFString*)tasklistId cancellable:(OGCancellable*)cancellable

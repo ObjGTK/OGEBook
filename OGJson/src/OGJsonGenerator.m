@@ -6,14 +6,14 @@
 
 #import "OGJsonGenerator.h"
 
-#import <OGio/OGCancellable.h>
 #import <OGio/OGOutputStream.h>
+#import <OGio/OGCancellable.h>
 
 @implementation OGJsonGenerator
 
 - (instancetype)init
 {
-	JsonGenerator* gobjectValue = JSON_GENERATOR(json_generator_new());
+	JsonGenerator* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(json_generator_new(), JsonGenerator, JsonGenerator);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -29,7 +29,7 @@
 
 - (JsonGenerator*)castedGObject
 {
-	return JSON_GENERATOR([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], JsonGenerator, JsonGenerator);
 }
 
 - (guint)indent

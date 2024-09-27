@@ -10,7 +10,7 @@
 
 - (EOAuth2ServiceYahoo*)castedGObject
 {
-	return E_OAUTH2_SERVICE_YAHOO([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], EOAuth2ServiceYahoo, EOAuth2ServiceYahoo);
 }
 
 

@@ -6,13 +6,14 @@
 
 #import "OGCamelMessageInfo.h"
 
+#import "OGCamelMimeMessage.h"
 #import "OGCamelFolderSummary.h"
 
 @implementation OGCamelMessageInfo
 
 - (instancetype)init:(OGCamelFolderSummary*)summary
 {
-	CamelMessageInfo* gobjectValue = CAMEL_MESSAGE_INFO(camel_message_info_new([summary castedGObject]));
+	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_message_info_new([summary castedGObject]), CamelMessageInfo, CamelMessageInfo);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -28,7 +29,23 @@
 
 - (instancetype)initFromHeadersWithSummary:(OGCamelFolderSummary*)summary headers:(const CamelNameValueArray*)headers
 {
-	CamelMessageInfo* gobjectValue = CAMEL_MESSAGE_INFO(camel_message_info_new_from_headers([summary castedGObject], headers));
+	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_message_info_new_from_headers([summary castedGObject], headers), CamelMessageInfo, CamelMessageInfo);
+
+	@try {
+		self = [super initWithGObject:gobjectValue];
+	} @catch (id e) {
+		g_object_unref(gobjectValue);
+		[self release];
+		@throw e;
+	}
+
+	g_object_unref(gobjectValue);
+	return self;
+}
+
+- (instancetype)initFromMessageWithSummary:(OGCamelFolderSummary*)summary message:(OGCamelMimeMessage*)message
+{
+	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_message_info_new_from_message([summary castedGObject], [message castedGObject]), CamelMessageInfo, CamelMessageInfo);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -44,12 +61,12 @@
 
 - (CamelMessageInfo*)castedGObject
 {
-	return CAMEL_MESSAGE_INFO([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMessageInfo, CamelMessageInfo);
 }
 
 - (OGCamelMessageInfo*)clone:(OGCamelFolderSummary*)assignSummary
 {
-	CamelMessageInfo* gobjectValue = CAMEL_MESSAGE_INFO(camel_message_info_clone([self castedGObject], [assignSummary castedGObject]));
+	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_message_info_clone([self castedGObject], [assignSummary castedGObject]), CamelMessageInfo, CamelMessageInfo);
 
 	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -73,7 +90,7 @@
 {
 	gchar* gobjectValue = camel_message_info_dup_preview([self castedGObject]);
 
-	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	OFString* returnValue = gobjectValue;
 	return returnValue;
 }
 
@@ -337,7 +354,7 @@
 
 - (OGCamelFolderSummary*)refSummary
 {
-	CamelFolderSummary* gobjectValue = CAMEL_FOLDER_SUMMARY(camel_message_info_ref_summary([self castedGObject]));
+	CamelFolderSummary* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_message_info_ref_summary([self castedGObject]), CamelFolderSummary, CamelFolderSummary);
 
 	OGCamelFolderSummary* returnValue = [OGCamelFolderSummary withGObject:gobjectValue];
 	g_object_unref(gobjectValue);

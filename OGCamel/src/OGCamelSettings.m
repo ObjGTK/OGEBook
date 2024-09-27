@@ -10,12 +10,12 @@
 
 - (CamelSettings*)castedGObject
 {
-	return CAMEL_SETTINGS([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelSettings, CamelSettings);
 }
 
 - (OGCamelSettings*)clone
 {
-	CamelSettings* gobjectValue = CAMEL_SETTINGS(camel_settings_clone([self castedGObject]));
+	CamelSettings* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_settings_clone([self castedGObject]), CamelSettings, CamelSettings);
 
 	OGCamelSettings* returnValue = [OGCamelSettings withGObject:gobjectValue];
 	g_object_unref(gobjectValue);

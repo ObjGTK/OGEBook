@@ -10,7 +10,7 @@
 
 - (CamelIndexCursor*)castedGObject
 {
-	return CAMEL_INDEX_CURSOR([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelIndexCursor, CamelIndexCursor);
 }
 
 - (OFString*)next

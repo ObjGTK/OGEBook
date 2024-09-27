@@ -10,7 +10,7 @@
 
 - (ESourceCredentialsProviderImplOAuth2*)castedGObject
 {
-	return E_SOURCE_CREDENTIALS_PROVIDER_IMPL_OAUTH2([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceCredentialsProviderImplOAuth2, ESourceCredentialsProviderImplOAuth2);
 }
 
 

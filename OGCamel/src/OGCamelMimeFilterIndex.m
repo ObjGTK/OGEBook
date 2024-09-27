@@ -6,14 +6,14 @@
 
 #import "OGCamelMimeFilterIndex.h"
 
-#import "OGCamelIndex.h"
 #import "OGCamelIndexName.h"
+#import "OGCamelIndex.h"
 
 @implementation OGCamelMimeFilterIndex
 
 - (instancetype)init:(OGCamelIndex*)index
 {
-	CamelMimeFilterIndex* gobjectValue = CAMEL_MIME_FILTER_INDEX(camel_mime_filter_index_new([index castedGObject]));
+	CamelMimeFilterIndex* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_index_new([index castedGObject]), CamelMimeFilterIndex, CamelMimeFilterIndex);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -29,7 +29,7 @@
 
 - (CamelMimeFilterIndex*)castedGObject
 {
-	return CAMEL_MIME_FILTER_INDEX([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMimeFilterIndex, CamelMimeFilterIndex);
 }
 
 - (void)setIndex:(OGCamelIndex*)index

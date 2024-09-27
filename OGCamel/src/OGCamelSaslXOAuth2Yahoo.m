@@ -10,7 +10,7 @@
 
 - (CamelSaslXOAuth2Yahoo*)castedGObject
 {
-	return CAMEL_SASL_XOAUTH2_YAHOO([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelSaslXOAuth2Yahoo, CamelSaslXOAuth2Yahoo);
 }
 
 

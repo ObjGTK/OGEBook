@@ -13,7 +13,7 @@
 
 - (instancetype)init:(OGCamelSession*)session
 {
-	CamelGpgContext* gobjectValue = CAMEL_GPG_CONTEXT(camel_gpg_context_new([session castedGObject]));
+	CamelGpgContext* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_gpg_context_new([session castedGObject]), CamelGpgContext, CamelGpgContext);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -29,7 +29,7 @@
 
 - (CamelGpgContext*)castedGObject
 {
-	return CAMEL_GPG_CONTEXT([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelGpgContext, CamelGpgContext);
 }
 
 - (bool)alwaysTrust

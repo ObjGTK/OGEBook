@@ -10,7 +10,7 @@
 
 - (ESourceMailComposition*)castedGObject
 {
-	return E_SOURCE_MAIL_COMPOSITION([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceMailComposition, ESourceMailComposition);
 }
 
 - (gchar**)dupBcc

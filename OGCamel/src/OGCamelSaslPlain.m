@@ -10,7 +10,7 @@
 
 - (CamelSaslPlain*)castedGObject
 {
-	return CAMEL_SASL_PLAIN([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelSaslPlain, CamelSaslPlain);
 }
 
 

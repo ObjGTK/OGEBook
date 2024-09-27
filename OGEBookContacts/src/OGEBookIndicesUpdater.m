@@ -10,7 +10,7 @@
 
 - (EBookIndicesUpdater*)castedGObject
 {
-	return E_BOOK_INDICES_UPDATER([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], EBookIndicesUpdater, EBookIndicesUpdater);
 }
 
 - (bool)addWithUid:(OFString*)uid indicesIndex:(guint)indicesIndex

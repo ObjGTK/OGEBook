@@ -10,7 +10,7 @@
 
 - (CamelMedium*)castedGObject
 {
-	return CAMEL_MEDIUM([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMedium, CamelMedium);
 }
 
 - (void)addHeaderWithName:(OFString*)name value:(OFString*)value
@@ -27,7 +27,7 @@
 
 - (OGCamelDataWrapper*)content
 {
-	CamelDataWrapper* gobjectValue = CAMEL_DATA_WRAPPER(camel_medium_get_content([self castedGObject]));
+	CamelDataWrapper* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_medium_get_content([self castedGObject]), CamelDataWrapper, CamelDataWrapper);
 
 	OGCamelDataWrapper* returnValue = [OGCamelDataWrapper withGObject:gobjectValue];
 	return returnValue;

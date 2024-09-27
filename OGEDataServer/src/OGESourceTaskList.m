@@ -10,7 +10,7 @@
 
 - (ESourceTaskList*)castedGObject
 {
-	return E_SOURCE_TASK_LIST([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceTaskList, ESourceTaskList);
 }
 
 

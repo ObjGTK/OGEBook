@@ -6,11 +6,11 @@
 
 #import "OGCamelObject.h"
 
+@class OGCamelFolderSummary;
+@class OGCamelMimeMessage;
+@class OGCamelStore;
 @class OGCancellable;
 @class OGCamelMessageInfo;
-@class OGCamelMimeMessage;
-@class OGCamelFolderSummary;
-@class OGCamelStore;
 
 @interface OGCamelFolder : OGCamelObject
 {

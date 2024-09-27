@@ -13,7 +13,7 @@
 
 - (instancetype)initWithBaseStream:(OGInputStream*)baseStream filter:(OGCamelMimeFilter*)filter
 {
-	CamelFilterInputStream* gobjectValue = CAMEL_FILTER_INPUT_STREAM(camel_filter_input_stream_new([baseStream castedGObject], [filter castedGObject]));
+	CamelFilterInputStream* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_filter_input_stream_new([baseStream castedGObject], [filter castedGObject]), CamelFilterInputStream, CamelFilterInputStream);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -29,12 +29,12 @@
 
 - (CamelFilterInputStream*)castedGObject
 {
-	return CAMEL_FILTER_INPUT_STREAM([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelFilterInputStream, CamelFilterInputStream);
 }
 
 - (OGCamelMimeFilter*)filter
 {
-	CamelMimeFilter* gobjectValue = CAMEL_MIME_FILTER(camel_filter_input_stream_get_filter([self castedGObject]));
+	CamelMimeFilter* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_filter_input_stream_get_filter([self castedGObject]), CamelMimeFilter, CamelMimeFilter);
 
 	OGCamelMimeFilter* returnValue = [OGCamelMimeFilter withGObject:gobjectValue];
 	return returnValue;

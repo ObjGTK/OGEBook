@@ -62,7 +62,7 @@
 
 - (instancetype)init
 {
-	EContact* gobjectValue = E_CONTACT(e_contact_new());
+	EContact* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_contact_new(), EContact, EContact);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -78,7 +78,7 @@
 
 - (instancetype)initFromVcard:(OFString*)vcard
 {
-	EContact* gobjectValue = E_CONTACT(e_contact_new_from_vcard([vcard UTF8String]));
+	EContact* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_contact_new_from_vcard([vcard UTF8String]), EContact, EContact);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -94,7 +94,7 @@
 
 - (instancetype)initFromVcardWithUidWithVcard:(OFString*)vcard uid:(OFString*)uid
 {
-	EContact* gobjectValue = E_CONTACT(e_contact_new_from_vcard_with_uid([vcard UTF8String], [uid UTF8String]));
+	EContact* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_contact_new_from_vcard_with_uid([vcard UTF8String], [uid UTF8String]), EContact, EContact);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -110,12 +110,12 @@
 
 - (EContact*)castedGObject
 {
-	return E_CONTACT([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], EContact, EContact);
 }
 
 - (OGEContact*)duplicate
 {
-	EContact* gobjectValue = E_CONTACT(e_contact_duplicate([self castedGObject]));
+	EContact* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_contact_duplicate([self castedGObject]), EContact, EContact);
 
 	OGEContact* returnValue = [OGEContact withGObject:gobjectValue];
 	g_object_unref(gobjectValue);

@@ -12,7 +12,7 @@
 
 - (instancetype)initWithBs:(OGCamelBlockFile*)bs root:(camel_block_t)root
 {
-	CamelKeyTable* gobjectValue = CAMEL_KEY_TABLE(camel_key_table_new([bs castedGObject], root));
+	CamelKeyTable* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_key_table_new([bs castedGObject], root), CamelKeyTable, CamelKeyTable);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -28,7 +28,7 @@
 
 - (CamelKeyTable*)castedGObject
 {
-	return CAMEL_KEY_TABLE([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelKeyTable, CamelKeyTable);
 }
 
 - (camel_key_t)addWithKey:(OFString*)key data:(camel_block_t)data flags:(guint)flags

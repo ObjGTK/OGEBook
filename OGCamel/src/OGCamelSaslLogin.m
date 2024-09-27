@@ -10,7 +10,7 @@
 
 - (CamelSaslLogin*)castedGObject
 {
-	return CAMEL_SASL_LOGIN([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelSaslLogin, CamelSaslLogin);
 }
 
 

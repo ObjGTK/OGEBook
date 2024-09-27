@@ -10,7 +10,7 @@
 
 - (instancetype)init
 {
-	CamelStreamMem* gobjectValue = CAMEL_STREAM_MEM(camel_stream_mem_new());
+	CamelStreamMem* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_mem_new(), CamelStreamMem, CamelStreamMem);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (instancetype)initWithBufferWithBuffer:(OFString*)buffer len:(gsize)len
 {
-	CamelStreamMem* gobjectValue = CAMEL_STREAM_MEM(camel_stream_mem_new_with_buffer([buffer UTF8String], len));
+	CamelStreamMem* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_mem_new_with_buffer([buffer UTF8String], len), CamelStreamMem, CamelStreamMem);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -42,7 +42,7 @@
 
 - (instancetype)initWithByteArray:(GByteArray*)buffer
 {
-	CamelStreamMem* gobjectValue = CAMEL_STREAM_MEM(camel_stream_mem_new_with_byte_array(buffer));
+	CamelStreamMem* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_mem_new_with_byte_array(buffer), CamelStreamMem, CamelStreamMem);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -58,7 +58,7 @@
 
 - (CamelStreamMem*)castedGObject
 {
-	return CAMEL_STREAM_MEM([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelStreamMem, CamelStreamMem);
 }
 
 - (GByteArray*)byteArray

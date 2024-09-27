@@ -40,12 +40,12 @@
 
 - (ESourceCamel*)castedGObject
 {
-	return E_SOURCE_CAMEL([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceCamel, ESourceCamel);
 }
 
 - (OGCamelSettings*)settings
 {
-	CamelSettings* gobjectValue = CAMEL_SETTINGS(e_source_camel_get_settings([self castedGObject]));
+	CamelSettings* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_camel_get_settings([self castedGObject]), CamelSettings, CamelSettings);
 
 	OGCamelSettings* returnValue = [OGCamelSettings withGObject:gobjectValue];
 	return returnValue;

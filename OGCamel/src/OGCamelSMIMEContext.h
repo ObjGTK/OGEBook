@@ -14,6 +14,23 @@
 
 }
 
+/**
+ * Functions
+ */
+
+/**
+ * Utility function to get a localized text description for an error code
+ * returned by PORT_GetError().
+ * 
+ * Note: the function returns always NULL when the library was not compiled
+ *   with S/MIME support.
+ *
+ * @param nssErrorCode an error code, as returned by PORT_GetError()
+ * @return a localized text description of the @nss_error_code,
+ *    or NULL, when the code is unknown or the library was not compiled with
+ *    S/MIME support.
+ */
++ (OFString*)utilNssErrorToString:(gint)nssErrorCode;
 
 /**
  * Constructors

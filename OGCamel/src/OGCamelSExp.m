@@ -18,9 +18,17 @@
 	camel_sexp_encode_string(string, [vstring UTF8String]);
 }
 
++ (OFString*)toSqlSexp:(OFString*)sexp
+{
+	gchar* gobjectValue = camel_sexp_to_sql_sexp([sexp UTF8String]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
+}
+
 - (instancetype)init
 {
-	CamelSExp* gobjectValue = CAMEL_SEXP(camel_sexp_new());
+	CamelSExp* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_sexp_new(), CamelSExp, CamelSExp);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -36,7 +44,7 @@
 
 - (CamelSExp*)castedGObject
 {
-	return CAMEL_SEXP([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelSExp, CamelSExp);
 }
 
 - (void)addFunctionWithScope:(guint)scope name:(OFString*)name func:(CamelSExpFunc)func userData:(gpointer)userData

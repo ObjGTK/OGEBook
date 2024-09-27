@@ -10,7 +10,7 @@
 
 - (instancetype)init:(CamelMimeFilterYencDirection)direction
 {
-	CamelMimeFilterYenc* gobjectValue = CAMEL_MIME_FILTER_YENC(camel_mime_filter_yenc_new(direction));
+	CamelMimeFilterYenc* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_yenc_new(direction), CamelMimeFilterYenc, CamelMimeFilterYenc);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (CamelMimeFilterYenc*)castedGObject
 {
-	return CAMEL_MIME_FILTER_YENC([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMimeFilterYenc, CamelMimeFilterYenc);
 }
 
 - (guint32)crc

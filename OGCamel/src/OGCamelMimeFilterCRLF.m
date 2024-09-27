@@ -10,7 +10,7 @@
 
 - (instancetype)initWithDirection:(CamelMimeFilterCRLFDirection)direction mode:(CamelMimeFilterCRLFMode)mode
 {
-	CamelMimeFilterCRLF* gobjectValue = CAMEL_MIME_FILTER_CRLF(camel_mime_filter_crlf_new(direction, mode));
+	CamelMimeFilterCRLF* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_crlf_new(direction, mode), CamelMimeFilterCRLF, CamelMimeFilterCRLF);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (CamelMimeFilterCRLF*)castedGObject
 {
-	return CAMEL_MIME_FILTER_CRLF([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMimeFilterCRLF, CamelMimeFilterCRLF);
 }
 
 - (bool)ensureCrlfEnd

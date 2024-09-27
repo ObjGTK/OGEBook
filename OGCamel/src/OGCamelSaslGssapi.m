@@ -17,7 +17,7 @@
 
 - (CamelSaslGssapi*)castedGObject
 {
-	return CAMEL_SASL_GSSAPI([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelSaslGssapi, CamelSaslGssapi);
 }
 
 - (void)overrideHostAndUserWithOverrideHost:(OFString*)overrideHost overrideUser:(OFString*)overrideUser

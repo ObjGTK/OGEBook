@@ -8,6 +8,7 @@
 
 #import <OGObject/OGObject.h>
 
+@class OGCamelMimeMessage;
 @class OGCamelFolderSummary;
 
 @interface OGCamelMessageInfo : OGObject
@@ -21,6 +22,7 @@
  */
 - (instancetype)init:(OGCamelFolderSummary*)summary;
 - (instancetype)initFromHeadersWithSummary:(OGCamelFolderSummary*)summary headers:(const CamelNameValueArray*)headers;
+- (instancetype)initFromMessageWithSummary:(OGCamelFolderSummary*)summary message:(OGCamelMimeMessage*)message;
 
 /**
  * Methods

@@ -7,16 +7,16 @@
 #import "OGCamelVeeStore.h"
 
 #import "OGCamelVeeDataCache.h"
-#import "OGCamelFolder.h"
 #import "OGCamelVeeMessageInfoData.h"
-#import <OGio/OGCancellable.h>
 #import "OGCamelVeeFolder.h"
+#import <OGio/OGCancellable.h>
+#import "OGCamelFolder.h"
 
 @implementation OGCamelVeeStore
 
 - (instancetype)init
 {
-	CamelVeeStore* gobjectValue = CAMEL_VEE_STORE(camel_vee_store_new());
+	CamelVeeStore* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_store_new(), CamelVeeStore, CamelVeeStore);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -32,7 +32,7 @@
 
 - (CamelVeeStore*)castedGObject
 {
-	return CAMEL_VEE_STORE([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelVeeStore, CamelVeeStore);
 }
 
 - (bool)unmatchedEnabled
@@ -44,7 +44,7 @@
 
 - (OGCamelVeeFolder*)unmatchedFolder
 {
-	CamelVeeFolder* gobjectValue = CAMEL_VEE_FOLDER(camel_vee_store_get_unmatched_folder([self castedGObject]));
+	CamelVeeFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_store_get_unmatched_folder([self castedGObject]), CamelVeeFolder, CamelVeeFolder);
 
 	OGCamelVeeFolder* returnValue = [OGCamelVeeFolder withGObject:gobjectValue];
 	return returnValue;
@@ -52,7 +52,7 @@
 
 - (OGCamelVeeDataCache*)veeDataCache
 {
-	CamelVeeDataCache* gobjectValue = CAMEL_VEE_DATA_CACHE(camel_vee_store_get_vee_data_cache([self castedGObject]));
+	CamelVeeDataCache* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_store_get_vee_data_cache([self castedGObject]), CamelVeeDataCache, CamelVeeDataCache);
 
 	OGCamelVeeDataCache* returnValue = [OGCamelVeeDataCache withGObject:gobjectValue];
 	return returnValue;

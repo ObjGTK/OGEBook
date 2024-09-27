@@ -10,7 +10,7 @@
 
 - (instancetype)init:(JsonNode*)node
 {
-	JsonReader* gobjectValue = JSON_READER(json_reader_new(node));
+	JsonReader* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(json_reader_new(node), JsonReader, JsonReader);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (JsonReader*)castedGObject
 {
-	return JSON_READER([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], JsonReader, JsonReader);
 }
 
 - (gint)countElements

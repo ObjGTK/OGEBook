@@ -6,8 +6,8 @@
 
 #import "OGESourceRegistry.h"
 
-#import "OGESource.h"
 #import <OGio/OGCancellable.h>
+#import "OGESource.h"
 #import "OGEOAuth2Services.h"
 
 @implementation OGESourceRegistry
@@ -33,7 +33,7 @@
 {
 	GError* err = NULL;
 
-	ESourceRegistry* gobjectValue = E_SOURCE_REGISTRY(e_source_registry_new_finish(result, &err));
+	ESourceRegistry* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_new_finish(result, &err), ESourceRegistry, ESourceRegistry);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -59,7 +59,7 @@
 {
 	GError* err = NULL;
 
-	ESourceRegistry* gobjectValue = E_SOURCE_REGISTRY(e_source_registry_new_sync([cancellable castedGObject], &err));
+	ESourceRegistry* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_new_sync([cancellable castedGObject], &err), ESourceRegistry, ESourceRegistry);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -83,7 +83,7 @@
 
 - (ESourceRegistry*)castedGObject
 {
-	return E_SOURCE_REGISTRY([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceRegistry, ESourceRegistry);
 }
 
 - (GNode*)buildDisplayTree:(OFString*)extensionName
@@ -185,7 +185,7 @@
 
 - (OGESource*)findExtensionWithSource:(OGESource*)source extensionName:(OFString*)extensionName
 {
-	ESource* gobjectValue = E_SOURCE(e_source_registry_find_extension([self castedGObject], [source castedGObject], [extensionName UTF8String]));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_find_extension([self castedGObject], [source castedGObject], [extensionName UTF8String]), ESource, ESource);
 
 	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -195,7 +195,7 @@
 
 - (OGEOAuth2Services*)oauth2Services
 {
-	EOAuth2Services* gobjectValue = E_OAUTH2_SERVICES(e_source_registry_get_oauth2_services([self castedGObject]));
+	EOAuth2Services* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_get_oauth2_services([self castedGObject]), EOAuth2Services, EOAuth2Services);
 
 	OGEOAuth2Services* returnValue = [OGEOAuth2Services withGObject:gobjectValue];
 	return returnValue;
@@ -217,7 +217,7 @@
 
 - (OGESource*)refBuiltinAddressBook
 {
-	ESource* gobjectValue = E_SOURCE(e_source_registry_ref_builtin_address_book([self castedGObject]));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_builtin_address_book([self castedGObject]), ESource, ESource);
 
 	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -227,7 +227,7 @@
 
 - (OGESource*)refBuiltinCalendar
 {
-	ESource* gobjectValue = E_SOURCE(e_source_registry_ref_builtin_calendar([self castedGObject]));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_builtin_calendar([self castedGObject]), ESource, ESource);
 
 	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -237,7 +237,7 @@
 
 - (OGESource*)refBuiltinMailAccount
 {
-	ESource* gobjectValue = E_SOURCE(e_source_registry_ref_builtin_mail_account([self castedGObject]));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_builtin_mail_account([self castedGObject]), ESource, ESource);
 
 	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -247,7 +247,7 @@
 
 - (OGESource*)refBuiltinMemoList
 {
-	ESource* gobjectValue = E_SOURCE(e_source_registry_ref_builtin_memo_list([self castedGObject]));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_builtin_memo_list([self castedGObject]), ESource, ESource);
 
 	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -257,7 +257,7 @@
 
 - (OGESource*)refBuiltinProxy
 {
-	ESource* gobjectValue = E_SOURCE(e_source_registry_ref_builtin_proxy([self castedGObject]));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_builtin_proxy([self castedGObject]), ESource, ESource);
 
 	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -267,7 +267,7 @@
 
 - (OGESource*)refBuiltinTaskList
 {
-	ESource* gobjectValue = E_SOURCE(e_source_registry_ref_builtin_task_list([self castedGObject]));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_builtin_task_list([self castedGObject]), ESource, ESource);
 
 	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -277,7 +277,7 @@
 
 - (OGESource*)refDefaultAddressBook
 {
-	ESource* gobjectValue = E_SOURCE(e_source_registry_ref_default_address_book([self castedGObject]));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_default_address_book([self castedGObject]), ESource, ESource);
 
 	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -287,7 +287,7 @@
 
 - (OGESource*)refDefaultCalendar
 {
-	ESource* gobjectValue = E_SOURCE(e_source_registry_ref_default_calendar([self castedGObject]));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_default_calendar([self castedGObject]), ESource, ESource);
 
 	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -297,7 +297,7 @@
 
 - (OGESource*)refDefaultForExtensionName:(OFString*)extensionName
 {
-	ESource* gobjectValue = E_SOURCE(e_source_registry_ref_default_for_extension_name([self castedGObject], [extensionName UTF8String]));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_default_for_extension_name([self castedGObject], [extensionName UTF8String]), ESource, ESource);
 
 	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -307,7 +307,7 @@
 
 - (OGESource*)refDefaultMailAccount
 {
-	ESource* gobjectValue = E_SOURCE(e_source_registry_ref_default_mail_account([self castedGObject]));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_default_mail_account([self castedGObject]), ESource, ESource);
 
 	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -317,7 +317,7 @@
 
 - (OGESource*)refDefaultMailIdentity
 {
-	ESource* gobjectValue = E_SOURCE(e_source_registry_ref_default_mail_identity([self castedGObject]));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_default_mail_identity([self castedGObject]), ESource, ESource);
 
 	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -327,7 +327,7 @@
 
 - (OGESource*)refDefaultMemoList
 {
-	ESource* gobjectValue = E_SOURCE(e_source_registry_ref_default_memo_list([self castedGObject]));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_default_memo_list([self castedGObject]), ESource, ESource);
 
 	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -337,7 +337,7 @@
 
 - (OGESource*)refDefaultTaskList
 {
-	ESource* gobjectValue = E_SOURCE(e_source_registry_ref_default_task_list([self castedGObject]));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_default_task_list([self castedGObject]), ESource, ESource);
 
 	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -347,7 +347,7 @@
 
 - (OGESource*)refSource:(OFString*)uid
 {
-	ESource* gobjectValue = E_SOURCE(e_source_registry_ref_source([self castedGObject], [uid UTF8String]));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_source([self castedGObject], [uid UTF8String]), ESource, ESource);
 
 	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);

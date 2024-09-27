@@ -25,7 +25,7 @@
 
 - (instancetype)init
 {
-	JsonPath* gobjectValue = JSON_PATH(json_path_new());
+	JsonPath* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(json_path_new(), JsonPath, JsonPath);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -41,7 +41,7 @@
 
 - (JsonPath*)castedGObject
 {
-	return JSON_PATH([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], JsonPath, JsonPath);
 }
 
 - (bool)compile:(OFString*)expression

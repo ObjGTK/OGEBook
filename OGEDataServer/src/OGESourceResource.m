@@ -10,7 +10,7 @@
 
 - (ESourceResource*)castedGObject
 {
-	return E_SOURCE_RESOURCE([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceResource, ESourceResource);
 }
 
 - (OFString*)dupIdentity

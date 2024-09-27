@@ -10,7 +10,7 @@
 
 - (ESourceCalendar*)castedGObject
 {
-	return E_SOURCE_CALENDAR([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceCalendar, ESourceCalendar);
 }
 
 

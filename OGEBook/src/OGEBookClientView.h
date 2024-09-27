@@ -8,9 +8,9 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGEBookClient;
-@class OGDBusConnection;
 @class OGCancellable;
+@class OGDBusConnection;
+@class OGEBookClient;
 
 /**
  * Contains only private data the should be read and manipulated using the
@@ -116,6 +116,12 @@
  * @return the object path
  */
 - (OFString*)objectPath;
+
+/**
+ *
+ * @return
+ */
+- (bool)isRunning;
 
 /**
  * Returns the #EBookClientView:client associated with @client_view.

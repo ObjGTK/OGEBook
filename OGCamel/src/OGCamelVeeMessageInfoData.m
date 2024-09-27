@@ -12,7 +12,7 @@
 
 - (instancetype)initWithSubfolderData:(OGCamelVeeSubfolderData*)subfolderData origMessageUid:(OFString*)origMessageUid
 {
-	CamelVeeMessageInfoData* gobjectValue = CAMEL_VEE_MESSAGE_INFO_DATA(camel_vee_message_info_data_new([subfolderData castedGObject], [origMessageUid UTF8String]));
+	CamelVeeMessageInfoData* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_message_info_data_new([subfolderData castedGObject], [origMessageUid UTF8String]), CamelVeeMessageInfoData, CamelVeeMessageInfoData);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -28,7 +28,7 @@
 
 - (CamelVeeMessageInfoData*)castedGObject
 {
-	return CAMEL_VEE_MESSAGE_INFO_DATA([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelVeeMessageInfoData, CamelVeeMessageInfoData);
 }
 
 - (OFString*)origMessageUid
@@ -41,7 +41,7 @@
 
 - (OGCamelVeeSubfolderData*)subfolderData
 {
-	CamelVeeSubfolderData* gobjectValue = CAMEL_VEE_SUBFOLDER_DATA(camel_vee_message_info_data_get_subfolder_data([self castedGObject]));
+	CamelVeeSubfolderData* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_message_info_data_get_subfolder_data([self castedGObject]), CamelVeeSubfolderData, CamelVeeSubfolderData);
 
 	OGCamelVeeSubfolderData* returnValue = [OGCamelVeeSubfolderData withGObject:gobjectValue];
 	return returnValue;

@@ -12,7 +12,7 @@
 
 - (instancetype)init
 {
-	CamelStoreSummary* gobjectValue = CAMEL_STORE_SUMMARY(camel_store_summary_new());
+	CamelStoreSummary* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_store_summary_new(), CamelStoreSummary, CamelStoreSummary);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -28,7 +28,7 @@
 
 - (CamelStoreSummary*)castedGObject
 {
-	return CAMEL_STORE_SUMMARY([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelStoreSummary, CamelStoreSummary);
 }
 
 - (void)add:(CamelStoreInfo*)info

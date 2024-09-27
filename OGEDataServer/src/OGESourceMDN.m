@@ -10,7 +10,7 @@
 
 - (ESourceMDN*)castedGObject
 {
-	return E_SOURCE_MDN([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceMDN, ESourceMDN);
 }
 
 - (EMdnResponsePolicy)responsePolicy

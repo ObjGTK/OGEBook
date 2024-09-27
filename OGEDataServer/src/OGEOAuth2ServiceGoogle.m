@@ -10,7 +10,7 @@
 
 - (EOAuth2ServiceGoogle*)castedGObject
 {
-	return E_OAUTH2_SERVICE_GOOGLE([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], EOAuth2ServiceGoogle, EOAuth2ServiceGoogle);
 }
 
 

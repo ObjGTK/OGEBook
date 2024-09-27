@@ -10,7 +10,7 @@
 
 - (instancetype)init
 {
-	CamelStreamProcess* gobjectValue = CAMEL_STREAM_PROCESS(camel_stream_process_new());
+	CamelStreamProcess* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_process_new(), CamelStreamProcess, CamelStreamProcess);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (CamelStreamProcess*)castedGObject
 {
-	return CAMEL_STREAM_PROCESS([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelStreamProcess, CamelStreamProcess);
 }
 
 - (gint)connectWithCommand:(OFString*)command env:(const gchar**)env

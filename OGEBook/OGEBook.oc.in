@@ -1,10 +1,11 @@
 package_format 1
 package_depends_on OGObject
+package_depends_on OGio
 package_depends_on OGCamel
 package_depends_on OGEBookContacts
 package_depends_on OGEDataServer
-package_depends_on OGio
 
-CPPFLAGS="$CPPFLAGS @OGEBOOK_CPPFLAGS@"
-LIBS="-logebook @OGEBOOK_LIBS@ $LIBS"
-FRAMEWORK_LIBS="-framework OGEBook @OGEBOOK_LIBS@ $FRAMEWORK_LIBS"
+CPPFLAGS="$CPPFLAGS -I@includedir@ @OGEBOOK_CPPFLAGS@"
+LIBS="-L@libdir@ -logebook @OGEBOOK_LIBS@ $LIBS"
+FRAMEWORK_LIBS="-L@libdir@ -logebook @OGEBOOK_LIBS@ $FRAMEWORK_LIBS"
+STATIC_LIBS="@libdir@/libogebook.a @OGEBOOK_LIBS@ $STATIC_LIBS"

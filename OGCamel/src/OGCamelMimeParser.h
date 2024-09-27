@@ -8,8 +8,8 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCamelStream;
 @class OGInputStream;
+@class OGCamelStream;
 @class OGCamelMimeFilter;
 
 @interface OGCamelMimeParser : OGObject
@@ -237,6 +237,13 @@
  * stream or file descriptor).
  */
 - (goffset)seekWithOffset:(goffset)offset whence:(gint)whence;
+
+/**
+ *
+ * @param matchstr
+ * @return
+ */
+- (gint)setHeaderRegex:(OFString*)matchstr;
 
 /**
  * Get the current parser state.

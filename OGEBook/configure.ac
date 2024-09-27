@@ -56,13 +56,24 @@ AC_MSG_CHECKING(for ObjFW package OGObject)
 AS_IF([$OBJFW_CONFIG --package OGObject], [AC_MSG_RESULT(yes)
 	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGObject --cppflags)"
 	LIBS="$LIBS $($OBJFW_CONFIG --package OGObject --libs)"
+	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGObject --framework-libs) $FRAMEWORK_LIBS"
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGObject installed.)
 ])
+AC_MSG_CHECKING(for ObjFW package OGio)
+AS_IF([$OBJFW_CONFIG --package OGio], [AC_MSG_RESULT(yes)
+	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGio --cppflags)"
+	LIBS="$LIBS $($OBJFW_CONFIG --package OGio --libs)"
+	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGio --framework-libs) $FRAMEWORK_LIBS"
+], [
+	AC_MSG_ERROR(You need ObjFW package OGio installed.)
+])
+
 AC_MSG_CHECKING(for ObjFW package OGCamel)
 AS_IF([$OBJFW_CONFIG --package OGCamel], [AC_MSG_RESULT(yes)
 	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGCamel --cppflags)"
 	LIBS="$LIBS $($OBJFW_CONFIG --package OGCamel --libs)"
+	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGCamel --framework-libs) $FRAMEWORK_LIBS"
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGCamel installed.)
 ])
@@ -71,6 +82,7 @@ AC_MSG_CHECKING(for ObjFW package OGEBookContacts)
 AS_IF([$OBJFW_CONFIG --package OGEBookContacts], [AC_MSG_RESULT(yes)
 	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGEBookContacts --cppflags)"
 	LIBS="$LIBS $($OBJFW_CONFIG --package OGEBookContacts --libs)"
+	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGEBookContacts --framework-libs) $FRAMEWORK_LIBS"
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGEBookContacts installed.)
 ])
@@ -79,16 +91,9 @@ AC_MSG_CHECKING(for ObjFW package OGEDataServer)
 AS_IF([$OBJFW_CONFIG --package OGEDataServer], [AC_MSG_RESULT(yes)
 	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGEDataServer --cppflags)"
 	LIBS="$LIBS $($OBJFW_CONFIG --package OGEDataServer --libs)"
+	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGEDataServer --framework-libs) $FRAMEWORK_LIBS"
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGEDataServer installed.)
-])
-
-AC_MSG_CHECKING(for ObjFW package OGio)
-AS_IF([$OBJFW_CONFIG --package OGio], [AC_MSG_RESULT(yes)
-	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGio --cppflags)"
-	LIBS="$LIBS $($OBJFW_CONFIG --package OGio --libs)"
-], [
-	AC_MSG_ERROR(You need ObjFW package OGio installed.)
 ])
 
 
@@ -108,6 +113,7 @@ PKG_CHECK_MODULES(libebook, [libebook-1.2 >= $(pkg-config --modversion libebook-
 	OGEBOOK_LIBS="$OGEBOOK_LIBS $libebook_LIBS"
 	CPPFLAGS="$CPPFLAGS $libebook_CFLAGS"
 	LIBS="$LIBS $libebook_LIBS"
+	FRAMEWORK_LIBS="$FRAMEWORK_LIBS $libebook_LIBS"
 ], [
 	AC_MSG_ERROR(You need libebook-1.2 >= $(pkg-config --modversion libebook-1.2) installed!)
 ])
@@ -126,5 +132,5 @@ AC_SUBST(CPPFLAGS)
 AC_SUBST(OGEBOOK_CPPFLAGS)
 AC_SUBST(OGEBOOK_LIBS)
 
-AC_CONFIG_FILES([buildsys.mk extra.mk OGEBook.oc])
+AC_CONFIG_FILES([buildsys.mk extra.mk OGEBook.oc src/Info.plist])
 AC_OUTPUT

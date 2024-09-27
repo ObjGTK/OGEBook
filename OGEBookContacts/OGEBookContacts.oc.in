@@ -4,6 +4,7 @@ package_depends_on OGCamel
 package_depends_on OGEDataServer
 package_depends_on OGio
 
-CPPFLAGS="$CPPFLAGS @OGEBOOKCONTACTS_CPPFLAGS@"
-LIBS="-logebookcontacts @OGEBOOKCONTACTS_LIBS@ $LIBS"
-FRAMEWORK_LIBS="-framework OGEBookContacts @OGEBOOKCONTACTS_LIBS@ $FRAMEWORK_LIBS"
+CPPFLAGS="$CPPFLAGS -I@includedir@ @OGEBOOKCONTACTS_CPPFLAGS@"
+LIBS="-L@libdir@ -logebookcontacts @OGEBOOKCONTACTS_LIBS@ $LIBS"
+FRAMEWORK_LIBS="-L@libdir@ -logebookcontacts @OGEBOOKCONTACTS_LIBS@ $FRAMEWORK_LIBS"
+STATIC_LIBS="@libdir@/libogebookcontacts.a @OGEBOOKCONTACTS_LIBS@ $STATIC_LIBS"

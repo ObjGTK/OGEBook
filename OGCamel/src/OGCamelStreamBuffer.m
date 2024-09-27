@@ -12,7 +12,7 @@
 
 - (instancetype)initWithStream:(OGCamelStream*)stream mode:(CamelStreamBufferMode)mode
 {
-	CamelStreamBuffer* gobjectValue = CAMEL_STREAM_BUFFER(camel_stream_buffer_new([stream castedGObject], mode));
+	CamelStreamBuffer* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_buffer_new([stream castedGObject], mode), CamelStreamBuffer, CamelStreamBuffer);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -28,7 +28,7 @@
 
 - (CamelStreamBuffer*)castedGObject
 {
-	return CAMEL_STREAM_BUFFER([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelStreamBuffer, CamelStreamBuffer);
 }
 
 - (void)discardCache

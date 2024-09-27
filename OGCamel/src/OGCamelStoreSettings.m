@@ -10,7 +10,7 @@
 
 - (CamelStoreSettings*)castedGObject
 {
-	return CAMEL_STORE_SETTINGS([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelStoreSettings, CamelStoreSettings);
 }
 
 - (bool)filterInbox

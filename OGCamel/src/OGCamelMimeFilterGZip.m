@@ -10,7 +10,7 @@
 
 - (instancetype)initWithMode:(CamelMimeFilterGZipMode)mode level:(gint)level
 {
-	CamelMimeFilterGZip* gobjectValue = CAMEL_MIME_FILTER_GZIP(camel_mime_filter_gzip_new(mode, level));
+	CamelMimeFilterGZip* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_gzip_new(mode, level), CamelMimeFilterGZip, CamelMimeFilterGZip);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (CamelMimeFilterGZip*)castedGObject
 {
-	return CAMEL_MIME_FILTER_GZIP([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMimeFilterGZip, CamelMimeFilterGZip);
 }
 
 

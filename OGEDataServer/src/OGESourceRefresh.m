@@ -10,7 +10,7 @@
 
 - (ESourceRefresh*)castedGObject
 {
-	return E_SOURCE_REFRESH([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceRefresh, ESourceRefresh);
 }
 
 - (bool)enabled

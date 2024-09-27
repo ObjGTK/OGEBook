@@ -10,7 +10,7 @@
 
 - (instancetype)initWithFromCharset:(OFString*)fromCharset toCharset:(OFString*)toCharset
 {
-	CamelMimeFilterCharset* gobjectValue = CAMEL_MIME_FILTER_CHARSET(camel_mime_filter_charset_new([fromCharset UTF8String], [toCharset UTF8String]));
+	CamelMimeFilterCharset* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_charset_new([fromCharset UTF8String], [toCharset UTF8String]), CamelMimeFilterCharset, CamelMimeFilterCharset);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (CamelMimeFilterCharset*)castedGObject
 {
-	return CAMEL_MIME_FILTER_CHARSET([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMimeFilterCharset, CamelMimeFilterCharset);
 }
 
 

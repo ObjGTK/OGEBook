@@ -10,7 +10,7 @@
 
 - (ESourceCredentialsProviderImplPassword*)castedGObject
 {
-	return E_SOURCE_CREDENTIALS_PROVIDER_IMPL_PASSWORD([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceCredentialsProviderImplPassword, ESourceCredentialsProviderImplPassword);
 }
 
 

@@ -11,8 +11,8 @@
 @class OGCamelMessageInfo;
 @class OGCamelFolder;
 @class OGCancellable;
-@class OGCamelSession;
 @class OGCamelMimeMessage;
+@class OGCamelSession;
 
 @interface OGCamelFilterDriver : OGObject
 {

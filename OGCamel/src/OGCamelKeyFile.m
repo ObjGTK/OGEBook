@@ -10,7 +10,7 @@
 
 - (instancetype)initWithPath:(OFString*)path flags:(gint)flags version:(OFString*)version
 {
-	CamelKeyFile* gobjectValue = CAMEL_KEY_FILE(camel_key_file_new([path UTF8String], flags, [version UTF8String]));
+	CamelKeyFile* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_key_file_new([path UTF8String], flags, [version UTF8String]), CamelKeyFile, CamelKeyFile);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (CamelKeyFile*)castedGObject
 {
-	return CAMEL_KEY_FILE([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelKeyFile, CamelKeyFile);
 }
 
 - (gint)delete

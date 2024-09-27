@@ -6,14 +6,14 @@
 
 #import "OGJsonParser.h"
 
-#import <OGio/OGInputStream.h>
 #import <OGio/OGCancellable.h>
+#import <OGio/OGInputStream.h>
 
 @implementation OGJsonParser
 
 - (instancetype)init
 {
-	JsonParser* gobjectValue = JSON_PARSER(json_parser_new());
+	JsonParser* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(json_parser_new(), JsonParser, JsonParser);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -29,7 +29,7 @@
 
 - (instancetype)initImmutable
 {
-	JsonParser* gobjectValue = JSON_PARSER(json_parser_new_immutable());
+	JsonParser* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(json_parser_new_immutable(), JsonParser, JsonParser);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -45,7 +45,7 @@
 
 - (JsonParser*)castedGObject
 {
-	return JSON_PARSER([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], JsonParser, JsonParser);
 }
 
 - (guint)currentLine

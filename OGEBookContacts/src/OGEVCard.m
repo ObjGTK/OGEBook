@@ -26,7 +26,7 @@
 
 - (instancetype)init
 {
-	EVCard* gobjectValue = E_VCARD(e_vcard_new());
+	EVCard* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_vcard_new(), EVCard, EVCard);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -42,7 +42,7 @@
 
 - (instancetype)initFromString:(OFString*)str
 {
-	EVCard* gobjectValue = E_VCARD(e_vcard_new_from_string([str UTF8String]));
+	EVCard* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_vcard_new_from_string([str UTF8String]), EVCard, EVCard);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -58,7 +58,7 @@
 
 - (EVCard*)castedGObject
 {
-	return E_VCARD([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], EVCard, EVCard);
 }
 
 - (void)addAttribute:(EVCardAttribute*)attr

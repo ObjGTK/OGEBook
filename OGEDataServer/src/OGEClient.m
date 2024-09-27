@@ -87,7 +87,7 @@
 
 - (EClient*)castedGObject
 {
-	return E_CLIENT([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], EClient, EClient);
 }
 
 - (void)cancelAll
@@ -161,7 +161,7 @@
 
 - (OGESource*)source
 {
-	ESource* gobjectValue = E_SOURCE(e_client_get_source([self castedGObject]));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_client_get_source([self castedGObject]), ESource, ESource);
 
 	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	return returnValue;

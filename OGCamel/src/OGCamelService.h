@@ -6,10 +6,10 @@
 
 #import "OGCamelObject.h"
 
-@class OGCamelSession;
 @class OGCamelSettings;
 @class OGCancellable;
 @class OGTask;
+@class OGCamelSession;
 
 @interface OGCamelService : OGCamelObject
 {

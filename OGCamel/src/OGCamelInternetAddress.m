@@ -26,7 +26,7 @@
 
 - (instancetype)init
 {
-	CamelInternetAddress* gobjectValue = CAMEL_INTERNET_ADDRESS(camel_internet_address_new());
+	CamelInternetAddress* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_internet_address_new(), CamelInternetAddress, CamelInternetAddress);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -42,7 +42,7 @@
 
 - (CamelInternetAddress*)castedGObject
 {
-	return CAMEL_INTERNET_ADDRESS([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelInternetAddress, CamelInternetAddress);
 }
 
 - (gint)addWithName:(OFString*)name address:(OFString*)address

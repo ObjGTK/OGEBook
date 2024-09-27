@@ -10,7 +10,7 @@
 
 - (CamelSaslNTLM*)castedGObject
 {
-	return CAMEL_SASL_NTLM([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelSaslNTLM, CamelSaslNTLM);
 }
 
 

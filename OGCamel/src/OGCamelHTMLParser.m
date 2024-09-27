@@ -10,7 +10,7 @@
 
 - (instancetype)init
 {
-	CamelHTMLParser* gobjectValue = CAMEL_HTML_PARSER(camel_html_parser_new());
+	CamelHTMLParser* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_html_parser_new(), CamelHTMLParser, CamelHTMLParser);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (CamelHTMLParser*)castedGObject
 {
-	return CAMEL_HTML_PARSER([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelHTMLParser, CamelHTMLParser);
 }
 
 - (OFString*)attr:(OFString*)name

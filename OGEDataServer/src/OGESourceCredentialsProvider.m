@@ -7,15 +7,15 @@
 #import "OGESourceCredentialsProvider.h"
 
 #import "OGESource.h"
+#import "OGESourceCredentialsProviderImpl.h"
 #import "OGESourceRegistry.h"
 #import <OGio/OGCancellable.h>
-#import "OGESourceCredentialsProviderImpl.h"
 
 @implementation OGESourceCredentialsProvider
 
 - (instancetype)init:(OGESourceRegistry*)registry
 {
-	ESourceCredentialsProvider* gobjectValue = E_SOURCE_CREDENTIALS_PROVIDER(e_source_credentials_provider_new([registry castedGObject]));
+	ESourceCredentialsProvider* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_credentials_provider_new([registry castedGObject]), ESourceCredentialsProvider, ESourceCredentialsProvider);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -31,7 +31,7 @@
 
 - (ESourceCredentialsProvider*)castedGObject
 {
-	return E_SOURCE_CREDENTIALS_PROVIDER([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceCredentialsProvider, ESourceCredentialsProvider);
 }
 
 - (bool)canPrompt:(OGESource*)source
@@ -120,7 +120,7 @@
 
 - (OGESource*)refCredentialsSource:(OGESource*)source
 {
-	ESource* gobjectValue = E_SOURCE(e_source_credentials_provider_ref_credentials_source([self castedGObject], [source castedGObject]));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_credentials_provider_ref_credentials_source([self castedGObject], [source castedGObject]), ESource, ESource);
 
 	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -137,7 +137,7 @@
 
 - (OGESource*)refSource:(OFString*)uid
 {
-	ESource* gobjectValue = E_SOURCE(e_source_credentials_provider_ref_source([self castedGObject], [uid UTF8String]));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_credentials_provider_ref_source([self castedGObject], [uid UTF8String]), ESource, ESource);
 
 	OGESource* returnValue = [OGESource withGObject:gobjectValue];
 	g_object_unref(gobjectValue);

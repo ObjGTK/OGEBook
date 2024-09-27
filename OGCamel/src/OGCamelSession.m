@@ -6,25 +6,25 @@
 
 #import "OGCamelSession.h"
 
+#import "OGCamelService.h"
+#import "OGCamelFolder.h"
+#import <OGio/OGCancellable.h>
 #import <OGio/OGTlsCertificate.h>
 #import "OGCamelMimeMessage.h"
 #import "OGCamelFilterDriver.h"
-#import <OGio/OGCancellable.h>
-#import "OGCamelService.h"
-#import "OGCamelFolder.h"
 
 @implementation OGCamelSession
 
 - (CamelSession*)castedGObject
 {
-	return CAMEL_SESSION([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelSession, CamelSession);
 }
 
 - (OGCamelService*)addServiceWithUid:(OFString*)uid protocol:(OFString*)protocol type:(CamelProviderType)type
 {
 	GError* err = NULL;
 
-	CamelService* gobjectValue = CAMEL_SERVICE(camel_session_add_service([self castedGObject], [uid UTF8String], [protocol UTF8String], type, &err));
+	CamelService* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_session_add_service([self castedGObject], [uid UTF8String], [protocol UTF8String], type, &err), CamelService, CamelService);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -144,7 +144,7 @@
 {
 	GError* err = NULL;
 
-	CamelFilterDriver* gobjectValue = CAMEL_FILTER_DRIVER(camel_session_get_filter_driver([self castedGObject], [type UTF8String], [forFolder castedGObject], &err));
+	CamelFilterDriver* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_session_get_filter_driver([self castedGObject], [type UTF8String], [forFolder castedGObject], &err), CamelFilterDriver, CamelFilterDriver);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -276,7 +276,7 @@
 
 - (OGCamelService*)refService:(OFString*)uid
 {
-	CamelService* gobjectValue = CAMEL_SERVICE(camel_session_ref_service([self castedGObject], [uid UTF8String]));
+	CamelService* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_session_ref_service([self castedGObject], [uid UTF8String]), CamelService, CamelService);
 
 	OGCamelService* returnValue = [OGCamelService withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -286,7 +286,7 @@
 
 - (OGCamelService*)refServiceByUrlWithUrl:(CamelURL*)url type:(CamelProviderType)type
 {
-	CamelService* gobjectValue = CAMEL_SERVICE(camel_session_ref_service_by_url([self castedGObject], url, type));
+	CamelService* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_session_ref_service_by_url([self castedGObject], url, type), CamelService, CamelService);
 
 	OGCamelService* returnValue = [OGCamelService withGObject:gobjectValue];
 	g_object_unref(gobjectValue);

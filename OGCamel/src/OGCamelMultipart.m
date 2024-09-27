@@ -6,14 +6,14 @@
 
 #import "OGCamelMultipart.h"
 
-#import "OGCamelMimePart.h"
 #import "OGCamelMimeParser.h"
+#import "OGCamelMimePart.h"
 
 @implementation OGCamelMultipart
 
 - (instancetype)init
 {
-	CamelMultipart* gobjectValue = CAMEL_MULTIPART(camel_multipart_new());
+	CamelMultipart* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_multipart_new(), CamelMultipart, CamelMultipart);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -29,7 +29,7 @@
 
 - (CamelMultipart*)castedGObject
 {
-	return CAMEL_MULTIPART([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMultipart, CamelMultipart);
 }
 
 - (void)addPart:(OGCamelMimePart*)part
@@ -41,6 +41,14 @@
 {
 	gint returnValue = camel_multipart_construct_from_parser([self castedGObject], [parser castedGObject]);
 
+	return returnValue;
+}
+
+- (OFString*)generatePreviewWithFunc:(CamelGeneratePreviewFunc)func userData:(gpointer)userData
+{
+	gchar* gobjectValue = camel_multipart_generate_preview([self castedGObject], func, userData);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
 	return returnValue;
 }
 
@@ -61,7 +69,7 @@
 
 - (OGCamelMimePart*)part:(guint)index
 {
-	CamelMimePart* gobjectValue = CAMEL_MIME_PART(camel_multipart_get_part([self castedGObject], index));
+	CamelMimePart* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_multipart_get_part([self castedGObject], index), CamelMimePart, CamelMimePart);
 
 	OGCamelMimePart* returnValue = [OGCamelMimePart withGObject:gobjectValue];
 	return returnValue;

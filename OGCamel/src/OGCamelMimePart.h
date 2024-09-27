@@ -68,6 +68,21 @@
 - (bool)constructFromParserSyncWithParser:(OGCamelMimeParser*)parser cancellable:(OGCancellable*)cancellable;
 
 /**
+ * Generates preview of the @mime_part, to be used in the interface,
+ * read by the users.
+ * 
+ * The optional @func can be used to override default preview generation
+ * function. If provided, it's always called as the first try on the parts.
+ *
+ * @param func an optional #CamelGeneratePreviewFunc function, or %NULL
+ * @param userData user data for the @func, or %NULL
+ * @return part's preview as a new string,
+ *    or %NULL, when cannot be generated. Free with g_free(), when no
+ *    longer needed.
+ */
+- (OFString*)generatePreviewWithFunc:(CamelGeneratePreviewFunc)func userData:(gpointer)userData;
+
+/**
  * Get the disposition of the MIME part as a structure.
  * Returned pointer is owned by @mime_part.
  *

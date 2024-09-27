@@ -12,7 +12,7 @@
 
 - (instancetype)init
 {
-	CamelMimeMessage* gobjectValue = CAMEL_MIME_MESSAGE(camel_mime_message_new());
+	CamelMimeMessage* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_message_new(), CamelMimeMessage, CamelMimeMessage);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -28,7 +28,7 @@
 
 - (CamelMimeMessage*)castedGObject
 {
-	return CAMEL_MIME_MESSAGE([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMimeMessage, CamelMimeMessage);
 }
 
 - (OFString*)buildMboxFrom
@@ -70,7 +70,7 @@
 
 - (OGCamelInternetAddress*)from
 {
-	CamelInternetAddress* gobjectValue = CAMEL_INTERNET_ADDRESS(camel_mime_message_get_from([self castedGObject]));
+	CamelInternetAddress* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_message_get_from([self castedGObject]), CamelInternetAddress, CamelInternetAddress);
 
 	OGCamelInternetAddress* returnValue = [OGCamelInternetAddress withGObject:gobjectValue];
 	return returnValue;
@@ -86,7 +86,7 @@
 
 - (OGCamelMimePart*)partByContentId:(OFString*)contentId
 {
-	CamelMimePart* gobjectValue = CAMEL_MIME_PART(camel_mime_message_get_part_by_content_id([self castedGObject], [contentId UTF8String]));
+	CamelMimePart* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_message_get_part_by_content_id([self castedGObject], [contentId UTF8String]), CamelMimePart, CamelMimePart);
 
 	OGCamelMimePart* returnValue = [OGCamelMimePart withGObject:gobjectValue];
 	return returnValue;
@@ -94,7 +94,7 @@
 
 - (OGCamelInternetAddress*)recipients:(OFString*)type
 {
-	CamelInternetAddress* gobjectValue = CAMEL_INTERNET_ADDRESS(camel_mime_message_get_recipients([self castedGObject], [type UTF8String]));
+	CamelInternetAddress* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_message_get_recipients([self castedGObject], [type UTF8String]), CamelInternetAddress, CamelInternetAddress);
 
 	OGCamelInternetAddress* returnValue = [OGCamelInternetAddress withGObject:gobjectValue];
 	return returnValue;
@@ -102,7 +102,7 @@
 
 - (OGCamelInternetAddress*)replyTo
 {
-	CamelInternetAddress* gobjectValue = CAMEL_INTERNET_ADDRESS(camel_mime_message_get_reply_to([self castedGObject]));
+	CamelInternetAddress* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_message_get_reply_to([self castedGObject]), CamelInternetAddress, CamelInternetAddress);
 
 	OGCamelInternetAddress* returnValue = [OGCamelInternetAddress withGObject:gobjectValue];
 	return returnValue;

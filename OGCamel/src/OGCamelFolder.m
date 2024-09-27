@@ -6,11 +6,11 @@
 
 #import "OGCamelFolder.h"
 
+#import "OGCamelFolderSummary.h"
+#import "OGCamelMimeMessage.h"
+#import "OGCamelStore.h"
 #import <OGio/OGCancellable.h>
 #import "OGCamelMessageInfo.h"
-#import "OGCamelMimeMessage.h"
-#import "OGCamelFolderSummary.h"
-#import "OGCamelStore.h"
 
 @implementation OGCamelFolder
 
@@ -23,7 +23,7 @@
 
 - (CamelFolder*)castedGObject
 {
-	return CAMEL_FOLDER([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelFolder, CamelFolder);
 }
 
 - (void)appendMessageWithMessage:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
@@ -225,7 +225,7 @@
 
 - (OGCamelFolderSummary*)folderSummary
 {
-	CamelFolderSummary* gobjectValue = CAMEL_FOLDER_SUMMARY(camel_folder_get_folder_summary([self castedGObject]));
+	CamelFolderSummary* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_get_folder_summary([self castedGObject]), CamelFolderSummary, CamelFolderSummary);
 
 	OGCamelFolderSummary* returnValue = [OGCamelFolderSummary withGObject:gobjectValue];
 	return returnValue;
@@ -275,7 +275,7 @@
 
 - (OGCamelMimeMessage*)messageCachedWithMessageUid:(OFString*)messageUid cancellable:(OGCancellable*)cancellable
 {
-	CamelMimeMessage* gobjectValue = CAMEL_MIME_MESSAGE(camel_folder_get_message_cached([self castedGObject], [messageUid UTF8String], [cancellable castedGObject]));
+	CamelMimeMessage* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_get_message_cached([self castedGObject], [messageUid UTF8String], [cancellable castedGObject]), CamelMimeMessage, CamelMimeMessage);
 
 	OGCamelMimeMessage* returnValue = [OGCamelMimeMessage withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -294,7 +294,7 @@
 {
 	GError* err = NULL;
 
-	CamelMimeMessage* gobjectValue = CAMEL_MIME_MESSAGE(camel_folder_get_message_finish([self castedGObject], result, &err));
+	CamelMimeMessage* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_get_message_finish([self castedGObject], result, &err), CamelMimeMessage, CamelMimeMessage);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -315,7 +315,7 @@
 
 - (OGCamelMessageInfo*)messageInfo:(OFString*)uid
 {
-	CamelMessageInfo* gobjectValue = CAMEL_MESSAGE_INFO(camel_folder_get_message_info([self castedGObject], [uid UTF8String]));
+	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_get_message_info([self castedGObject], [uid UTF8String]), CamelMessageInfo, CamelMessageInfo);
 
 	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -327,7 +327,7 @@
 {
 	GError* err = NULL;
 
-	CamelMimeMessage* gobjectValue = CAMEL_MIME_MESSAGE(camel_folder_get_message_sync([self castedGObject], [messageUid UTF8String], [cancellable castedGObject], &err));
+	CamelMimeMessage* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_get_message_sync([self castedGObject], [messageUid UTF8String], [cancellable castedGObject], &err), CamelMimeMessage, CamelMimeMessage);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -356,7 +356,7 @@
 
 - (OGCamelStore*)parentStore
 {
-	CamelStore* gobjectValue = CAMEL_STORE(camel_folder_get_parent_store([self castedGObject]));
+	CamelStore* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_get_parent_store([self castedGObject]), CamelStore, CamelStore);
 
 	OGCamelStore* returnValue = [OGCamelStore withGObject:gobjectValue];
 	return returnValue;

@@ -10,7 +10,7 @@
 
 - (ESourceMailAccount*)castedGObject
 {
-	return E_SOURCE_MAIL_ACCOUNT([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceMailAccount, ESourceMailAccount);
 }
 
 - (OFString*)dupArchiveFolder

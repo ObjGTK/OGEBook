@@ -24,6 +24,22 @@
 + (void)cancelAll;
 
 /**
+ * Duplicates current operation message, or returns %NULL, if no such is available.
+ * The message as the last text set by camel_operation_push_message().
+ * 
+ * Free the returned text with g_free(), when no longer needed.
+ * 
+ * This function only works if @cancellable is a #CamelOperation cast as a
+ * #GCancellable.  If @cancellable is a plain #GCancellable or %NULL, the
+ * function does nothing and returns silently.
+ *
+ * @param cancellable a #GCancellable or %NULL
+ * @return a copy of the last text set by camel_operation_push_message(),
+ *    or %NULL, when none is set.
+ */
++ (OFString*)dupMessage:(OGCancellable*)cancellable;
+
+/**
  * Pops the most recently pushed message.
  * 
  * This function only works if @cancellable is a #CamelOperation cast as a

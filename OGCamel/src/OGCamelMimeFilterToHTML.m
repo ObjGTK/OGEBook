@@ -10,7 +10,7 @@
 
 - (instancetype)initWithFlags:(CamelMimeFilterToHTMLFlags)flags color:(guint32)color
 {
-	CamelMimeFilterToHTML* gobjectValue = CAMEL_MIME_FILTER_TOHTML(camel_mime_filter_tohtml_new(flags, color));
+	CamelMimeFilterToHTML* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_tohtml_new(flags, color), CamelMimeFilterToHTML, CamelMimeFilterToHTML);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (CamelMimeFilterToHTML*)castedGObject
 {
-	return CAMEL_MIME_FILTER_TOHTML([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMimeFilterToHTML, CamelMimeFilterToHTML);
 }
 
 

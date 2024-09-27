@@ -31,7 +31,7 @@
 
 - (instancetype)initWithPath:(OFString*)path flags:(gint)flags
 {
-	CamelTextIndex* gobjectValue = CAMEL_TEXT_INDEX(camel_text_index_new([path UTF8String], flags));
+	CamelTextIndex* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_text_index_new([path UTF8String], flags), CamelTextIndex, CamelTextIndex);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -47,7 +47,7 @@
 
 - (CamelTextIndex*)castedGObject
 {
-	return CAMEL_TEXT_INDEX([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelTextIndex, CamelTextIndex);
 }
 
 - (void)dump

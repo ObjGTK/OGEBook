@@ -11,9 +11,17 @@
 
 @implementation OGCamelSMIMEContext
 
++ (OFString*)utilNssErrorToString:(gint)nssErrorCode
+{
+	const gchar* gobjectValue = camel_smime_context_util_nss_error_to_string(nssErrorCode);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
+}
+
 - (instancetype)init:(OGCamelSession*)session
 {
-	CamelSMIMEContext* gobjectValue = CAMEL_SMIME_CONTEXT(camel_smime_context_new([session castedGObject]));
+	CamelSMIMEContext* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_smime_context_new([session castedGObject]), CamelSMIMEContext, CamelSMIMEContext);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -29,7 +37,7 @@
 
 - (CamelSMIMEContext*)castedGObject
 {
-	return CAMEL_SMIME_CONTEXT([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelSMIMEContext, CamelSMIMEContext);
 }
 
 - (guint32)describePart:(OGCamelMimePart*)part

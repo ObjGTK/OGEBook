@@ -10,7 +10,7 @@
 
 - (CamelTextIndexName*)castedGObject
 {
-	return CAMEL_TEXT_INDEX_NAME([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelTextIndexName, CamelTextIndexName);
 }
 
 

@@ -10,7 +10,7 @@
 
 - (EOAuth2ServiceOutlook*)castedGObject
 {
-	return E_OAUTH2_SERVICE_OUTLOOK([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], EOAuth2ServiceOutlook, EOAuth2ServiceOutlook);
 }
 
 

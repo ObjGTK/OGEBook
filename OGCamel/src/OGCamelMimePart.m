@@ -13,7 +13,7 @@
 
 - (instancetype)init
 {
-	CamelMimePart* gobjectValue = CAMEL_MIME_PART(camel_mime_part_new());
+	CamelMimePart* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_part_new(), CamelMimePart, CamelMimePart);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -29,7 +29,7 @@
 
 - (CamelMimePart*)castedGObject
 {
-	return CAMEL_MIME_PART([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMimePart, CamelMimePart);
 }
 
 - (bool)constructContentFromParserWithMp:(OGCamelMimeParser*)mp cancellable:(OGCancellable*)cancellable
@@ -79,6 +79,14 @@
 		@throw exception;
 	}
 
+	return returnValue;
+}
+
+- (OFString*)generatePreviewWithFunc:(CamelGeneratePreviewFunc)func userData:(gpointer)userData
+{
+	gchar* gobjectValue = camel_mime_part_generate_preview([self castedGObject], func, userData);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
 	return returnValue;
 }
 

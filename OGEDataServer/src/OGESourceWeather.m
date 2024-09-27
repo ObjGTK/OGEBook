@@ -10,7 +10,7 @@
 
 - (ESourceWeather*)castedGObject
 {
-	return E_SOURCE_WEATHER([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceWeather, ESourceWeather);
 }
 
 - (OFString*)dupLocation

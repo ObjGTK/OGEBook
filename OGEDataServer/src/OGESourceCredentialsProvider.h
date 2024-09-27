@@ -9,9 +9,9 @@
 #import <OGObject/OGObject.h>
 
 @class OGESource;
+@class OGESourceCredentialsProviderImpl;
 @class OGESourceRegistry;
 @class OGCancellable;
-@class OGESourceCredentialsProviderImpl;
 
 /**
  * Contains only private data that should be read and manipulated using the

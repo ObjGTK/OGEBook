@@ -6,14 +6,14 @@
 
 #import "OGCamelFilterOutputStream.h"
 
-#import "OGCamelMimeFilter.h"
 #import <OGio/OGOutputStream.h>
+#import "OGCamelMimeFilter.h"
 
 @implementation OGCamelFilterOutputStream
 
 - (instancetype)initWithBaseStream:(OGOutputStream*)baseStream filter:(OGCamelMimeFilter*)filter
 {
-	CamelFilterOutputStream* gobjectValue = CAMEL_FILTER_OUTPUT_STREAM(camel_filter_output_stream_new([baseStream castedGObject], [filter castedGObject]));
+	CamelFilterOutputStream* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_filter_output_stream_new([baseStream castedGObject], [filter castedGObject]), CamelFilterOutputStream, CamelFilterOutputStream);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -29,12 +29,12 @@
 
 - (CamelFilterOutputStream*)castedGObject
 {
-	return CAMEL_FILTER_OUTPUT_STREAM([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelFilterOutputStream, CamelFilterOutputStream);
 }
 
 - (OGCamelMimeFilter*)filter
 {
-	CamelMimeFilter* gobjectValue = CAMEL_MIME_FILTER(camel_filter_output_stream_get_filter([self castedGObject]));
+	CamelMimeFilter* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_filter_output_stream_get_filter([self castedGObject]), CamelMimeFilter, CamelMimeFilter);
 
 	OGCamelMimeFilter* returnValue = [OGCamelMimeFilter withGObject:gobjectValue];
 	return returnValue;

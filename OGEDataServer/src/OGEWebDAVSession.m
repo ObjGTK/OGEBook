@@ -6,10 +6,10 @@
 
 #import "OGEWebDAVSession.h"
 
-#import "OGESource.h"
 #import <OGio/OGInputStream.h>
 #import <OGio/OGOutputStream.h>
 #import <OGio/OGCancellable.h>
+#import "OGESource.h"
 
 @implementation OGEWebDAVSession
 
@@ -35,7 +35,7 @@
 
 - (instancetype)init:(OGESource*)source
 {
-	EWebDAVSession* gobjectValue = E_WEBDAV_SESSION(e_webdav_session_new([source castedGObject]));
+	EWebDAVSession* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_webdav_session_new([source castedGObject]), EWebDAVSession, EWebDAVSession);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -51,7 +51,7 @@
 
 - (EWebDAVSession*)castedGObject
 {
-	return E_WEBDAV_SESSION([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], EWebDAVSession, EWebDAVSession);
 }
 
 - (bool)aclSyncWithUri:(OFString*)uri xml:(const EXmlDocument*)xml cancellable:(OGCancellable*)cancellable

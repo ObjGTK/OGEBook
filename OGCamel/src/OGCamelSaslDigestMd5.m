@@ -10,7 +10,7 @@
 
 - (CamelSaslDigestMd5*)castedGObject
 {
-	return CAMEL_SASL_DIGEST_MD5([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelSaslDigestMd5, CamelSaslDigestMd5);
 }
 
 

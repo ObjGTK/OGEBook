@@ -2,6 +2,7 @@ package_format 1
 package_depends_on OGObject
 package_depends_on OGio
 
-CPPFLAGS="$CPPFLAGS @OGJSON_CPPFLAGS@"
-LIBS="-logjson @OGJSON_LIBS@ $LIBS"
-FRAMEWORK_LIBS="-framework OGJson @OGJSON_LIBS@ $FRAMEWORK_LIBS"
+CPPFLAGS="$CPPFLAGS -I@includedir@ @OGJSON_CPPFLAGS@"
+LIBS="-L@libdir@ -logjson @OGJSON_LIBS@ $LIBS"
+FRAMEWORK_LIBS="-L@libdir@ -logjson @OGJSON_LIBS@ $FRAMEWORK_LIBS"
+STATIC_LIBS="@libdir@/libogjson.a @OGJSON_LIBS@ $STATIC_LIBS"

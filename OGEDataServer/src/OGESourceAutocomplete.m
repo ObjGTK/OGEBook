@@ -10,7 +10,7 @@
 
 - (ESourceAutocomplete*)castedGObject
 {
-	return E_SOURCE_AUTOCOMPLETE([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceAutocomplete, ESourceAutocomplete);
 }
 
 - (bool)includeMe

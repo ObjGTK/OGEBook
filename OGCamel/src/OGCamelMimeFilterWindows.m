@@ -10,7 +10,7 @@
 
 - (instancetype)init:(OFString*)claimedCharset
 {
-	CamelMimeFilterWindows* gobjectValue = CAMEL_MIME_FILTER_WINDOWS(camel_mime_filter_windows_new([claimedCharset UTF8String]));
+	CamelMimeFilterWindows* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_windows_new([claimedCharset UTF8String]), CamelMimeFilterWindows, CamelMimeFilterWindows);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (CamelMimeFilterWindows*)castedGObject
 {
-	return CAMEL_MIME_FILTER_WINDOWS([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMimeFilterWindows, CamelMimeFilterWindows);
 }
 
 - (bool)isWindowsCharset

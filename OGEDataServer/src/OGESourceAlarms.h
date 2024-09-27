@@ -34,6 +34,17 @@
 - (OFString*)dupLastNotified;
 
 /**
+ * Returns whether the user should be alerted about all upcoming appointments
+ * in the calendar described by the #ESource to which @extension belongs.
+ * 
+ * This is used in addition to the GSettings key defall-reminder-enabled
+ * in org.gnome.evolution-data-server.calendar.
+ *
+ * @return whether to show alarms for every event
+ */
+- (bool)forEveryEvent;
+
+/**
  * Returns whether the user should be alerted about upcoming appointments
  * in the calendar described by the #ESource to which @extension belongs.
  * 
@@ -53,6 +64,17 @@
  * @return an ISO 8601 timestamp, or %NULL
  */
 - (OFString*)lastNotified;
+
+/**
+ * Sets whether the user should be alerted about every event in
+ * the calendar described by the #ESource to which @extension belongs.
+ * 
+ * This is used in addition to the GSettings key defall-reminder-enabled
+ * in org.gnome.evolution-data-server.calendar.
+ *
+ * @param forEveryEvent whether to show alarms for every event
+ */
+- (void)setForEveryEvent:(bool)forEveryEvent;
 
 /**
  * Sets whether the user should be alerted about upcoming appointments in

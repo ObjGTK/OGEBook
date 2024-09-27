@@ -13,6 +13,14 @@
 	camel_operation_cancel_all();
 }
 
++ (OFString*)dupMessage:(OGCancellable*)cancellable
+{
+	gchar* gobjectValue = camel_operation_dup_message([cancellable castedGObject]);
+
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
+}
+
 + (void)popMessage:(OGCancellable*)cancellable
 {
 	camel_operation_pop_message([cancellable castedGObject]);
@@ -25,7 +33,7 @@
 
 - (instancetype)init
 {
-	CamelOperation* gobjectValue = CAMEL_OPERATION(camel_operation_new());
+	CamelOperation* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_operation_new(), CamelOperation, CamelOperation);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -41,7 +49,7 @@
 
 - (instancetype)initProxy:(OGCancellable*)cancellable
 {
-	CamelOperation* gobjectValue = CAMEL_OPERATION(camel_operation_new_proxy([cancellable castedGObject]));
+	CamelOperation* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_operation_new_proxy([cancellable castedGObject]), CamelOperation, CamelOperation);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -57,7 +65,7 @@
 
 - (CamelOperation*)castedGObject
 {
-	return CAMEL_OPERATION([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelOperation, CamelOperation);
 }
 
 

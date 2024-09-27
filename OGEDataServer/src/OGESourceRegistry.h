@@ -8,8 +8,8 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGESource;
 @class OGCancellable;
+@class OGESource;
 @class OGEOAuth2Services;
 
 /**

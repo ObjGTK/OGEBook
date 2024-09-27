@@ -10,7 +10,7 @@
 
 - (CamelSaslPOPB4SMTP*)castedGObject
 {
-	return CAMEL_SASL_POPB4SMTP([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelSaslPOPB4SMTP, CamelSaslPOPB4SMTP);
 }
 
 

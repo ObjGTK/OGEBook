@@ -56,6 +56,7 @@ AC_MSG_CHECKING(for ObjFW package OGObject)
 AS_IF([$OBJFW_CONFIG --package OGObject], [AC_MSG_RESULT(yes)
 	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGObject --cppflags)"
 	LIBS="$LIBS $($OBJFW_CONFIG --package OGObject --libs)"
+	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGObject --framework-libs) $FRAMEWORK_LIBS"
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGObject installed.)
 ])
@@ -63,6 +64,7 @@ AC_MSG_CHECKING(for ObjFW package OGJson)
 AS_IF([$OBJFW_CONFIG --package OGJson], [AC_MSG_RESULT(yes)
 	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGJson --cppflags)"
 	LIBS="$LIBS $($OBJFW_CONFIG --package OGJson --libs)"
+	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGJson --framework-libs) $FRAMEWORK_LIBS"
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGJson installed.)
 ])
@@ -71,6 +73,7 @@ AC_MSG_CHECKING(for ObjFW package OGCamel)
 AS_IF([$OBJFW_CONFIG --package OGCamel], [AC_MSG_RESULT(yes)
 	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGCamel --cppflags)"
 	LIBS="$LIBS $($OBJFW_CONFIG --package OGCamel --libs)"
+	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGCamel --framework-libs) $FRAMEWORK_LIBS"
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGCamel installed.)
 ])
@@ -79,6 +82,7 @@ AC_MSG_CHECKING(for ObjFW package OGio)
 AS_IF([$OBJFW_CONFIG --package OGio], [AC_MSG_RESULT(yes)
 	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGio --cppflags)"
 	LIBS="$LIBS $($OBJFW_CONFIG --package OGio --libs)"
+	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGio --framework-libs) $FRAMEWORK_LIBS"
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGio installed.)
 ])
@@ -100,6 +104,7 @@ PKG_CHECK_MODULES(libedataserver, [libedataserver-1.2 >= $(pkg-config --modversi
 	OGEDATASERVER_LIBS="$OGEDATASERVER_LIBS $libedataserver_LIBS"
 	CPPFLAGS="$CPPFLAGS $libedataserver_CFLAGS"
 	LIBS="$LIBS $libedataserver_LIBS"
+	FRAMEWORK_LIBS="$FRAMEWORK_LIBS $libedataserver_LIBS"
 ], [
 	AC_MSG_ERROR(You need libedataserver-1.2 >= $(pkg-config --modversion libedataserver-1.2) installed!)
 ])
@@ -118,5 +123,5 @@ AC_SUBST(CPPFLAGS)
 AC_SUBST(OGEDATASERVER_CPPFLAGS)
 AC_SUBST(OGEDATASERVER_LIBS)
 
-AC_CONFIG_FILES([buildsys.mk extra.mk OGEDataServer.oc])
+AC_CONFIG_FILES([buildsys.mk extra.mk OGEDataServer.oc src/Info.plist])
 AC_OUTPUT

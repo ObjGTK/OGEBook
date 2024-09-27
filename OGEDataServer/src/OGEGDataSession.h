@@ -4,18 +4,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
-#import "OGESoupSession.h"
+#include <libedataserver/libedataserver.h>
+
 
 @class OGESource;
-@class OGCancellable;
 @class OGJsonBuilder;
+@class OGCancellable;
 
 /**
  * Contains only private data that should be read and manipulated using the
  * functions below.
  *
  */
-@interface OGEGDataSession : OGESoupSession
+@interface OGEGDataSession : ESoupSession
 {
 
 }

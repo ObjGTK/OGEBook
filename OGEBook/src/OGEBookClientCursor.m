@@ -14,7 +14,7 @@
 
 - (EBookClientCursor*)castedGObject
 {
-	return E_BOOK_CLIENT_CURSOR([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], EBookClientCursor, EBookClientCursor);
 }
 
 - (const gchar* const*)alphabetWithNlabels:(gint*)nlabels underflow:(gint*)underflow inflow:(gint*)inflow overflow:(gint*)overflow
@@ -47,7 +47,7 @@
 
 - (OGEBookClient*)refClient
 {
-	EBookClient* gobjectValue = E_BOOK_CLIENT(e_book_client_cursor_ref_client([self castedGObject]));
+	EBookClient* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_book_client_cursor_ref_client([self castedGObject]), EBookClient, EBookClient);
 
 	OGEBookClient* returnValue = [OGEBookClient withGObject:gobjectValue];
 	g_object_unref(gobjectValue);

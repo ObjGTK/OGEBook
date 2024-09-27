@@ -10,7 +10,7 @@
 
 + (OGCamelCertDB*)default
 {
-	CamelCertDB* gobjectValue = CAMEL_CERTDB(camel_certdb_get_default());
+	CamelCertDB* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_certdb_get_default(), CamelCertDB, CamelCertDB);
 
 	OGCamelCertDB* returnValue = [OGCamelCertDB withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -20,7 +20,7 @@
 
 - (instancetype)init
 {
-	CamelCertDB* gobjectValue = CAMEL_CERTDB(camel_certdb_new());
+	CamelCertDB* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_certdb_new(), CamelCertDB, CamelCertDB);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -36,7 +36,7 @@
 
 - (CamelCertDB*)castedGObject
 {
-	return CAMEL_CERTDB([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelCertDB, CamelCertDB);
 }
 
 - (void)clear

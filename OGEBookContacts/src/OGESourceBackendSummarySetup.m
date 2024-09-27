@@ -10,7 +10,7 @@
 
 - (ESourceBackendSummarySetup*)castedGObject
 {
-	return E_SOURCE_BACKEND_SUMMARY_SETUP([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceBackendSummarySetup, ESourceBackendSummarySetup);
 }
 
 - (EContactField*)indexedFieldsWithTypes:(EBookIndexType**)types nfields:(gint*)nfields

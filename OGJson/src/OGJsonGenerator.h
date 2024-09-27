@@ -8,8 +8,8 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCancellable;
 @class OGOutputStream;
+@class OGCancellable;
 
 /**
  * `JsonGenerator` provides an object for generating a JSON data stream

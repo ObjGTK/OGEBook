@@ -10,7 +10,7 @@
 
 - (CamelTextIndexCursor*)castedGObject
 {
-	return CAMEL_TEXT_INDEX_CURSOR([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelTextIndexCursor, CamelTextIndexCursor);
 }
 
 

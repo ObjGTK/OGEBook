@@ -13,12 +13,12 @@
 
 - (CamelIndex*)castedGObject
 {
-	return CAMEL_INDEX([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelIndex, CamelIndex);
 }
 
 - (OGCamelIndexName*)addName:(OFString*)name
 {
-	CamelIndexName* gobjectValue = CAMEL_INDEX_NAME(camel_index_add_name([self castedGObject], [name UTF8String]));
+	CamelIndexName* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_index_add_name([self castedGObject], [name UTF8String]), CamelIndexName, CamelIndexName);
 
 	OGCamelIndexName* returnValue = [OGCamelIndexName withGObject:gobjectValue];
 	return returnValue;
@@ -50,7 +50,7 @@
 
 - (OGCamelIndexCursor*)find:(OFString*)word
 {
-	CamelIndexCursor* gobjectValue = CAMEL_INDEX_CURSOR(camel_index_find([self castedGObject], [word UTF8String]));
+	CamelIndexCursor* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_index_find([self castedGObject], [word UTF8String]), CamelIndexCursor, CamelIndexCursor);
 
 	OGCamelIndexCursor* returnValue = [OGCamelIndexCursor withGObject:gobjectValue];
 	return returnValue;
@@ -58,7 +58,7 @@
 
 - (OGCamelIndexCursor*)findName:(OFString*)name
 {
-	CamelIndexCursor* gobjectValue = CAMEL_INDEX_CURSOR(camel_index_find_name([self castedGObject], [name UTF8String]));
+	CamelIndexCursor* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_index_find_name([self castedGObject], [name UTF8String]), CamelIndexCursor, CamelIndexCursor);
 
 	OGCamelIndexCursor* returnValue = [OGCamelIndexCursor withGObject:gobjectValue];
 	return returnValue;
@@ -92,7 +92,7 @@
 
 - (OGCamelIndexCursor*)words
 {
-	CamelIndexCursor* gobjectValue = CAMEL_INDEX_CURSOR(camel_index_words([self castedGObject]));
+	CamelIndexCursor* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_index_words([self castedGObject]), CamelIndexCursor, CamelIndexCursor);
 
 	OGCamelIndexCursor* returnValue = [OGCamelIndexCursor withGObject:gobjectValue];
 	return returnValue;

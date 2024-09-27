@@ -10,7 +10,7 @@
 
 - (ESourceWebDAVNotes*)castedGObject
 {
-	return E_SOURCE_WEBDAV_NOTES([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceWebDAVNotes, ESourceWebDAVNotes);
 }
 
 - (OFString*)dupDefaultExt

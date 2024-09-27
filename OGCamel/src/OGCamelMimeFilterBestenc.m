@@ -10,7 +10,7 @@
 
 - (instancetype)init:(guint)flags
 {
-	CamelMimeFilterBestenc* gobjectValue = CAMEL_MIME_FILTER_BESTENC(camel_mime_filter_bestenc_new(flags));
+	CamelMimeFilterBestenc* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_bestenc_new(flags), CamelMimeFilterBestenc, CamelMimeFilterBestenc);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (CamelMimeFilterBestenc*)castedGObject
 {
-	return CAMEL_MIME_FILTER_BESTENC([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMimeFilterBestenc, CamelMimeFilterBestenc);
 }
 
 - (OFString*)bestCharset

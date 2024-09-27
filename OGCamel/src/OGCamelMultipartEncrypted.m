@@ -10,7 +10,7 @@
 
 - (instancetype)init
 {
-	CamelMultipartEncrypted* gobjectValue = CAMEL_MULTIPART_ENCRYPTED(camel_multipart_encrypted_new());
+	CamelMultipartEncrypted* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_multipart_encrypted_new(), CamelMultipartEncrypted, CamelMultipartEncrypted);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (CamelMultipartEncrypted*)castedGObject
 {
-	return CAMEL_MULTIPART_ENCRYPTED([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMultipartEncrypted, CamelMultipartEncrypted);
 }
 
 

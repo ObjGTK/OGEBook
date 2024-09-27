@@ -10,7 +10,7 @@
 
 - (instancetype)init
 {
-	CamelStreamNull* gobjectValue = CAMEL_STREAM_NULL(camel_stream_null_new());
+	CamelStreamNull* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_null_new(), CamelStreamNull, CamelStreamNull);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (CamelStreamNull*)castedGObject
 {
-	return CAMEL_STREAM_NULL([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelStreamNull, CamelStreamNull);
 }
 
 - (gsize)bytesWritten

@@ -6,16 +6,16 @@
 
 #import "OGCamelService.h"
 
-#import "OGCamelSession.h"
 #import "OGCamelSettings.h"
 #import <OGio/OGCancellable.h>
 #import <OGio/OGTask.h>
+#import "OGCamelSession.h"
 
 @implementation OGCamelService
 
 - (CamelService*)castedGObject
 {
-	return CAMEL_SERVICE([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelService, CamelService);
 }
 
 - (void)authenticateWithMechanism:(OFString*)mechanism ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
@@ -262,7 +262,7 @@
 
 - (OGCamelSession*)refSession
 {
-	CamelSession* gobjectValue = CAMEL_SESSION(camel_service_ref_session([self castedGObject]));
+	CamelSession* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_service_ref_session([self castedGObject]), CamelSession, CamelSession);
 
 	OGCamelSession* returnValue = [OGCamelSession withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -272,7 +272,7 @@
 
 - (OGCamelSettings*)refSettings
 {
-	CamelSettings* gobjectValue = CAMEL_SETTINGS(camel_service_ref_settings([self castedGObject]));
+	CamelSettings* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_service_ref_settings([self castedGObject]), CamelSettings, CamelSettings);
 
 	OGCamelSettings* returnValue = [OGCamelSettings withGObject:gobjectValue];
 	g_object_unref(gobjectValue);

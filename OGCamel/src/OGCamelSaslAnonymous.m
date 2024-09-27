@@ -10,7 +10,7 @@
 
 - (instancetype)initWithType:(CamelSaslAnonTraceType)type traceInfo:(OFString*)traceInfo
 {
-	CamelSaslAnonymous* gobjectValue = CAMEL_SASL_ANONYMOUS(camel_sasl_anonymous_new(type, [traceInfo UTF8String]));
+	CamelSaslAnonymous* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_sasl_anonymous_new(type, [traceInfo UTF8String]), CamelSaslAnonymous, CamelSaslAnonymous);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (CamelSaslAnonymous*)castedGObject
 {
-	return CAMEL_SASL_ANONYMOUS([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelSaslAnonymous, CamelSaslAnonymous);
 }
 
 

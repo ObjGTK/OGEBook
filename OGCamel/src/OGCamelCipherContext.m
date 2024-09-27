@@ -6,8 +6,8 @@
 
 #import "OGCamelCipherContext.h"
 
-#import <OGio/OGCancellable.h>
 #import "OGCamelMimePart.h"
+#import <OGio/OGCancellable.h>
 #import "OGCamelSession.h"
 
 @implementation OGCamelCipherContext
@@ -21,7 +21,7 @@
 
 - (instancetype)init:(OGCamelSession*)session
 {
-	CamelCipherContext* gobjectValue = CAMEL_CIPHER_CONTEXT(camel_cipher_context_new([session castedGObject]));
+	CamelCipherContext* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_cipher_context_new([session castedGObject]), CamelCipherContext, CamelCipherContext);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -37,7 +37,7 @@
 
 - (CamelCipherContext*)castedGObject
 {
-	return CAMEL_CIPHER_CONTEXT([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelCipherContext, CamelCipherContext);
 }
 
 - (void)decryptWithIpart:(OGCamelMimePart*)ipart opart:(OGCamelMimePart*)opart ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
@@ -112,7 +112,7 @@
 
 - (OGCamelSession*)session
 {
-	CamelSession* gobjectValue = CAMEL_SESSION(camel_cipher_context_get_session([self castedGObject]));
+	CamelSession* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_cipher_context_get_session([self castedGObject]), CamelSession, CamelSession);
 
 	OGCamelSession* returnValue = [OGCamelSession withGObject:gobjectValue];
 	return returnValue;

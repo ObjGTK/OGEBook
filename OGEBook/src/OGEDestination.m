@@ -6,8 +6,8 @@
 
 #import "OGEDestination.h"
 
-#import "OGEBookClient.h"
 #import <OGEBookContacts/OGEContact.h>
+#import "OGEBookClient.h"
 
 @implementation OGEDestination
 
@@ -34,7 +34,7 @@
 
 + (OGEDestination*)import:(OFString*)str
 {
-	EDestination* gobjectValue = E_DESTINATION(e_destination_import([str UTF8String]));
+	EDestination* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_destination_import([str UTF8String]), EDestination, EDestination);
 
 	OGEDestination* returnValue = [OGEDestination withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -51,7 +51,7 @@
 
 - (instancetype)init
 {
-	EDestination* gobjectValue = E_DESTINATION(e_destination_new());
+	EDestination* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_destination_new(), EDestination, EDestination);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -67,12 +67,12 @@
 
 - (EDestination*)castedGObject
 {
-	return E_DESTINATION([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], EDestination, EDestination);
 }
 
 - (OGEDestination*)copy
 {
-	EDestination* gobjectValue = E_DESTINATION(e_destination_copy([self castedGObject]));
+	EDestination* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_destination_copy([self castedGObject]), EDestination, EDestination);
 
 	OGEDestination* returnValue = [OGEDestination withGObject:gobjectValue];
 	g_object_unref(gobjectValue);
@@ -117,7 +117,7 @@
 
 - (OGEContact*)contact
 {
-	EContact* gobjectValue = E_CONTACT(e_destination_get_contact([self castedGObject]));
+	EContact* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_destination_get_contact([self castedGObject]), EContact, EContact);
 
 	OGEContact* returnValue = [OGEContact withGObject:gobjectValue];
 	return returnValue;

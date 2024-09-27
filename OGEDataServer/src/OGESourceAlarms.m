@@ -10,7 +10,7 @@
 
 - (ESourceAlarms*)castedGObject
 {
-	return E_SOURCE_ALARMS([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceAlarms, ESourceAlarms);
 }
 
 - (OFString*)dupLastNotified
@@ -18,6 +18,13 @@
 	gchar* gobjectValue = e_source_alarms_dup_last_notified([self castedGObject]);
 
 	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	return returnValue;
+}
+
+- (bool)forEveryEvent
+{
+	bool returnValue = e_source_alarms_get_for_every_event([self castedGObject]);
+
 	return returnValue;
 }
 
@@ -34,6 +41,11 @@
 
 	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
 	return returnValue;
+}
+
+- (void)setForEveryEvent:(bool)forEveryEvent
+{
+	e_source_alarms_set_for_every_event([self castedGObject], forEveryEvent);
 }
 
 - (void)setIncludeMe:(bool)includeMe

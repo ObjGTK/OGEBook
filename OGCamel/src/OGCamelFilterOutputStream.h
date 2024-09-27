@@ -8,8 +8,8 @@
 
 #import <OGio/OGFilterOutputStream.h>
 
-@class OGCamelMimeFilter;
 @class OGOutputStream;
+@class OGCamelMimeFilter;
 
 @interface OGCamelFilterOutputStream : OGFilterOutputStream
 {

@@ -13,7 +13,7 @@
 
 - (instancetype)init
 {
-	CamelMultipartSigned* gobjectValue = CAMEL_MULTIPART_SIGNED(camel_multipart_signed_new());
+	CamelMultipartSigned* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_multipart_signed_new(), CamelMultipartSigned, CamelMultipartSigned);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -29,14 +29,14 @@
 
 - (CamelMultipartSigned*)castedGObject
 {
-	return CAMEL_MULTIPART_SIGNED([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMultipartSigned, CamelMultipartSigned);
 }
 
 - (OGCamelStream*)contentStream
 {
 	GError* err = NULL;
 
-	CamelStream* gobjectValue = CAMEL_STREAM(camel_multipart_signed_get_content_stream([self castedGObject], &err));
+	CamelStream* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_multipart_signed_get_content_stream([self castedGObject], &err), CamelStream, CamelStream);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];

@@ -14,7 +14,7 @@
 {
 	GError* err = NULL;
 
-	CamelDataCache* gobjectValue = CAMEL_DATA_CACHE(camel_data_cache_new([path UTF8String], &err));
+	CamelDataCache* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_data_cache_new([path UTF8String], &err), CamelDataCache, CamelDataCache);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -38,14 +38,14 @@
 
 - (CamelDataCache*)castedGObject
 {
-	return CAMEL_DATA_CACHE([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelDataCache, CamelDataCache);
 }
 
 - (OGIOStream*)addWithPath:(OFString*)path key:(OFString*)key
 {
 	GError* err = NULL;
 
-	GIOStream* gobjectValue = G_IO_STREAM(camel_data_cache_add([self castedGObject], [path UTF8String], [key UTF8String], &err));
+	GIOStream* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_data_cache_add([self castedGObject], [path UTF8String], [key UTF8String], &err), GIOStream, GIOStream);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -75,7 +75,7 @@
 {
 	GError* err = NULL;
 
-	GIOStream* gobjectValue = G_IO_STREAM(camel_data_cache_get([self castedGObject], [path UTF8String], [key UTF8String], &err));
+	GIOStream* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_data_cache_get([self castedGObject], [path UTF8String], [key UTF8String], &err), GIOStream, GIOStream);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];

@@ -10,7 +10,7 @@
 
 - (instancetype)initWithFd:(gint)fd
 {
-	CamelStreamFs* gobjectValue = CAMEL_STREAM_FS(camel_stream_fs_new_with_fd(fd));
+	CamelStreamFs* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_fs_new_with_fd(fd), CamelStreamFs, CamelStreamFs);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -28,7 +28,7 @@
 {
 	GError* err = NULL;
 
-	CamelStreamFs* gobjectValue = CAMEL_STREAM_FS(camel_stream_fs_new_with_name([name UTF8String], flags, mode, &err));
+	CamelStreamFs* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_fs_new_with_name([name UTF8String], flags, mode, &err), CamelStreamFs, CamelStreamFs);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -52,7 +52,7 @@
 
 - (CamelStreamFs*)castedGObject
 {
-	return CAMEL_STREAM_FS([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelStreamFs, CamelStreamFs);
 }
 
 - (gint)fd

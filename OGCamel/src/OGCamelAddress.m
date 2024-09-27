@@ -10,7 +10,7 @@
 
 - (instancetype)init
 {
-	CamelAddress* gobjectValue = CAMEL_ADDRESS(camel_address_new());
+	CamelAddress* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_address_new(), CamelAddress, CamelAddress);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (CamelAddress*)castedGObject
 {
-	return CAMEL_ADDRESS([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelAddress, CamelAddress);
 }
 
 - (gint)cat:(OGCamelAddress*)source
@@ -75,7 +75,7 @@
 
 - (OGCamelAddress*)newClone
 {
-	CamelAddress* gobjectValue = CAMEL_ADDRESS(camel_address_new_clone([self castedGObject]));
+	CamelAddress* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_address_new_clone([self castedGObject]), CamelAddress, CamelAddress);
 
 	OGCamelAddress* returnValue = [OGCamelAddress withGObject:gobjectValue];
 	g_object_unref(gobjectValue);

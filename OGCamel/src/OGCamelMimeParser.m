@@ -6,15 +6,15 @@
 
 #import "OGCamelMimeParser.h"
 
-#import "OGCamelStream.h"
 #import <OGio/OGInputStream.h>
+#import "OGCamelStream.h"
 #import "OGCamelMimeFilter.h"
 
 @implementation OGCamelMimeParser
 
 - (instancetype)init
 {
-	CamelMimeParser* gobjectValue = CAMEL_MIME_PARSER(camel_mime_parser_new());
+	CamelMimeParser* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_parser_new(), CamelMimeParser, CamelMimeParser);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -30,7 +30,7 @@
 
 - (CamelMimeParser*)castedGObject
 {
-	return CAMEL_MIME_PARSER([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMimeParser, CamelMimeParser);
 }
 
 - (CamelContentType*)contentType
@@ -172,6 +172,13 @@
 	return returnValue;
 }
 
+- (gint)setHeaderRegex:(OFString*)matchstr
+{
+	gint returnValue = camel_mime_parser_set_header_regex([self castedGObject], g_strdup([matchstr UTF8String]));
+
+	return returnValue;
+}
+
 - (CamelMimeParserState)state
 {
 	CamelMimeParserState returnValue = camel_mime_parser_state([self castedGObject]);
@@ -188,7 +195,7 @@
 
 - (OGCamelStream*)stream
 {
-	CamelStream* gobjectValue = CAMEL_STREAM(camel_mime_parser_stream([self castedGObject]));
+	CamelStream* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_parser_stream([self castedGObject]), CamelStream, CamelStream);
 
 	OGCamelStream* returnValue = [OGCamelStream withGObject:gobjectValue];
 	return returnValue;

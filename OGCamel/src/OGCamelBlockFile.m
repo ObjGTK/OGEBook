@@ -10,7 +10,7 @@
 
 - (instancetype)initWithPath:(OFString*)path flags:(gint)flags version:(OFString*)version blockSize:(gsize)blockSize
 {
-	CamelBlockFile* gobjectValue = CAMEL_BLOCK_FILE(camel_block_file_new([path UTF8String], flags, [version UTF8String], blockSize));
+	CamelBlockFile* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_block_file_new([path UTF8String], flags, [version UTF8String], blockSize), CamelBlockFile, CamelBlockFile);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (CamelBlockFile*)castedGObject
 {
-	return CAMEL_BLOCK_FILE([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelBlockFile, CamelBlockFile);
 }
 
 - (void)attachBlock:(CamelBlock*)bl

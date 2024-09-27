@@ -6,10 +6,10 @@
 
 #import "OGCamelFolderSearch.h"
 
-#import "OGCamelIndex.h"
-#import <OGio/OGCancellable.h>
-#import "OGCamelMessageInfo.h"
 #import "OGCamelFolder.h"
+#import "OGCamelIndex.h"
+#import "OGCamelMessageInfo.h"
+#import <OGio/OGCancellable.h>
 
 @implementation OGCamelFolderSearch
 
@@ -43,7 +43,7 @@
 
 - (instancetype)init
 {
-	CamelFolderSearch* gobjectValue = CAMEL_FOLDER_SEARCH(camel_folder_search_new());
+	CamelFolderSearch* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_search_new(), CamelFolderSearch, CamelFolderSearch);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -59,7 +59,7 @@
 
 - (CamelFolderSearch*)castedGObject
 {
-	return CAMEL_FOLDER_SEARCH([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelFolderSearch, CamelFolderSearch);
 }
 
 - (guint32)countWithExpr:(OFString*)expr cancellable:(OGCancellable*)cancellable
@@ -84,7 +84,7 @@
 
 - (OGCamelMessageInfo*)currentMessageInfo
 {
-	CamelMessageInfo* gobjectValue = CAMEL_MESSAGE_INFO(camel_folder_search_get_current_message_info([self castedGObject]));
+	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_search_get_current_message_info([self castedGObject]), CamelMessageInfo, CamelMessageInfo);
 
 	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo withGObject:gobjectValue];
 	return returnValue;
@@ -99,7 +99,7 @@
 
 - (OGCamelFolder*)folder
 {
-	CamelFolder* gobjectValue = CAMEL_FOLDER(camel_folder_search_get_folder([self castedGObject]));
+	CamelFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_search_get_folder([self castedGObject]), CamelFolder, CamelFolder);
 
 	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
 	return returnValue;

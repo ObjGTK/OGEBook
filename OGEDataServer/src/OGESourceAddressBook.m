@@ -10,7 +10,7 @@
 
 - (ESourceAddressBook*)castedGObject
 {
-	return E_SOURCE_ADDRESS_BOOK([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceAddressBook, ESourceAddressBook);
 }
 
 - (guint)order

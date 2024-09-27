@@ -10,7 +10,7 @@
 
 - (CamelIndexName*)castedGObject
 {
-	return CAMEL_INDEX_NAME([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelIndexName, CamelIndexName);
 }
 
 - (gsize)addBufferWithBuffer:(OFString*)buffer len:(gsize)len

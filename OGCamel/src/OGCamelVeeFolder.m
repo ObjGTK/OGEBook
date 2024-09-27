@@ -6,15 +6,15 @@
 
 #import "OGCamelVeeFolder.h"
 
-#import <OGio/OGCancellable.h>
-#import "OGCamelVeeMessageInfoData.h"
 #import "OGCamelStore.h"
+#import "OGCamelVeeMessageInfoData.h"
+#import <OGio/OGCancellable.h>
 
 @implementation OGCamelVeeFolder
 
 - (instancetype)initWithParentStore:(OGCamelStore*)parentStore full:(OFString*)full flags:(guint32)flags
 {
-	CamelVeeFolder* gobjectValue = CAMEL_VEE_FOLDER(camel_vee_folder_new([parentStore castedGObject], [full UTF8String], flags));
+	CamelVeeFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_folder_new([parentStore castedGObject], [full UTF8String], flags), CamelVeeFolder, CamelVeeFolder);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -30,7 +30,7 @@
 
 - (CamelVeeFolder*)castedGObject
 {
-	return CAMEL_VEE_FOLDER([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelVeeFolder, CamelVeeFolder);
 }
 
 - (void)addFolderWithSubfolder:(OGCamelFolder*)subfolder cancellable:(OGCancellable*)cancellable
@@ -72,7 +72,7 @@
 
 - (OGCamelFolder*)locationWithVinfo:(const CamelVeeMessageInfo*)vinfo realuid:(gchar**)realuid
 {
-	CamelFolder* gobjectValue = CAMEL_FOLDER(camel_vee_folder_get_location([self castedGObject], vinfo, realuid));
+	CamelFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_folder_get_location([self castedGObject], vinfo, realuid), CamelFolder, CamelFolder);
 
 	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
 	return returnValue;
@@ -80,7 +80,7 @@
 
 - (OGCamelFolder*)veeUidFolder:(OFString*)veeMessageUid
 {
-	CamelFolder* gobjectValue = CAMEL_FOLDER(camel_vee_folder_get_vee_uid_folder([self castedGObject], [veeMessageUid UTF8String]));
+	CamelFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_folder_get_vee_uid_folder([self castedGObject], [veeMessageUid UTF8String]), CamelFolder, CamelFolder);
 
 	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
 	return returnValue;

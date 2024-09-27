@@ -10,7 +10,7 @@
 
 - (ESourceMailSubmission*)castedGObject
 {
-	return E_SOURCE_MAIL_SUBMISSION([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceMailSubmission, ESourceMailSubmission);
 }
 
 - (OFString*)dupSentFolder

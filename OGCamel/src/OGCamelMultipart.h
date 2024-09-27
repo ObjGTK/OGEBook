@@ -6,8 +6,8 @@
 
 #import "OGCamelDataWrapper.h"
 
-@class OGCamelMimePart;
 @class OGCamelMimeParser;
+@class OGCamelMimePart;
 
 @interface OGCamelMultipart : OGCamelDataWrapper
 {
@@ -40,6 +40,21 @@
  * @return 0 on success or -1 on fail
  */
 - (gint)constructFromParser:(OGCamelMimeParser*)parser;
+
+/**
+ * Generates preview of the @multipart, to be used in the interface,
+ * read by the users.
+ * 
+ * The optional @func can be used to override default preview generation
+ * function. If provided, it's always called as the first try on the parts.
+ *
+ * @param func an optional #CamelGeneratePreviewFunc function, or %NULL
+ * @param userData user data for the @func, or %NULL
+ * @return part's preview as a new string,
+ *    or %NULL, when cannot be generated. Free with g_free(), when no
+ *    longer needed.
+ */
+- (OFString*)generatePreviewWithFunc:(CamelGeneratePreviewFunc)func userData:(gpointer)userData;
 
 /**
  *

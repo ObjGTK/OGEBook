@@ -6,8 +6,8 @@
 
 #import "OGCamelSasl.h"
 
-#import <OGio/OGCancellable.h>
 #import "OGCamelService.h"
+#import <OGio/OGCancellable.h>
 
 @implementation OGCamelSasl
 
@@ -34,7 +34,7 @@
 
 - (instancetype)initWithServiceName:(OFString*)serviceName mechanism:(OFString*)mechanism service:(OGCamelService*)service
 {
-	CamelSasl* gobjectValue = CAMEL_SASL(camel_sasl_new([serviceName UTF8String], [mechanism UTF8String], [service castedGObject]));
+	CamelSasl* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_sasl_new([serviceName UTF8String], [mechanism UTF8String], [service castedGObject]), CamelSasl, CamelSasl);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -50,7 +50,7 @@
 
 - (CamelSasl*)castedGObject
 {
-	return CAMEL_SASL([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelSasl, CamelSasl);
 }
 
 - (void)challengeWithToken:(GByteArray*)token ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
@@ -142,7 +142,7 @@
 
 - (OGCamelService*)service
 {
-	CamelService* gobjectValue = CAMEL_SERVICE(camel_sasl_get_service([self castedGObject]));
+	CamelService* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_sasl_get_service([self castedGObject]), CamelService, CamelService);
 
 	OGCamelService* returnValue = [OGCamelService withGObject:gobjectValue];
 	return returnValue;

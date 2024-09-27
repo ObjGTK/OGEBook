@@ -7,8 +7,8 @@
 #import "OGEExtension.h"
 
 @class OGESourceCredentialsProvider;
-@class OGESource;
 @class OGCancellable;
+@class OGESource;
 
 /**
  * Credentials provider implementation base structure. The descendants

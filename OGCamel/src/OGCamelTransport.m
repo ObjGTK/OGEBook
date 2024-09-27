@@ -6,15 +6,15 @@
 
 #import "OGCamelTransport.h"
 
-#import <OGio/OGCancellable.h>
-#import "OGCamelAddress.h"
 #import "OGCamelMimeMessage.h"
+#import "OGCamelAddress.h"
+#import <OGio/OGCancellable.h>
 
 @implementation OGCamelTransport
 
 - (CamelTransport*)castedGObject
 {
-	return CAMEL_TRANSPORT([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelTransport, CamelTransport);
 }
 
 - (bool)requestDsn

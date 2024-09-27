@@ -10,7 +10,7 @@
 
 - (instancetype)init
 {
-	CamelMimeFilter* gobjectValue = CAMEL_MIME_FILTER(camel_mime_filter_new());
+	CamelMimeFilter* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_new(), CamelMimeFilter, CamelMimeFilter);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (CamelMimeFilter*)castedGObject
 {
-	return CAMEL_MIME_FILTER([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMimeFilter, CamelMimeFilter);
 }
 
 - (void)backupWithData:(OFString*)data length:(gsize)length
@@ -44,9 +44,21 @@
 	camel_mime_filter_filter([self castedGObject], [in UTF8String], len, prespace, out, outlen, outprespace);
 }
 
+- (bool)requestStop
+{
+	bool returnValue = camel_mime_filter_get_request_stop([self castedGObject]);
+
+	return returnValue;
+}
+
 - (void)reset
 {
 	camel_mime_filter_reset([self castedGObject]);
+}
+
+- (void)setRequestStop:(bool)requestStop
+{
+	camel_mime_filter_set_request_stop([self castedGObject], requestStop);
 }
 
 - (void)setSizeWithSize:(gsize)size keep:(gint)keep

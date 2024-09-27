@@ -66,10 +66,27 @@
 - (void)filterWithIn:(OFString*)in len:(gsize)len prespace:(gsize)prespace out:(gchar**)out outlen:(gsize*)outlen outprespace:(gsize*)outprespace;
 
 /**
+ * Returns whether the @filter requested stop further processing
+ * with camel_mime_filter_set_request_stop().
+ *
+ * @return %TRUE, when the @filter request stop further processing,
+ *    %FALSE otherwise
+ */
+- (bool)requestStop;
+
+/**
  * Resets the state on @filter so that it may be used again.
  *
  */
 - (void)reset;
+
+/**
+ * Sets whether the @filter requests, or not, stop further processing.
+ * This can be used to stop before all the data is filtered.
+ *
+ * @param requestStop value to set
+ */
+- (void)setRequestStop:(bool)requestStop;
 
 /**
  * Ensure that @filter has enough storage space to store @size bytes

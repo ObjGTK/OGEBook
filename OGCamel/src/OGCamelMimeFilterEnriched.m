@@ -10,7 +10,7 @@
 
 - (instancetype)init:(guint32)flags
 {
-	CamelMimeFilterEnriched* gobjectValue = CAMEL_MIME_FILTER_ENRICHED(camel_mime_filter_enriched_new(flags));
+	CamelMimeFilterEnriched* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_enriched_new(flags), CamelMimeFilterEnriched, CamelMimeFilterEnriched);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (CamelMimeFilterEnriched*)castedGObject
 {
-	return CAMEL_MIME_FILTER_ENRICHED([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMimeFilterEnriched, CamelMimeFilterEnriched);
 }
 
 

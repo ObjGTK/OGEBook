@@ -10,7 +10,7 @@
 
 - (ESourceGoa*)castedGObject
 {
-	return E_SOURCE_GOA([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceGoa, ESourceGoa);
 }
 
 - (OFString*)dupAccountId

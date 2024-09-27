@@ -10,7 +10,7 @@
 
 - (CamelSaslXOAuth2Google*)castedGObject
 {
-	return CAMEL_SASL_XOAUTH2_GOOGLE([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelSaslXOAuth2Google, CamelSaslXOAuth2Google);
 }
 
 

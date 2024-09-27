@@ -14,7 +14,7 @@
 
 - (instancetype)init:(OGCamelFolder*)parent
 {
-	CamelVeeSummary* gobjectValue = CAMEL_VEE_SUMMARY(camel_vee_summary_new([parent castedGObject]));
+	CamelVeeSummary* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_summary_new([parent castedGObject]), CamelVeeSummary, CamelVeeSummary);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -30,12 +30,12 @@
 
 - (CamelVeeSummary*)castedGObject
 {
-	return CAMEL_VEE_SUMMARY([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelVeeSummary, CamelVeeSummary);
 }
 
 - (OGCamelVeeMessageInfo*)add:(OGCamelVeeMessageInfoData*)miData
 {
-	CamelVeeMessageInfo* gobjectValue = CAMEL_VEE_MESSAGE_INFO(camel_vee_summary_add([self castedGObject], [miData castedGObject]));
+	CamelVeeMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_summary_add([self castedGObject], [miData castedGObject]), CamelVeeMessageInfo, CamelVeeMessageInfo);
 
 	OGCamelVeeMessageInfo* returnValue = [OGCamelVeeMessageInfo withGObject:gobjectValue];
 	g_object_unref(gobjectValue);

@@ -10,7 +10,7 @@
 
 - (instancetype)initWithNsHref:(OFString*)nsHref rootElement:(OFString*)rootElement
 {
-	EXmlDocument* gobjectValue = E_XML_DOCUMENT(e_xml_document_new([nsHref UTF8String], [rootElement UTF8String]));
+	EXmlDocument* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_xml_document_new([nsHref UTF8String], [rootElement UTF8String]), EXmlDocument, EXmlDocument);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (EXmlDocument*)castedGObject
 {
-	return E_XML_DOCUMENT([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], EXmlDocument, EXmlDocument);
 }
 
 - (void)addAttributeWithNsHref:(OFString*)nsHref name:(OFString*)name value:(OFString*)value

@@ -12,7 +12,7 @@
 
 - (instancetype)initWithCancellable:(OGCancellable*)cancellable total:(gsize)total
 {
-	CamelMimeFilterProgress* gobjectValue = CAMEL_MIME_FILTER_PROGRESS(camel_mime_filter_progress_new([cancellable castedGObject], total));
+	CamelMimeFilterProgress* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_progress_new([cancellable castedGObject], total), CamelMimeFilterProgress, CamelMimeFilterProgress);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -28,7 +28,7 @@
 
 - (CamelMimeFilterProgress*)castedGObject
 {
-	return CAMEL_MIME_FILTER_PROGRESS([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMimeFilterProgress, CamelMimeFilterProgress);
 }
 
 

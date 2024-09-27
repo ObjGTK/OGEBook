@@ -10,7 +10,7 @@
 
 - (instancetype)initWithPreferredLen:(guint)preferredLen maxLen:(guint)maxLen indentChar:(gchar)indentChar flags:(guint32)flags
 {
-	CamelMimeFilterLinewrap* gobjectValue = CAMEL_MIME_FILTER_LINEWRAP(camel_mime_filter_linewrap_new(preferredLen, maxLen, indentChar, flags));
+	CamelMimeFilterLinewrap* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_linewrap_new(preferredLen, maxLen, indentChar, flags), CamelMimeFilterLinewrap, CamelMimeFilterLinewrap);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (CamelMimeFilterLinewrap*)castedGObject
 {
-	return CAMEL_MIME_FILTER_LINEWRAP([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMimeFilterLinewrap, CamelMimeFilterLinewrap);
 }
 
 

@@ -10,7 +10,7 @@
 
 - (CamelObject*)castedGObject
 {
-	return CAMEL_OBJECT([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelObject, CamelObject);
 }
 
 - (OFString*)stateFilename

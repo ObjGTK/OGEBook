@@ -10,7 +10,7 @@
 
 - (ESourceUoa*)castedGObject
 {
-	return E_SOURCE_UOA([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceUoa, ESourceUoa);
 }
 
 - (guint)accountId

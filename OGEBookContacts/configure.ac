@@ -56,6 +56,7 @@ AC_MSG_CHECKING(for ObjFW package OGObject)
 AS_IF([$OBJFW_CONFIG --package OGObject], [AC_MSG_RESULT(yes)
 	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGObject --cppflags)"
 	LIBS="$LIBS $($OBJFW_CONFIG --package OGObject --libs)"
+	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGObject --framework-libs) $FRAMEWORK_LIBS"
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGObject installed.)
 ])
@@ -63,6 +64,7 @@ AC_MSG_CHECKING(for ObjFW package OGCamel)
 AS_IF([$OBJFW_CONFIG --package OGCamel], [AC_MSG_RESULT(yes)
 	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGCamel --cppflags)"
 	LIBS="$LIBS $($OBJFW_CONFIG --package OGCamel --libs)"
+	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGCamel --framework-libs) $FRAMEWORK_LIBS"
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGCamel installed.)
 ])
@@ -71,6 +73,7 @@ AC_MSG_CHECKING(for ObjFW package OGEDataServer)
 AS_IF([$OBJFW_CONFIG --package OGEDataServer], [AC_MSG_RESULT(yes)
 	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGEDataServer --cppflags)"
 	LIBS="$LIBS $($OBJFW_CONFIG --package OGEDataServer --libs)"
+	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGEDataServer --framework-libs) $FRAMEWORK_LIBS"
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGEDataServer installed.)
 ])
@@ -79,6 +82,7 @@ AC_MSG_CHECKING(for ObjFW package OGio)
 AS_IF([$OBJFW_CONFIG --package OGio], [AC_MSG_RESULT(yes)
 	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGio --cppflags)"
 	LIBS="$LIBS $($OBJFW_CONFIG --package OGio --libs)"
+	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGio --framework-libs) $FRAMEWORK_LIBS"
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGio installed.)
 ])
@@ -100,6 +104,7 @@ PKG_CHECK_MODULES(libebookcontacts, [libebook-contacts-1.2 >= $(pkg-config --mod
 	OGEBOOKCONTACTS_LIBS="$OGEBOOKCONTACTS_LIBS $libebookcontacts_LIBS"
 	CPPFLAGS="$CPPFLAGS $libebookcontacts_CFLAGS"
 	LIBS="$LIBS $libebookcontacts_LIBS"
+	FRAMEWORK_LIBS="$FRAMEWORK_LIBS $libebookcontacts_LIBS"
 ], [
 	AC_MSG_ERROR(You need libebook-contacts-1.2 >= $(pkg-config --modversion libebook-contacts-1.2) installed!)
 ])
@@ -118,5 +123,5 @@ AC_SUBST(CPPFLAGS)
 AC_SUBST(OGEBOOKCONTACTS_CPPFLAGS)
 AC_SUBST(OGEBOOKCONTACTS_LIBS)
 
-AC_CONFIG_FILES([buildsys.mk extra.mk OGEBookContacts.oc])
+AC_CONFIG_FILES([buildsys.mk extra.mk OGEBookContacts.oc src/Info.plist])
 AC_OUTPUT

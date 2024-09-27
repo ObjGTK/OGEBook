@@ -10,7 +10,7 @@
 
 - (ESourceMailIdentity*)castedGObject
 {
-	return E_SOURCE_MAIL_IDENTITY([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceMailIdentity, ESourceMailIdentity);
 }
 
 - (OFString*)dupAddress

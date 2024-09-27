@@ -23,7 +23,7 @@
 {
 	GError* err = NULL;
 
-	ESource* gobjectValue = E_SOURCE(e_source_new(dbusObject, mainContext, &err));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_new(dbusObject, mainContext, &err), ESource, ESource);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -49,7 +49,7 @@
 {
 	GError* err = NULL;
 
-	ESource* gobjectValue = E_SOURCE(e_source_new_with_uid([uid UTF8String], mainContext, &err));
+	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_new_with_uid([uid UTF8String], mainContext, &err), ESource, ESource);
 
 	if(err != NULL) {
 		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
@@ -73,7 +73,7 @@
 
 - (ESource*)castedGObject
 {
-	return E_SOURCE([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESource, ESource);
 }
 
 - (void)camelConfigureService:(OGCamelService*)service

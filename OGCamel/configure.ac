@@ -56,6 +56,7 @@ AC_MSG_CHECKING(for ObjFW package OGObject)
 AS_IF([$OBJFW_CONFIG --package OGObject], [AC_MSG_RESULT(yes)
 	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGObject --cppflags)"
 	LIBS="$LIBS $($OBJFW_CONFIG --package OGObject --libs)"
+	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGObject --framework-libs) $FRAMEWORK_LIBS"
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGObject installed.)
 ])
@@ -63,6 +64,7 @@ AC_MSG_CHECKING(for ObjFW package OGio)
 AS_IF([$OBJFW_CONFIG --package OGio], [AC_MSG_RESULT(yes)
 	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGio --cppflags)"
 	LIBS="$LIBS $($OBJFW_CONFIG --package OGio --libs)"
+	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGio --framework-libs) $FRAMEWORK_LIBS"
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGio installed.)
 ])
@@ -84,6 +86,7 @@ PKG_CHECK_MODULES(camel, [camel-1.2 >= $(pkg-config --modversion camel-1.2)], [
 	OGCAMEL_LIBS="$OGCAMEL_LIBS $camel_LIBS"
 	CPPFLAGS="$CPPFLAGS $camel_CFLAGS"
 	LIBS="$LIBS $camel_LIBS"
+	FRAMEWORK_LIBS="$FRAMEWORK_LIBS $camel_LIBS"
 ], [
 	AC_MSG_ERROR(You need camel-1.2 >= $(pkg-config --modversion camel-1.2) installed!)
 ])
@@ -102,5 +105,5 @@ AC_SUBST(CPPFLAGS)
 AC_SUBST(OGCAMEL_CPPFLAGS)
 AC_SUBST(OGCAMEL_LIBS)
 
-AC_CONFIG_FILES([buildsys.mk extra.mk OGCamel.oc])
+AC_CONFIG_FILES([buildsys.mk extra.mk OGCamel.oc src/Info.plist])
 AC_OUTPUT

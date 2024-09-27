@@ -10,7 +10,7 @@
 
 - (instancetype)init
 {
-	CamelNNTPAddress* gobjectValue = CAMEL_NNTP_ADDRESS(camel_nntp_address_new());
+	CamelNNTPAddress* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_nntp_address_new(), CamelNNTPAddress, CamelNNTPAddress);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -26,7 +26,7 @@
 
 - (CamelNNTPAddress*)castedGObject
 {
-	return CAMEL_NNTP_ADDRESS([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelNNTPAddress, CamelNNTPAddress);
 }
 
 - (gint)add:(OFString*)name

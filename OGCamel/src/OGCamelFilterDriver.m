@@ -9,14 +9,14 @@
 #import "OGCamelMessageInfo.h"
 #import "OGCamelFolder.h"
 #import <OGio/OGCancellable.h>
-#import "OGCamelSession.h"
 #import "OGCamelMimeMessage.h"
+#import "OGCamelSession.h"
 
 @implementation OGCamelFilterDriver
 
 - (instancetype)init:(OGCamelSession*)session
 {
-	CamelFilterDriver* gobjectValue = CAMEL_FILTER_DRIVER(camel_filter_driver_new([session castedGObject]));
+	CamelFilterDriver* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_filter_driver_new([session castedGObject]), CamelFilterDriver, CamelFilterDriver);
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -32,7 +32,7 @@
 
 - (CamelFilterDriver*)castedGObject
 {
-	return CAMEL_FILTER_DRIVER([self gObject]);
+	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelFilterDriver, CamelFilterDriver);
 }
 
 - (void)addRuleWithName:(OFString*)name match:(OFString*)match action:(OFString*)action
