@@ -15,3 +15,5 @@ Generated Objective-C wrappers for the Evolution EBook libraries.
 ### Debian / Ubuntu
 
 `sudo apt install libevolution libebook1.2-dev libebook-contacts1.2-dev`
+
+Supported platforms: elementary OS 8, Ubuntu 24.04
