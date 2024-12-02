@@ -11,6 +11,7 @@
 #import "OGEClient.h"
 #import "OGEExtension.h"
 #import "OGEGDataSession.h"
+#import "OGEMsOapxbc.h"
 #import "OGENetworkMonitor.h"
 #import "OGEOAuth2ServiceBase.h"
 #import "OGEOAuth2ServiceGoogle.h"

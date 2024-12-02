@@ -7,8 +7,8 @@
 #import "OGEBookClientView.h"
 
 #import <OGio/OGCancellable.h>
-#import <OGio/OGDBusConnection.h>
 #import "OGEBookClient.h"
+#import <OGio/OGDBusConnection.h>
 
 @implementation OGEBookClientView
 
@@ -79,6 +79,13 @@
 	const gchar* gobjectValue = e_book_client_view_get_object_path([self castedGObject]);
 
 	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:false] : nil);
+	return returnValue;
+}
+
+- (bool)isRunning
+{
+	bool returnValue = e_book_client_view_is_running([self castedGObject]);
+
 	return returnValue;
 }
 

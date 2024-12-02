@@ -146,6 +146,13 @@
 	return returnValue;
 }
 
+- (guint)timeout
+{
+	guint returnValue = e_source_webdav_get_timeout([self castedGObject]);
+
+	return returnValue;
+}
+
 - (void)setAvoidIfmatch:(bool)avoidIfmatch
 {
 	e_source_webdav_set_avoid_ifmatch([self castedGObject], avoidIfmatch);
@@ -194,6 +201,11 @@
 - (void)setSslTrustResponse:(ETrustPromptResponse)response
 {
 	e_source_webdav_set_ssl_trust_response([self castedGObject], response);
+}
+
+- (void)setTimeout:(guint)timeout
+{
+	e_source_webdav_set_timeout([self castedGObject], timeout);
 }
 
 - (void)setUri:(GUri*)uri

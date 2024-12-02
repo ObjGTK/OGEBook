@@ -191,6 +191,13 @@
 - (ETrustPromptResponse)sslTrustResponse;
 
 /**
+ *
+ * @return the connection timeout, in seconds. The default
+ *    is 90 seconds.
+ */
+- (guint)timeout;
+
+/**
  * This setting works around a
  * <ulink url="https://issues.apache.org/bugzilla/show_bug.cgi?id=38034">
  * bug</ulink> in older Apache mod_dav versions.
@@ -305,6 +312,13 @@
  * @param response an #ETrustPromptResponse to set
  */
 - (void)setSslTrustResponse:(ETrustPromptResponse)response;
+
+/**
+ * Set the connection timeout, in seconds.
+ *
+ * @param timeout a timeout, in seconds
+ */
+- (void)setTimeout:(guint)timeout;
 
 /**
  * This is a convenience function which propagates the components of

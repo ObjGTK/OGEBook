@@ -7,8 +7,8 @@
 #import "OGCamelMimeParser.h"
 
 #import <OGio/OGInputStream.h>
-#import "OGCamelStream.h"
 #import "OGCamelMimeFilter.h"
+#import "OGCamelStream.h"
 
 @implementation OGCamelMimeParser
 
@@ -168,6 +168,13 @@
 - (goffset)seekWithOffset:(goffset)offset whence:(gint)whence
 {
 	goffset returnValue = camel_mime_parser_seek([self castedGObject], offset, whence);
+
+	return returnValue;
+}
+
+- (gint)setHeaderRegex:(OFString*)matchstr
+{
+	gint returnValue = camel_mime_parser_set_header_regex([self castedGObject], g_strdup([matchstr UTF8String]));
 
 	return returnValue;
 }

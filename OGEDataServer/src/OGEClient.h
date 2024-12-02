@@ -8,8 +8,8 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGESource;
 @class OGCancellable;
+@class OGESource;
 
 /**
  * Contains only private data that should be read and manipulated using the
@@ -61,7 +61,7 @@
 + (GSList*)utilCopyObjectSlistWithCopyTo:(GSList*)copyTo objects:(const GSList*)objects;
 
 /**
- * Use e_util_copy_string_slist() instead.
+ * Copies the #GSList of strings to the end of @copy_to.
  *
  * @param copyTo Where to copy; may be %NULL
  * @param strings #GSList of strings to be copied
@@ -79,7 +79,7 @@
 + (void)utilFreeObjectSlist:(GSList*)objects;
 
 /**
- * Frees memory previously allocated by e_client_util_strv_to_slist().
+ * Use g_slist_free_full() instead.
  *
  * @param strings a #GSList of strings (gchar *)
  */
@@ -96,7 +96,7 @@
 + (GSList*)utilParseCommaStrings:(OFString*)strings;
 
 /**
- * Use e_util_slist_to_strv() instead.
+ * Convert a list of strings into a %NULL-terminated array of strings.
  *
  * @param strings a #GSList of strings (const gchar *)
  * @return Newly allocated %NULL-terminated array of strings.
@@ -119,7 +119,16 @@
 + (GSList*)utilStrvToSlist:(const gchar* const*)strv;
 
 /**
- * This function is no longer used.
+ * The function takes a @dbus_error and tries to find a match in @known_errors
+ * for it, if it is a G_IO_ERROR, G_IO_ERROR_DBUS_ERROR. If it is anything else
+ * then the @dbus_error is moved to @client_error.
+ * 
+ * The @fail_when_none_matched influences behaviour. If it's %TRUE, and none of
+ * @known_errors matches, or this is not a G_IO_ERROR_DBUS_ERROR, then %FALSE
+ * is returned and the @client_error is left without change. Otherwise, the
+ * @fail_when_none_matched is %FALSE, the error is always processed and will
+ * result in E_CLIENT_ERROR, E_CLIENT_ERROR_OTHER_ERROR if none of @known_error
+ * matches.
  *
  * @param dbusError DBus #GError to unwrap
  * @param clientError Resulting #GError; can be %NULL
