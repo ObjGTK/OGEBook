@@ -99,14 +99,14 @@ AS_IF([test x"$with_libebookcontacts" != x"no" -a x"$with_libebookcontacts" != x
 ])
 
 
-PKG_CHECK_MODULES(libebookcontacts, [libebook-contacts-1.2 >= $(pkg-config --modversion libebook-contacts-1.2)], [
+PKG_CHECK_MODULES(libebookcontacts, [libebook-contacts-1.2 >= 3.52.3], [
 	OGEBOOKCONTACTS_CPPFLAGS="$OGEBOOKCONTACTS_CPPFLAGS $libebookcontacts_CFLAGS"
 	OGEBOOKCONTACTS_LIBS="$OGEBOOKCONTACTS_LIBS $libebookcontacts_LIBS"
 	CPPFLAGS="$CPPFLAGS $libebookcontacts_CFLAGS"
 	LIBS="$LIBS $libebookcontacts_LIBS"
 	FRAMEWORK_LIBS="$FRAMEWORK_LIBS $libebookcontacts_LIBS"
 ], [
-	AC_MSG_ERROR(You need libebook-contacts-1.2 >= $(pkg-config --modversion libebook-contacts-1.2) installed!)
+	AC_MSG_ERROR(You need libebook-contacts-1.2 >= 3.52.3 installed!)
 ])
 
 AS_IF([test x"$GOBJC" = x"yes"], [
