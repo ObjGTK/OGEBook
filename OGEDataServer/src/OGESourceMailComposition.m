@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGESourceMailComposition.h"
 
 @implementation OGESourceMailComposition
+
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_SOURCE_MAIL_COMPOSITION;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (ESourceMailComposition*)castedGObject
 {
@@ -15,14 +25,14 @@
 
 - (gchar**)dupBcc
 {
-	gchar** returnValue = e_source_mail_composition_dup_bcc([self castedGObject]);
+	gchar** returnValue = (gchar**)e_source_mail_composition_dup_bcc([self castedGObject]);
 
 	return returnValue;
 }
 
 - (gchar**)dupCc
 {
-	gchar** returnValue = e_source_mail_composition_dup_cc([self castedGObject]);
+	gchar** returnValue = (gchar**)e_source_mail_composition_dup_cc([self castedGObject]);
 
 	return returnValue;
 }
@@ -53,14 +63,14 @@
 
 - (const gchar* const*)bcc
 {
-	const gchar* const* returnValue = e_source_mail_composition_get_bcc([self castedGObject]);
+	const gchar* const* returnValue = (const gchar* const*)e_source_mail_composition_get_bcc([self castedGObject]);
 
 	return returnValue;
 }
 
 - (const gchar* const*)cc
 {
-	const gchar* const* returnValue = e_source_mail_composition_get_cc([self castedGObject]);
+	const gchar* const* returnValue = (const gchar* const*)e_source_mail_composition_get_cc([self castedGObject]);
 
 	return returnValue;
 }
@@ -83,21 +93,21 @@
 
 - (ESourceMailCompositionReplyStyle)replyStyle
 {
-	ESourceMailCompositionReplyStyle returnValue = e_source_mail_composition_get_reply_style([self castedGObject]);
+	ESourceMailCompositionReplyStyle returnValue = (ESourceMailCompositionReplyStyle)e_source_mail_composition_get_reply_style([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)signImip
 {
-	bool returnValue = e_source_mail_composition_get_sign_imip([self castedGObject]);
+	bool returnValue = (bool)e_source_mail_composition_get_sign_imip([self castedGObject]);
 
 	return returnValue;
 }
 
 - (EThreeState)startBottom
 {
-	EThreeState returnValue = e_source_mail_composition_get_start_bottom([self castedGObject]);
+	EThreeState returnValue = (EThreeState)e_source_mail_composition_get_start_bottom([self castedGObject]);
 
 	return returnValue;
 }
@@ -112,7 +122,7 @@
 
 - (EThreeState)topSignature
 {
-	EThreeState returnValue = e_source_mail_composition_get_top_signature([self castedGObject]);
+	EThreeState returnValue = (EThreeState)e_source_mail_composition_get_top_signature([self castedGObject]);
 
 	return returnValue;
 }

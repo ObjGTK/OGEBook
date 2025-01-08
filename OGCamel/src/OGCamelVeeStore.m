@@ -1,18 +1,28 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelVeeStore.h"
 
-#import "OGCamelVeeDataCache.h"
-#import "OGCamelVeeMessageInfoData.h"
-#import "OGCamelVeeFolder.h"
-#import <OGio/OGCancellable.h>
 #import "OGCamelFolder.h"
+#import "OGCamelVeeDataCache.h"
+#import "OGCamelVeeFolder.h"
+#import "OGCamelVeeMessageInfoData.h"
+#import <OGio/OGCancellable.h>
 
 @implementation OGCamelVeeStore
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_VEE_STORE;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (instancetype)init
 {
@@ -37,24 +47,24 @@
 
 - (bool)unmatchedEnabled
 {
-	bool returnValue = camel_vee_store_get_unmatched_enabled([self castedGObject]);
+	bool returnValue = (bool)camel_vee_store_get_unmatched_enabled([self castedGObject]);
 
 	return returnValue;
 }
 
 - (OGCamelVeeFolder*)unmatchedFolder
 {
-	CamelVeeFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_store_get_unmatched_folder([self castedGObject]), CamelVeeFolder, CamelVeeFolder);
+	CamelVeeFolder* gobjectValue = camel_vee_store_get_unmatched_folder([self castedGObject]);
 
-	OGCamelVeeFolder* returnValue = [OGCamelVeeFolder withGObject:gobjectValue];
+	OGCamelVeeFolder* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
 - (OGCamelVeeDataCache*)veeDataCache
 {
-	CamelVeeDataCache* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_store_get_vee_data_cache([self castedGObject]), CamelVeeDataCache, CamelVeeDataCache);
+	CamelVeeDataCache* gobjectValue = camel_vee_store_get_vee_data_cache([self castedGObject]);
 
-	OGCamelVeeDataCache* returnValue = [OGCamelVeeDataCache withGObject:gobjectValue];
+	OGCamelVeeDataCache* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
@@ -84,11 +94,7 @@
 
 	camel_vee_store_rebuild_unmatched_folder([self castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 }
 

@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelStreamNull.h"
 
 @implementation OGCamelStreamNull
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_STREAM_NULL;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (instancetype)init
 {
@@ -31,14 +41,14 @@
 
 - (gsize)bytesWritten
 {
-	gsize returnValue = camel_stream_null_get_bytes_written([self castedGObject]);
+	gsize returnValue = (gsize)camel_stream_null_get_bytes_written([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)endsWithCrlf
 {
-	bool returnValue = camel_stream_null_get_ends_with_crlf([self castedGObject]);
+	bool returnValue = (bool)camel_stream_null_get_ends_with_crlf([self castedGObject]);
 
 	return returnValue;
 }

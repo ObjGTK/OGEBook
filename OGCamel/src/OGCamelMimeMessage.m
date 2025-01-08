@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -9,6 +9,16 @@
 #import "OGCamelInternetAddress.h"
 
 @implementation OGCamelMimeMessage
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_MIME_MESSAGE;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (instancetype)init
 {
@@ -56,23 +66,23 @@
 
 - (time_t)date:(gint*)offset
 {
-	time_t returnValue = camel_mime_message_get_date([self castedGObject], offset);
+	time_t returnValue = (time_t)camel_mime_message_get_date([self castedGObject], offset);
 
 	return returnValue;
 }
 
 - (time_t)dateReceived:(gint*)offset
 {
-	time_t returnValue = camel_mime_message_get_date_received([self castedGObject], offset);
+	time_t returnValue = (time_t)camel_mime_message_get_date_received([self castedGObject], offset);
 
 	return returnValue;
 }
 
 - (OGCamelInternetAddress*)from
 {
-	CamelInternetAddress* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_message_get_from([self castedGObject]), CamelInternetAddress, CamelInternetAddress);
+	CamelInternetAddress* gobjectValue = camel_mime_message_get_from([self castedGObject]);
 
-	OGCamelInternetAddress* returnValue = [OGCamelInternetAddress withGObject:gobjectValue];
+	OGCamelInternetAddress* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
@@ -86,25 +96,25 @@
 
 - (OGCamelMimePart*)partByContentId:(OFString*)contentId
 {
-	CamelMimePart* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_message_get_part_by_content_id([self castedGObject], [contentId UTF8String]), CamelMimePart, CamelMimePart);
+	CamelMimePart* gobjectValue = camel_mime_message_get_part_by_content_id([self castedGObject], [contentId UTF8String]);
 
-	OGCamelMimePart* returnValue = [OGCamelMimePart withGObject:gobjectValue];
+	OGCamelMimePart* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
 - (OGCamelInternetAddress*)recipients:(OFString*)type
 {
-	CamelInternetAddress* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_message_get_recipients([self castedGObject], [type UTF8String]), CamelInternetAddress, CamelInternetAddress);
+	CamelInternetAddress* gobjectValue = camel_mime_message_get_recipients([self castedGObject], [type UTF8String]);
 
-	OGCamelInternetAddress* returnValue = [OGCamelInternetAddress withGObject:gobjectValue];
+	OGCamelInternetAddress* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
 - (OGCamelInternetAddress*)replyTo
 {
-	CamelInternetAddress* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_message_get_reply_to([self castedGObject]), CamelInternetAddress, CamelInternetAddress);
+	CamelInternetAddress* gobjectValue = camel_mime_message_get_reply_to([self castedGObject]);
 
-	OGCamelInternetAddress* returnValue = [OGCamelInternetAddress withGObject:gobjectValue];
+	OGCamelInternetAddress* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
@@ -126,14 +136,14 @@
 
 - (bool)has8bitParts
 {
-	bool returnValue = camel_mime_message_has_8bit_parts([self castedGObject]);
+	bool returnValue = (bool)camel_mime_message_has_8bit_parts([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)hasAttachment
 {
-	bool returnValue = camel_mime_message_has_attachment([self castedGObject]);
+	bool returnValue = (bool)camel_mime_message_has_attachment([self castedGObject]);
 
 	return returnValue;
 }

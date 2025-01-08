@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGEXmlDocument.h"
 
 @implementation OGEXmlDocument
+
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_XML_DOCUMENT;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (instancetype)initWithNsHref:(OFString*)nsHref rootElement:(OFString*)rootElement
 {
@@ -74,7 +84,7 @@
 
 - (xmlDoc*)xmldoc
 {
-	xmlDoc* returnValue = e_xml_document_get_xmldoc([self castedGObject]);
+	xmlDoc* returnValue = (xmlDoc*)e_xml_document_get_xmldoc([self castedGObject]);
 
 	return returnValue;
 }

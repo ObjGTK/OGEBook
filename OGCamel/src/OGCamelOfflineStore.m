@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -10,6 +10,16 @@
 
 @implementation OGCamelOfflineStore
 
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_OFFLINE_STORE;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
 - (CamelOfflineStore*)castedGObject
 {
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelOfflineStore, CamelOfflineStore);
@@ -17,14 +27,14 @@
 
 - (GPtrArray*)dupDownsyncFolders
 {
-	GPtrArray* returnValue = camel_offline_store_dup_downsync_folders([self castedGObject]);
+	GPtrArray* returnValue = (GPtrArray*)camel_offline_store_dup_downsync_folders([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)online
 {
-	bool returnValue = camel_offline_store_get_online([self castedGObject]);
+	bool returnValue = (bool)camel_offline_store_get_online([self castedGObject]);
 
 	return returnValue;
 }
@@ -33,20 +43,16 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_offline_store_prepare_for_offline_sync([self castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_offline_store_prepare_for_offline_sync([self castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
 
 - (bool)requiresDownsync
 {
-	bool returnValue = camel_offline_store_requires_downsync([self castedGObject]);
+	bool returnValue = (bool)camel_offline_store_requires_downsync([self castedGObject]);
 
 	return returnValue;
 }
@@ -60,13 +66,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_offline_store_set_online_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)camel_offline_store_set_online_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -75,13 +77,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_offline_store_set_online_sync([self castedGObject], online, [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_offline_store_set_online_sync([self castedGObject], online, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }

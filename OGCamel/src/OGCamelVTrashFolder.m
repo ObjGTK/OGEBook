@@ -1,15 +1,25 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelVTrashFolder.h"
 
-#import "OGCamelStore.h"
 #import "OGCamelFolder.h"
+#import "OGCamelStore.h"
 
 @implementation OGCamelVTrashFolder
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_VTRASH_FOLDER;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (instancetype)initWithParentStore:(OGCamelStore*)parentStore type:(CamelVTrashFolderType)type
 {
@@ -34,7 +44,7 @@
 
 - (CamelVTrashFolderType)folderType
 {
-	CamelVTrashFolderType returnValue = camel_vtrash_folder_get_folder_type([self castedGObject]);
+	CamelVTrashFolderType returnValue = (CamelVTrashFolderType)camel_vtrash_folder_get_folder_type([self castedGObject]);
 
 	return returnValue;
 }

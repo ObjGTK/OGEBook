@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -10,19 +10,23 @@
 
 @implementation OGCamelDataCache
 
-- (instancetype)init:(OFString*)path
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_DATA_CACHE;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
+- (instancetype)initWithPath:(OFString*)path
 {
 	GError* err = NULL;
 
 	CamelDataCache* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_data_cache_new([path UTF8String], &err), CamelDataCache, CamelDataCache);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		if(gobjectValue != NULL)
-			g_object_unref(gobjectValue);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err unrefGObject:gobjectValue];
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -45,17 +49,11 @@
 {
 	GError* err = NULL;
 
-	GIOStream* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_data_cache_add([self castedGObject], [path UTF8String], [key UTF8String], &err), GIOStream, GIOStream);
+	GIOStream* gobjectValue = camel_data_cache_add([self castedGObject], [path UTF8String], [key UTF8String], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		if(gobjectValue != NULL)
-			g_object_unref(gobjectValue);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err unrefGObject:gobjectValue];
 
-	OGIOStream* returnValue = [OGIOStream withGObject:gobjectValue];
+	OGIOStream* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -75,17 +73,11 @@
 {
 	GError* err = NULL;
 
-	GIOStream* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_data_cache_get([self castedGObject], [path UTF8String], [key UTF8String], &err), GIOStream, GIOStream);
+	GIOStream* gobjectValue = camel_data_cache_get([self castedGObject], [path UTF8String], [key UTF8String], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		if(gobjectValue != NULL)
-			g_object_unref(gobjectValue);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err unrefGObject:gobjectValue];
 
-	OGIOStream* returnValue = [OGIOStream withGObject:gobjectValue];
+	OGIOStream* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -93,7 +85,7 @@
 
 - (bool)expireEnabled
 {
-	bool returnValue = camel_data_cache_get_expire_enabled([self castedGObject]);
+	bool returnValue = (bool)camel_data_cache_get_expire_enabled([self castedGObject]);
 
 	return returnValue;
 }
@@ -118,13 +110,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_data_cache_remove([self castedGObject], [path UTF8String], [key UTF8String], &err);
+	gint returnValue = (gint)camel_data_cache_remove([self castedGObject], [path UTF8String], [key UTF8String], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }

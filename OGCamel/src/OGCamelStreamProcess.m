@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelStreamProcess.h"
 
 @implementation OGCamelStreamProcess
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_STREAM_PROCESS;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (instancetype)init
 {
@@ -33,13 +43,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_stream_process_connect([self castedGObject], [command UTF8String], env, &err);
+	gint returnValue = (gint)camel_stream_process_connect([self castedGObject], [command UTF8String], env, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }

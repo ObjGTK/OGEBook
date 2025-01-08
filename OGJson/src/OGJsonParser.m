@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -10,6 +10,16 @@
 #import <OGio/OGInputStream.h>
 
 @implementation OGJsonParser
+
++ (void)load
+{
+	GType gtypeToAssociate = JSON_TYPE_PARSER;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (instancetype)init
 {
@@ -50,28 +60,28 @@
 
 - (guint)currentLine
 {
-	guint returnValue = json_parser_get_current_line([self castedGObject]);
+	guint returnValue = (guint)json_parser_get_current_line([self castedGObject]);
 
 	return returnValue;
 }
 
 - (guint)currentPos
 {
-	guint returnValue = json_parser_get_current_pos([self castedGObject]);
+	guint returnValue = (guint)json_parser_get_current_pos([self castedGObject]);
 
 	return returnValue;
 }
 
 - (JsonNode*)root
 {
-	JsonNode* returnValue = json_parser_get_root([self castedGObject]);
+	JsonNode* returnValue = (JsonNode*)json_parser_get_root([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)hasAssignment:(gchar**)variableName
 {
-	bool returnValue = json_parser_has_assignment([self castedGObject], variableName);
+	bool returnValue = (bool)json_parser_has_assignment([self castedGObject], variableName);
 
 	return returnValue;
 }
@@ -80,13 +90,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = json_parser_load_from_data([self castedGObject], [data UTF8String], length, &err);
+	bool returnValue = (bool)json_parser_load_from_data([self castedGObject], [data UTF8String], length, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -95,13 +101,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = json_parser_load_from_file([self castedGObject], [filename UTF8String], &err);
+	bool returnValue = (bool)json_parser_load_from_file([self castedGObject], [filename UTF8String], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -110,13 +112,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = json_parser_load_from_mapped_file([self castedGObject], [filename UTF8String], &err);
+	bool returnValue = (bool)json_parser_load_from_mapped_file([self castedGObject], [filename UTF8String], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -125,13 +123,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = json_parser_load_from_stream([self castedGObject], [stream castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)json_parser_load_from_stream([self castedGObject], [stream castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -145,20 +139,16 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = json_parser_load_from_stream_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)json_parser_load_from_stream_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
 
 - (JsonNode*)stealRoot
 {
-	JsonNode* returnValue = json_parser_steal_root([self castedGObject]);
+	JsonNode* returnValue = (JsonNode*)json_parser_steal_root([self castedGObject]);
 
 	return returnValue;
 }

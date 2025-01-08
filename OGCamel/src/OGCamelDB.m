@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelDB.h"
 
 @implementation OGCamelDB
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_DB;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 + (void)camelMirFree:(CamelMIRecord*)record
 {
@@ -15,7 +25,7 @@
 
 + (GQuark)errorQuark
 {
-	GQuark returnValue = camel_db_error_quark();
+	GQuark returnValue = (GQuark)camel_db_error_quark();
 
 	return returnValue;
 }
@@ -27,7 +37,7 @@
 
 + (CamelDBKnownColumnNames)columnIdentWithHash:(GHashTable**)hash index:(gint)index ncols:(gint)ncols colNames:(gchar**)colNames
 {
-	CamelDBKnownColumnNames returnValue = camel_db_get_column_ident(hash, index, ncols, colNames);
+	CamelDBKnownColumnNames returnValue = (CamelDBKnownColumnNames)camel_db_get_column_ident(hash, index, ncols, colNames);
 
 	return returnValue;
 }
@@ -53,19 +63,13 @@
 	return returnValue;
 }
 
-- (instancetype)init:(OFString*)filename
+- (instancetype)initWithFilename:(OFString*)filename
 {
 	GError* err = NULL;
 
 	CamelDB* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_db_new([filename UTF8String], &err), CamelDB, CamelDB);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		if(gobjectValue != NULL)
-			g_object_unref(gobjectValue);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err unrefGObject:gobjectValue];
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -88,13 +92,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_abort_transaction([self castedGObject], &err);
+	gint returnValue = (gint)camel_db_abort_transaction([self castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -103,13 +103,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_add_to_transaction([self castedGObject], [query UTF8String], &err);
+	gint returnValue = (gint)camel_db_add_to_transaction([self castedGObject], [query UTF8String], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -118,13 +114,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_begin_transaction([self castedGObject], &err);
+	gint returnValue = (gint)camel_db_begin_transaction([self castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -133,13 +125,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_clear_folder_summary([self castedGObject], [folderName UTF8String], &err);
+	gint returnValue = (gint)camel_db_clear_folder_summary([self castedGObject], [folderName UTF8String], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -148,13 +136,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_command([self castedGObject], [stmt UTF8String], &err);
+	gint returnValue = (gint)camel_db_command([self castedGObject], [stmt UTF8String], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -163,13 +147,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_count_deleted_message_info([self castedGObject], [tableName UTF8String], count, &err);
+	gint returnValue = (gint)camel_db_count_deleted_message_info([self castedGObject], [tableName UTF8String], count, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -178,13 +158,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_count_junk_message_info([self castedGObject], [tableName UTF8String], count, &err);
+	gint returnValue = (gint)camel_db_count_junk_message_info([self castedGObject], [tableName UTF8String], count, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -193,13 +169,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_count_junk_not_deleted_message_info([self castedGObject], [tableName UTF8String], count, &err);
+	gint returnValue = (gint)camel_db_count_junk_not_deleted_message_info([self castedGObject], [tableName UTF8String], count, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -208,13 +180,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_count_message_info([self castedGObject], [query UTF8String], count, &err);
+	gint returnValue = (gint)camel_db_count_message_info([self castedGObject], [query UTF8String], count, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -223,13 +191,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_count_total_message_info([self castedGObject], [tableName UTF8String], count, &err);
+	gint returnValue = (gint)camel_db_count_total_message_info([self castedGObject], [tableName UTF8String], count, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -238,13 +202,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_count_unread_message_info([self castedGObject], [tableName UTF8String], count, &err);
+	gint returnValue = (gint)camel_db_count_unread_message_info([self castedGObject], [tableName UTF8String], count, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -253,13 +213,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_count_visible_message_info([self castedGObject], [tableName UTF8String], count, &err);
+	gint returnValue = (gint)camel_db_count_visible_message_info([self castedGObject], [tableName UTF8String], count, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -268,13 +224,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_count_visible_unread_message_info([self castedGObject], [tableName UTF8String], count, &err);
+	gint returnValue = (gint)camel_db_count_visible_unread_message_info([self castedGObject], [tableName UTF8String], count, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -283,13 +235,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_create_folders_table([self castedGObject], &err);
+	gint returnValue = (gint)camel_db_create_folders_table([self castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -298,13 +246,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_delete_folder([self castedGObject], [folderName UTF8String], &err);
+	gint returnValue = (gint)camel_db_delete_folder([self castedGObject], [folderName UTF8String], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -313,13 +257,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_delete_uid([self castedGObject], [folderName UTF8String], [uid UTF8String], &err);
+	gint returnValue = (gint)camel_db_delete_uid([self castedGObject], [folderName UTF8String], [uid UTF8String], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -328,13 +268,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_delete_uids([self castedGObject], [folderName UTF8String], uids, &err);
+	gint returnValue = (gint)camel_db_delete_uids([self castedGObject], [folderName UTF8String], uids, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -343,13 +279,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_end_transaction([self castedGObject], &err);
+	gint returnValue = (gint)camel_db_end_transaction([self castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -358,13 +290,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_flush_in_memory_transactions([self castedGObject], [folderName UTF8String], &err);
+	gint returnValue = (gint)camel_db_flush_in_memory_transactions([self castedGObject], [folderName UTF8String], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -381,13 +309,9 @@
 {
 	GError* err = NULL;
 
-	GPtrArray* returnValue = camel_db_get_folder_deleted_uids([self castedGObject], [folderName UTF8String], &err);
+	GPtrArray* returnValue = (GPtrArray*)camel_db_get_folder_deleted_uids([self castedGObject], [folderName UTF8String], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -396,13 +320,9 @@
 {
 	GError* err = NULL;
 
-	GPtrArray* returnValue = camel_db_get_folder_junk_uids([self castedGObject], [folderName UTF8String], &err);
+	GPtrArray* returnValue = (GPtrArray*)camel_db_get_folder_junk_uids([self castedGObject], [folderName UTF8String], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -411,13 +331,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_get_folder_uids([self castedGObject], [folderName UTF8String], [sortBy UTF8String], [collate UTF8String], hash, &err);
+	gint returnValue = (gint)camel_db_get_folder_uids([self castedGObject], [folderName UTF8String], [sortBy UTF8String], [collate UTF8String], hash, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -426,13 +342,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_db_maybe_run_maintenance([self castedGObject], &err);
+	bool returnValue = (bool)camel_db_maybe_run_maintenance([self castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -441,13 +353,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_prepare_message_info_table([self castedGObject], [folderName UTF8String], &err);
+	gint returnValue = (gint)camel_db_prepare_message_info_table([self castedGObject], [folderName UTF8String], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -456,13 +364,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_read_folder_info_record([self castedGObject], [folderName UTF8String], record, &err);
+	gint returnValue = (gint)camel_db_read_folder_info_record([self castedGObject], [folderName UTF8String], record, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -471,13 +375,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_read_message_info_record_with_uid([self castedGObject], [folderName UTF8String], [uid UTF8String], userData, callback, &err);
+	gint returnValue = (gint)camel_db_read_message_info_record_with_uid([self castedGObject], [folderName UTF8String], [uid UTF8String], userData, callback, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -486,13 +386,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_read_message_info_records([self castedGObject], [folderName UTF8String], userData, callback, &err);
+	gint returnValue = (gint)camel_db_read_message_info_records([self castedGObject], [folderName UTF8String], userData, callback, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -501,13 +397,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_rename_folder([self castedGObject], [oldFolderName UTF8String], [newFolderName UTF8String], &err);
+	gint returnValue = (gint)camel_db_rename_folder([self castedGObject], [oldFolderName UTF8String], [newFolderName UTF8String], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -516,13 +408,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_reset_folder_version([self castedGObject], [folderName UTF8String], resetVersion, &err);
+	gint returnValue = (gint)camel_db_reset_folder_version([self castedGObject], [folderName UTF8String], resetVersion, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -531,20 +419,16 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_select([self castedGObject], [stmt UTF8String], callback, userData, &err);
+	gint returnValue = (gint)camel_db_select([self castedGObject], [stmt UTF8String], callback, userData, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
 
 - (gint)setCollateWithCol:(OFString*)col collate:(OFString*)collate func:(CamelDBCollate)func
 {
-	gint returnValue = camel_db_set_collate([self castedGObject], [col UTF8String], [collate UTF8String], func);
+	gint returnValue = (gint)camel_db_set_collate([self castedGObject], [col UTF8String], [collate UTF8String], func);
 
 	return returnValue;
 }
@@ -553,13 +437,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_start_in_memory_transactions([self castedGObject], &err);
+	gint returnValue = (gint)camel_db_start_in_memory_transactions([self castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -568,13 +448,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_transaction_command([self castedGObject], qryList, &err);
+	gint returnValue = (gint)camel_db_transaction_command([self castedGObject], qryList, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -583,13 +459,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_write_folder_info_record([self castedGObject], record, &err);
+	gint returnValue = (gint)camel_db_write_folder_info_record([self castedGObject], record, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -598,13 +470,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_db_write_message_info_record([self castedGObject], [folderName UTF8String], record, &err);
+	gint returnValue = (gint)camel_db_write_message_info_record([self castedGObject], [folderName UTF8String], record, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }

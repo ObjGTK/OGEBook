@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,11 +8,21 @@
 
 @implementation OGCamelCertDB
 
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_CERTDB;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
 + (OGCamelCertDB*)default
 {
-	CamelCertDB* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_certdb_get_default(), CamelCertDB, CamelCertDB);
+	CamelCertDB* gobjectValue = camel_certdb_get_default();
 
-	OGCamelCertDB* returnValue = [OGCamelCertDB withGObject:gobjectValue];
+	OGCamelCertDB* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -46,21 +56,21 @@
 
 - (CamelCert*)hostWithHostname:(OFString*)hostname fingerprint:(OFString*)fingerprint
 {
-	CamelCert* returnValue = camel_certdb_get_host([self castedGObject], [hostname UTF8String], [fingerprint UTF8String]);
+	CamelCert* returnValue = (CamelCert*)camel_certdb_get_host([self castedGObject], [hostname UTF8String], [fingerprint UTF8String]);
 
 	return returnValue;
 }
 
 - (GSList*)listCerts
 {
-	GSList* returnValue = camel_certdb_list_certs([self castedGObject]);
+	GSList* returnValue = (GSList*)camel_certdb_list_certs([self castedGObject]);
 
 	return returnValue;
 }
 
 - (gint)load
 {
-	gint returnValue = camel_certdb_load([self castedGObject]);
+	gint returnValue = (gint)camel_certdb_load([self castedGObject]);
 
 	return returnValue;
 }
@@ -77,7 +87,7 @@
 
 - (gint)save
 {
-	gint returnValue = camel_certdb_save([self castedGObject]);
+	gint returnValue = (gint)camel_certdb_save([self castedGObject]);
 
 	return returnValue;
 }

@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -10,6 +10,16 @@
 #import "OGCamelStream.h"
 
 @implementation OGCamelMultipartSigned
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_MULTIPART_SIGNED;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (instancetype)init
 {
@@ -36,17 +46,11 @@
 {
 	GError* err = NULL;
 
-	CamelStream* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_multipart_signed_get_content_stream([self castedGObject], &err), CamelStream, CamelStream);
+	CamelStream* gobjectValue = camel_multipart_signed_get_content_stream([self castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		if(gobjectValue != NULL)
-			g_object_unref(gobjectValue);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err unrefGObject:gobjectValue];
 
-	OGCamelStream* returnValue = [OGCamelStream withGObject:gobjectValue];
+	OGCamelStream* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;

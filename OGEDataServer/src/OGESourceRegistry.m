@@ -1,20 +1,30 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGESourceRegistry.h"
 
-#import <OGio/OGCancellable.h>
-#import "OGESource.h"
 #import "OGEOAuth2Services.h"
+#import "OGESource.h"
+#import <OGio/OGCancellable.h>
 
 @implementation OGESourceRegistry
 
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_SOURCE_REGISTRY;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
 + (bool)debugEnabled
 {
-	bool returnValue = e_source_registry_debug_enabled();
+	bool returnValue = (bool)e_source_registry_debug_enabled();
 
 	return returnValue;
 }
@@ -29,19 +39,13 @@
 	e_source_registry_new([cancellable castedGObject], callback, userData);
 }
 
-- (instancetype)initFinish:(GAsyncResult*)result
+- (instancetype)initWithResultFinish:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
 	ESourceRegistry* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_new_finish(result, &err), ESourceRegistry, ESourceRegistry);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		if(gobjectValue != NULL)
-			g_object_unref(gobjectValue);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err unrefGObject:gobjectValue];
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -55,19 +59,13 @@
 	return self;
 }
 
-- (instancetype)initSync:(OGCancellable*)cancellable
+- (instancetype)initWithCancellableSync:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
 	ESourceRegistry* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_new_sync([cancellable castedGObject], &err), ESourceRegistry, ESourceRegistry);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		if(gobjectValue != NULL)
-			g_object_unref(gobjectValue);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err unrefGObject:gobjectValue];
 
 	@try {
 		self = [super initWithGObject:gobjectValue];
@@ -88,14 +86,14 @@
 
 - (GNode*)buildDisplayTree:(OFString*)extensionName
 {
-	GNode* returnValue = e_source_registry_build_display_tree([self castedGObject], [extensionName UTF8String]);
+	GNode* returnValue = (GNode*)e_source_registry_build_display_tree([self castedGObject], [extensionName UTF8String]);
 
 	return returnValue;
 }
 
 - (bool)checkEnabled:(OGESource*)source
 {
-	bool returnValue = e_source_registry_check_enabled([self castedGObject], [source castedGObject]);
+	bool returnValue = (bool)e_source_registry_check_enabled([self castedGObject], [source castedGObject]);
 
 	return returnValue;
 }
@@ -109,13 +107,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_registry_commit_source_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)e_source_registry_commit_source_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -124,13 +118,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_registry_commit_source_sync([self castedGObject], [source castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_source_registry_commit_source_sync([self castedGObject], [source castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -144,13 +134,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_registry_create_sources_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)e_source_registry_create_sources_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -159,13 +145,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_registry_create_sources_sync([self castedGObject], listOfSources, [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_source_registry_create_sources_sync([self castedGObject], listOfSources, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -185,9 +167,9 @@
 
 - (OGESource*)findExtensionWithSource:(OGESource*)source extensionName:(OFString*)extensionName
 {
-	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_find_extension([self castedGObject], [source castedGObject], [extensionName UTF8String]), ESource, ESource);
+	ESource* gobjectValue = e_source_registry_find_extension([self castedGObject], [source castedGObject], [extensionName UTF8String]);
 
-	OGESource* returnValue = [OGESource withGObject:gobjectValue];
+	OGESource* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -195,31 +177,31 @@
 
 - (OGEOAuth2Services*)oauth2Services
 {
-	EOAuth2Services* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_get_oauth2_services([self castedGObject]), EOAuth2Services, EOAuth2Services);
+	EOAuth2Services* gobjectValue = e_source_registry_get_oauth2_services([self castedGObject]);
 
-	OGEOAuth2Services* returnValue = [OGEOAuth2Services withGObject:gobjectValue];
+	OGEOAuth2Services* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
 - (GList*)listEnabled:(OFString*)extensionName
 {
-	GList* returnValue = e_source_registry_list_enabled([self castedGObject], [extensionName UTF8String]);
+	GList* returnValue = (GList*)e_source_registry_list_enabled([self castedGObject], [extensionName UTF8String]);
 
 	return returnValue;
 }
 
 - (GList*)listSources:(OFString*)extensionName
 {
-	GList* returnValue = e_source_registry_list_sources([self castedGObject], [extensionName UTF8String]);
+	GList* returnValue = (GList*)e_source_registry_list_sources([self castedGObject], [extensionName UTF8String]);
 
 	return returnValue;
 }
 
 - (OGESource*)refBuiltinAddressBook
 {
-	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_builtin_address_book([self castedGObject]), ESource, ESource);
+	ESource* gobjectValue = e_source_registry_ref_builtin_address_book([self castedGObject]);
 
-	OGESource* returnValue = [OGESource withGObject:gobjectValue];
+	OGESource* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -227,9 +209,9 @@
 
 - (OGESource*)refBuiltinCalendar
 {
-	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_builtin_calendar([self castedGObject]), ESource, ESource);
+	ESource* gobjectValue = e_source_registry_ref_builtin_calendar([self castedGObject]);
 
-	OGESource* returnValue = [OGESource withGObject:gobjectValue];
+	OGESource* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -237,9 +219,9 @@
 
 - (OGESource*)refBuiltinMailAccount
 {
-	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_builtin_mail_account([self castedGObject]), ESource, ESource);
+	ESource* gobjectValue = e_source_registry_ref_builtin_mail_account([self castedGObject]);
 
-	OGESource* returnValue = [OGESource withGObject:gobjectValue];
+	OGESource* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -247,9 +229,9 @@
 
 - (OGESource*)refBuiltinMemoList
 {
-	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_builtin_memo_list([self castedGObject]), ESource, ESource);
+	ESource* gobjectValue = e_source_registry_ref_builtin_memo_list([self castedGObject]);
 
-	OGESource* returnValue = [OGESource withGObject:gobjectValue];
+	OGESource* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -257,9 +239,9 @@
 
 - (OGESource*)refBuiltinProxy
 {
-	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_builtin_proxy([self castedGObject]), ESource, ESource);
+	ESource* gobjectValue = e_source_registry_ref_builtin_proxy([self castedGObject]);
 
-	OGESource* returnValue = [OGESource withGObject:gobjectValue];
+	OGESource* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -267,9 +249,9 @@
 
 - (OGESource*)refBuiltinTaskList
 {
-	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_builtin_task_list([self castedGObject]), ESource, ESource);
+	ESource* gobjectValue = e_source_registry_ref_builtin_task_list([self castedGObject]);
 
-	OGESource* returnValue = [OGESource withGObject:gobjectValue];
+	OGESource* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -277,9 +259,9 @@
 
 - (OGESource*)refDefaultAddressBook
 {
-	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_default_address_book([self castedGObject]), ESource, ESource);
+	ESource* gobjectValue = e_source_registry_ref_default_address_book([self castedGObject]);
 
-	OGESource* returnValue = [OGESource withGObject:gobjectValue];
+	OGESource* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -287,9 +269,9 @@
 
 - (OGESource*)refDefaultCalendar
 {
-	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_default_calendar([self castedGObject]), ESource, ESource);
+	ESource* gobjectValue = e_source_registry_ref_default_calendar([self castedGObject]);
 
-	OGESource* returnValue = [OGESource withGObject:gobjectValue];
+	OGESource* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -297,9 +279,9 @@
 
 - (OGESource*)refDefaultForExtensionName:(OFString*)extensionName
 {
-	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_default_for_extension_name([self castedGObject], [extensionName UTF8String]), ESource, ESource);
+	ESource* gobjectValue = e_source_registry_ref_default_for_extension_name([self castedGObject], [extensionName UTF8String]);
 
-	OGESource* returnValue = [OGESource withGObject:gobjectValue];
+	OGESource* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -307,9 +289,9 @@
 
 - (OGESource*)refDefaultMailAccount
 {
-	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_default_mail_account([self castedGObject]), ESource, ESource);
+	ESource* gobjectValue = e_source_registry_ref_default_mail_account([self castedGObject]);
 
-	OGESource* returnValue = [OGESource withGObject:gobjectValue];
+	OGESource* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -317,9 +299,9 @@
 
 - (OGESource*)refDefaultMailIdentity
 {
-	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_default_mail_identity([self castedGObject]), ESource, ESource);
+	ESource* gobjectValue = e_source_registry_ref_default_mail_identity([self castedGObject]);
 
-	OGESource* returnValue = [OGESource withGObject:gobjectValue];
+	OGESource* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -327,9 +309,9 @@
 
 - (OGESource*)refDefaultMemoList
 {
-	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_default_memo_list([self castedGObject]), ESource, ESource);
+	ESource* gobjectValue = e_source_registry_ref_default_memo_list([self castedGObject]);
 
-	OGESource* returnValue = [OGESource withGObject:gobjectValue];
+	OGESource* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -337,9 +319,9 @@
 
 - (OGESource*)refDefaultTaskList
 {
-	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_default_task_list([self castedGObject]), ESource, ESource);
+	ESource* gobjectValue = e_source_registry_ref_default_task_list([self castedGObject]);
 
-	OGESource* returnValue = [OGESource withGObject:gobjectValue];
+	OGESource* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -347,9 +329,9 @@
 
 - (OGESource*)refSource:(OFString*)uid
 {
-	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_ref_source([self castedGObject], [uid UTF8String]), ESource, ESource);
+	ESource* gobjectValue = e_source_registry_ref_source([self castedGObject], [uid UTF8String]);
 
-	OGESource* returnValue = [OGESource withGObject:gobjectValue];
+	OGESource* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -364,13 +346,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_registry_refresh_backend_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)e_source_registry_refresh_backend_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -379,13 +357,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_registry_refresh_backend_sync([self castedGObject], [sourceUid UTF8String], [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_source_registry_refresh_backend_sync([self castedGObject], [sourceUid UTF8String], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }

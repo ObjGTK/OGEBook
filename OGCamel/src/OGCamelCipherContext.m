@@ -1,25 +1,35 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelCipherContext.h"
 
 #import "OGCamelMimePart.h"
-#import <OGio/OGCancellable.h>
 #import "OGCamelSession.h"
+#import <OGio/OGCancellable.h>
 
 @implementation OGCamelCipherContext
 
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_CIPHER_CONTEXT;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
 + (GQuark)errorQuark
 {
-	GQuark returnValue = camel_cipher_context_error_quark();
+	GQuark returnValue = (GQuark)camel_cipher_context_error_quark();
 
 	return returnValue;
 }
 
-- (instancetype)init:(OGCamelSession*)session
+- (instancetype)initWithSession:(OGCamelSession*)session
 {
 	CamelCipherContext* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_cipher_context_new([session castedGObject]), CamelCipherContext, CamelCipherContext);
 
@@ -49,13 +59,9 @@
 {
 	GError* err = NULL;
 
-	CamelCipherValidity* returnValue = camel_cipher_context_decrypt_finish([self castedGObject], result, &err);
+	CamelCipherValidity* returnValue = (CamelCipherValidity*)camel_cipher_context_decrypt_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -64,13 +70,9 @@
 {
 	GError* err = NULL;
 
-	CamelCipherValidity* returnValue = camel_cipher_context_decrypt_sync([self castedGObject], [ipart castedGObject], [opart castedGObject], [cancellable castedGObject], &err);
+	CamelCipherValidity* returnValue = (CamelCipherValidity*)camel_cipher_context_decrypt_sync([self castedGObject], [ipart castedGObject], [opart castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -84,13 +86,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_cipher_context_encrypt_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)camel_cipher_context_encrypt_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -99,22 +97,18 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_cipher_context_encrypt_sync([self castedGObject], [userid UTF8String], recipients, [ipart castedGObject], [opart castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_cipher_context_encrypt_sync([self castedGObject], [userid UTF8String], recipients, [ipart castedGObject], [opart castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
 
 - (OGCamelSession*)session
 {
-	CamelSession* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_cipher_context_get_session([self castedGObject]), CamelSession, CamelSession);
+	CamelSession* gobjectValue = camel_cipher_context_get_session([self castedGObject]);
 
-	OGCamelSession* returnValue = [OGCamelSession withGObject:gobjectValue];
+	OGCamelSession* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
@@ -126,9 +120,9 @@
 	return returnValue;
 }
 
-- (CamelCipherHash)idToHash:(OFString*)id
+- (CamelCipherHash)idToHash:(OFString*)identifier
 {
-	CamelCipherHash returnValue = camel_cipher_context_id_to_hash([self castedGObject], [id UTF8String]);
+	CamelCipherHash returnValue = (CamelCipherHash)camel_cipher_context_id_to_hash([self castedGObject], [identifier UTF8String]);
 
 	return returnValue;
 }
@@ -142,13 +136,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_cipher_context_sign_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)camel_cipher_context_sign_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -157,13 +147,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_cipher_context_sign_sync([self castedGObject], [userid UTF8String], hash, [ipart castedGObject], [opart castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_cipher_context_sign_sync([self castedGObject], [userid UTF8String], hash, [ipart castedGObject], [opart castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -177,13 +163,9 @@
 {
 	GError* err = NULL;
 
-	CamelCipherValidity* returnValue = camel_cipher_context_verify_finish([self castedGObject], result, &err);
+	CamelCipherValidity* returnValue = (CamelCipherValidity*)camel_cipher_context_verify_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -192,13 +174,9 @@
 {
 	GError* err = NULL;
 
-	CamelCipherValidity* returnValue = camel_cipher_context_verify_sync([self castedGObject], [ipart castedGObject], [cancellable castedGObject], &err);
+	CamelCipherValidity* returnValue = (CamelCipherValidity*)camel_cipher_context_verify_sync([self castedGObject], [ipart castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }

@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -24,6 +24,8 @@
 /**
  * Functions
  */
++ (void)load;
+
 
 /**
  *
@@ -61,7 +63,7 @@
 + (GSList*)utilCopyObjectSlistWithCopyTo:(GSList*)copyTo objects:(const GSList*)objects;
 
 /**
- * Use e_util_copy_string_slist() instead.
+ * Copies the #GSList of strings to the end of @copy_to.
  *
  * @param copyTo Where to copy; may be %NULL
  * @param strings #GSList of strings to be copied
@@ -71,8 +73,7 @@
 + (GSList*)utilCopyStringSlistWithCopyTo:(GSList*)copyTo strings:(const GSList*)strings;
 
 /**
- * Calls g_object_unref() on each member of @objects and then frees @objects
- * itself.
+ * Use g_slist_free_full() instead.
  *
  * @param objects a #GSList of #GObject<!-- -->s
  */
@@ -107,7 +108,7 @@
 + (gchar**)utilSlistToStrv:(const GSList*)strings;
 
 /**
- * Use e_util_strv_to_slist() instead.
+ * Convert a %NULL-terminated array of strings to a list of strings.
  *
  * @param strv a %NULL-terminated array of strings (const gchar *)
  * @return Newly allocated #GSList of

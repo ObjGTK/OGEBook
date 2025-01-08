@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -11,6 +11,16 @@
 
 @implementation OGCamelSMIMEContext
 
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_SMIME_CONTEXT;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
 + (OFString*)utilNssErrorToString:(gint)nssErrorCode
 {
 	const gchar* gobjectValue = camel_smime_context_util_nss_error_to_string(nssErrorCode);
@@ -19,7 +29,7 @@
 	return returnValue;
 }
 
-- (instancetype)init:(OGCamelSession*)session
+- (instancetype)initWithSession:(OGCamelSession*)session
 {
 	CamelSMIMEContext* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_smime_context_new([session castedGObject]), CamelSMIMEContext, CamelSMIMEContext);
 
@@ -42,7 +52,7 @@
 
 - (guint32)describePart:(OGCamelMimePart*)part
 {
-	guint32 returnValue = camel_smime_context_describe_part([self castedGObject], [part castedGObject]);
+	guint32 returnValue = (guint32)camel_smime_context_describe_part([self castedGObject], [part castedGObject]);
 
 	return returnValue;
 }

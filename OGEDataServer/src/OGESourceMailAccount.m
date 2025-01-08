@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGESourceMailAccount.h"
 
 @implementation OGESourceMailAccount
+
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_SOURCE_MAIL_ACCOUNT;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (ESourceMailAccount*)castedGObject
 {
@@ -39,7 +49,7 @@
 
 - (bool)builtin
 {
-	bool returnValue = e_source_mail_account_get_builtin([self castedGObject]);
+	bool returnValue = (bool)e_source_mail_account_get_builtin([self castedGObject]);
 
 	return returnValue;
 }
@@ -54,21 +64,21 @@
 
 - (EThreeState)markSeen
 {
-	EThreeState returnValue = e_source_mail_account_get_mark_seen([self castedGObject]);
+	EThreeState returnValue = (EThreeState)e_source_mail_account_get_mark_seen([self castedGObject]);
 
 	return returnValue;
 }
 
 - (gint)markSeenTimeout
 {
-	gint returnValue = e_source_mail_account_get_mark_seen_timeout([self castedGObject]);
+	gint returnValue = (gint)e_source_mail_account_get_mark_seen_timeout([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)needsInitialSetup
 {
-	bool returnValue = e_source_mail_account_get_needs_initial_setup([self castedGObject]);
+	bool returnValue = (bool)e_source_mail_account_get_needs_initial_setup([self castedGObject]);
 
 	return returnValue;
 }

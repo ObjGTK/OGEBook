@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,9 +8,9 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGInputStream;
-@class OGCamelStream;
 @class OGCamelMimeFilter;
+@class OGCamelStream;
+@class OGInputStream;
 
 @interface OGCamelMimeParser : OGObject
 {
@@ -86,9 +86,9 @@
  * Remove a processing filter from the pipeline.  There is no
  * restriction on the order the filters can be removed.
  *
- * @param id id of the filter to remove, as returned from camel_mime_parser_filter_add()
+ * @param identifier id of the filter to remove, as returned from camel_mime_parser_filter_add()
  */
-- (void)filterRemove:(gint)id;
+- (void)filterRemove:(gint)identifier;
 
 /**
  * Get the last scanned "From " line, from a recently scanned from.
@@ -237,6 +237,13 @@
  * stream or file descriptor).
  */
 - (goffset)seekWithOffset:(goffset)offset whence:(gint)whence;
+
+/**
+ *
+ * @param matchstr
+ * @return
+ */
+- (gint)setHeaderRegex:(OFString*)matchstr;
 
 /**
  * Get the current parser state.

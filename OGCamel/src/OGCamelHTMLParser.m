@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelHTMLParser.h"
 
 @implementation OGCamelHTMLParser
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_HTML_PARSER;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (instancetype)init
 {
@@ -39,7 +49,7 @@
 
 - (const GPtrArray*)attrList:(const GPtrArray**)values
 {
-	const GPtrArray* returnValue = camel_html_parser_attr_list([self castedGObject], values);
+	const GPtrArray* returnValue = (const GPtrArray*)camel_html_parser_attr_list([self castedGObject], values);
 
 	return returnValue;
 }
@@ -59,7 +69,7 @@
 
 - (CamelHTMLParserState)stepWithDatap:(const gchar**)datap lenp:(gint*)lenp
 {
-	CamelHTMLParserState returnValue = camel_html_parser_step([self castedGObject], datap, lenp);
+	CamelHTMLParserState returnValue = (CamelHTMLParserState)camel_html_parser_step([self castedGObject], datap, lenp);
 
 	return returnValue;
 }

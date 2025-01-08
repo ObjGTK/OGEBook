@@ -1,16 +1,26 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelMimeParser.h"
 
-#import <OGio/OGInputStream.h>
-#import "OGCamelStream.h"
 #import "OGCamelMimeFilter.h"
+#import "OGCamelStream.h"
+#import <OGio/OGInputStream.h>
 
 @implementation OGCamelMimeParser
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_MIME_PARSER;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (instancetype)init
 {
@@ -35,7 +45,7 @@
 
 - (CamelContentType*)contentType
 {
-	CamelContentType* returnValue = camel_mime_parser_content_type([self castedGObject]);
+	CamelContentType* returnValue = (CamelContentType*)camel_mime_parser_content_type([self castedGObject]);
 
 	return returnValue;
 }
@@ -47,28 +57,28 @@
 
 - (CamelNameValueArray*)dupHeaders
 {
-	CamelNameValueArray* returnValue = camel_mime_parser_dup_headers([self castedGObject]);
+	CamelNameValueArray* returnValue = (CamelNameValueArray*)camel_mime_parser_dup_headers([self castedGObject]);
 
 	return returnValue;
 }
 
 - (gint)errNo
 {
-	gint returnValue = camel_mime_parser_errno([self castedGObject]);
+	gint returnValue = (gint)camel_mime_parser_errno([self castedGObject]);
 
 	return returnValue;
 }
 
 - (gint)filterAdd:(OGCamelMimeFilter*)mf
 {
-	gint returnValue = camel_mime_parser_filter_add([self castedGObject], [mf castedGObject]);
+	gint returnValue = (gint)camel_mime_parser_filter_add([self castedGObject], [mf castedGObject]);
 
 	return returnValue;
 }
 
-- (void)filterRemove:(gint)id
+- (void)filterRemove:(gint)identifier
 {
-	camel_mime_parser_filter_remove([self castedGObject], id);
+	camel_mime_parser_filter_remove([self castedGObject], identifier);
 }
 
 - (OFString*)fromLine
@@ -94,7 +104,7 @@
 
 - (gint)initWithFd:(gint)fd
 {
-	gint returnValue = camel_mime_parser_init_with_fd([self castedGObject], fd);
+	gint returnValue = (gint)camel_mime_parser_init_with_fd([self castedGObject], fd);
 
 	return returnValue;
 }
@@ -108,13 +118,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_mime_parser_init_with_stream([self castedGObject], [stream castedGObject], &err);
+	gint returnValue = (gint)camel_mime_parser_init_with_stream([self castedGObject], [stream castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -144,13 +150,9 @@
 {
 	GError* err = NULL;
 
-	gssize returnValue = camel_mime_parser_read([self castedGObject], databuffer, len, &err);
+	gssize returnValue = (gssize)camel_mime_parser_read([self castedGObject], databuffer, len, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -167,57 +169,64 @@
 
 - (goffset)seekWithOffset:(goffset)offset whence:(gint)whence
 {
-	goffset returnValue = camel_mime_parser_seek([self castedGObject], offset, whence);
+	goffset returnValue = (goffset)camel_mime_parser_seek([self castedGObject], offset, whence);
+
+	return returnValue;
+}
+
+- (gint)setHeaderRegex:(OFString*)matchstr
+{
+	gint returnValue = (gint)camel_mime_parser_set_header_regex([self castedGObject], g_strdup([matchstr UTF8String]));
 
 	return returnValue;
 }
 
 - (CamelMimeParserState)state
 {
-	CamelMimeParserState returnValue = camel_mime_parser_state([self castedGObject]);
+	CamelMimeParserState returnValue = (CamelMimeParserState)camel_mime_parser_state([self castedGObject]);
 
 	return returnValue;
 }
 
 - (CamelMimeParserState)stepWithDatabuffer:(gchar**)databuffer datalength:(gsize*)datalength
 {
-	CamelMimeParserState returnValue = camel_mime_parser_step([self castedGObject], databuffer, datalength);
+	CamelMimeParserState returnValue = (CamelMimeParserState)camel_mime_parser_step([self castedGObject], databuffer, datalength);
 
 	return returnValue;
 }
 
 - (OGCamelStream*)stream
 {
-	CamelStream* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_parser_stream([self castedGObject]), CamelStream, CamelStream);
+	CamelStream* gobjectValue = camel_mime_parser_stream([self castedGObject]);
 
-	OGCamelStream* returnValue = [OGCamelStream withGObject:gobjectValue];
+	OGCamelStream* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
 - (goffset)tell
 {
-	goffset returnValue = camel_mime_parser_tell([self castedGObject]);
+	goffset returnValue = (goffset)camel_mime_parser_tell([self castedGObject]);
 
 	return returnValue;
 }
 
 - (goffset)tellStartBoundary
 {
-	goffset returnValue = camel_mime_parser_tell_start_boundary([self castedGObject]);
+	goffset returnValue = (goffset)camel_mime_parser_tell_start_boundary([self castedGObject]);
 
 	return returnValue;
 }
 
 - (goffset)tellStartFrom
 {
-	goffset returnValue = camel_mime_parser_tell_start_from([self castedGObject]);
+	goffset returnValue = (goffset)camel_mime_parser_tell_start_from([self castedGObject]);
 
 	return returnValue;
 }
 
 - (goffset)tellStartHeaders
 {
-	goffset returnValue = camel_mime_parser_tell_start_headers([self castedGObject]);
+	goffset returnValue = (goffset)camel_mime_parser_tell_start_headers([self castedGObject]);
 
 	return returnValue;
 }

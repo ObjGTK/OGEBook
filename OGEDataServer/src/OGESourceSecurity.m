@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGESourceSecurity.h"
 
 @implementation OGESourceSecurity
+
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_SOURCE_SECURITY;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (ESourceSecurity*)castedGObject
 {
@@ -31,7 +41,7 @@
 
 - (bool)secure
 {
-	bool returnValue = e_source_security_get_secure([self castedGObject]);
+	bool returnValue = (bool)e_source_security_get_secure([self castedGObject]);
 
 	return returnValue;
 }

@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGEVCard.h"
 
 @implementation OGEVCard
+
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_VCARD;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 + (OFString*)escapeString:(OFString*)s
 {
@@ -40,7 +50,7 @@
 	return self;
 }
 
-- (instancetype)initFromString:(OFString*)str
+- (instancetype)initWithStrFromString:(OFString*)str
 {
 	EVCard* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_vcard_new_from_string([str UTF8String]), EVCard, EVCard);
 
@@ -103,28 +113,28 @@
 
 - (EVCardAttribute*)attribute:(OFString*)name
 {
-	EVCardAttribute* returnValue = e_vcard_get_attribute([self castedGObject], [name UTF8String]);
+	EVCardAttribute* returnValue = (EVCardAttribute*)e_vcard_get_attribute([self castedGObject], [name UTF8String]);
 
 	return returnValue;
 }
 
 - (EVCardAttribute*)attributeIfParsed:(OFString*)name
 {
-	EVCardAttribute* returnValue = e_vcard_get_attribute_if_parsed([self castedGObject], [name UTF8String]);
+	EVCardAttribute* returnValue = (EVCardAttribute*)e_vcard_get_attribute_if_parsed([self castedGObject], [name UTF8String]);
 
 	return returnValue;
 }
 
 - (GList*)attributes
 {
-	GList* returnValue = e_vcard_get_attributes([self castedGObject]);
+	GList* returnValue = (GList*)e_vcard_get_attributes([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)isParsed
 {
-	bool returnValue = e_vcard_is_parsed([self castedGObject]);
+	bool returnValue = (bool)e_vcard_is_parsed([self castedGObject]);
 
 	return returnValue;
 }

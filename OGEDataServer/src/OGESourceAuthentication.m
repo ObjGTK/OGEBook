@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGESourceAuthentication.h"
 
 @implementation OGESourceAuthentication
+
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_SOURCE_AUTHENTICATION;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (ESourceAuthentication*)castedGObject
 {
@@ -71,7 +81,7 @@
 
 - (bool)isExternal
 {
-	bool returnValue = e_source_authentication_get_is_external([self castedGObject]);
+	bool returnValue = (bool)e_source_authentication_get_is_external([self castedGObject]);
 
 	return returnValue;
 }
@@ -86,7 +96,7 @@
 
 - (guint16)port
 {
-	guint16 returnValue = e_source_authentication_get_port([self castedGObject]);
+	guint16 returnValue = (guint16)e_source_authentication_get_port([self castedGObject]);
 
 	return returnValue;
 }
@@ -101,7 +111,7 @@
 
 - (bool)rememberPassword
 {
-	bool returnValue = e_source_authentication_get_remember_password([self castedGObject]);
+	bool returnValue = (bool)e_source_authentication_get_remember_password([self castedGObject]);
 
 	return returnValue;
 }
@@ -116,14 +126,14 @@
 
 - (GSocketConnectable*)refConnectable
 {
-	GSocketConnectable* returnValue = e_source_authentication_ref_connectable([self castedGObject]);
+	GSocketConnectable* returnValue = (GSocketConnectable*)e_source_authentication_ref_connectable([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)required
 {
-	bool returnValue = e_source_authentication_required([self castedGObject]);
+	bool returnValue = (bool)e_source_authentication_required([self castedGObject]);
 
 	return returnValue;
 }

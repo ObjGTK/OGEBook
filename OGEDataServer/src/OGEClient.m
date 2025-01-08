@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -11,16 +11,26 @@
 
 @implementation OGEClient
 
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_CLIENT;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
 + (GError*)errorCreateWithCode:(EClientError)code customMsg:(OFString*)customMsg
 {
-	GError* returnValue = e_client_error_create(code, [customMsg UTF8String]);
+	GError* returnValue = (GError*)e_client_error_create(code, [customMsg UTF8String]);
 
 	return returnValue;
 }
 
 + (GQuark)errorQuark
 {
-	GQuark returnValue = e_client_error_quark();
+	GQuark returnValue = (GQuark)e_client_error_quark();
 
 	return returnValue;
 }
@@ -35,14 +45,14 @@
 
 + (GSList*)utilCopyObjectSlistWithCopyTo:(GSList*)copyTo objects:(const GSList*)objects
 {
-	GSList* returnValue = e_client_util_copy_object_slist(copyTo, objects);
+	GSList* returnValue = (GSList*)e_client_util_copy_object_slist(copyTo, objects);
 
 	return returnValue;
 }
 
 + (GSList*)utilCopyStringSlistWithCopyTo:(GSList*)copyTo strings:(const GSList*)strings
 {
-	GSList* returnValue = e_client_util_copy_string_slist(copyTo, strings);
+	GSList* returnValue = (GSList*)e_client_util_copy_string_slist(copyTo, strings);
 
 	return returnValue;
 }
@@ -59,28 +69,28 @@
 
 + (GSList*)utilParseCommaStrings:(OFString*)strings
 {
-	GSList* returnValue = e_client_util_parse_comma_strings([strings UTF8String]);
+	GSList* returnValue = (GSList*)e_client_util_parse_comma_strings([strings UTF8String]);
 
 	return returnValue;
 }
 
 + (gchar**)utilSlistToStrv:(const GSList*)strings
 {
-	gchar** returnValue = e_client_util_slist_to_strv(strings);
+	gchar** returnValue = (gchar**)e_client_util_slist_to_strv(strings);
 
 	return returnValue;
 }
 
 + (GSList*)utilStrvToSlist:(const gchar* const*)strv
 {
-	GSList* returnValue = e_client_util_strv_to_slist(strv);
+	GSList* returnValue = (GSList*)e_client_util_strv_to_slist(strv);
 
 	return returnValue;
 }
 
 + (bool)utilUnwrapDbusErrorWithDbusError:(GError*)dbusError clientError:(GError**)clientError knownErrors:(const EClientErrorsList*)knownErrors knownErrorsCount:(guint)knownErrorsCount knownErrorsDomain:(GQuark)knownErrorsDomain failWhenNoneMatched:(bool)failWhenNoneMatched
 {
-	bool returnValue = e_client_util_unwrap_dbus_error(dbusError, clientError, knownErrors, knownErrorsCount, knownErrorsDomain, failWhenNoneMatched);
+	bool returnValue = (bool)e_client_util_unwrap_dbus_error(dbusError, clientError, knownErrors, knownErrorsCount, knownErrorsDomain, failWhenNoneMatched);
 
 	return returnValue;
 }
@@ -97,14 +107,14 @@
 
 - (bool)checkCapability:(OFString*)capability
 {
-	bool returnValue = e_client_check_capability([self castedGObject], [capability UTF8String]);
+	bool returnValue = (bool)e_client_check_capability([self castedGObject], [capability UTF8String]);
 
 	return returnValue;
 }
 
 - (bool)checkRefreshSupported
 {
-	bool returnValue = e_client_check_refresh_supported([self castedGObject]);
+	bool returnValue = (bool)e_client_check_refresh_supported([self castedGObject]);
 
 	return returnValue;
 }
@@ -126,13 +136,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_client_get_backend_property_finish([self castedGObject], result, propValue, &err);
+	bool returnValue = (bool)e_client_get_backend_property_finish([self castedGObject], result, propValue, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -141,49 +147,45 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_client_get_backend_property_sync([self castedGObject], [propName UTF8String], propValue, [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_client_get_backend_property_sync([self castedGObject], [propName UTF8String], propValue, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
 
 - (const GSList*)capabilities
 {
-	const GSList* returnValue = e_client_get_capabilities([self castedGObject]);
+	const GSList* returnValue = (const GSList*)e_client_get_capabilities([self castedGObject]);
 
 	return returnValue;
 }
 
 - (OGESource*)source
 {
-	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_client_get_source([self castedGObject]), ESource, ESource);
+	ESource* gobjectValue = e_client_get_source([self castedGObject]);
 
-	OGESource* returnValue = [OGESource withGObject:gobjectValue];
+	OGESource* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
 - (bool)isOnline
 {
-	bool returnValue = e_client_is_online([self castedGObject]);
+	bool returnValue = (bool)e_client_is_online([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)isOpened
 {
-	bool returnValue = e_client_is_opened([self castedGObject]);
+	bool returnValue = (bool)e_client_is_opened([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)isReadonly
 {
-	bool returnValue = e_client_is_readonly([self castedGObject]);
+	bool returnValue = (bool)e_client_is_readonly([self castedGObject]);
 
 	return returnValue;
 }
@@ -197,13 +199,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_client_open_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)e_client_open_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -212,20 +210,16 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_client_open_sync([self castedGObject], onlyIfExists, [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_client_open_sync([self castedGObject], onlyIfExists, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
 
 - (GMainContext*)refMainContext
 {
-	GMainContext* returnValue = e_client_ref_main_context([self castedGObject]);
+	GMainContext* returnValue = (GMainContext*)e_client_ref_main_context([self castedGObject]);
 
 	return returnValue;
 }
@@ -239,13 +233,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_client_refresh_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)e_client_refresh_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -254,13 +244,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_client_refresh_sync([self castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_client_refresh_sync([self castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -274,13 +260,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_client_remove_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)e_client_remove_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -289,13 +271,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_client_remove_sync([self castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_client_remove_sync([self castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -309,13 +287,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_client_retrieve_capabilities_finish([self castedGObject], result, capabilities, &err);
+	bool returnValue = (bool)e_client_retrieve_capabilities_finish([self castedGObject], result, capabilities, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -324,13 +298,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_client_retrieve_capabilities_sync([self castedGObject], capabilities, [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_client_retrieve_capabilities_sync([self castedGObject], capabilities, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -344,13 +314,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_client_retrieve_properties_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)e_client_retrieve_properties_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -359,13 +325,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_client_retrieve_properties_sync([self castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_client_retrieve_properties_sync([self castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -379,13 +341,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_client_set_backend_property_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)e_client_set_backend_property_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -394,13 +352,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_client_set_backend_property_sync([self castedGObject], [propName UTF8String], [propValue UTF8String], [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_client_set_backend_property_sync([self castedGObject], [propName UTF8String], [propValue UTF8String], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -416,11 +370,7 @@
 
 	e_client_unwrap_dbus_error([self castedGObject], dbusError, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 }
 
@@ -433,13 +383,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_client_wait_for_connected_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)e_client_wait_for_connected_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -448,13 +394,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_client_wait_for_connected_sync([self castedGObject], timeoutSeconds, [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_client_wait_for_connected_sync([self castedGObject], timeoutSeconds, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }

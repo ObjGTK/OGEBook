@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGESourceProxy.h"
 
 @implementation OGESourceProxy
+
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_SOURCE_PROXY;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (ESourceProxy*)castedGObject
 {
@@ -63,7 +73,7 @@
 
 - (gchar**)dupIgnoreHosts
 {
-	gchar** returnValue = e_source_proxy_dup_ignore_hosts([self castedGObject]);
+	gchar** returnValue = (gchar**)e_source_proxy_dup_ignore_hosts([self castedGObject]);
 
 	return returnValue;
 }
@@ -94,7 +104,7 @@
 
 - (guint16)ftpPort
 {
-	guint16 returnValue = e_source_proxy_get_ftp_port([self castedGObject]);
+	guint16 returnValue = (guint16)e_source_proxy_get_ftp_port([self castedGObject]);
 
 	return returnValue;
 }
@@ -125,14 +135,14 @@
 
 - (guint16)httpPort
 {
-	guint16 returnValue = e_source_proxy_get_http_port([self castedGObject]);
+	guint16 returnValue = (guint16)e_source_proxy_get_http_port([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)httpUseAuth
 {
-	bool returnValue = e_source_proxy_get_http_use_auth([self castedGObject]);
+	bool returnValue = (bool)e_source_proxy_get_http_use_auth([self castedGObject]);
 
 	return returnValue;
 }
@@ -147,21 +157,21 @@
 
 - (guint16)httpsPort
 {
-	guint16 returnValue = e_source_proxy_get_https_port([self castedGObject]);
+	guint16 returnValue = (guint16)e_source_proxy_get_https_port([self castedGObject]);
 
 	return returnValue;
 }
 
 - (const gchar* const*)ignoreHosts
 {
-	const gchar* const* returnValue = e_source_proxy_get_ignore_hosts([self castedGObject]);
+	const gchar* const* returnValue = (const gchar* const*)e_source_proxy_get_ignore_hosts([self castedGObject]);
 
 	return returnValue;
 }
 
 - (EProxyMethod)method
 {
-	EProxyMethod returnValue = e_source_proxy_get_method([self castedGObject]);
+	EProxyMethod returnValue = (EProxyMethod)e_source_proxy_get_method([self castedGObject]);
 
 	return returnValue;
 }
@@ -176,7 +186,7 @@
 
 - (guint16)socksPort
 {
-	guint16 returnValue = e_source_proxy_get_socks_port([self castedGObject]);
+	guint16 returnValue = (guint16)e_source_proxy_get_socks_port([self castedGObject]);
 
 	return returnValue;
 }

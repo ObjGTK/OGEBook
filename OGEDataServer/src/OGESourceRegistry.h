@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,9 +8,9 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCancellable;
-@class OGESource;
 @class OGEOAuth2Services;
+@class OGESource;
+@class OGCancellable;
 
 /**
  * Contains only private data that should be read and manipulated using the
@@ -25,6 +25,8 @@
 /**
  * Functions
  */
++ (void)load;
+
 
 /**
  *
@@ -60,8 +62,8 @@
 /**
  * Constructors
  */
-- (instancetype)initFinish:(GAsyncResult*)result;
-- (instancetype)initSync:(OGCancellable*)cancellable;
+- (instancetype)initWithResultFinish:(GAsyncResult*)result;
+- (instancetype)initWithCancellableSync:(OGCancellable*)cancellable;
 
 /**
  * Methods

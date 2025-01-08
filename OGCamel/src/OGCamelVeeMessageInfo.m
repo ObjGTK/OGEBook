@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -10,6 +10,16 @@
 #import "OGCamelFolderSummary.h"
 
 @implementation OGCamelVeeMessageInfo
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_VEE_MESSAGE_INFO;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (instancetype)initWithSummary:(OGCamelFolderSummary*)summary originalSummary:(OGCamelFolderSummary*)originalSummary vuid:(OFString*)vuid
 {
@@ -34,17 +44,17 @@
 
 - (OGCamelFolder*)originalFolder
 {
-	CamelFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_message_info_get_original_folder([self castedGObject]), CamelFolder, CamelFolder);
+	CamelFolder* gobjectValue = camel_vee_message_info_get_original_folder([self castedGObject]);
 
-	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
+	OGCamelFolder* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
 - (OGCamelFolderSummary*)originalSummary
 {
-	CamelFolderSummary* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_message_info_get_original_summary([self castedGObject]), CamelFolderSummary, CamelFolderSummary);
+	CamelFolderSummary* gobjectValue = camel_vee_message_info_get_original_summary([self castedGObject]);
 
-	OGCamelFolderSummary* returnValue = [OGCamelFolderSummary withGObject:gobjectValue];
+	OGCamelFolderSummary* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 

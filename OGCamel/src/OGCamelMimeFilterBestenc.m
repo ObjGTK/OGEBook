@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,7 +8,17 @@
 
 @implementation OGCamelMimeFilterBestenc
 
-- (instancetype)init:(guint)flags
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_MIME_FILTER_BESTENC;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
+- (instancetype)initWithFlags:(guint)flags
 {
 	CamelMimeFilterBestenc* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_bestenc_new(flags), CamelMimeFilterBestenc, CamelMimeFilterBestenc);
 
@@ -39,7 +49,7 @@
 
 - (CamelTransferEncoding)bestEncoding:(CamelBestencEncoding)required
 {
-	CamelTransferEncoding returnValue = camel_mime_filter_bestenc_get_best_encoding([self castedGObject], required);
+	CamelTransferEncoding returnValue = (CamelTransferEncoding)camel_mime_filter_bestenc_get_best_encoding([self castedGObject], required);
 
 	return returnValue;
 }

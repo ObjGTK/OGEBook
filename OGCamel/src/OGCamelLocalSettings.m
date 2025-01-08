@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelLocalSettings.h"
 
 @implementation OGCamelLocalSettings
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_LOCAL_SETTINGS;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (CamelLocalSettings*)castedGObject
 {
@@ -23,21 +33,21 @@
 
 - (bool)filterAll
 {
-	bool returnValue = camel_local_settings_get_filter_all([self castedGObject]);
+	bool returnValue = (bool)camel_local_settings_get_filter_all([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)filterJunk
 {
-	bool returnValue = camel_local_settings_get_filter_junk([self castedGObject]);
+	bool returnValue = (bool)camel_local_settings_get_filter_junk([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)maildirAltFlagSep
 {
-	bool returnValue = camel_local_settings_get_maildir_alt_flag_sep([self castedGObject]);
+	bool returnValue = (bool)camel_local_settings_get_maildir_alt_flag_sep([self castedGObject]);
 
 	return returnValue;
 }

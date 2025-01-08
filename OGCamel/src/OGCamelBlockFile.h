@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -51,19 +51,19 @@
 
 /**
  *
- * @param id a #camel_block_t
+ * @param identifier a #camel_block_t
  * @return
  */
-- (gint)freeBlock:(camel_block_t)id;
+- (gint)freeBlock:(camel_block_t)identifier;
 
 /**
  * Retreive a block @id.
  *
- * @param id a #camel_block_t
+ * @param identifier a #camel_block_t
  * @return The block, or %NULL if blockid is invalid or a file
  *    error occurred.
  */
-- (CamelBlock*)block:(camel_block_t)id;
+- (CamelBlock*)block:(camel_block_t)identifier;
 
 /**
  *

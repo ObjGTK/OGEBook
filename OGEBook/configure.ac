@@ -60,24 +60,6 @@ AS_IF([$OBJFW_CONFIG --package OGObject], [AC_MSG_RESULT(yes)
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGObject installed.)
 ])
-AC_MSG_CHECKING(for ObjFW package OGio)
-AS_IF([$OBJFW_CONFIG --package OGio], [AC_MSG_RESULT(yes)
-	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGio --cppflags)"
-	LIBS="$LIBS $($OBJFW_CONFIG --package OGio --libs)"
-	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGio --framework-libs) $FRAMEWORK_LIBS"
-], [
-	AC_MSG_ERROR(You need ObjFW package OGio installed.)
-])
-
-AC_MSG_CHECKING(for ObjFW package OGCamel)
-AS_IF([$OBJFW_CONFIG --package OGCamel], [AC_MSG_RESULT(yes)
-	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGCamel --cppflags)"
-	LIBS="$LIBS $($OBJFW_CONFIG --package OGCamel --libs)"
-	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGCamel --framework-libs) $FRAMEWORK_LIBS"
-], [
-	AC_MSG_ERROR(You need ObjFW package OGCamel installed.)
-])
-
 AC_MSG_CHECKING(for ObjFW package OGEBookContacts)
 AS_IF([$OBJFW_CONFIG --package OGEBookContacts], [AC_MSG_RESULT(yes)
 	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGEBookContacts --cppflags)"
@@ -94,6 +76,24 @@ AS_IF([$OBJFW_CONFIG --package OGEDataServer], [AC_MSG_RESULT(yes)
 	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGEDataServer --framework-libs) $FRAMEWORK_LIBS"
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGEDataServer installed.)
+])
+
+AC_MSG_CHECKING(for ObjFW package OGCamel)
+AS_IF([$OBJFW_CONFIG --package OGCamel], [AC_MSG_RESULT(yes)
+	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGCamel --cppflags)"
+	LIBS="$LIBS $($OBJFW_CONFIG --package OGCamel --libs)"
+	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGCamel --framework-libs) $FRAMEWORK_LIBS"
+], [
+	AC_MSG_ERROR(You need ObjFW package OGCamel installed.)
+])
+
+AC_MSG_CHECKING(for ObjFW package OGio)
+AS_IF([$OBJFW_CONFIG --package OGio], [AC_MSG_RESULT(yes)
+	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGio --cppflags)"
+	LIBS="$LIBS $($OBJFW_CONFIG --package OGio --libs)"
+	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGio --framework-libs) $FRAMEWORK_LIBS"
+], [
+	AC_MSG_ERROR(You need ObjFW package OGio installed.)
 ])
 
 

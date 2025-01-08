@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -11,23 +11,33 @@
 
 @implementation OGCamelSasl
 
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_SASL;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
 + (CamelServiceAuthType*)authtype:(OFString*)mechanism
 {
-	CamelServiceAuthType* returnValue = camel_sasl_authtype([mechanism UTF8String]);
+	CamelServiceAuthType* returnValue = (CamelServiceAuthType*)camel_sasl_authtype([mechanism UTF8String]);
 
 	return returnValue;
 }
 
 + (GList*)authtypeList:(bool)includePlain
 {
-	GList* returnValue = camel_sasl_authtype_list(includePlain);
+	GList* returnValue = (GList*)camel_sasl_authtype_list(includePlain);
 
 	return returnValue;
 }
 
 + (bool)isXoauth2Alias:(OFString*)mechanism
 {
-	bool returnValue = camel_sasl_is_xoauth2_alias([mechanism UTF8String]);
+	bool returnValue = (bool)camel_sasl_is_xoauth2_alias([mechanism UTF8String]);
 
 	return returnValue;
 }
@@ -69,11 +79,7 @@
 
 	gchar* gobjectValue = camel_sasl_challenge_base64_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
 	return returnValue;
@@ -85,11 +91,7 @@
 
 	gchar* gobjectValue = camel_sasl_challenge_base64_sync([self castedGObject], [token UTF8String], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
 	return returnValue;
@@ -99,13 +101,9 @@
 {
 	GError* err = NULL;
 
-	GByteArray* returnValue = camel_sasl_challenge_finish([self castedGObject], result, &err);
+	GByteArray* returnValue = (GByteArray*)camel_sasl_challenge_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -114,20 +112,16 @@
 {
 	GError* err = NULL;
 
-	GByteArray* returnValue = camel_sasl_challenge_sync([self castedGObject], token, [cancellable castedGObject], &err);
+	GByteArray* returnValue = (GByteArray*)camel_sasl_challenge_sync([self castedGObject], token, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
 
 - (bool)authenticated
 {
-	bool returnValue = camel_sasl_get_authenticated([self castedGObject]);
+	bool returnValue = (bool)camel_sasl_get_authenticated([self castedGObject]);
 
 	return returnValue;
 }
@@ -142,9 +136,9 @@
 
 - (OGCamelService*)service
 {
-	CamelService* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_sasl_get_service([self castedGObject]), CamelService, CamelService);
+	CamelService* gobjectValue = camel_sasl_get_service([self castedGObject]);
 
-	OGCamelService* returnValue = [OGCamelService withGObject:gobjectValue];
+	OGCamelService* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
@@ -170,13 +164,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_sasl_try_empty_password_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)camel_sasl_try_empty_password_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -185,13 +175,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_sasl_try_empty_password_sync([self castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_sasl_try_empty_password_sync([self castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }

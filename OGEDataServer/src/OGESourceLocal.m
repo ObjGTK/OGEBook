@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGESourceLocal.h"
 
 @implementation OGESourceLocal
+
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_SOURCE_LOCAL;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (ESourceLocal*)castedGObject
 {
@@ -15,7 +25,7 @@
 
 - (GFile*)dupCustomFile
 {
-	GFile* returnValue = e_source_local_dup_custom_file([self castedGObject]);
+	GFile* returnValue = (GFile*)e_source_local_dup_custom_file([self castedGObject]);
 
 	return returnValue;
 }
@@ -30,7 +40,7 @@
 
 - (GFile*)customFile
 {
-	GFile* returnValue = e_source_local_get_custom_file([self castedGObject]);
+	GFile* returnValue = (GFile*)e_source_local_get_custom_file([self castedGObject]);
 
 	return returnValue;
 }
@@ -45,7 +55,7 @@
 
 - (bool)writable
 {
-	bool returnValue = e_source_local_get_writable([self castedGObject]);
+	bool returnValue = (bool)e_source_local_get_writable([self castedGObject]);
 
 	return returnValue;
 }

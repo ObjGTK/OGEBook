@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGEExtension.h"
 
 @implementation OGEExtension
+
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_EXTENSION;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (EExtension*)castedGObject
 {
@@ -15,7 +25,7 @@
 
 - (EExtensible*)extensible
 {
-	EExtensible* returnValue = e_extension_get_extensible([self castedGObject]);
+	EExtensible* returnValue = (EExtensible*)e_extension_get_extensible([self castedGObject]);
 
 	return returnValue;
 }

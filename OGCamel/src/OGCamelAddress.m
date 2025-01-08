@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelAddress.h"
 
 @implementation OGCamelAddress
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_ADDRESS;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (instancetype)init
 {
@@ -31,21 +41,21 @@
 
 - (gint)cat:(OGCamelAddress*)source
 {
-	gint returnValue = camel_address_cat([self castedGObject], [source castedGObject]);
+	gint returnValue = (gint)camel_address_cat([self castedGObject], [source castedGObject]);
 
 	return returnValue;
 }
 
 - (gint)copy:(OGCamelAddress*)source
 {
-	gint returnValue = camel_address_copy([self castedGObject], [source castedGObject]);
+	gint returnValue = (gint)camel_address_copy([self castedGObject], [source castedGObject]);
 
 	return returnValue;
 }
 
 - (gint)decode:(OFString*)raw
 {
-	gint returnValue = camel_address_decode([self castedGObject], [raw UTF8String]);
+	gint returnValue = (gint)camel_address_decode([self castedGObject], [raw UTF8String]);
 
 	return returnValue;
 }
@@ -68,16 +78,16 @@
 
 - (gint)length
 {
-	gint returnValue = camel_address_length([self castedGObject]);
+	gint returnValue = (gint)camel_address_length([self castedGObject]);
 
 	return returnValue;
 }
 
 - (OGCamelAddress*)newClone
 {
-	CamelAddress* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_address_new_clone([self castedGObject]), CamelAddress, CamelAddress);
+	CamelAddress* gobjectValue = camel_address_new_clone([self castedGObject]);
 
-	OGCamelAddress* returnValue = [OGCamelAddress withGObject:gobjectValue];
+	OGCamelAddress* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -90,7 +100,7 @@
 
 - (gint)unformat:(OFString*)raw
 {
-	gint returnValue = camel_address_unformat([self castedGObject], [raw UTF8String]);
+	gint returnValue = (gint)camel_address_unformat([self castedGObject], [raw UTF8String]);
 
 	return returnValue;
 }

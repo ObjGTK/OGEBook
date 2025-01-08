@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,23 +8,33 @@
 
 @implementation OGCamelTextIndex
 
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_TEXT_INDEX;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
 + (gint)check:(OFString*)path
 {
-	gint returnValue = camel_text_index_check([path UTF8String]);
+	gint returnValue = (gint)camel_text_index_check([path UTF8String]);
 
 	return returnValue;
 }
 
 + (gint)remove:(OFString*)old
 {
-	gint returnValue = camel_text_index_remove([old UTF8String]);
+	gint returnValue = (gint)camel_text_index_remove([old UTF8String]);
 
 	return returnValue;
 }
 
 + (gint)renameWithOld:(OFString*)old new:(OFString*)new
 {
-	gint returnValue = camel_text_index_rename([old UTF8String], [new UTF8String]);
+	gint returnValue = (gint)camel_text_index_rename([old UTF8String], [new UTF8String]);
 
 	return returnValue;
 }

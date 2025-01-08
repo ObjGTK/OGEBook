@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -11,7 +11,17 @@
 
 @implementation OGCamelStream
 
-- (instancetype)init:(OGIOStream*)baseStream
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_STREAM;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
+- (instancetype)initWithBaseStream:(OGIOStream*)baseStream
 {
 	CamelStream* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_new([baseStream castedGObject]), CamelStream, CamelStream);
 
@@ -36,20 +46,16 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_stream_close([self castedGObject], [cancellable castedGObject], &err);
+	gint returnValue = (gint)camel_stream_close([self castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
 
 - (bool)eos
 {
-	bool returnValue = camel_stream_eos([self castedGObject]);
+	bool returnValue = (bool)camel_stream_eos([self castedGObject]);
 
 	return returnValue;
 }
@@ -58,13 +64,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_stream_flush([self castedGObject], [cancellable castedGObject], &err);
+	gint returnValue = (gint)camel_stream_flush([self castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -73,22 +75,18 @@
 {
 	GError* err = NULL;
 
-	gssize returnValue = camel_stream_read([self castedGObject], g_strdup([buffer UTF8String]), n, [cancellable castedGObject], &err);
+	gssize returnValue = (gssize)camel_stream_read([self castedGObject], g_strdup([buffer UTF8String]), n, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
 
 - (OGIOStream*)refBaseStream
 {
-	GIOStream* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_ref_base_stream([self castedGObject]), GIOStream, GIOStream);
+	GIOStream* gobjectValue = camel_stream_ref_base_stream([self castedGObject]);
 
-	OGIOStream* returnValue = [OGIOStream withGObject:gobjectValue];
+	OGIOStream* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -103,13 +101,9 @@
 {
 	GError* err = NULL;
 
-	gssize returnValue = camel_stream_write([self castedGObject], [buffer UTF8String], n, [cancellable castedGObject], &err);
+	gssize returnValue = (gssize)camel_stream_write([self castedGObject], [buffer UTF8String], n, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -118,13 +112,9 @@
 {
 	GError* err = NULL;
 
-	gssize returnValue = camel_stream_write_string([self castedGObject], [string UTF8String], [cancellable castedGObject], &err);
+	gssize returnValue = (gssize)camel_stream_write_string([self castedGObject], [string UTF8String], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -133,13 +123,9 @@
 {
 	GError* err = NULL;
 
-	gssize returnValue = camel_stream_write_to_stream([self castedGObject], [outputStream castedGObject], [cancellable castedGObject], &err);
+	gssize returnValue = (gssize)camel_stream_write_to_stream([self castedGObject], [outputStream castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }

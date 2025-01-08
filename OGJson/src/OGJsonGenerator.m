@@ -1,15 +1,25 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGJsonGenerator.h"
 
-#import <OGio/OGOutputStream.h>
 #import <OGio/OGCancellable.h>
+#import <OGio/OGOutputStream.h>
 
 @implementation OGJsonGenerator
+
++ (void)load
+{
+	GType gtypeToAssociate = JSON_TYPE_GENERATOR;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (instancetype)init
 {
@@ -34,28 +44,28 @@
 
 - (guint)indent
 {
-	guint returnValue = json_generator_get_indent([self castedGObject]);
+	guint returnValue = (guint)json_generator_get_indent([self castedGObject]);
 
 	return returnValue;
 }
 
 - (gunichar)indentChar
 {
-	gunichar returnValue = json_generator_get_indent_char([self castedGObject]);
+	gunichar returnValue = (gunichar)json_generator_get_indent_char([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)pretty
 {
-	bool returnValue = json_generator_get_pretty([self castedGObject]);
+	bool returnValue = (bool)json_generator_get_pretty([self castedGObject]);
 
 	return returnValue;
 }
 
 - (JsonNode*)root
 {
-	JsonNode* returnValue = json_generator_get_root([self castedGObject]);
+	JsonNode* returnValue = (JsonNode*)json_generator_get_root([self castedGObject]);
 
 	return returnValue;
 }
@@ -92,20 +102,16 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = json_generator_to_file([self castedGObject], [filename UTF8String], &err);
+	bool returnValue = (bool)json_generator_to_file([self castedGObject], [filename UTF8String], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
 
 - (GString*)toGstring:(GString*)string
 {
-	GString* returnValue = json_generator_to_gstring([self castedGObject], string);
+	GString* returnValue = (GString*)json_generator_to_gstring([self castedGObject], string);
 
 	return returnValue;
 }
@@ -114,13 +120,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = json_generator_to_stream([self castedGObject], [stream castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)json_generator_to_stream([self castedGObject], [stream castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }

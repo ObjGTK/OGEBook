@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelStreamMem.h"
 
 @implementation OGCamelStreamMem
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_STREAM_MEM;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (instancetype)init
 {
@@ -40,7 +50,7 @@
 	return self;
 }
 
-- (instancetype)initWithByteArray:(GByteArray*)buffer
+- (instancetype)initWithBufferWithByteArray:(GByteArray*)buffer
 {
 	CamelStreamMem* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_mem_new_with_byte_array(buffer), CamelStreamMem, CamelStreamMem);
 
@@ -63,7 +73,7 @@
 
 - (GByteArray*)byteArray
 {
-	GByteArray* returnValue = camel_stream_mem_get_byte_array([self castedGObject]);
+	GByteArray* returnValue = (GByteArray*)camel_stream_mem_get_byte_array([self castedGObject]);
 
 	return returnValue;
 }

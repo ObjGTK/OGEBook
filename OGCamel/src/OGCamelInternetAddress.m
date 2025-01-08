@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelInternetAddress.h"
 
 @implementation OGCamelInternetAddress
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_INTERNET_ADDRESS;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 + (OFString*)encodeAddressWithLen:(gint*)len name:(OFString*)name addr:(OFString*)addr
 {
@@ -47,7 +57,7 @@
 
 - (gint)addWithName:(OFString*)name address:(OFString*)address
 {
-	gint returnValue = camel_internet_address_add([self castedGObject], [name UTF8String], [address UTF8String]);
+	gint returnValue = (gint)camel_internet_address_add([self castedGObject], [name UTF8String], [address UTF8String]);
 
 	return returnValue;
 }
@@ -59,28 +69,28 @@
 
 - (gint)findAddressWithAddress:(OFString*)address namep:(const gchar**)namep
 {
-	gint returnValue = camel_internet_address_find_address([self castedGObject], [address UTF8String], namep);
+	gint returnValue = (gint)camel_internet_address_find_address([self castedGObject], [address UTF8String], namep);
 
 	return returnValue;
 }
 
 - (gint)findNameWithName:(OFString*)name addressp:(const gchar**)addressp
 {
-	gint returnValue = camel_internet_address_find_name([self castedGObject], [name UTF8String], addressp);
+	gint returnValue = (gint)camel_internet_address_find_name([self castedGObject], [name UTF8String], addressp);
 
 	return returnValue;
 }
 
 - (bool)getWithIndex:(gint)index namep:(const gchar**)namep addressp:(const gchar**)addressp
 {
-	bool returnValue = camel_internet_address_get([self castedGObject], index, namep, addressp);
+	bool returnValue = (bool)camel_internet_address_get([self castedGObject], index, namep, addressp);
 
 	return returnValue;
 }
 
 - (bool)sanitizeAsciiDomain
 {
-	bool returnValue = camel_internet_address_sanitize_ascii_domain([self castedGObject]);
+	bool returnValue = (bool)camel_internet_address_sanitize_ascii_domain([self castedGObject]);
 
 	return returnValue;
 }

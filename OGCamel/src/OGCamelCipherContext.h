@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -9,8 +9,8 @@
 #import <OGObject/OGObject.h>
 
 @class OGCamelMimePart;
-@class OGCancellable;
 @class OGCamelSession;
+@class OGCancellable;
 
 @interface OGCamelCipherContext : OGObject
 {
@@ -20,6 +20,8 @@
 /**
  * Functions
  */
++ (void)load;
+
 
 /**
  *
@@ -30,7 +32,7 @@
 /**
  * Constructors
  */
-- (instancetype)init:(OGCamelSession*)session;
+- (instancetype)initWithSession:(OGCamelSession*)session;
 
 /**
  * Methods
@@ -130,10 +132,10 @@
 
 /**
  *
- * @param id
+ * @param identifier
  * @return
  */
-- (CamelCipherHash)idToHash:(OFString*)id;
+- (CamelCipherHash)idToHash:(OFString*)identifier;
 
 /**
  * Asynchronously converts the (unsigned) part @ipart into a new

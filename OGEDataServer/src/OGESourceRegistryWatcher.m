@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -9,6 +9,16 @@
 #import "OGESourceRegistry.h"
 
 @implementation OGESourceRegistryWatcher
+
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_SOURCE_REGISTRY_WATCHER;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (instancetype)initWithRegistry:(OGESourceRegistry*)registry extensionName:(OFString*)extensionName
 {
@@ -41,9 +51,9 @@
 
 - (OGESourceRegistry*)registry
 {
-	ESourceRegistry* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_watcher_get_registry([self castedGObject]), ESourceRegistry, ESourceRegistry);
+	ESourceRegistry* gobjectValue = e_source_registry_watcher_get_registry([self castedGObject]);
 
-	OGESourceRegistry* returnValue = [OGESourceRegistry withGObject:gobjectValue];
+	OGESourceRegistry* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 

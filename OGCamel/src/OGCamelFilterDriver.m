@@ -1,20 +1,30 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelFilterDriver.h"
 
-#import "OGCamelMessageInfo.h"
 #import "OGCamelFolder.h"
-#import <OGio/OGCancellable.h>
+#import "OGCamelMessageInfo.h"
 #import "OGCamelMimeMessage.h"
 #import "OGCamelSession.h"
+#import <OGio/OGCancellable.h>
 
 @implementation OGCamelFilterDriver
 
-- (instancetype)init:(OGCamelSession*)session
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_FILTER_DRIVER;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
+- (instancetype)initWithSession:(OGCamelSession*)session
 {
 	CamelFilterDriver* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_filter_driver_new([session castedGObject]), CamelFilterDriver, CamelFilterDriver);
 
@@ -44,13 +54,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_filter_driver_filter_folder([self castedGObject], [folder castedGObject], cache, uids, remove, [cancellable castedGObject], &err);
+	gint returnValue = (gint)camel_filter_driver_filter_folder([self castedGObject], [folder castedGObject], cache, uids, remove, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -59,13 +65,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_filter_driver_filter_mbox([self castedGObject], [mbox UTF8String], [originalSourceUrl UTF8String], [cancellable castedGObject], &err);
+	gint returnValue = (gint)camel_filter_driver_filter_mbox([self castedGObject], [mbox UTF8String], [originalSourceUrl UTF8String], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -74,13 +76,9 @@
 {
 	GError* err = NULL;
 
-	gint returnValue = camel_filter_driver_filter_message([self castedGObject], [message castedGObject], [info castedGObject], [uid UTF8String], [source castedGObject], [storeUid UTF8String], [originalStoreUid UTF8String], [cancellable castedGObject], &err);
+	gint returnValue = (gint)camel_filter_driver_filter_message([self castedGObject], [message castedGObject], [info castedGObject], [uid UTF8String], [source castedGObject], [storeUid UTF8String], [originalStoreUid UTF8String], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -91,17 +89,13 @@
 
 	camel_filter_driver_flush([self castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 }
 
 - (bool)removeRuleByName:(OFString*)name
 {
-	bool returnValue = camel_filter_driver_remove_rule_by_name([self castedGObject], [name UTF8String]);
+	bool returnValue = (bool)camel_filter_driver_remove_rule_by_name([self castedGObject], [name UTF8String]);
 
 	return returnValue;
 }

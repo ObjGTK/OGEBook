@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -9,6 +9,16 @@
 #import "OGCamelVeeSubfolderData.h"
 
 @implementation OGCamelVeeMessageInfoData
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_VEE_MESSAGE_INFO_DATA;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (instancetype)initWithSubfolderData:(OGCamelVeeSubfolderData*)subfolderData origMessageUid:(OFString*)origMessageUid
 {
@@ -41,9 +51,9 @@
 
 - (OGCamelVeeSubfolderData*)subfolderData
 {
-	CamelVeeSubfolderData* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_message_info_data_get_subfolder_data([self castedGObject]), CamelVeeSubfolderData, CamelVeeSubfolderData);
+	CamelVeeSubfolderData* gobjectValue = camel_vee_message_info_data_get_subfolder_data([self castedGObject]);
 
-	OGCamelVeeSubfolderData* returnValue = [OGCamelVeeSubfolderData withGObject:gobjectValue];
+	OGCamelVeeSubfolderData* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 

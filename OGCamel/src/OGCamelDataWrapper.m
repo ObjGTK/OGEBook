@@ -1,17 +1,27 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelDataWrapper.h"
 
-#import <OGio/OGInputStream.h>
-#import <OGio/OGCancellable.h>
 #import "OGCamelStream.h"
+#import <OGio/OGCancellable.h>
+#import <OGio/OGInputStream.h>
 #import <OGio/OGOutputStream.h>
 
 @implementation OGCamelDataWrapper
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_DATA_WRAPPER;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (instancetype)init
 {
@@ -38,13 +48,9 @@
 {
 	GError* err = NULL;
 
-	gsize returnValue = camel_data_wrapper_calculate_decoded_size_sync([self castedGObject], [cancellable castedGObject], &err);
+	gsize returnValue = (gsize)camel_data_wrapper_calculate_decoded_size_sync([self castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -53,13 +59,9 @@
 {
 	GError* err = NULL;
 
-	gsize returnValue = camel_data_wrapper_calculate_size_sync([self castedGObject], [cancellable castedGObject], &err);
+	gsize returnValue = (gsize)camel_data_wrapper_calculate_size_sync([self castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -68,13 +70,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_data_wrapper_construct_from_data_sync([self castedGObject], data, dataLen, [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_data_wrapper_construct_from_data_sync([self castedGObject], data, dataLen, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -88,13 +86,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_data_wrapper_construct_from_input_stream_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)camel_data_wrapper_construct_from_input_stream_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -103,13 +97,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_data_wrapper_construct_from_input_stream_sync([self castedGObject], [inputStream castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_data_wrapper_construct_from_input_stream_sync([self castedGObject], [inputStream castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -123,13 +113,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_data_wrapper_construct_from_stream_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)camel_data_wrapper_construct_from_stream_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -138,13 +124,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_data_wrapper_construct_from_stream_sync([self castedGObject], [stream castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_data_wrapper_construct_from_stream_sync([self castedGObject], [stream castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -158,13 +140,9 @@
 {
 	GError* err = NULL;
 
-	gssize returnValue = camel_data_wrapper_decode_to_output_stream_finish([self castedGObject], result, &err);
+	gssize returnValue = (gssize)camel_data_wrapper_decode_to_output_stream_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -173,13 +151,9 @@
 {
 	GError* err = NULL;
 
-	gssize returnValue = camel_data_wrapper_decode_to_output_stream_sync([self castedGObject], [outputStream castedGObject], [cancellable castedGObject], &err);
+	gssize returnValue = (gssize)camel_data_wrapper_decode_to_output_stream_sync([self castedGObject], [outputStream castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -193,13 +167,9 @@
 {
 	GError* err = NULL;
 
-	gssize returnValue = camel_data_wrapper_decode_to_stream_finish([self castedGObject], result, &err);
+	gssize returnValue = (gssize)camel_data_wrapper_decode_to_stream_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -208,27 +178,23 @@
 {
 	GError* err = NULL;
 
-	gssize returnValue = camel_data_wrapper_decode_to_stream_sync([self castedGObject], [stream castedGObject], [cancellable castedGObject], &err);
+	gssize returnValue = (gssize)camel_data_wrapper_decode_to_stream_sync([self castedGObject], [stream castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
 
 - (GByteArray*)byteArray
 {
-	GByteArray* returnValue = camel_data_wrapper_get_byte_array([self castedGObject]);
+	GByteArray* returnValue = (GByteArray*)camel_data_wrapper_get_byte_array([self castedGObject]);
 
 	return returnValue;
 }
 
 - (CamelTransferEncoding)encoding
 {
-	CamelTransferEncoding returnValue = camel_data_wrapper_get_encoding([self castedGObject]);
+	CamelTransferEncoding returnValue = (CamelTransferEncoding)camel_data_wrapper_get_encoding([self castedGObject]);
 
 	return returnValue;
 }
@@ -243,14 +209,14 @@
 
 - (CamelContentType*)mimeTypeField
 {
-	CamelContentType* returnValue = camel_data_wrapper_get_mime_type_field([self castedGObject]);
+	CamelContentType* returnValue = (CamelContentType*)camel_data_wrapper_get_mime_type_field([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)isOffline
 {
-	bool returnValue = camel_data_wrapper_is_offline([self castedGObject]);
+	bool returnValue = (bool)camel_data_wrapper_is_offline([self castedGObject]);
 
 	return returnValue;
 }
@@ -289,13 +255,9 @@
 {
 	GError* err = NULL;
 
-	gssize returnValue = camel_data_wrapper_write_to_output_stream_finish([self castedGObject], result, &err);
+	gssize returnValue = (gssize)camel_data_wrapper_write_to_output_stream_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -304,13 +266,9 @@
 {
 	GError* err = NULL;
 
-	gssize returnValue = camel_data_wrapper_write_to_output_stream_sync([self castedGObject], [outputStream castedGObject], [cancellable castedGObject], &err);
+	gssize returnValue = (gssize)camel_data_wrapper_write_to_output_stream_sync([self castedGObject], [outputStream castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -324,13 +282,9 @@
 {
 	GError* err = NULL;
 
-	gssize returnValue = camel_data_wrapper_write_to_stream_finish([self castedGObject], result, &err);
+	gssize returnValue = (gssize)camel_data_wrapper_write_to_stream_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -339,13 +293,9 @@
 {
 	GError* err = NULL;
 
-	gssize returnValue = camel_data_wrapper_write_to_stream_sync([self castedGObject], [stream castedGObject], [cancellable castedGObject], &err);
+	gssize returnValue = (gssize)camel_data_wrapper_write_to_stream_sync([self castedGObject], [stream castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
