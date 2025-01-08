@@ -99,14 +99,14 @@ AS_IF([test x"$with_libedataserver" != x"no" -a x"$with_libedataserver" != x""],
 ])
 
 
-PKG_CHECK_MODULES(libedataserver, [libedataserver-1.2 >= $(pkg-config --modversion libedataserver-1.2)], [
+PKG_CHECK_MODULES(libedataserver, [libedataserver-1.2 >= 3.52.3], [
 	OGEDATASERVER_CPPFLAGS="$OGEDATASERVER_CPPFLAGS $libedataserver_CFLAGS"
 	OGEDATASERVER_LIBS="$OGEDATASERVER_LIBS $libedataserver_LIBS"
 	CPPFLAGS="$CPPFLAGS $libedataserver_CFLAGS"
 	LIBS="$LIBS $libedataserver_LIBS"
 	FRAMEWORK_LIBS="$FRAMEWORK_LIBS $libedataserver_LIBS"
 ], [
-	AC_MSG_ERROR(You need libedataserver-1.2 >= $(pkg-config --modversion libedataserver-1.2) installed!)
+	AC_MSG_ERROR(You need libedataserver-1.2 >= 3.52.3 installed!)
 ])
 
 AS_IF([test x"$GOBJC" = x"yes"], [
