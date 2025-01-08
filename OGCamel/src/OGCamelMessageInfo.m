@@ -100,7 +100,7 @@
 {
 	gchar* gobjectValue = camel_message_info_dup_preview([self castedGObject]);
 
-	OFString* returnValue = gobjectValue;
+	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
 	return returnValue;
 }
 

@@ -28,14 +28,6 @@
 	camel_sexp_encode_string(string, [vstring UTF8String]);
 }
 
-+ (OFString*)toSqlSexp:(OFString*)sexp
-{
-	gchar* gobjectValue = camel_sexp_to_sql_sexp([sexp UTF8String]);
-
-	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
-	return returnValue;
-}
-
 - (instancetype)init
 {
 	CamelSExp* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_sexp_new(), CamelSExp, CamelSExp);
