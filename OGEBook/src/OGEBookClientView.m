@@ -88,13 +88,6 @@
 	return returnValue;
 }
 
-- (bool)isRunning
-{
-	bool returnValue = (bool)e_book_client_view_is_running([self castedGObject]);
-
-	return returnValue;
-}
-
 - (OGEBookClient*)refClient
 {
 	EBookClient* gobjectValue = e_book_client_view_ref_client([self castedGObject]);
