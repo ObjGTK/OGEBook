@@ -81,14 +81,14 @@ AS_IF([test x"$with_jsonglib" != x"no" -a x"$with_jsonglib" != x""], [
 ])
 
 
-PKG_CHECK_MODULES(jsonglib, [json-glib-1.0 >= $(pkg-config --modversion json-glib-1.0)], [
+PKG_CHECK_MODULES(jsonglib, [json-glib-1.0 >= 1.8.0], [
 	OGJSON_CPPFLAGS="$OGJSON_CPPFLAGS $jsonglib_CFLAGS"
 	OGJSON_LIBS="$OGJSON_LIBS $jsonglib_LIBS"
 	CPPFLAGS="$CPPFLAGS $jsonglib_CFLAGS"
 	LIBS="$LIBS $jsonglib_LIBS"
 	FRAMEWORK_LIBS="$FRAMEWORK_LIBS $jsonglib_LIBS"
 ], [
-	AC_MSG_ERROR(You need json-glib-1.0 >= $(pkg-config --modversion json-glib-1.0) installed!)
+	AC_MSG_ERROR(You need json-glib-1.0 >= 1.8.0 installed!)
 ])
 
 AS_IF([test x"$GOBJC" = x"yes"], [
