@@ -174,13 +174,6 @@
 	return returnValue;
 }
 
-- (gint)setHeaderRegex:(OFString*)matchstr
-{
-	gint returnValue = (gint)camel_mime_parser_set_header_regex([self castedGObject], g_strdup([matchstr UTF8String]));
-
-	return returnValue;
-}
-
 - (CamelMimeParserState)state
 {
 	CamelMimeParserState returnValue = (CamelMimeParserState)camel_mime_parser_state([self castedGObject]);
