@@ -108,14 +108,14 @@ AS_IF([test x"$with_libebook" != x"no" -a x"$with_libebook" != x""], [
 ])
 
 
-PKG_CHECK_MODULES(libebook, [libebook-1.2 >= $(pkg-config --modversion libebook-1.2)], [
+PKG_CHECK_MODULES(libebook, [libebook-1.2 >= 3.52.3], [
 	OGEBOOK_CPPFLAGS="$OGEBOOK_CPPFLAGS $libebook_CFLAGS"
 	OGEBOOK_LIBS="$OGEBOOK_LIBS $libebook_LIBS"
 	CPPFLAGS="$CPPFLAGS $libebook_CFLAGS"
 	LIBS="$LIBS $libebook_LIBS"
 	FRAMEWORK_LIBS="$FRAMEWORK_LIBS $libebook_LIBS"
 ], [
-	AC_MSG_ERROR(You need libebook-1.2 >= $(pkg-config --modversion libebook-1.2) installed!)
+	AC_MSG_ERROR(You need libebook-1.2 >= 3.52.3 installed!)
 ])
 
 AS_IF([test x"$GOBJC" = x"yes"], [
