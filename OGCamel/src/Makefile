@@ -14,8 +14,6 @@ SRCS = OGCamelAddress.m \
 	OGCamelDataCache.m \
 	OGCamelDataWrapper.m \
 	OGCamelFilterDriver.m \
-	OGCamelFilterInputStream.m \
-	OGCamelFilterOutputStream.m \
 	OGCamelFolder.m \
 	OGCamelFolderSearch.m \
 	OGCamelFolderSummary.m \

@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -11,20 +11,34 @@
 
 @implementation OGCamelMultipart
 
-- (instancetype)init
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_MULTIPART;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
++ (instancetype)multipart
 {
 	CamelMultipart* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_multipart_new(), CamelMultipart, CamelMultipart);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelMultipart* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelMultipart alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelMultipart*)castedGObject
@@ -39,7 +53,7 @@
 
 - (gint)constructFromParser:(OGCamelMimeParser*)parser
 {
-	gint returnValue = camel_multipart_construct_from_parser([self castedGObject], [parser castedGObject]);
+	gint returnValue = (gint)camel_multipart_construct_from_parser([self castedGObject], [parser castedGObject]);
 
 	return returnValue;
 }
@@ -62,16 +76,16 @@
 
 - (guint)number
 {
-	guint returnValue = camel_multipart_get_number([self castedGObject]);
+	guint returnValue = (guint)camel_multipart_get_number([self castedGObject]);
 
 	return returnValue;
 }
 
 - (OGCamelMimePart*)part:(guint)index
 {
-	CamelMimePart* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_multipart_get_part([self castedGObject], index), CamelMimePart, CamelMimePart);
+	CamelMimePart* gobjectValue = camel_multipart_get_part([self castedGObject], index);
 
-	OGCamelMimePart* returnValue = [OGCamelMimePart withGObject:gobjectValue];
+	OGCamelMimePart* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 

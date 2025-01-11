@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -14,6 +14,8 @@
 /**
  * Functions
  */
++ (void)load;
+
 
 /**
  * Gets the #EContactField corresponding to the @field_name.
@@ -77,9 +79,9 @@
 /**
  * Constructors
  */
-- (instancetype)init;
-- (instancetype)initFromVcard:(OFString*)vcard;
-- (instancetype)initFromVcardWithUidWithVcard:(OFString*)vcard uid:(OFString*)uid;
++ (instancetype)contact;
++ (instancetype)contactFromVcard:(OFString*)vcard;
++ (instancetype)contactFromVcardWithUidWithVcard:(OFString*)vcard uid:(OFString*)uid;
 
 /**
  * Methods

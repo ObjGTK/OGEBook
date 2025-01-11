@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -12,20 +12,34 @@
 
 @implementation OGCamelVeeFolder
 
-- (instancetype)initWithParentStore:(OGCamelStore*)parentStore full:(OFString*)full flags:(guint32)flags
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_VEE_FOLDER;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
++ (instancetype)veeFolderWithParentStore:(OGCamelStore*)parentStore full:(OFString*)full flags:(guint32)flags
 {
 	CamelVeeFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_folder_new([parentStore castedGObject], [full UTF8String], flags), CamelVeeFolder, CamelVeeFolder);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelVeeFolder* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelVeeFolder alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelVeeFolder*)castedGObject
@@ -50,7 +64,7 @@
 
 - (bool)autoUpdate
 {
-	bool returnValue = camel_vee_folder_get_auto_update([self castedGObject]);
+	bool returnValue = (bool)camel_vee_folder_get_auto_update([self castedGObject]);
 
 	return returnValue;
 }
@@ -65,24 +79,24 @@
 
 - (guint32)flags
 {
-	guint32 returnValue = camel_vee_folder_get_flags([self castedGObject]);
+	guint32 returnValue = (guint32)camel_vee_folder_get_flags([self castedGObject]);
 
 	return returnValue;
 }
 
 - (OGCamelFolder*)locationWithVinfo:(const CamelVeeMessageInfo*)vinfo realuid:(gchar**)realuid
 {
-	CamelFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_folder_get_location([self castedGObject], vinfo, realuid), CamelFolder, CamelFolder);
+	CamelFolder* gobjectValue = camel_vee_folder_get_location([self castedGObject], vinfo, realuid);
 
-	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
+	OGCamelFolder* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
 - (OGCamelFolder*)veeUidFolder:(OFString*)veeMessageUid
 {
-	CamelFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_folder_get_vee_uid_folder([self castedGObject], [veeMessageUid UTF8String]), CamelFolder, CamelFolder);
+	CamelFolder* gobjectValue = camel_vee_folder_get_vee_uid_folder([self castedGObject], [veeMessageUid UTF8String]);
 
-	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
+	OGCamelFolder* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
@@ -103,7 +117,7 @@
 
 - (GList*)refFolders
 {
-	GList* returnValue = camel_vee_folder_ref_folders([self castedGObject]);
+	GList* returnValue = (GList*)camel_vee_folder_ref_folders([self castedGObject]);
 
 	return returnValue;
 }

@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,20 +8,34 @@
 
 @implementation OGCamelMimeFilterYenc
 
-- (instancetype)init:(CamelMimeFilterYencDirection)direction
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_MIME_FILTER_YENC;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
++ (instancetype)mimeFilterYenc:(CamelMimeFilterYencDirection)direction
 {
 	CamelMimeFilterYenc* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_yenc_new(direction), CamelMimeFilterYenc, CamelMimeFilterYenc);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelMimeFilterYenc* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelMimeFilterYenc alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelMimeFilterYenc*)castedGObject
@@ -31,14 +45,14 @@
 
 - (guint32)crc
 {
-	guint32 returnValue = camel_mime_filter_yenc_get_crc([self castedGObject]);
+	guint32 returnValue = (guint32)camel_mime_filter_yenc_get_crc([self castedGObject]);
 
 	return returnValue;
 }
 
 - (guint32)pcrc
 {
-	guint32 returnValue = camel_mime_filter_yenc_get_pcrc([self castedGObject]);
+	guint32 returnValue = (guint32)camel_mime_filter_yenc_get_pcrc([self castedGObject]);
 
 	return returnValue;
 }

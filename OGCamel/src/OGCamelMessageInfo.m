@@ -1,62 +1,84 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelMessageInfo.h"
 
-#import "OGCamelMimeMessage.h"
 #import "OGCamelFolderSummary.h"
+#import "OGCamelMimeMessage.h"
 
 @implementation OGCamelMessageInfo
 
-- (instancetype)init:(OGCamelFolderSummary*)summary
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_MESSAGE_INFO;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
++ (instancetype)messageInfo:(OGCamelFolderSummary*)summary
 {
 	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_message_info_new([summary castedGObject]), CamelMessageInfo, CamelMessageInfo);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelMessageInfo* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelMessageInfo alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
-- (instancetype)initFromHeadersWithSummary:(OGCamelFolderSummary*)summary headers:(const CamelNameValueArray*)headers
++ (instancetype)messageInfoFromHeadersWithSummary:(OGCamelFolderSummary*)summary headers:(const CamelNameValueArray*)headers
 {
 	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_message_info_new_from_headers([summary castedGObject], headers), CamelMessageInfo, CamelMessageInfo);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelMessageInfo* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelMessageInfo alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
-- (instancetype)initFromMessageWithSummary:(OGCamelFolderSummary*)summary message:(OGCamelMimeMessage*)message
++ (instancetype)messageInfoFromMessageWithSummary:(OGCamelFolderSummary*)summary message:(OGCamelMimeMessage*)message
 {
 	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_message_info_new_from_message([summary castedGObject], [message castedGObject]), CamelMessageInfo, CamelMessageInfo);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelMessageInfo* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelMessageInfo alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelMessageInfo*)castedGObject
@@ -66,9 +88,9 @@
 
 - (OGCamelMessageInfo*)clone:(OGCamelFolderSummary*)assignSummary
 {
-	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_message_info_clone([self castedGObject], [assignSummary castedGObject]), CamelMessageInfo, CamelMessageInfo);
+	CamelMessageInfo* gobjectValue = camel_message_info_clone([self castedGObject], [assignSummary castedGObject]);
 
-	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo withGObject:gobjectValue];
+	OGCamelMessageInfo* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -81,7 +103,7 @@
 
 - (CamelNameValueArray*)dupHeaders
 {
-	CamelNameValueArray* returnValue = camel_message_info_dup_headers([self castedGObject]);
+	CamelNameValueArray* returnValue = (CamelNameValueArray*)camel_message_info_dup_headers([self castedGObject]);
 
 	return returnValue;
 }
@@ -90,20 +112,20 @@
 {
 	gchar* gobjectValue = camel_message_info_dup_preview([self castedGObject]);
 
-	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	OFString* returnValue = gobjectValue;
 	return returnValue;
 }
 
 - (GArray*)dupReferences
 {
-	GArray* returnValue = camel_message_info_dup_references([self castedGObject]);
+	GArray* returnValue = (GArray*)camel_message_info_dup_references([self castedGObject]);
 
 	return returnValue;
 }
 
 - (CamelNamedFlags*)dupUserFlags
 {
-	CamelNamedFlags* returnValue = camel_message_info_dup_user_flags([self castedGObject]);
+	CamelNamedFlags* returnValue = (CamelNamedFlags*)camel_message_info_dup_user_flags([self castedGObject]);
 
 	return returnValue;
 }
@@ -118,7 +140,7 @@
 
 - (CamelNameValueArray*)dupUserHeaders
 {
-	CamelNameValueArray* returnValue = camel_message_info_dup_user_headers([self castedGObject]);
+	CamelNameValueArray* returnValue = (CamelNameValueArray*)camel_message_info_dup_user_headers([self castedGObject]);
 
 	return returnValue;
 }
@@ -133,7 +155,7 @@
 
 - (CamelNameValueArray*)dupUserTags
 {
-	CamelNameValueArray* returnValue = camel_message_info_dup_user_tags([self castedGObject]);
+	CamelNameValueArray* returnValue = (CamelNameValueArray*)camel_message_info_dup_user_tags([self castedGObject]);
 
 	return returnValue;
 }
@@ -145,7 +167,7 @@
 
 - (bool)abortNotifications
 {
-	bool returnValue = camel_message_info_get_abort_notifications([self castedGObject]);
+	bool returnValue = (bool)camel_message_info_get_abort_notifications([self castedGObject]);
 
 	return returnValue;
 }
@@ -160,42 +182,42 @@
 
 - (gint64)dateReceived
 {
-	gint64 returnValue = camel_message_info_get_date_received([self castedGObject]);
+	gint64 returnValue = (gint64)camel_message_info_get_date_received([self castedGObject]);
 
 	return returnValue;
 }
 
 - (gint64)dateSent
 {
-	gint64 returnValue = camel_message_info_get_date_sent([self castedGObject]);
+	gint64 returnValue = (gint64)camel_message_info_get_date_sent([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)dirty
 {
-	bool returnValue = camel_message_info_get_dirty([self castedGObject]);
+	bool returnValue = (bool)camel_message_info_get_dirty([self castedGObject]);
 
 	return returnValue;
 }
 
 - (guint32)flags
 {
-	guint32 returnValue = camel_message_info_get_flags([self castedGObject]);
+	guint32 returnValue = (guint32)camel_message_info_get_flags([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)folderFlagged
 {
-	bool returnValue = camel_message_info_get_folder_flagged([self castedGObject]);
+	bool returnValue = (bool)camel_message_info_get_folder_flagged([self castedGObject]);
 
 	return returnValue;
 }
 
 - (guint)folderFlaggedStamp
 {
-	guint returnValue = camel_message_info_get_folder_flagged_stamp([self castedGObject]);
+	guint returnValue = (guint)camel_message_info_get_folder_flagged_stamp([self castedGObject]);
 
 	return returnValue;
 }
@@ -210,14 +232,14 @@
 
 - (const CamelNameValueArray*)headers
 {
-	const CamelNameValueArray* returnValue = camel_message_info_get_headers([self castedGObject]);
+	const CamelNameValueArray* returnValue = (const CamelNameValueArray*)camel_message_info_get_headers([self castedGObject]);
 
 	return returnValue;
 }
 
 - (guint64)messageId
 {
-	guint64 returnValue = camel_message_info_get_message_id([self castedGObject]);
+	guint64 returnValue = (guint64)camel_message_info_get_message_id([self castedGObject]);
 
 	return returnValue;
 }
@@ -232,7 +254,7 @@
 
 - (bool)notificationsFrozen
 {
-	bool returnValue = camel_message_info_get_notifications_frozen([self castedGObject]);
+	bool returnValue = (bool)camel_message_info_get_notifications_frozen([self castedGObject]);
 
 	return returnValue;
 }
@@ -247,14 +269,14 @@
 
 - (const GArray*)references
 {
-	const GArray* returnValue = camel_message_info_get_references([self castedGObject]);
+	const GArray* returnValue = (const GArray*)camel_message_info_get_references([self castedGObject]);
 
 	return returnValue;
 }
 
 - (guint32)size
 {
-	guint32 returnValue = camel_message_info_get_size([self castedGObject]);
+	guint32 returnValue = (guint32)camel_message_info_get_size([self castedGObject]);
 
 	return returnValue;
 }
@@ -285,14 +307,14 @@
 
 - (bool)userFlag:(OFString*)name
 {
-	bool returnValue = camel_message_info_get_user_flag([self castedGObject], [name UTF8String]);
+	bool returnValue = (bool)camel_message_info_get_user_flag([self castedGObject], [name UTF8String]);
 
 	return returnValue;
 }
 
 - (const CamelNamedFlags*)userFlags
 {
-	const CamelNamedFlags* returnValue = camel_message_info_get_user_flags([self castedGObject]);
+	const CamelNamedFlags* returnValue = (const CamelNamedFlags*)camel_message_info_get_user_flags([self castedGObject]);
 
 	return returnValue;
 }
@@ -307,7 +329,7 @@
 
 - (const CamelNameValueArray*)userHeaders
 {
-	const CamelNameValueArray* returnValue = camel_message_info_get_user_headers([self castedGObject]);
+	const CamelNameValueArray* returnValue = (const CamelNameValueArray*)camel_message_info_get_user_headers([self castedGObject]);
 
 	return returnValue;
 }
@@ -322,14 +344,14 @@
 
 - (const CamelNameValueArray*)userTags
 {
-	const CamelNameValueArray* returnValue = camel_message_info_get_user_tags([self castedGObject]);
+	const CamelNameValueArray* returnValue = (const CamelNameValueArray*)camel_message_info_get_user_tags([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)loadWithRecord:(const struct _CamelMIRecord*)record bdataPtr:(gchar**)bdataPtr
 {
-	bool returnValue = camel_message_info_load([self castedGObject], record, bdataPtr);
+	bool returnValue = (bool)camel_message_info_load([self castedGObject], record, bdataPtr);
 
 	return returnValue;
 }
@@ -354,9 +376,9 @@
 
 - (OGCamelFolderSummary*)refSummary
 {
-	CamelFolderSummary* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_message_info_ref_summary([self castedGObject]), CamelFolderSummary, CamelFolderSummary);
+	CamelFolderSummary* gobjectValue = camel_message_info_ref_summary([self castedGObject]);
 
-	OGCamelFolderSummary* returnValue = [OGCamelFolderSummary withGObject:gobjectValue];
+	OGCamelFolderSummary* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -364,7 +386,7 @@
 
 - (bool)saveWithRecord:(CamelMIRecord*)record bdataStr:(GString*)bdataStr
 {
-	bool returnValue = camel_message_info_save([self castedGObject], record, bdataStr);
+	bool returnValue = (bool)camel_message_info_save([self castedGObject], record, bdataStr);
 
 	return returnValue;
 }
@@ -376,21 +398,21 @@
 
 - (bool)setCc:(OFString*)cc
 {
-	bool returnValue = camel_message_info_set_cc([self castedGObject], [cc UTF8String]);
+	bool returnValue = (bool)camel_message_info_set_cc([self castedGObject], [cc UTF8String]);
 
 	return returnValue;
 }
 
 - (bool)setDateReceived:(gint64)dateReceived
 {
-	bool returnValue = camel_message_info_set_date_received([self castedGObject], dateReceived);
+	bool returnValue = (bool)camel_message_info_set_date_received([self castedGObject], dateReceived);
 
 	return returnValue;
 }
 
 - (bool)setDateSent:(gint64)dateSent
 {
-	bool returnValue = camel_message_info_set_date_sent([self castedGObject], dateSent);
+	bool returnValue = (bool)camel_message_info_set_date_sent([self castedGObject], dateSent);
 
 	return returnValue;
 }
@@ -402,126 +424,126 @@
 
 - (bool)setFlagsWithMask:(guint32)mask set:(guint32)set
 {
-	bool returnValue = camel_message_info_set_flags([self castedGObject], mask, set);
+	bool returnValue = (bool)camel_message_info_set_flags([self castedGObject], mask, set);
 
 	return returnValue;
 }
 
 - (bool)setFolderFlagged:(bool)folderFlagged
 {
-	bool returnValue = camel_message_info_set_folder_flagged([self castedGObject], folderFlagged);
+	bool returnValue = (bool)camel_message_info_set_folder_flagged([self castedGObject], folderFlagged);
 
 	return returnValue;
 }
 
 - (bool)setFrom:(OFString*)from
 {
-	bool returnValue = camel_message_info_set_from([self castedGObject], [from UTF8String]);
+	bool returnValue = (bool)camel_message_info_set_from([self castedGObject], [from UTF8String]);
 
 	return returnValue;
 }
 
 - (bool)setMessageId:(guint64)messageId
 {
-	bool returnValue = camel_message_info_set_message_id([self castedGObject], messageId);
+	bool returnValue = (bool)camel_message_info_set_message_id([self castedGObject], messageId);
 
 	return returnValue;
 }
 
 - (bool)setMlist:(OFString*)mlist
 {
-	bool returnValue = camel_message_info_set_mlist([self castedGObject], [mlist UTF8String]);
+	bool returnValue = (bool)camel_message_info_set_mlist([self castedGObject], [mlist UTF8String]);
 
 	return returnValue;
 }
 
 - (bool)setPreview:(OFString*)preview
 {
-	bool returnValue = camel_message_info_set_preview([self castedGObject], [preview UTF8String]);
+	bool returnValue = (bool)camel_message_info_set_preview([self castedGObject], [preview UTF8String]);
 
 	return returnValue;
 }
 
 - (bool)setSize:(guint32)size
 {
-	bool returnValue = camel_message_info_set_size([self castedGObject], size);
+	bool returnValue = (bool)camel_message_info_set_size([self castedGObject], size);
 
 	return returnValue;
 }
 
 - (bool)setSubject:(OFString*)subject
 {
-	bool returnValue = camel_message_info_set_subject([self castedGObject], [subject UTF8String]);
+	bool returnValue = (bool)camel_message_info_set_subject([self castedGObject], [subject UTF8String]);
 
 	return returnValue;
 }
 
 - (bool)setTo:(OFString*)to
 {
-	bool returnValue = camel_message_info_set_to([self castedGObject], [to UTF8String]);
+	bool returnValue = (bool)camel_message_info_set_to([self castedGObject], [to UTF8String]);
 
 	return returnValue;
 }
 
 - (bool)setUid:(OFString*)uid
 {
-	bool returnValue = camel_message_info_set_uid([self castedGObject], [uid UTF8String]);
+	bool returnValue = (bool)camel_message_info_set_uid([self castedGObject], [uid UTF8String]);
 
 	return returnValue;
 }
 
 - (bool)setUserFlagWithName:(OFString*)name state:(bool)state
 {
-	bool returnValue = camel_message_info_set_user_flag([self castedGObject], [name UTF8String], state);
+	bool returnValue = (bool)camel_message_info_set_user_flag([self castedGObject], [name UTF8String], state);
 
 	return returnValue;
 }
 
 - (bool)setUserHeaderWithName:(OFString*)name value:(OFString*)value
 {
-	bool returnValue = camel_message_info_set_user_header([self castedGObject], [name UTF8String], [value UTF8String]);
+	bool returnValue = (bool)camel_message_info_set_user_header([self castedGObject], [name UTF8String], [value UTF8String]);
 
 	return returnValue;
 }
 
 - (bool)setUserTagWithName:(OFString*)name value:(OFString*)value
 {
-	bool returnValue = camel_message_info_set_user_tag([self castedGObject], [name UTF8String], [value UTF8String]);
+	bool returnValue = (bool)camel_message_info_set_user_tag([self castedGObject], [name UTF8String], [value UTF8String]);
 
 	return returnValue;
 }
 
 - (bool)takeHeaders:(CamelNameValueArray*)headers
 {
-	bool returnValue = camel_message_info_take_headers([self castedGObject], headers);
+	bool returnValue = (bool)camel_message_info_take_headers([self castedGObject], headers);
 
 	return returnValue;
 }
 
 - (bool)takeReferences:(GArray*)references
 {
-	bool returnValue = camel_message_info_take_references([self castedGObject], references);
+	bool returnValue = (bool)camel_message_info_take_references([self castedGObject], references);
 
 	return returnValue;
 }
 
 - (bool)takeUserFlags:(CamelNamedFlags*)userFlags
 {
-	bool returnValue = camel_message_info_take_user_flags([self castedGObject], userFlags);
+	bool returnValue = (bool)camel_message_info_take_user_flags([self castedGObject], userFlags);
 
 	return returnValue;
 }
 
 - (bool)takeUserHeaders:(CamelNameValueArray*)headers
 {
-	bool returnValue = camel_message_info_take_user_headers([self castedGObject], headers);
+	bool returnValue = (bool)camel_message_info_take_user_headers([self castedGObject], headers);
 
 	return returnValue;
 }
 
 - (bool)takeUserTags:(CamelNameValueArray*)userTags
 {
-	bool returnValue = camel_message_info_take_user_tags([self castedGObject], userTags);
+	bool returnValue = (bool)camel_message_info_take_user_tags([self castedGObject], userTags);
 
 	return returnValue;
 }

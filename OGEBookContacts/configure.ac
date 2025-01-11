@@ -60,15 +60,6 @@ AS_IF([$OBJFW_CONFIG --package OGObject], [AC_MSG_RESULT(yes)
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGObject installed.)
 ])
-AC_MSG_CHECKING(for ObjFW package OGCamel)
-AS_IF([$OBJFW_CONFIG --package OGCamel], [AC_MSG_RESULT(yes)
-	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGCamel --cppflags)"
-	LIBS="$LIBS $($OBJFW_CONFIG --package OGCamel --libs)"
-	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGCamel --framework-libs) $FRAMEWORK_LIBS"
-], [
-	AC_MSG_ERROR(You need ObjFW package OGCamel installed.)
-])
-
 AC_MSG_CHECKING(for ObjFW package OGEDataServer)
 AS_IF([$OBJFW_CONFIG --package OGEDataServer], [AC_MSG_RESULT(yes)
 	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGEDataServer --cppflags)"
@@ -87,6 +78,15 @@ AS_IF([$OBJFW_CONFIG --package OGio], [AC_MSG_RESULT(yes)
 	AC_MSG_ERROR(You need ObjFW package OGio installed.)
 ])
 
+AC_MSG_CHECKING(for ObjFW package OGCamel)
+AS_IF([$OBJFW_CONFIG --package OGCamel], [AC_MSG_RESULT(yes)
+	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGCamel --cppflags)"
+	LIBS="$LIBS $($OBJFW_CONFIG --package OGCamel --libs)"
+	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGCamel --framework-libs) $FRAMEWORK_LIBS"
+], [
+	AC_MSG_ERROR(You need ObjFW package OGCamel installed.)
+])
+
 
 AC_ARG_WITH(libebookcontacts, AS_HELP_STRING([--with-libebookcontacts=PREFIX],
 	[build with libebook-contacts-1.2 in the specified prefix]))
@@ -99,14 +99,14 @@ AS_IF([test x"$with_libebookcontacts" != x"no" -a x"$with_libebookcontacts" != x
 ])
 
 
-PKG_CHECK_MODULES(libebookcontacts, [libebook-contacts-1.2 >= $(pkg-config --modversion libebook-contacts-1.2)], [
+PKG_CHECK_MODULES(libebookcontacts, [libebook-contacts-1.2 >= 3.52.3], [
 	OGEBOOKCONTACTS_CPPFLAGS="$OGEBOOKCONTACTS_CPPFLAGS $libebookcontacts_CFLAGS"
 	OGEBOOKCONTACTS_LIBS="$OGEBOOKCONTACTS_LIBS $libebookcontacts_LIBS"
 	CPPFLAGS="$CPPFLAGS $libebookcontacts_CFLAGS"
 	LIBS="$LIBS $libebookcontacts_LIBS"
 	FRAMEWORK_LIBS="$FRAMEWORK_LIBS $libebookcontacts_LIBS"
 ], [
-	AC_MSG_ERROR(You need libebook-contacts-1.2 >= $(pkg-config --modversion libebook-contacts-1.2) installed!)
+	AC_MSG_ERROR(You need libebook-contacts-1.2 >= 3.52.3 installed!)
 ])
 
 AS_IF([test x"$GOBJC" = x"yes"], [

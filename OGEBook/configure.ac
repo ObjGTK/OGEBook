@@ -60,24 +60,6 @@ AS_IF([$OBJFW_CONFIG --package OGObject], [AC_MSG_RESULT(yes)
 ], [
 	AC_MSG_ERROR(You need ObjFW package OGObject installed.)
 ])
-AC_MSG_CHECKING(for ObjFW package OGio)
-AS_IF([$OBJFW_CONFIG --package OGio], [AC_MSG_RESULT(yes)
-	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGio --cppflags)"
-	LIBS="$LIBS $($OBJFW_CONFIG --package OGio --libs)"
-	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGio --framework-libs) $FRAMEWORK_LIBS"
-], [
-	AC_MSG_ERROR(You need ObjFW package OGio installed.)
-])
-
-AC_MSG_CHECKING(for ObjFW package OGCamel)
-AS_IF([$OBJFW_CONFIG --package OGCamel], [AC_MSG_RESULT(yes)
-	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGCamel --cppflags)"
-	LIBS="$LIBS $($OBJFW_CONFIG --package OGCamel --libs)"
-	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGCamel --framework-libs) $FRAMEWORK_LIBS"
-], [
-	AC_MSG_ERROR(You need ObjFW package OGCamel installed.)
-])
-
 AC_MSG_CHECKING(for ObjFW package OGEBookContacts)
 AS_IF([$OBJFW_CONFIG --package OGEBookContacts], [AC_MSG_RESULT(yes)
 	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGEBookContacts --cppflags)"
@@ -96,6 +78,24 @@ AS_IF([$OBJFW_CONFIG --package OGEDataServer], [AC_MSG_RESULT(yes)
 	AC_MSG_ERROR(You need ObjFW package OGEDataServer installed.)
 ])
 
+AC_MSG_CHECKING(for ObjFW package OGCamel)
+AS_IF([$OBJFW_CONFIG --package OGCamel], [AC_MSG_RESULT(yes)
+	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGCamel --cppflags)"
+	LIBS="$LIBS $($OBJFW_CONFIG --package OGCamel --libs)"
+	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGCamel --framework-libs) $FRAMEWORK_LIBS"
+], [
+	AC_MSG_ERROR(You need ObjFW package OGCamel installed.)
+])
+
+AC_MSG_CHECKING(for ObjFW package OGio)
+AS_IF([$OBJFW_CONFIG --package OGio], [AC_MSG_RESULT(yes)
+	CPPFLAGS="$CPPFLAGS $($OBJFW_CONFIG --package OGio --cppflags)"
+	LIBS="$LIBS $($OBJFW_CONFIG --package OGio --libs)"
+	FRAMEWORK_LIBS="$($OBJFW_CONFIG --package OGio --framework-libs) $FRAMEWORK_LIBS"
+], [
+	AC_MSG_ERROR(You need ObjFW package OGio installed.)
+])
+
 
 AC_ARG_WITH(libebook, AS_HELP_STRING([--with-libebook=PREFIX],
 	[build with libebook-1.2 in the specified prefix]))
@@ -108,14 +108,14 @@ AS_IF([test x"$with_libebook" != x"no" -a x"$with_libebook" != x""], [
 ])
 
 
-PKG_CHECK_MODULES(libebook, [libebook-1.2 >= $(pkg-config --modversion libebook-1.2)], [
+PKG_CHECK_MODULES(libebook, [libebook-1.2 >= 3.52.3], [
 	OGEBOOK_CPPFLAGS="$OGEBOOK_CPPFLAGS $libebook_CFLAGS"
 	OGEBOOK_LIBS="$OGEBOOK_LIBS $libebook_LIBS"
 	CPPFLAGS="$CPPFLAGS $libebook_CFLAGS"
 	LIBS="$LIBS $libebook_LIBS"
 	FRAMEWORK_LIBS="$FRAMEWORK_LIBS $libebook_LIBS"
 ], [
-	AC_MSG_ERROR(You need libebook-1.2 >= $(pkg-config --modversion libebook-1.2) installed!)
+	AC_MSG_ERROR(You need libebook-1.2 >= 3.52.3 installed!)
 ])
 
 AS_IF([test x"$GOBJC" = x"yes"], [

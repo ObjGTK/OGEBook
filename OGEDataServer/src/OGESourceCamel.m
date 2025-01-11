@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -10,9 +10,19 @@
 
 @implementation OGESourceCamel
 
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_SOURCE_CAMEL;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
 + (GType)generateSubtypeWithProtocol:(OFString*)protocol settingsType:(GType)settingsType
 {
-	GType returnValue = e_source_camel_generate_subtype([protocol UTF8String], settingsType);
+	GType returnValue = (GType)e_source_camel_generate_subtype([protocol UTF8String], settingsType);
 
 	return returnValue;
 }
@@ -45,9 +55,9 @@
 
 - (OGCamelSettings*)settings
 {
-	CamelSettings* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_camel_get_settings([self castedGObject]), CamelSettings, CamelSettings);
+	CamelSettings* gobjectValue = e_source_camel_get_settings([self castedGObject]);
 
-	OGCamelSettings* returnValue = [OGCamelSettings withGObject:gobjectValue];
+	OGCamelSettings* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 

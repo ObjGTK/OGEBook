@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -24,6 +24,8 @@
 /**
  * Functions
  */
++ (void)load;
+
 
 /**
  *
@@ -51,7 +53,7 @@
 + (OFString*)errorToString:(EClientError)code;
 
 /**
- * Copies a #GSList of #GObject<!-- -->s to the end of @copy_to.
+ * Use e_util_copy_object_slist() instead.
  *
  * @param copyTo Where to copy; may be %NULL
  * @param objects #GSList of #GObject<!-- -->s to be copied
@@ -71,8 +73,7 @@
 + (GSList*)utilCopyStringSlistWithCopyTo:(GSList*)copyTo strings:(const GSList*)strings;
 
 /**
- * Calls g_object_unref() on each member of @objects and then frees @objects
- * itself.
+ * Use g_slist_free_full() instead.
  *
  * @param objects a #GSList of #GObject<!-- -->s
  */
@@ -119,7 +120,16 @@
 + (GSList*)utilStrvToSlist:(const gchar* const*)strv;
 
 /**
- * This function is no longer used.
+ * The function takes a @dbus_error and tries to find a match in @known_errors
+ * for it, if it is a G_IO_ERROR, G_IO_ERROR_DBUS_ERROR. If it is anything else
+ * then the @dbus_error is moved to @client_error.
+ * 
+ * The @fail_when_none_matched influences behaviour. If it's %TRUE, and none of
+ * @known_errors matches, or this is not a G_IO_ERROR_DBUS_ERROR, then %FALSE
+ * is returned and the @client_error is left without change. Otherwise, the
+ * @fail_when_none_matched is %FALSE, the error is always processed and will
+ * result in E_CLIENT_ERROR, E_CLIENT_ERROR_OTHER_ERROR if none of @known_error
+ * matches.
  *
  * @param dbusError DBus #GError to unwrap
  * @param clientError Resulting #GError; can be %NULL

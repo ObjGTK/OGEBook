@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -10,20 +10,34 @@
 
 @implementation OGCamelVeeMessageInfoData
 
-- (instancetype)initWithSubfolderData:(OGCamelVeeSubfolderData*)subfolderData origMessageUid:(OFString*)origMessageUid
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_VEE_MESSAGE_INFO_DATA;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
++ (instancetype)veeMessageInfoDataWithSubfolderData:(OGCamelVeeSubfolderData*)subfolderData origMessageUid:(OFString*)origMessageUid
 {
 	CamelVeeMessageInfoData* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_message_info_data_new([subfolderData castedGObject], [origMessageUid UTF8String]), CamelVeeMessageInfoData, CamelVeeMessageInfoData);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelVeeMessageInfoData* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelVeeMessageInfoData alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelVeeMessageInfoData*)castedGObject
@@ -41,9 +55,9 @@
 
 - (OGCamelVeeSubfolderData*)subfolderData
 {
-	CamelVeeSubfolderData* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_message_info_data_get_subfolder_data([self castedGObject]), CamelVeeSubfolderData, CamelVeeSubfolderData);
+	CamelVeeSubfolderData* gobjectValue = camel_vee_message_info_data_get_subfolder_data([self castedGObject]);
 
-	OGCamelVeeSubfolderData* returnValue = [OGCamelVeeSubfolderData withGObject:gobjectValue];
+	OGCamelVeeSubfolderData* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 

@@ -1,19 +1,29 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelSession.h"
 
-#import "OGCamelService.h"
+#import "OGCamelFilterDriver.h"
 #import "OGCamelFolder.h"
+#import "OGCamelMimeMessage.h"
+#import "OGCamelService.h"
 #import <OGio/OGCancellable.h>
 #import <OGio/OGTlsCertificate.h>
-#import "OGCamelMimeMessage.h"
-#import "OGCamelFilterDriver.h"
 
 @implementation OGCamelSession
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_SESSION;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (CamelSession*)castedGObject
 {
@@ -24,17 +34,11 @@
 {
 	GError* err = NULL;
 
-	CamelService* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_session_add_service([self castedGObject], [uid UTF8String], [protocol UTF8String], type, &err), CamelService, CamelService);
+	CamelService* gobjectValue = camel_session_add_service([self castedGObject], [uid UTF8String], [protocol UTF8String], type, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		if(gobjectValue != NULL)
-			g_object_unref(gobjectValue);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err unrefGObject:gobjectValue];
 
-	OGCamelService* returnValue = [OGCamelService withGObject:gobjectValue];
+	OGCamelService* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -44,13 +48,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_session_addressbook_contains_sync([self castedGObject], [bookUid UTF8String], [emailAddress UTF8String], [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_session_addressbook_contains_sync([self castedGObject], [bookUid UTF8String], [emailAddress UTF8String], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -64,13 +64,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_session_authenticate_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)camel_session_authenticate_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -79,13 +75,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_session_authenticate_sync([self castedGObject], [service castedGObject], [mechanism UTF8String], [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_session_authenticate_sync([self castedGObject], [service castedGObject], [mechanism UTF8String], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -94,13 +86,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_session_forget_password([self castedGObject], [service castedGObject], [item UTF8String], &err);
+	bool returnValue = (bool)camel_session_forget_password([self castedGObject], [service castedGObject], [item UTF8String], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -114,13 +102,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_session_forward_to_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)camel_session_forward_to_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -129,13 +113,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_session_forward_to_sync([self castedGObject], [folder castedGObject], [message castedGObject], [address UTF8String], [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_session_forward_to_sync([self castedGObject], [folder castedGObject], [message castedGObject], [address UTF8String], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -144,28 +124,24 @@
 {
 	GError* err = NULL;
 
-	CamelFilterDriver* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_session_get_filter_driver([self castedGObject], [type UTF8String], [forFolder castedGObject], &err), CamelFilterDriver, CamelFilterDriver);
+	CamelFilterDriver* gobjectValue = camel_session_get_filter_driver([self castedGObject], [type UTF8String], [forFolder castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
-	OGCamelFilterDriver* returnValue = [OGCamelFilterDriver withGObject:gobjectValue];
+	OGCamelFilterDriver* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
 - (CamelJunkFilter*)junkFilter
 {
-	CamelJunkFilter* returnValue = camel_session_get_junk_filter([self castedGObject]);
+	CamelJunkFilter* returnValue = (CamelJunkFilter*)camel_session_get_junk_filter([self castedGObject]);
 
 	return returnValue;
 }
 
 - (const GHashTable*)junkHeaders
 {
-	const GHashTable* returnValue = camel_session_get_junk_headers([self castedGObject]);
+	const GHashTable* returnValue = (const GHashTable*)camel_session_get_junk_headers([self castedGObject]);
 
 	return returnValue;
 }
@@ -174,20 +150,16 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_session_get_oauth2_access_token_sync([self castedGObject], [service castedGObject], outAccessToken, outExpiresIn, [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_session_get_oauth2_access_token_sync([self castedGObject], [service castedGObject], outAccessToken, outExpiresIn, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
 
 - (bool)online
 {
-	bool returnValue = camel_session_get_online([self castedGObject]);
+	bool returnValue = (bool)camel_session_get_online([self castedGObject]);
 
 	return returnValue;
 }
@@ -198,11 +170,7 @@
 
 	gchar* gobjectValue = camel_session_get_password([self castedGObject], [service castedGObject], [prompt UTF8String], [item UTF8String], flags, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
 	return returnValue;
@@ -212,13 +180,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_session_get_recipient_certificates_sync([self castedGObject], flags, recipients, outCertificates, [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_session_get_recipient_certificates_sync([self castedGObject], flags, recipients, outCertificates, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -241,44 +205,44 @@
 
 - (guint)idleAddWithPriority:(gint)priority function:(GSourceFunc)function data:(gpointer)data notify:(GDestroyNotify)notify
 {
-	guint returnValue = camel_session_idle_add([self castedGObject], priority, function, data, notify);
+	guint returnValue = (guint)camel_session_idle_add([self castedGObject], priority, function, data, notify);
 
 	return returnValue;
 }
 
 - (GList*)listServices
 {
-	GList* returnValue = camel_session_list_services([self castedGObject]);
+	GList* returnValue = (GList*)camel_session_list_services([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)lookupAddressbook:(OFString*)name
 {
-	bool returnValue = camel_session_lookup_addressbook([self castedGObject], [name UTF8String]);
+	bool returnValue = (bool)camel_session_lookup_addressbook([self castedGObject], [name UTF8String]);
 
 	return returnValue;
 }
 
 - (GMainContext*)refMainContext
 {
-	GMainContext* returnValue = camel_session_ref_main_context([self castedGObject]);
+	GMainContext* returnValue = (GMainContext*)camel_session_ref_main_context([self castedGObject]);
 
 	return returnValue;
 }
 
 - (GNetworkMonitor*)refNetworkMonitor
 {
-	GNetworkMonitor* returnValue = camel_session_ref_network_monitor([self castedGObject]);
+	GNetworkMonitor* returnValue = (GNetworkMonitor*)camel_session_ref_network_monitor([self castedGObject]);
 
 	return returnValue;
 }
 
 - (OGCamelService*)refService:(OFString*)uid
 {
-	CamelService* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_session_ref_service([self castedGObject], [uid UTF8String]), CamelService, CamelService);
+	CamelService* gobjectValue = camel_session_ref_service([self castedGObject], [uid UTF8String]);
 
-	OGCamelService* returnValue = [OGCamelService withGObject:gobjectValue];
+	OGCamelService* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -286,9 +250,9 @@
 
 - (OGCamelService*)refServiceByUrlWithUrl:(CamelURL*)url type:(CamelProviderType)type
 {
-	CamelService* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_session_ref_service_by_url([self castedGObject], url, type), CamelService, CamelService);
+	CamelService* gobjectValue = camel_session_ref_service_by_url([self castedGObject], url, type);
 
-	OGCamelService* returnValue = [OGCamelService withGObject:gobjectValue];
+	OGCamelService* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -331,7 +295,7 @@
 
 - (CamelCertTrust)trustPromptWithService:(OGCamelService*)service certificate:(OGTlsCertificate*)certificate errors:(GTlsCertificateFlags)errors
 {
-	CamelCertTrust returnValue = camel_session_trust_prompt([self castedGObject], [service castedGObject], [certificate castedGObject], errors);
+	CamelCertTrust returnValue = (CamelCertTrust)camel_session_trust_prompt([self castedGObject], [service castedGObject], [certificate castedGObject], errors);
 
 	return returnValue;
 }

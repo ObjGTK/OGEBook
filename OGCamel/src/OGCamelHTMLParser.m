@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,20 +8,34 @@
 
 @implementation OGCamelHTMLParser
 
-- (instancetype)init
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_HTML_PARSER;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
++ (instancetype)hTMLParser
 {
 	CamelHTMLParser* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_html_parser_new(), CamelHTMLParser, CamelHTMLParser);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelHTMLParser* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelHTMLParser alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelHTMLParser*)castedGObject
@@ -39,7 +53,7 @@
 
 - (const GPtrArray*)attrList:(const GPtrArray**)values
 {
-	const GPtrArray* returnValue = camel_html_parser_attr_list([self castedGObject], values);
+	const GPtrArray* returnValue = (const GPtrArray*)camel_html_parser_attr_list([self castedGObject], values);
 
 	return returnValue;
 }
@@ -59,7 +73,7 @@
 
 - (CamelHTMLParserState)stepWithDatap:(const gchar**)datap lenp:(gint*)lenp
 {
-	CamelHTMLParserState returnValue = camel_html_parser_step([self castedGObject], datap, lenp);
+	CamelHTMLParserState returnValue = (CamelHTMLParserState)camel_html_parser_step([self castedGObject], datap, lenp);
 
 	return returnValue;
 }

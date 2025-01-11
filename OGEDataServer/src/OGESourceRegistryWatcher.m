@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -10,20 +10,34 @@
 
 @implementation OGESourceRegistryWatcher
 
-- (instancetype)initWithRegistry:(OGESourceRegistry*)registry extensionName:(OFString*)extensionName
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_SOURCE_REGISTRY_WATCHER;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
++ (instancetype)sourceRegistryWatcherWithRegistry:(OGESourceRegistry*)registry extensionName:(OFString*)extensionName
 {
 	ESourceRegistryWatcher* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_watcher_new([registry castedGObject], [extensionName UTF8String]), ESourceRegistryWatcher, ESourceRegistryWatcher);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGESourceRegistryWatcher* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGESourceRegistryWatcher alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (ESourceRegistryWatcher*)castedGObject
@@ -41,9 +55,9 @@
 
 - (OGESourceRegistry*)registry
 {
-	ESourceRegistry* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_watcher_get_registry([self castedGObject]), ESourceRegistry, ESourceRegistry);
+	ESourceRegistry* gobjectValue = e_source_registry_watcher_get_registry([self castedGObject]);
 
-	OGESourceRegistry* returnValue = [OGESourceRegistry withGObject:gobjectValue];
+	OGESourceRegistry* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 

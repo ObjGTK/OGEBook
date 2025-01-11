@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,8 +8,8 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGEContact;
 @class OGEBookClient;
+@class OGEContact;
 
 @interface OGEDestination : OGObject
 {
@@ -19,6 +19,8 @@
 /**
  * Functions
  */
++ (void)load;
+
 
 /**
  * Exports multiple #EDestination elements to a single XML document.
@@ -66,7 +68,7 @@
 /**
  * Constructors
  */
-- (instancetype)init;
++ (instancetype)destination;
 
 /**
  * Methods

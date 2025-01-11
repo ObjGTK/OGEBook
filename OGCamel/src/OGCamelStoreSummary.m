@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -10,20 +10,34 @@
 
 @implementation OGCamelStoreSummary
 
-- (instancetype)init
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_STORE_SUMMARY;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
++ (instancetype)storeSummary
 {
 	CamelStoreSummary* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_store_summary_new(), CamelStoreSummary, CamelStoreSummary);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelStoreSummary* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelStoreSummary alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelStoreSummary*)castedGObject
@@ -38,14 +52,14 @@
 
 - (CamelStoreInfo*)addFromPath:(OFString*)path
 {
-	CamelStoreInfo* returnValue = camel_store_summary_add_from_path([self castedGObject], [path UTF8String]);
+	CamelStoreInfo* returnValue = (CamelStoreInfo*)camel_store_summary_add_from_path([self castedGObject], [path UTF8String]);
 
 	return returnValue;
 }
 
 - (GPtrArray*)array
 {
-	GPtrArray* returnValue = camel_store_summary_array([self castedGObject]);
+	GPtrArray* returnValue = (GPtrArray*)camel_store_summary_array([self castedGObject]);
 
 	return returnValue;
 }
@@ -57,35 +71,35 @@
 
 - (bool)connectFolderSummaryWithPath:(OFString*)path folderSummary:(OGCamelFolderSummary*)folderSummary
 {
-	bool returnValue = camel_store_summary_connect_folder_summary([self castedGObject], [path UTF8String], [folderSummary castedGObject]);
+	bool returnValue = (bool)camel_store_summary_connect_folder_summary([self castedGObject], [path UTF8String], [folderSummary castedGObject]);
 
 	return returnValue;
 }
 
 - (gint)count
 {
-	gint returnValue = camel_store_summary_count([self castedGObject]);
+	gint returnValue = (gint)camel_store_summary_count([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)disconnectFolderSummary:(OGCamelFolderSummary*)folderSummary
 {
-	bool returnValue = camel_store_summary_disconnect_folder_summary([self castedGObject], [folderSummary castedGObject]);
+	bool returnValue = (bool)camel_store_summary_disconnect_folder_summary([self castedGObject], [folderSummary castedGObject]);
 
 	return returnValue;
 }
 
 - (CamelStoreInfo*)infoNew
 {
-	CamelStoreInfo* returnValue = camel_store_summary_info_new([self castedGObject]);
+	CamelStoreInfo* returnValue = (CamelStoreInfo*)camel_store_summary_info_new([self castedGObject]);
 
 	return returnValue;
 }
 
 - (CamelStoreInfo*)infoRef:(CamelStoreInfo*)info
 {
-	CamelStoreInfo* returnValue = camel_store_summary_info_ref([self castedGObject], info);
+	CamelStoreInfo* returnValue = (CamelStoreInfo*)camel_store_summary_info_ref([self castedGObject], info);
 
 	return returnValue;
 }
@@ -97,14 +111,14 @@
 
 - (gint)load
 {
-	gint returnValue = camel_store_summary_load([self castedGObject]);
+	gint returnValue = (gint)camel_store_summary_load([self castedGObject]);
 
 	return returnValue;
 }
 
 - (CamelStoreInfo*)path:(OFString*)path
 {
-	CamelStoreInfo* returnValue = camel_store_summary_path([self castedGObject], [path UTF8String]);
+	CamelStoreInfo* returnValue = (CamelStoreInfo*)camel_store_summary_path([self castedGObject], [path UTF8String]);
 
 	return returnValue;
 }
@@ -121,7 +135,7 @@
 
 - (gint)save
 {
-	gint returnValue = camel_store_summary_save([self castedGObject]);
+	gint returnValue = (gint)camel_store_summary_save([self castedGObject]);
 
 	return returnValue;
 }

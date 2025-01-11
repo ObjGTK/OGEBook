@@ -1,16 +1,26 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGESourceCredentialsProviderImpl.h"
 
+#import "OGESource.h"
 #import "OGESourceCredentialsProvider.h"
 #import <OGio/OGCancellable.h>
-#import "OGESource.h"
 
 @implementation OGESourceCredentialsProviderImpl
+
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_SOURCE_CREDENTIALS_PROVIDER_IMPL;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (ESourceCredentialsProviderImpl*)castedGObject
 {
@@ -19,21 +29,21 @@
 
 - (bool)canProcess:(OGESource*)source
 {
-	bool returnValue = e_source_credentials_provider_impl_can_process([self castedGObject], [source castedGObject]);
+	bool returnValue = (bool)e_source_credentials_provider_impl_can_process([self castedGObject], [source castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)canPrompt
 {
-	bool returnValue = e_source_credentials_provider_impl_can_prompt([self castedGObject]);
+	bool returnValue = (bool)e_source_credentials_provider_impl_can_prompt([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)canStore
 {
-	bool returnValue = e_source_credentials_provider_impl_can_store([self castedGObject]);
+	bool returnValue = (bool)e_source_credentials_provider_impl_can_store([self castedGObject]);
 
 	return returnValue;
 }
@@ -42,22 +52,18 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_credentials_provider_impl_delete_sync([self castedGObject], [source castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_source_credentials_provider_impl_delete_sync([self castedGObject], [source castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
 
 - (OGESourceCredentialsProvider*)provider
 {
-	ESourceCredentialsProvider* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_credentials_provider_impl_get_provider([self castedGObject]), ESourceCredentialsProvider, ESourceCredentialsProvider);
+	ESourceCredentialsProvider* gobjectValue = e_source_credentials_provider_impl_get_provider([self castedGObject]);
 
-	OGESourceCredentialsProvider* returnValue = [OGESourceCredentialsProvider withGObject:gobjectValue];
+	OGESourceCredentialsProvider* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
@@ -65,13 +71,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_credentials_provider_impl_lookup_sync([self castedGObject], [source castedGObject], [cancellable castedGObject], outCredentials, &err);
+	bool returnValue = (bool)e_source_credentials_provider_impl_lookup_sync([self castedGObject], [source castedGObject], [cancellable castedGObject], outCredentials, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -80,13 +82,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_credentials_provider_impl_store_sync([self castedGObject], [source castedGObject], credentials, permanently, [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_source_credentials_provider_impl_store_sync([self castedGObject], [source castedGObject], credentials, permanently, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }

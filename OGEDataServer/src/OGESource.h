@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,8 +8,8 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCancellable;
 @class OGCamelService;
+@class OGCancellable;
 
 /**
  * Contains only private data that should be read and manipulated using the
@@ -24,6 +24,8 @@
 /**
  * Functions
  */
++ (void)load;
+
 
 /**
  * Converts a #GParamSpec name (e.g. "foo-bar" or "foo_bar")
@@ -40,8 +42,8 @@
 /**
  * Constructors
  */
-- (instancetype)initWithDbusObject:(GDBusObject*)dbusObject mainContext:(GMainContext*)mainContext;
-- (instancetype)initWithUidWithUid:(OFString*)uid mainContext:(GMainContext*)mainContext;
++ (instancetype)sourceWithDbusObject:(GDBusObject*)dbusObject mainContext:(GMainContext*)mainContext;
++ (instancetype)sourceWithUidWithUid:(OFString*)uid mainContext:(GMainContext*)mainContext;
 
 /**
  * Methods

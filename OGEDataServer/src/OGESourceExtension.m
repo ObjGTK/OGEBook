@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -10,6 +10,16 @@
 
 @implementation OGESourceExtension
 
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_SOURCE_EXTENSION;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
 - (ESourceExtension*)castedGObject
 {
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceExtension, ESourceExtension);
@@ -17,9 +27,9 @@
 
 - (OGESource*)source
 {
-	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_extension_get_source([self castedGObject]), ESource, ESource);
+	ESource* gobjectValue = e_source_extension_get_source([self castedGObject]);
 
-	OGESource* returnValue = [OGESource withGObject:gobjectValue];
+	OGESource* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
@@ -35,9 +45,9 @@
 
 - (OGESource*)refSource
 {
-	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_extension_ref_source([self castedGObject]), ESource, ESource);
+	ESource* gobjectValue = e_source_extension_ref_source([self castedGObject]);
 
-	OGESource* returnValue = [OGESource withGObject:gobjectValue];
+	OGESource* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;

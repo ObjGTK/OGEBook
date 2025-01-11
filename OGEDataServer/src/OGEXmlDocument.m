@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,20 +8,34 @@
 
 @implementation OGEXmlDocument
 
-- (instancetype)initWithNsHref:(OFString*)nsHref rootElement:(OFString*)rootElement
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_XML_DOCUMENT;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
++ (instancetype)xmlDocumentWithNsHref:(OFString*)nsHref rootElement:(OFString*)rootElement
 {
 	EXmlDocument* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_xml_document_new([nsHref UTF8String], [rootElement UTF8String]), EXmlDocument, EXmlDocument);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGEXmlDocument* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGEXmlDocument alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (EXmlDocument*)castedGObject
@@ -74,7 +88,7 @@
 
 - (xmlDoc*)xmldoc
 {
-	xmlDoc* returnValue = e_xml_document_get_xmldoc([self castedGObject]);
+	xmlDoc* returnValue = (xmlDoc*)e_xml_document_get_xmldoc([self castedGObject]);
 
 	return returnValue;
 }

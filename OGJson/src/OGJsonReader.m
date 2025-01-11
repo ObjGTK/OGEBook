@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,20 +8,34 @@
 
 @implementation OGJsonReader
 
-- (instancetype)init:(JsonNode*)node
++ (void)load
+{
+	GType gtypeToAssociate = JSON_TYPE_READER;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
++ (instancetype)reader:(JsonNode*)node
 {
 	JsonReader* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(json_reader_new(node), JsonReader, JsonReader);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGJsonReader* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGJsonReader alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (JsonReader*)castedGObject
@@ -31,14 +45,14 @@
 
 - (gint)countElements
 {
-	gint returnValue = json_reader_count_elements([self castedGObject]);
+	gint returnValue = (gint)json_reader_count_elements([self castedGObject]);
 
 	return returnValue;
 }
 
 - (gint)countMembers
 {
-	gint returnValue = json_reader_count_members([self castedGObject]);
+	gint returnValue = (gint)json_reader_count_members([self castedGObject]);
 
 	return returnValue;
 }
@@ -55,35 +69,35 @@
 
 - (bool)booleanValue
 {
-	bool returnValue = json_reader_get_boolean_value([self castedGObject]);
+	bool returnValue = (bool)json_reader_get_boolean_value([self castedGObject]);
 
 	return returnValue;
 }
 
 - (JsonNode*)currentNode
 {
-	JsonNode* returnValue = json_reader_get_current_node([self castedGObject]);
+	JsonNode* returnValue = (JsonNode*)json_reader_get_current_node([self castedGObject]);
 
 	return returnValue;
 }
 
 - (gdouble)doubleValue
 {
-	gdouble returnValue = json_reader_get_double_value([self castedGObject]);
+	gdouble returnValue = (gdouble)json_reader_get_double_value([self castedGObject]);
 
 	return returnValue;
 }
 
 - (const GError*)error
 {
-	const GError* returnValue = json_reader_get_error([self castedGObject]);
+	const GError* returnValue = (const GError*)json_reader_get_error([self castedGObject]);
 
 	return returnValue;
 }
 
 - (gint64)intValue
 {
-	gint64 returnValue = json_reader_get_int_value([self castedGObject]);
+	gint64 returnValue = (gint64)json_reader_get_int_value([self castedGObject]);
 
 	return returnValue;
 }
@@ -98,7 +112,7 @@
 
 - (bool)nullValue
 {
-	bool returnValue = json_reader_get_null_value([self castedGObject]);
+	bool returnValue = (bool)json_reader_get_null_value([self castedGObject]);
 
 	return returnValue;
 }
@@ -113,49 +127,49 @@
 
 - (JsonNode*)value
 {
-	JsonNode* returnValue = json_reader_get_value([self castedGObject]);
+	JsonNode* returnValue = (JsonNode*)json_reader_get_value([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)isArray
 {
-	bool returnValue = json_reader_is_array([self castedGObject]);
+	bool returnValue = (bool)json_reader_is_array([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)isObject
 {
-	bool returnValue = json_reader_is_object([self castedGObject]);
+	bool returnValue = (bool)json_reader_is_object([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)isValue
 {
-	bool returnValue = json_reader_is_value([self castedGObject]);
+	bool returnValue = (bool)json_reader_is_value([self castedGObject]);
 
 	return returnValue;
 }
 
 - (gchar**)listMembers
 {
-	gchar** returnValue = json_reader_list_members([self castedGObject]);
+	gchar** returnValue = (gchar**)json_reader_list_members([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)readElement:(guint)index
 {
-	bool returnValue = json_reader_read_element([self castedGObject], index);
+	bool returnValue = (bool)json_reader_read_element([self castedGObject], index);
 
 	return returnValue;
 }
 
 - (bool)readMember:(OFString*)memberName
 {
-	bool returnValue = json_reader_read_member([self castedGObject], [memberName UTF8String]);
+	bool returnValue = (bool)json_reader_read_member([self castedGObject], [memberName UTF8String]);
 
 	return returnValue;
 }

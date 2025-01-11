@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,9 +8,19 @@
 
 @implementation OGENetworkMonitor
 
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_NETWORK_MONITOR;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
 + (GNetworkMonitor*)default
 {
-	GNetworkMonitor* returnValue = e_network_monitor_get_default();
+	GNetworkMonitor* returnValue = (GNetworkMonitor*)e_network_monitor_get_default();
 
 	return returnValue;
 }
@@ -30,7 +40,7 @@
 
 - (GSList*)listGioNames
 {
-	GSList* returnValue = e_network_monitor_list_gio_names([self castedGObject]);
+	GSList* returnValue = (GSList*)e_network_monitor_list_gio_names([self castedGObject]);
 
 	return returnValue;
 }

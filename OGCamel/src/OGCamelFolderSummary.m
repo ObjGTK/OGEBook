@@ -1,39 +1,53 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelFolderSummary.h"
 
-#import "OGCamelIndex.h"
-#import "OGCamelMimeMessage.h"
 #import "OGCamelFolder.h"
-#import "OGCamelMimeParser.h"
+#import "OGCamelIndex.h"
 #import "OGCamelMessageInfo.h"
+#import "OGCamelMimeMessage.h"
+#import "OGCamelMimeParser.h"
 #import "OGCamelStore.h"
 
 @implementation OGCamelFolderSummary
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_FOLDER_SUMMARY;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 + (void)freeArray:(GPtrArray*)array
 {
 	camel_folder_summary_free_array(array);
 }
 
-- (instancetype)init:(OGCamelFolder*)folder
++ (instancetype)folderSummary:(OGCamelFolder*)folder
 {
 	CamelFolderSummary* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_summary_new([folder castedGObject]), CamelFolderSummary, CamelFolderSummary);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelFolderSummary* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelFolderSummary alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelFolderSummary*)castedGObject
@@ -48,7 +62,7 @@
 
 - (bool)checkUid:(OFString*)uid
 {
-	bool returnValue = camel_folder_summary_check_uid([self castedGObject], [uid UTF8String]);
+	bool returnValue = (bool)camel_folder_summary_check_uid([self castedGObject], [uid UTF8String]);
 
 	return returnValue;
 }
@@ -57,29 +71,25 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_folder_summary_clear([self castedGObject], &err);
+	bool returnValue = (bool)camel_folder_summary_clear([self castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
 
 - (guint)count
 {
-	guint returnValue = camel_folder_summary_count([self castedGObject]);
+	guint returnValue = (guint)camel_folder_summary_count([self castedGObject]);
 
 	return returnValue;
 }
 
 - (OGCamelMessageInfo*)get:(OFString*)uid
 {
-	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_summary_get([self castedGObject], [uid UTF8String]), CamelMessageInfo, CamelMessageInfo);
+	CamelMessageInfo* gobjectValue = camel_folder_summary_get([self castedGObject], [uid UTF8String]);
 
-	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo withGObject:gobjectValue];
+	OGCamelMessageInfo* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -87,114 +97,114 @@
 
 - (GPtrArray*)array
 {
-	GPtrArray* returnValue = camel_folder_summary_get_array([self castedGObject]);
+	GPtrArray* returnValue = (GPtrArray*)camel_folder_summary_get_array([self castedGObject]);
 
 	return returnValue;
 }
 
 - (GPtrArray*)changed
 {
-	GPtrArray* returnValue = camel_folder_summary_get_changed([self castedGObject]);
+	GPtrArray* returnValue = (GPtrArray*)camel_folder_summary_get_changed([self castedGObject]);
 
 	return returnValue;
 }
 
 - (guint32)deletedCount
 {
-	guint32 returnValue = camel_folder_summary_get_deleted_count([self castedGObject]);
+	guint32 returnValue = (guint32)camel_folder_summary_get_deleted_count([self castedGObject]);
 
 	return returnValue;
 }
 
 - (guint32)flags
 {
-	guint32 returnValue = camel_folder_summary_get_flags([self castedGObject]);
+	guint32 returnValue = (guint32)camel_folder_summary_get_flags([self castedGObject]);
 
 	return returnValue;
 }
 
 - (OGCamelFolder*)folder
 {
-	CamelFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_summary_get_folder([self castedGObject]), CamelFolder, CamelFolder);
+	CamelFolder* gobjectValue = camel_folder_summary_get_folder([self castedGObject]);
 
-	OGCamelFolder* returnValue = [OGCamelFolder withGObject:gobjectValue];
+	OGCamelFolder* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
 - (GHashTable*)hash
 {
-	GHashTable* returnValue = camel_folder_summary_get_hash([self castedGObject]);
+	GHashTable* returnValue = (GHashTable*)camel_folder_summary_get_hash([self castedGObject]);
 
 	return returnValue;
 }
 
 - (OGCamelIndex*)index
 {
-	CamelIndex* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_summary_get_index([self castedGObject]), CamelIndex, CamelIndex);
+	CamelIndex* gobjectValue = camel_folder_summary_get_index([self castedGObject]);
 
-	OGCamelIndex* returnValue = [OGCamelIndex withGObject:gobjectValue];
+	OGCamelIndex* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
 - (guint32)infoFlags:(OFString*)uid
 {
-	guint32 returnValue = camel_folder_summary_get_info_flags([self castedGObject], [uid UTF8String]);
+	guint32 returnValue = (guint32)camel_folder_summary_get_info_flags([self castedGObject], [uid UTF8String]);
 
 	return returnValue;
 }
 
 - (guint32)junkCount
 {
-	guint32 returnValue = camel_folder_summary_get_junk_count([self castedGObject]);
+	guint32 returnValue = (guint32)camel_folder_summary_get_junk_count([self castedGObject]);
 
 	return returnValue;
 }
 
 - (guint32)junkNotDeletedCount
 {
-	guint32 returnValue = camel_folder_summary_get_junk_not_deleted_count([self castedGObject]);
+	guint32 returnValue = (guint32)camel_folder_summary_get_junk_not_deleted_count([self castedGObject]);
 
 	return returnValue;
 }
 
 - (guint32)nextUid
 {
-	guint32 returnValue = camel_folder_summary_get_next_uid([self castedGObject]);
+	guint32 returnValue = (guint32)camel_folder_summary_get_next_uid([self castedGObject]);
 
 	return returnValue;
 }
 
 - (guint32)savedCount
 {
-	guint32 returnValue = camel_folder_summary_get_saved_count([self castedGObject]);
+	guint32 returnValue = (guint32)camel_folder_summary_get_saved_count([self castedGObject]);
 
 	return returnValue;
 }
 
 - (gint64)timestamp
 {
-	gint64 returnValue = camel_folder_summary_get_timestamp([self castedGObject]);
+	gint64 returnValue = (gint64)camel_folder_summary_get_timestamp([self castedGObject]);
 
 	return returnValue;
 }
 
 - (guint32)unreadCount
 {
-	guint32 returnValue = camel_folder_summary_get_unread_count([self castedGObject]);
+	guint32 returnValue = (guint32)camel_folder_summary_get_unread_count([self castedGObject]);
 
 	return returnValue;
 }
 
 - (guint32)version
 {
-	guint32 returnValue = camel_folder_summary_get_version([self castedGObject]);
+	guint32 returnValue = (guint32)camel_folder_summary_get_version([self castedGObject]);
 
 	return returnValue;
 }
 
 - (guint32)visibleCount
 {
-	guint32 returnValue = camel_folder_summary_get_visible_count([self castedGObject]);
+	guint32 returnValue = (guint32)camel_folder_summary_get_visible_count([self castedGObject]);
 
 	return returnValue;
 }
@@ -203,13 +213,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_folder_summary_header_load([self castedGObject], [store castedGObject], [folderName UTF8String], &err);
+	bool returnValue = (bool)camel_folder_summary_header_load([self castedGObject], [store castedGObject], [folderName UTF8String], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -218,22 +224,18 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_folder_summary_header_save([self castedGObject], &err);
+	bool returnValue = (bool)camel_folder_summary_header_save([self castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
 
 - (OGCamelMessageInfo*)infoNewFromHeaders:(const CamelNameValueArray*)headers
 {
-	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_summary_info_new_from_headers([self castedGObject], headers), CamelMessageInfo, CamelMessageInfo);
+	CamelMessageInfo* gobjectValue = camel_folder_summary_info_new_from_headers([self castedGObject], headers);
 
-	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo withGObject:gobjectValue];
+	OGCamelMessageInfo* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -241,9 +243,9 @@
 
 - (OGCamelMessageInfo*)infoNewFromMessage:(OGCamelMimeMessage*)message
 {
-	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_summary_info_new_from_message([self castedGObject], [message castedGObject]), CamelMessageInfo, CamelMessageInfo);
+	CamelMessageInfo* gobjectValue = camel_folder_summary_info_new_from_message([self castedGObject], [message castedGObject]);
 
-	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo withGObject:gobjectValue];
+	OGCamelMessageInfo* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -251,9 +253,9 @@
 
 - (OGCamelMessageInfo*)infoNewFromParser:(OGCamelMimeParser*)parser
 {
-	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_summary_info_new_from_parser([self castedGObject], [parser castedGObject]), CamelMessageInfo, CamelMessageInfo);
+	CamelMessageInfo* gobjectValue = camel_folder_summary_info_new_from_parser([self castedGObject], [parser castedGObject]);
 
-	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo withGObject:gobjectValue];
+	OGCamelMessageInfo* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -263,13 +265,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_folder_summary_load([self castedGObject], &err);
+	bool returnValue = (bool)camel_folder_summary_load([self castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -281,7 +279,7 @@
 
 - (guint32)generateNextUid
 {
-	guint32 returnValue = camel_folder_summary_next_uid([self castedGObject]);
+	guint32 returnValue = (guint32)camel_folder_summary_next_uid([self castedGObject]);
 
 	return returnValue;
 }
@@ -296,9 +294,9 @@
 
 - (OGCamelMessageInfo*)peekLoaded:(OFString*)uid
 {
-	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_summary_peek_loaded([self castedGObject], [uid UTF8String]), CamelMessageInfo, CamelMessageInfo);
+	CamelMessageInfo* gobjectValue = camel_folder_summary_peek_loaded([self castedGObject], [uid UTF8String]);
 
-	OGCamelMessageInfo* returnValue = [OGCamelMessageInfo withGObject:gobjectValue];
+	OGCamelMessageInfo* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -310,38 +308,34 @@
 
 	camel_folder_summary_prepare_fetch_all([self castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 }
 
 - (bool)remove:(OGCamelMessageInfo*)info
 {
-	bool returnValue = camel_folder_summary_remove([self castedGObject], [info castedGObject]);
+	bool returnValue = (bool)camel_folder_summary_remove([self castedGObject], [info castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)removeUid:(OFString*)uid
 {
-	bool returnValue = camel_folder_summary_remove_uid([self castedGObject], [uid UTF8String]);
+	bool returnValue = (bool)camel_folder_summary_remove_uid([self castedGObject], [uid UTF8String]);
 
 	return returnValue;
 }
 
 - (bool)removeUids:(GList*)uids
 {
-	bool returnValue = camel_folder_summary_remove_uids([self castedGObject], uids);
+	bool returnValue = (bool)camel_folder_summary_remove_uids([self castedGObject], uids);
 
 	return returnValue;
 }
 
 - (bool)replaceFlags:(OGCamelMessageInfo*)info
 {
-	bool returnValue = camel_folder_summary_replace_flags([self castedGObject], [info castedGObject]);
+	bool returnValue = (bool)camel_folder_summary_replace_flags([self castedGObject], [info castedGObject]);
 
 	return returnValue;
 }
@@ -350,13 +344,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_folder_summary_save([self castedGObject], &err);
+	bool returnValue = (bool)camel_folder_summary_save([self castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }

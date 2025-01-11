@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,23 +8,33 @@
 
 @implementation OGEContact
 
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_CONTACT;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
 + (EContactField)fieldId:(OFString*)fieldName
 {
-	EContactField returnValue = e_contact_field_id([fieldName UTF8String]);
+	EContactField returnValue = (EContactField)e_contact_field_id([fieldName UTF8String]);
 
 	return returnValue;
 }
 
 + (EContactField)fieldIdFromVcard:(OFString*)vcardField
 {
-	EContactField returnValue = e_contact_field_id_from_vcard([vcardField UTF8String]);
+	EContactField returnValue = (EContactField)e_contact_field_id_from_vcard([vcardField UTF8String]);
 
 	return returnValue;
 }
 
 + (bool)fieldIsString:(EContactField)fieldId
 {
-	bool returnValue = e_contact_field_is_string(fieldId);
+	bool returnValue = (bool)e_contact_field_is_string(fieldId);
 
 	return returnValue;
 }
@@ -39,7 +49,7 @@
 
 + (GType)fieldType:(EContactField)fieldId
 {
-	GType returnValue = e_contact_field_type(fieldId);
+	GType returnValue = (GType)e_contact_field_type(fieldId);
 
 	return returnValue;
 }
@@ -60,52 +70,64 @@
 	return returnValue;
 }
 
-- (instancetype)init
++ (instancetype)contact
 {
 	EContact* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_contact_new(), EContact, EContact);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGEContact* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGEContact alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
-- (instancetype)initFromVcard:(OFString*)vcard
++ (instancetype)contactFromVcard:(OFString*)vcard
 {
 	EContact* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_contact_new_from_vcard([vcard UTF8String]), EContact, EContact);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGEContact* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGEContact alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
-- (instancetype)initFromVcardWithUidWithVcard:(OFString*)vcard uid:(OFString*)uid
++ (instancetype)contactFromVcardWithUidWithVcard:(OFString*)vcard uid:(OFString*)uid
 {
 	EContact* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_contact_new_from_vcard_with_uid([vcard UTF8String], [uid UTF8String]), EContact, EContact);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGEContact* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGEContact alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (EContact*)castedGObject
@@ -115,9 +137,9 @@
 
 - (OGEContact*)duplicate
 {
-	EContact* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_contact_duplicate([self castedGObject]), EContact, EContact);
+	EContact* gobjectValue = e_contact_duplicate([self castedGObject]);
 
-	OGEContact* returnValue = [OGEContact withGObject:gobjectValue];
+	OGEContact* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -125,28 +147,28 @@
 
 - (gpointer)get:(EContactField)fieldId
 {
-	gpointer returnValue = e_contact_get([self castedGObject], fieldId);
+	gpointer returnValue = (gpointer)e_contact_get([self castedGObject], fieldId);
 
 	return returnValue;
 }
 
 - (GList*)attributes:(EContactField)fieldId
 {
-	GList* returnValue = e_contact_get_attributes([self castedGObject], fieldId);
+	GList* returnValue = (GList*)e_contact_get_attributes([self castedGObject], fieldId);
 
 	return returnValue;
 }
 
 - (GList*)attributesSetWithFieldIds:(const EContactField*)fieldIds size:(gint)size
 {
-	GList* returnValue = e_contact_get_attributes_set([self castedGObject], fieldIds, size);
+	GList* returnValue = (GList*)e_contact_get_attributes_set([self castedGObject], fieldIds, size);
 
 	return returnValue;
 }
 
 - (gconstpointer)const:(EContactField)fieldId
 {
-	gconstpointer returnValue = e_contact_get_const([self castedGObject], fieldId);
+	gconstpointer returnValue = (gconstpointer)e_contact_get_const([self castedGObject], fieldId);
 
 	return returnValue;
 }
@@ -155,13 +177,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_contact_inline_local_photos([self castedGObject], &err);
+	bool returnValue = (bool)e_contact_inline_local_photos([self castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }

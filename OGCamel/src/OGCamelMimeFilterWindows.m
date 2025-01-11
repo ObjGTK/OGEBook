@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,20 +8,34 @@
 
 @implementation OGCamelMimeFilterWindows
 
-- (instancetype)init:(OFString*)claimedCharset
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_MIME_FILTER_WINDOWS;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
++ (instancetype)mimeFilterWindows:(OFString*)claimedCharset
 {
 	CamelMimeFilterWindows* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_windows_new([claimedCharset UTF8String]), CamelMimeFilterWindows, CamelMimeFilterWindows);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelMimeFilterWindows* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelMimeFilterWindows alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelMimeFilterWindows*)castedGObject
@@ -31,7 +45,7 @@
 
 - (bool)isWindowsCharset
 {
-	bool returnValue = camel_mime_filter_windows_is_windows_charset([self castedGObject]);
+	bool returnValue = (bool)camel_mime_filter_windows_is_windows_charset([self castedGObject]);
 
 	return returnValue;
 }

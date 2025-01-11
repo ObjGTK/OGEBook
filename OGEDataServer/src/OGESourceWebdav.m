@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -9,6 +9,16 @@
 #import <OGio/OGTlsCertificate.h>
 
 @implementation OGESourceWebdav
+
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_SOURCE_WEBDAV;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (ESourceWebdav*)castedGObject
 {
@@ -65,21 +75,21 @@
 
 - (GUri*)dupUri
 {
-	GUri* returnValue = e_source_webdav_dup_uri([self castedGObject]);
+	GUri* returnValue = (GUri*)e_source_webdav_dup_uri([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)avoidIfmatch
 {
-	bool returnValue = e_source_webdav_get_avoid_ifmatch([self castedGObject]);
+	bool returnValue = (bool)e_source_webdav_get_avoid_ifmatch([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)calendarAutoSchedule
 {
-	bool returnValue = e_source_webdav_get_calendar_auto_schedule([self castedGObject]);
+	bool returnValue = (bool)e_source_webdav_get_calendar_auto_schedule([self castedGObject]);
 
 	return returnValue;
 }
@@ -110,7 +120,7 @@
 
 - (guint)order
 {
-	guint returnValue = e_source_webdav_get_order([self castedGObject]);
+	guint returnValue = (guint)e_source_webdav_get_order([self castedGObject]);
 
 	return returnValue;
 }
@@ -141,7 +151,7 @@
 
 - (ETrustPromptResponse)sslTrustResponse
 {
-	ETrustPromptResponse returnValue = e_source_webdav_get_ssl_trust_response([self castedGObject]);
+	ETrustPromptResponse returnValue = (ETrustPromptResponse)e_source_webdav_get_ssl_trust_response([self castedGObject]);
 
 	return returnValue;
 }
@@ -213,7 +223,7 @@
 
 - (ETrustPromptResponse)verifySslTrustWithHost:(OFString*)host cert:(OGTlsCertificate*)cert certErrors:(GTlsCertificateFlags)certErrors
 {
-	ETrustPromptResponse returnValue = e_source_webdav_verify_ssl_trust([self castedGObject], [host UTF8String], [cert castedGObject], certErrors);
+	ETrustPromptResponse returnValue = (ETrustPromptResponse)e_source_webdav_verify_ssl_trust([self castedGObject], [host UTF8String], [cert castedGObject], certErrors);
 
 	return returnValue;
 }

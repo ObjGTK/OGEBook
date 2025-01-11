@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelSettings.h"
 
 @implementation OGCamelSettings
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_SETTINGS;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (CamelSettings*)castedGObject
 {
@@ -15,9 +25,9 @@
 
 - (OGCamelSettings*)clone
 {
-	CamelSettings* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_settings_clone([self castedGObject]), CamelSettings, CamelSettings);
+	CamelSettings* gobjectValue = camel_settings_clone([self castedGObject]);
 
-	OGCamelSettings* returnValue = [OGCamelSettings withGObject:gobjectValue];
+	OGCamelSettings* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -25,7 +35,7 @@
 
 - (bool)equal:(OGCamelSettings*)settingsB
 {
-	bool returnValue = camel_settings_equal([self castedGObject], [settingsB castedGObject]);
+	bool returnValue = (bool)camel_settings_equal([self castedGObject], [settingsB castedGObject]);
 
 	return returnValue;
 }

@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGESourceLDAP.h"
 
 @implementation OGESourceLDAP
+
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_SOURCE_LDAP;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (ESourceLDAP*)castedGObject
 {
@@ -31,14 +41,14 @@
 
 - (ESourceLDAPAuthentication)authentication
 {
-	ESourceLDAPAuthentication returnValue = e_source_ldap_get_authentication([self castedGObject]);
+	ESourceLDAPAuthentication returnValue = (ESourceLDAPAuthentication)e_source_ldap_get_authentication([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)canBrowse
 {
-	bool returnValue = e_source_ldap_get_can_browse([self castedGObject]);
+	bool returnValue = (bool)e_source_ldap_get_can_browse([self castedGObject]);
 
 	return returnValue;
 }
@@ -53,7 +63,7 @@
 
 - (guint)limit
 {
-	guint returnValue = e_source_ldap_get_limit([self castedGObject]);
+	guint returnValue = (guint)e_source_ldap_get_limit([self castedGObject]);
 
 	return returnValue;
 }
@@ -68,14 +78,14 @@
 
 - (ESourceLDAPScope)scope
 {
-	ESourceLDAPScope returnValue = e_source_ldap_get_scope([self castedGObject]);
+	ESourceLDAPScope returnValue = (ESourceLDAPScope)e_source_ldap_get_scope([self castedGObject]);
 
 	return returnValue;
 }
 
 - (ESourceLDAPSecurity)security
 {
-	ESourceLDAPSecurity returnValue = e_source_ldap_get_security([self castedGObject]);
+	ESourceLDAPSecurity returnValue = (ESourceLDAPSecurity)e_source_ldap_get_security([self castedGObject]);
 
 	return returnValue;
 }

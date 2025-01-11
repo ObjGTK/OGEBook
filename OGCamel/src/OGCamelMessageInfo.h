@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,8 +8,8 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCamelMimeMessage;
 @class OGCamelFolderSummary;
+@class OGCamelMimeMessage;
 
 @interface OGCamelMessageInfo : OGObject
 {
@@ -20,9 +20,9 @@
 /**
  * Constructors
  */
-- (instancetype)init:(OGCamelFolderSummary*)summary;
-- (instancetype)initFromHeadersWithSummary:(OGCamelFolderSummary*)summary headers:(const CamelNameValueArray*)headers;
-- (instancetype)initFromMessageWithSummary:(OGCamelFolderSummary*)summary message:(OGCamelMimeMessage*)message;
++ (instancetype)messageInfo:(OGCamelFolderSummary*)summary;
++ (instancetype)messageInfoFromHeadersWithSummary:(OGCamelFolderSummary*)summary headers:(const CamelNameValueArray*)headers;
++ (instancetype)messageInfoFromMessageWithSummary:(OGCamelFolderSummary*)summary message:(OGCamelMimeMessage*)message;
 
 /**
  * Methods

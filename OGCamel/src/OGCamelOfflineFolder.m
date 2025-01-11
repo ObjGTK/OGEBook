@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -10,6 +10,16 @@
 
 @implementation OGCamelOfflineFolder
 
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_OFFLINE_FOLDER;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
 - (CamelOfflineFolder*)castedGObject
 {
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelOfflineFolder, CamelOfflineFolder);
@@ -17,7 +27,7 @@
 
 - (bool)canDownsync
 {
-	bool returnValue = camel_offline_folder_can_downsync([self castedGObject]);
+	bool returnValue = (bool)camel_offline_folder_can_downsync([self castedGObject]);
 
 	return returnValue;
 }
@@ -31,13 +41,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_offline_folder_downsync_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)camel_offline_folder_downsync_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -46,20 +52,16 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_offline_folder_downsync_sync([self castedGObject], [expression UTF8String], [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_offline_folder_downsync_sync([self castedGObject], [expression UTF8String], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
 
 - (CamelThreeState)offlineSync
 {
-	CamelThreeState returnValue = camel_offline_folder_get_offline_sync([self castedGObject]);
+	CamelThreeState returnValue = (CamelThreeState)camel_offline_folder_get_offline_sync([self castedGObject]);
 
 	return returnValue;
 }

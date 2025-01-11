@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelMedium.h"
 
 @implementation OGCamelMedium
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_MEDIUM;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (CamelMedium*)castedGObject
 {
@@ -20,16 +30,16 @@
 
 - (CamelNameValueArray*)dupHeaders
 {
-	CamelNameValueArray* returnValue = camel_medium_dup_headers([self castedGObject]);
+	CamelNameValueArray* returnValue = (CamelNameValueArray*)camel_medium_dup_headers([self castedGObject]);
 
 	return returnValue;
 }
 
 - (OGCamelDataWrapper*)content
 {
-	CamelDataWrapper* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_medium_get_content([self castedGObject]), CamelDataWrapper, CamelDataWrapper);
+	CamelDataWrapper* gobjectValue = camel_medium_get_content([self castedGObject]);
 
-	OGCamelDataWrapper* returnValue = [OGCamelDataWrapper withGObject:gobjectValue];
+	OGCamelDataWrapper* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
@@ -43,7 +53,7 @@
 
 - (const CamelNameValueArray*)headers
 {
-	const CamelNameValueArray* returnValue = camel_medium_get_headers([self castedGObject]);
+	const CamelNameValueArray* returnValue = (const CamelNameValueArray*)camel_medium_get_headers([self castedGObject]);
 
 	return returnValue;
 }

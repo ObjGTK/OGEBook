@@ -1,30 +1,44 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelGpgContext.h"
 
-#import <OGio/OGCancellable.h>
 #import "OGCamelSession.h"
+#import <OGio/OGCancellable.h>
 
 @implementation OGCamelGpgContext
 
-- (instancetype)init:(OGCamelSession*)session
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_GPG_CONTEXT;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
++ (instancetype)gpgContext:(OGCamelSession*)session
 {
 	CamelGpgContext* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_gpg_context_new([session castedGObject]), CamelGpgContext, CamelGpgContext);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelGpgContext* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelGpgContext alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelGpgContext*)castedGObject
@@ -34,7 +48,7 @@
 
 - (bool)alwaysTrust
 {
-	bool returnValue = camel_gpg_context_get_always_trust([self castedGObject]);
+	bool returnValue = (bool)camel_gpg_context_get_always_trust([self castedGObject]);
 
 	return returnValue;
 }
@@ -43,27 +57,23 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_gpg_context_get_key_data_info_sync([self castedGObject], data, dataSize, flags, outInfos, [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_gpg_context_get_key_data_info_sync([self castedGObject], data, dataSize, flags, outInfos, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
 
 - (bool)locateKeys
 {
-	bool returnValue = camel_gpg_context_get_locate_keys([self castedGObject]);
+	bool returnValue = (bool)camel_gpg_context_get_locate_keys([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)preferInline
 {
-	bool returnValue = camel_gpg_context_get_prefer_inline([self castedGObject]);
+	bool returnValue = (bool)camel_gpg_context_get_prefer_inline([self castedGObject]);
 
 	return returnValue;
 }
@@ -72,13 +82,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_gpg_context_get_public_key_info_sync([self castedGObject], [keyid UTF8String], flags, outInfos, [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_gpg_context_get_public_key_info_sync([self castedGObject], [keyid UTF8String], flags, outInfos, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -87,13 +93,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_gpg_context_get_public_key_sync([self castedGObject], [keyid UTF8String], flags, outData, outDataSize, [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_gpg_context_get_public_key_sync([self castedGObject], [keyid UTF8String], flags, outData, outDataSize, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -102,13 +104,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_gpg_context_has_public_key_sync([self castedGObject], [keyid UTF8String], [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_gpg_context_has_public_key_sync([self castedGObject], [keyid UTF8String], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -117,13 +115,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_gpg_context_import_key_sync([self castedGObject], data, dataSize, flags, [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_gpg_context_import_key_sync([self castedGObject], data, dataSize, flags, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -137,13 +131,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_gpg_context_set_key_trust_sync([self castedGObject], [keyid UTF8String], trust, [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_gpg_context_set_key_trust_sync([self castedGObject], [keyid UTF8String], trust, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }

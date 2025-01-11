@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,11 +8,11 @@
 
 #import <OGObject/OGObject.h>
 
-@class OGCamelIndex;
-@class OGCamelMimeMessage;
 @class OGCamelFolder;
-@class OGCamelMimeParser;
+@class OGCamelIndex;
 @class OGCamelMessageInfo;
+@class OGCamelMimeMessage;
+@class OGCamelMimeParser;
 @class OGCamelStore;
 
 @interface OGCamelFolderSummary : OGObject
@@ -23,6 +23,8 @@
 /**
  * Functions
  */
++ (void)load;
+
 
 /**
  * Free's array and its elements returned from camel_folder_summary_get_array().
@@ -34,7 +36,7 @@
 /**
  * Constructors
  */
-- (instancetype)init:(OGCamelFolder*)folder;
++ (instancetype)folderSummary:(OGCamelFolder*)folder;
 
 /**
  * Methods

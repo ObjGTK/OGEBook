@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -17,7 +17,7 @@
 /**
  * Constructors
  */
-- (instancetype)init:(OGCamelStream*)source;
++ (instancetype)streamFilter:(OGCamelStream*)source;
 
 /**
  * Methods
@@ -46,8 +46,8 @@
 /**
  * Remove a processing filter from the stream by id.
  *
- * @param id Filter id, as returned from camel_stream_filter_add()
+ * @param identifier Filter id, as returned from camel_stream_filter_add()
  */
-- (void)remove:(gint)id;
+- (void)remove:(gint)identifier;
 
 @end

@@ -1,30 +1,44 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelMimeFilterIndex.h"
 
-#import "OGCamelIndexName.h"
 #import "OGCamelIndex.h"
+#import "OGCamelIndexName.h"
 
 @implementation OGCamelMimeFilterIndex
 
-- (instancetype)init:(OGCamelIndex*)index
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_MIME_FILTER_INDEX;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
++ (instancetype)mimeFilterIndex:(OGCamelIndex*)index
 {
 	CamelMimeFilterIndex* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_index_new([index castedGObject]), CamelMimeFilterIndex, CamelMimeFilterIndex);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelMimeFilterIndex* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelMimeFilterIndex alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelMimeFilterIndex*)castedGObject

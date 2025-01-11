@@ -1,15 +1,25 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGESource.h"
 
-#import <OGio/OGCancellable.h>
 #import <OGCamel/OGCamelService.h>
+#import <OGio/OGCancellable.h>
 
 @implementation OGESource
+
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_SOURCE;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 + (OFString*)parameterToKey:(OFString*)paramName
 {
@@ -19,56 +29,52 @@
 	return returnValue;
 }
 
-- (instancetype)initWithDbusObject:(GDBusObject*)dbusObject mainContext:(GMainContext*)mainContext
++ (instancetype)sourceWithDbusObject:(GDBusObject*)dbusObject mainContext:(GMainContext*)mainContext
 {
 	GError* err = NULL;
 
 	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_new(dbusObject, mainContext, &err), ESource, ESource);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		if(gobjectValue != NULL)
-			g_object_unref(gobjectValue);
-		@throw exception;
-	}
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
 
+	[OGErrorException throwForError:err unrefGObject:gobjectValue];
+
+	OGESource* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGESource alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
-- (instancetype)initWithUidWithUid:(OFString*)uid mainContext:(GMainContext*)mainContext
++ (instancetype)sourceWithUidWithUid:(OFString*)uid mainContext:(GMainContext*)mainContext
 {
 	GError* err = NULL;
 
 	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_new_with_uid([uid UTF8String], mainContext, &err), ESource, ESource);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		if(gobjectValue != NULL)
-			g_object_unref(gobjectValue);
-		@throw exception;
-	}
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
 
+	[OGErrorException throwForError:err unrefGObject:gobjectValue];
+
+	OGESource* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGESource alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (ESource*)castedGObject
@@ -88,7 +94,7 @@
 
 - (gint)compareByDisplayName:(OGESource*)source2
 {
-	gint returnValue = e_source_compare_by_display_name([self castedGObject], [source2 castedGObject]);
+	gint returnValue = (gint)e_source_compare_by_display_name([self castedGObject], [source2 castedGObject]);
 
 	return returnValue;
 }
@@ -102,13 +108,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_delete_password_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)e_source_delete_password_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -117,13 +119,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_delete_password_sync([self castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_source_delete_password_sync([self castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -167,14 +165,14 @@
 
 - (bool)equal:(OGESource*)source2
 {
-	bool returnValue = e_source_equal([self castedGObject], [source2 castedGObject]);
+	bool returnValue = (bool)e_source_equal([self castedGObject], [source2 castedGObject]);
 
 	return returnValue;
 }
 
 - (ESourceConnectionStatus)connectionStatus
 {
-	ESourceConnectionStatus returnValue = e_source_get_connection_status([self castedGObject]);
+	ESourceConnectionStatus returnValue = (ESourceConnectionStatus)e_source_get_connection_status([self castedGObject]);
 
 	return returnValue;
 }
@@ -189,14 +187,14 @@
 
 - (bool)enabled
 {
-	bool returnValue = e_source_get_enabled([self castedGObject]);
+	bool returnValue = (bool)e_source_get_enabled([self castedGObject]);
 
 	return returnValue;
 }
 
 - (gpointer)extension:(OFString*)extensionName
 {
-	gpointer returnValue = e_source_get_extension([self castedGObject], [extensionName UTF8String]);
+	gpointer returnValue = (gpointer)e_source_get_extension([self castedGObject], [extensionName UTF8String]);
 
 	return returnValue;
 }
@@ -210,13 +208,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_get_last_credentials_required_arguments_finish([self castedGObject], result, outReason, outCertificatePem, outCertificateErrors, outOpError, &err);
+	bool returnValue = (bool)e_source_get_last_credentials_required_arguments_finish([self castedGObject], result, outReason, outCertificatePem, outCertificateErrors, outOpError, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -225,13 +219,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_get_last_credentials_required_arguments_sync([self castedGObject], outReason, outCertificatePem, outCertificateErrors, outOpError, [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_source_get_last_credentials_required_arguments_sync([self castedGObject], outReason, outCertificatePem, outCertificateErrors, outOpError, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -245,13 +235,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_get_oauth2_access_token_finish([self castedGObject], result, outAccessToken, outExpiresIn, &err);
+	bool returnValue = (bool)e_source_get_oauth2_access_token_finish([self castedGObject], result, outAccessToken, outExpiresIn, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -260,13 +246,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_get_oauth2_access_token_sync([self castedGObject], [cancellable castedGObject], outAccessToken, outExpiresIn, &err);
+	bool returnValue = (bool)e_source_get_oauth2_access_token_sync([self castedGObject], [cancellable castedGObject], outAccessToken, outExpiresIn, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -281,21 +263,21 @@
 
 - (bool)remoteCreatable
 {
-	bool returnValue = e_source_get_remote_creatable([self castedGObject]);
+	bool returnValue = (bool)e_source_get_remote_creatable([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)remoteDeletable
 {
-	bool returnValue = e_source_get_remote_deletable([self castedGObject]);
+	bool returnValue = (bool)e_source_get_remote_deletable([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)removable
 {
-	bool returnValue = e_source_get_removable([self castedGObject]);
+	bool returnValue = (bool)e_source_get_removable([self castedGObject]);
 
 	return returnValue;
 }
@@ -310,21 +292,21 @@
 
 - (bool)writable
 {
-	bool returnValue = e_source_get_writable([self castedGObject]);
+	bool returnValue = (bool)e_source_get_writable([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)hasExtension:(OFString*)extensionName
 {
-	bool returnValue = e_source_has_extension([self castedGObject], [extensionName UTF8String]);
+	bool returnValue = (bool)e_source_has_extension([self castedGObject], [extensionName UTF8String]);
 
 	return returnValue;
 }
 
 - (guint)hash
 {
-	guint returnValue = e_source_hash([self castedGObject]);
+	guint returnValue = (guint)e_source_hash([self castedGObject]);
 
 	return returnValue;
 }
@@ -338,13 +320,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_invoke_authenticate_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)e_source_invoke_authenticate_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -353,13 +331,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_invoke_authenticate_sync([self castedGObject], credentials, [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_source_invoke_authenticate_sync([self castedGObject], credentials, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -373,13 +347,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_invoke_credentials_required_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)e_source_invoke_credentials_required_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -388,13 +358,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_invoke_credentials_required_sync([self castedGObject], reason, [certificatePem UTF8String], certificateErrors, opError, [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_source_invoke_credentials_required_sync([self castedGObject], reason, [certificatePem UTF8String], certificateErrors, opError, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -408,13 +374,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_lookup_password_finish([self castedGObject], result, outPassword, &err);
+	bool returnValue = (bool)e_source_lookup_password_finish([self castedGObject], result, outPassword, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -423,13 +385,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_lookup_password_sync([self castedGObject], [cancellable castedGObject], outPassword, &err);
+	bool returnValue = (bool)e_source_lookup_password_sync([self castedGObject], [cancellable castedGObject], outPassword, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -443,13 +401,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_mail_signature_load_finish([self castedGObject], result, contents, length, &err);
+	bool returnValue = (bool)e_source_mail_signature_load_finish([self castedGObject], result, contents, length, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -458,13 +412,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_mail_signature_load_sync([self castedGObject], contents, length, [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_source_mail_signature_load_sync([self castedGObject], contents, length, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -478,13 +428,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_mail_signature_replace_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)e_source_mail_signature_replace_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -493,13 +439,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_mail_signature_replace_sync([self castedGObject], [contents UTF8String], length, [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_source_mail_signature_replace_sync([self castedGObject], [contents UTF8String], length, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -513,13 +455,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_mail_signature_symlink_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)e_source_mail_signature_symlink_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -528,13 +466,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_mail_signature_symlink_sync([self castedGObject], [symlinkTarget UTF8String], [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_source_mail_signature_symlink_sync([self castedGObject], [symlinkTarget UTF8String], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -548,13 +482,9 @@
 {
 	GError* err = NULL;
 
-	gchar** returnValue = e_source_proxy_lookup_finish([self castedGObject], result, &err);
+	gchar** returnValue = (gchar**)e_source_proxy_lookup_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -563,34 +493,30 @@
 {
 	GError* err = NULL;
 
-	gchar** returnValue = e_source_proxy_lookup_sync([self castedGObject], [uri UTF8String], [cancellable castedGObject], &err);
+	gchar** returnValue = (gchar**)e_source_proxy_lookup_sync([self castedGObject], [uri UTF8String], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
 
 - (GDBusObject*)refDbusObject
 {
-	GDBusObject* returnValue = e_source_ref_dbus_object([self castedGObject]);
+	GDBusObject* returnValue = (GDBusObject*)e_source_ref_dbus_object([self castedGObject]);
 
 	return returnValue;
 }
 
 - (GMainContext*)refMainContext
 {
-	GMainContext* returnValue = e_source_ref_main_context([self castedGObject]);
+	GMainContext* returnValue = (GMainContext*)e_source_ref_main_context([self castedGObject]);
 
 	return returnValue;
 }
 
 - (guint)refreshAddTimeoutWithContext:(GMainContext*)context callback:(ESourceRefreshFunc)callback userData:(gpointer)userData notify:(GDestroyNotify)notify
 {
-	guint returnValue = e_source_refresh_add_timeout([self castedGObject], context, callback, userData, notify);
+	guint returnValue = (guint)e_source_refresh_add_timeout([self castedGObject], context, callback, userData, notify);
 
 	return returnValue;
 }
@@ -602,14 +528,14 @@
 
 - (bool)refreshRemoveTimeout:(guint)refreshTimeoutId
 {
-	bool returnValue = e_source_refresh_remove_timeout([self castedGObject], refreshTimeoutId);
+	bool returnValue = (bool)e_source_refresh_remove_timeout([self castedGObject], refreshTimeoutId);
 
 	return returnValue;
 }
 
 - (guint)refreshRemoveTimeoutsByData:(gpointer)userData
 {
-	guint returnValue = e_source_refresh_remove_timeouts_by_data([self castedGObject], userData);
+	guint returnValue = (guint)e_source_refresh_remove_timeouts_by_data([self castedGObject], userData);
 
 	return returnValue;
 }
@@ -623,13 +549,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_remote_create_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)e_source_remote_create_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -638,13 +560,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_remote_create_sync([self castedGObject], [scratchSource castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_source_remote_create_sync([self castedGObject], [scratchSource castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -658,13 +576,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_remote_delete_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)e_source_remote_delete_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -673,13 +587,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_remote_delete_sync([self castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_source_remote_delete_sync([self castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -693,13 +603,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_remove_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)e_source_remove_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -708,13 +614,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_remove_sync([self castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_source_remove_sync([self castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -748,13 +650,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_store_password_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)e_source_store_password_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -763,13 +661,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_store_password_sync([self castedGObject], [password UTF8String], permanently, [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_source_store_password_sync([self castedGObject], [password UTF8String], permanently, [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -791,13 +685,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_unset_last_credentials_required_arguments_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)e_source_unset_last_credentials_required_arguments_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -806,13 +696,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_unset_last_credentials_required_arguments_sync([self castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_source_unset_last_credentials_required_arguments_sync([self castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -826,13 +712,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_write_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)e_source_write_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -841,13 +723,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = e_source_write_sync([self castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)e_source_write_sync([self castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }

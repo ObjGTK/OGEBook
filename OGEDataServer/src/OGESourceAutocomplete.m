@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGESourceAutocomplete.h"
 
 @implementation OGESourceAutocomplete
+
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_SOURCE_AUTOCOMPLETE;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (ESourceAutocomplete*)castedGObject
 {
@@ -15,7 +25,7 @@
 
 - (bool)includeMe
 {
-	bool returnValue = e_source_autocomplete_get_include_me([self castedGObject]);
+	bool returnValue = (bool)e_source_autocomplete_get_include_me([self castedGObject]);
 
 	return returnValue;
 }

@@ -81,14 +81,14 @@ AS_IF([test x"$with_camel" != x"no" -a x"$with_camel" != x""], [
 ])
 
 
-PKG_CHECK_MODULES(camel, [camel-1.2 >= $(pkg-config --modversion camel-1.2)], [
+PKG_CHECK_MODULES(camel, [camel-1.2 >= 3.52.3], [
 	OGCAMEL_CPPFLAGS="$OGCAMEL_CPPFLAGS $camel_CFLAGS"
 	OGCAMEL_LIBS="$OGCAMEL_LIBS $camel_LIBS"
 	CPPFLAGS="$CPPFLAGS $camel_CFLAGS"
 	LIBS="$LIBS $camel_LIBS"
 	FRAMEWORK_LIBS="$FRAMEWORK_LIBS $camel_LIBS"
 ], [
-	AC_MSG_ERROR(You need camel-1.2 >= $(pkg-config --modversion camel-1.2) installed!)
+	AC_MSG_ERROR(You need camel-1.2 >= 3.52.3 installed!)
 ])
 
 AS_IF([test x"$GOBJC" = x"yes"], [

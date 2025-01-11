@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -12,20 +12,34 @@
 
 @implementation OGCamelVeeSummary
 
-- (instancetype)init:(OGCamelFolder*)parent
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_VEE_SUMMARY;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
++ (instancetype)veeSummary:(OGCamelFolder*)parent
 {
 	CamelVeeSummary* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_summary_new([parent castedGObject]), CamelVeeSummary, CamelVeeSummary);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelVeeSummary* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelVeeSummary alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelVeeSummary*)castedGObject
@@ -35,9 +49,9 @@
 
 - (OGCamelVeeMessageInfo*)add:(OGCamelVeeMessageInfoData*)miData
 {
-	CamelVeeMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_summary_add([self castedGObject], [miData castedGObject]), CamelVeeMessageInfo, CamelVeeMessageInfo);
+	CamelVeeMessageInfo* gobjectValue = camel_vee_summary_add([self castedGObject], [miData castedGObject]);
 
-	OGCamelVeeMessageInfo* returnValue = [OGCamelVeeMessageInfo withGObject:gobjectValue];
+	OGCamelVeeMessageInfo* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -45,7 +59,7 @@
 
 - (GHashTable*)uidsForSubfolder:(OGCamelFolder*)subfolder
 {
-	GHashTable* returnValue = camel_vee_summary_get_uids_for_subfolder([self castedGObject], [subfolder castedGObject]);
+	GHashTable* returnValue = (GHashTable*)camel_vee_summary_get_uids_for_subfolder([self castedGObject], [subfolder castedGObject]);
 
 	return returnValue;
 }

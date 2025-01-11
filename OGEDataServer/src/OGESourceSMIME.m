@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGESourceSMIME.h"
 
 @implementation OGESourceSMIME
+
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_SOURCE_SMIME;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (ESourceSMIME*)castedGObject
 {
@@ -39,14 +49,14 @@
 
 - (bool)encryptByDefault
 {
-	bool returnValue = e_source_smime_get_encrypt_by_default([self castedGObject]);
+	bool returnValue = (bool)e_source_smime_get_encrypt_by_default([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)encryptToSelf
 {
-	bool returnValue = e_source_smime_get_encrypt_to_self([self castedGObject]);
+	bool returnValue = (bool)e_source_smime_get_encrypt_to_self([self castedGObject]);
 
 	return returnValue;
 }
@@ -61,7 +71,7 @@
 
 - (bool)signByDefault
 {
-	bool returnValue = e_source_smime_get_sign_by_default([self castedGObject]);
+	bool returnValue = (bool)e_source_smime_get_sign_by_default([self castedGObject]);
 
 	return returnValue;
 }

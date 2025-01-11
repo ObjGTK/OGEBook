@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,20 +8,34 @@
 
 @implementation OGCamelKeyFile
 
-- (instancetype)initWithPath:(OFString*)path flags:(gint)flags version:(OFString*)version
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_KEY_FILE;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
++ (instancetype)keyFileWithPath:(OFString*)path flags:(gint)flags version:(OFString*)version
 {
 	CamelKeyFile* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_key_file_new([path UTF8String], flags, [version UTF8String]), CamelKeyFile, CamelKeyFile);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelKeyFile* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelKeyFile alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelKeyFile*)castedGObject
@@ -31,28 +45,28 @@
 
 - (gint)delete
 {
-	gint returnValue = camel_key_file_delete([self castedGObject]);
+	gint returnValue = (gint)camel_key_file_delete([self castedGObject]);
 
 	return returnValue;
 }
 
 - (gint)readWithStart:(camel_block_t*)start len:(gsize*)len records:(camel_key_t**)records
 {
-	gint returnValue = camel_key_file_read([self castedGObject], start, len, records);
+	gint returnValue = (gint)camel_key_file_read([self castedGObject], start, len, records);
 
 	return returnValue;
 }
 
 - (gint)rename:(OFString*)path
 {
-	gint returnValue = camel_key_file_rename([self castedGObject], [path UTF8String]);
+	gint returnValue = (gint)camel_key_file_rename([self castedGObject], [path UTF8String]);
 
 	return returnValue;
 }
 
 - (gint)writeWithParent:(camel_block_t*)parent len:(gsize)len records:(camel_key_t*)records
 {
-	gint returnValue = camel_key_file_write([self castedGObject], parent, len, records);
+	gint returnValue = (gint)camel_key_file_write([self castedGObject], parent, len, records);
 
 	return returnValue;
 }

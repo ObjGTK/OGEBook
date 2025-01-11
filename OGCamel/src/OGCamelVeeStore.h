@@ -1,16 +1,16 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelStore.h"
 
-@class OGCamelVeeDataCache;
-@class OGCamelVeeMessageInfoData;
-@class OGCamelVeeFolder;
-@class OGCancellable;
 @class OGCamelFolder;
+@class OGCamelVeeDataCache;
+@class OGCamelVeeFolder;
+@class OGCamelVeeMessageInfoData;
+@class OGCancellable;
 
 @interface OGCamelVeeStore : OGCamelStore
 {
@@ -21,7 +21,7 @@
 /**
  * Constructors
  */
-- (instancetype)init;
++ (instancetype)veeStore;
 
 /**
  * Methods

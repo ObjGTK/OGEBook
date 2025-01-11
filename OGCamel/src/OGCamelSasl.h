@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -19,6 +19,8 @@
 /**
  * Functions
  */
++ (void)load;
+
 
 /**
  *
@@ -50,7 +52,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithServiceName:(OFString*)serviceName mechanism:(OFString*)mechanism service:(OGCamelService*)service;
++ (instancetype)saslWithServiceName:(OFString*)serviceName mechanism:(OFString*)mechanism service:(OGCamelService*)service;
 
 /**
  * Methods

@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGESourceCollection.h"
 
 @implementation OGESourceCollection
+
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_SOURCE_COLLECTION;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (ESourceCollection*)castedGObject
 {
@@ -39,14 +49,14 @@
 
 - (bool)allowSourcesRename
 {
-	bool returnValue = e_source_collection_get_allow_sources_rename([self castedGObject]);
+	bool returnValue = (bool)e_source_collection_get_allow_sources_rename([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)calendarEnabled
 {
-	bool returnValue = e_source_collection_get_calendar_enabled([self castedGObject]);
+	bool returnValue = (bool)e_source_collection_get_calendar_enabled([self castedGObject]);
 
 	return returnValue;
 }
@@ -61,7 +71,7 @@
 
 - (bool)contactsEnabled
 {
-	bool returnValue = e_source_collection_get_contacts_enabled([self castedGObject]);
+	bool returnValue = (bool)e_source_collection_get_contacts_enabled([self castedGObject]);
 
 	return returnValue;
 }
@@ -84,7 +94,7 @@
 
 - (bool)mailEnabled
 {
-	bool returnValue = e_source_collection_get_mail_enabled([self castedGObject]);
+	bool returnValue = (bool)e_source_collection_get_mail_enabled([self castedGObject]);
 
 	return returnValue;
 }

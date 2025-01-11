@@ -1,15 +1,25 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGEDestination.h"
 
-#import <OGEBookContacts/OGEContact.h>
 #import "OGEBookClient.h"
+#import <OGEBookContacts/OGEContact.h>
 
 @implementation OGEDestination
+
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_DESTINATION;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 + (OFString*)exportv:(EDestination**)destv
 {
@@ -34,9 +44,9 @@
 
 + (OGEDestination*)import:(OFString*)str
 {
-	EDestination* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_destination_import([str UTF8String]), EDestination, EDestination);
+	EDestination* gobjectValue = e_destination_import([str UTF8String]);
 
-	OGEDestination* returnValue = [OGEDestination withGObject:gobjectValue];
+	OGEDestination* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -44,25 +54,29 @@
 
 + (EDestination**)importv:(OFString*)str
 {
-	EDestination** returnValue = e_destination_importv([str UTF8String]);
+	EDestination** returnValue = (EDestination**)e_destination_importv([str UTF8String]);
 
 	return returnValue;
 }
 
-- (instancetype)init
++ (instancetype)destination
 {
 	EDestination* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_destination_new(), EDestination, EDestination);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGEDestination* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGEDestination alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (EDestination*)castedGObject
@@ -72,9 +86,9 @@
 
 - (OGEDestination*)copy
 {
-	EDestination* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_destination_copy([self castedGObject]), EDestination, EDestination);
+	EDestination* gobjectValue = e_destination_copy([self castedGObject]);
 
-	OGEDestination* returnValue = [OGEDestination withGObject:gobjectValue];
+	OGEDestination* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	g_object_unref(gobjectValue);
 
 	return returnValue;
@@ -82,14 +96,14 @@
 
 - (bool)empty
 {
-	bool returnValue = e_destination_empty([self castedGObject]);
+	bool returnValue = (bool)e_destination_empty([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)equal:(const EDestination*)b
 {
-	bool returnValue = e_destination_equal([self castedGObject], b);
+	bool returnValue = (bool)e_destination_equal([self castedGObject], b);
 
 	return returnValue;
 }
@@ -117,9 +131,9 @@
 
 - (OGEContact*)contact
 {
-	EContact* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_destination_get_contact([self castedGObject]), EContact, EContact);
+	EContact* gobjectValue = e_destination_get_contact([self castedGObject]);
 
-	OGEContact* returnValue = [OGEContact withGObject:gobjectValue];
+	OGEContact* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
@@ -141,14 +155,14 @@
 
 - (gint)emailNum
 {
-	gint returnValue = e_destination_get_email_num([self castedGObject]);
+	gint returnValue = (gint)e_destination_get_email_num([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)htmlMailPref
 {
-	bool returnValue = e_destination_get_html_mail_pref([self castedGObject]);
+	bool returnValue = (bool)e_destination_get_html_mail_pref([self castedGObject]);
 
 	return returnValue;
 }
@@ -179,42 +193,42 @@
 
 - (bool)isAutoRecipient
 {
-	bool returnValue = e_destination_is_auto_recipient([self castedGObject]);
+	bool returnValue = (bool)e_destination_is_auto_recipient([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)isEvolutionList
 {
-	bool returnValue = e_destination_is_evolution_list([self castedGObject]);
+	bool returnValue = (bool)e_destination_is_evolution_list([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)isIgnored
 {
-	bool returnValue = e_destination_is_ignored([self castedGObject]);
+	bool returnValue = (bool)e_destination_is_ignored([self castedGObject]);
 
 	return returnValue;
 }
 
 - (const GList*)listGetDests
 {
-	const GList* returnValue = e_destination_list_get_dests([self castedGObject]);
+	const GList* returnValue = (const GList*)e_destination_list_get_dests([self castedGObject]);
 
 	return returnValue;
 }
 
 - (const GList*)listGetRootDests
 {
-	const GList* returnValue = e_destination_list_get_root_dests([self castedGObject]);
+	const GList* returnValue = (const GList*)e_destination_list_get_root_dests([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)listShowAddresses
 {
-	bool returnValue = e_destination_list_show_addresses([self castedGObject]);
+	bool returnValue = (bool)e_destination_list_show_addresses([self castedGObject]);
 
 	return returnValue;
 }

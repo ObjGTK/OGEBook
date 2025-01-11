@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelSExp.h"
 
 @implementation OGCamelSExp
+
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_SEXP;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 + (void)encodeBoolWithString:(GString*)string vbool:(bool)vbool
 {
@@ -18,20 +28,24 @@
 	camel_sexp_encode_string(string, [vstring UTF8String]);
 }
 
-- (instancetype)init
++ (instancetype)sExp
 {
 	CamelSExp* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_sexp_new(), CamelSExp, CamelSExp);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelSExp* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelSExp alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelSExp*)castedGObject
@@ -64,14 +78,14 @@
 
 - (CamelSExpResult*)eval
 {
-	CamelSExpResult* returnValue = camel_sexp_eval([self castedGObject]);
+	CamelSExpResult* returnValue = (CamelSExpResult*)camel_sexp_eval([self castedGObject]);
 
 	return returnValue;
 }
 
 - (bool)evaluateOccurTimesWithStart:(time_t*)start end:(time_t*)end
 {
-	bool returnValue = camel_sexp_evaluate_occur_times([self castedGObject], start, end);
+	bool returnValue = (bool)camel_sexp_evaluate_occur_times([self castedGObject], start, end);
 
 	return returnValue;
 }
@@ -88,14 +102,14 @@
 
 - (gint)parse
 {
-	gint returnValue = camel_sexp_parse([self castedGObject]);
+	gint returnValue = (gint)camel_sexp_parse([self castedGObject]);
 
 	return returnValue;
 }
 
 - (CamelSExpTerm*)parseValue
 {
-	CamelSExpTerm* returnValue = camel_sexp_parse_value([self castedGObject]);
+	CamelSExpTerm* returnValue = (CamelSExpTerm*)camel_sexp_parse_value([self castedGObject]);
 
 	return returnValue;
 }
@@ -112,7 +126,7 @@
 
 - (CamelSExpResult*)resultNew:(gint)type
 {
-	CamelSExpResult* returnValue = camel_sexp_result_new([self castedGObject], type);
+	CamelSExpResult* returnValue = (CamelSExpResult*)camel_sexp_result_new([self castedGObject], type);
 
 	return returnValue;
 }
@@ -124,14 +138,14 @@
 
 - (gint)setScope:(guint)scope
 {
-	gint returnValue = camel_sexp_set_scope([self castedGObject], scope);
+	gint returnValue = (gint)camel_sexp_set_scope([self castedGObject], scope);
 
 	return returnValue;
 }
 
 - (CamelSExpResult*)termEval:(CamelSExpTerm*)term
 {
-	CamelSExpResult* returnValue = camel_sexp_term_eval([self castedGObject], term);
+	CamelSExpResult* returnValue = (CamelSExpResult*)camel_sexp_term_eval([self castedGObject], term);
 
 	return returnValue;
 }

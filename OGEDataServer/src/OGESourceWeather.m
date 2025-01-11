@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGESourceWeather.h"
 
 @implementation OGESourceWeather
+
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_SOURCE_WEATHER;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (ESourceWeather*)castedGObject
 {
@@ -31,7 +41,7 @@
 
 - (ESourceWeatherUnits)units
 {
-	ESourceWeatherUnits returnValue = e_source_weather_get_units([self castedGObject]);
+	ESourceWeatherUnits returnValue = (ESourceWeatherUnits)e_source_weather_get_units([self castedGObject]);
 
 	return returnValue;
 }

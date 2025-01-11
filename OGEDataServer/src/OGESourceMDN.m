@@ -1,12 +1,22 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGESourceMDN.h"
 
 @implementation OGESourceMDN
+
++ (void)load
+{
+	GType gtypeToAssociate = E_TYPE_SOURCE_MDN;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
 
 - (ESourceMDN*)castedGObject
 {
@@ -15,7 +25,7 @@
 
 - (EMdnResponsePolicy)responsePolicy
 {
-	EMdnResponsePolicy returnValue = e_source_mdn_get_response_policy([self castedGObject]);
+	EMdnResponsePolicy returnValue = (EMdnResponsePolicy)e_source_mdn_get_response_policy([self castedGObject]);
 
 	return returnValue;
 }

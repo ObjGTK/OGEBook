@@ -1,30 +1,44 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelMimePart.h"
 
-#import <OGio/OGCancellable.h>
 #import "OGCamelMimeParser.h"
+#import <OGio/OGCancellable.h>
 
 @implementation OGCamelMimePart
 
-- (instancetype)init
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_MIME_PART;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
++ (instancetype)mimePart
 {
 	CamelMimePart* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_part_new(), CamelMimePart, CamelMimePart);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelMimePart* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelMimePart alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelMimePart*)castedGObject
@@ -36,13 +50,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_mime_part_construct_content_from_parser([self castedGObject], [mp castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_mime_part_construct_content_from_parser([self castedGObject], [mp castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -56,13 +66,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_mime_part_construct_from_parser_finish([self castedGObject], result, &err);
+	bool returnValue = (bool)camel_mime_part_construct_from_parser_finish([self castedGObject], result, &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -71,13 +77,9 @@
 {
 	GError* err = NULL;
 
-	bool returnValue = camel_mime_part_construct_from_parser_sync([self castedGObject], [parser castedGObject], [cancellable castedGObject], &err);
+	bool returnValue = (bool)camel_mime_part_construct_from_parser_sync([self castedGObject], [parser castedGObject], [cancellable castedGObject], &err);
 
-	if(err != NULL) {
-		OGErrorException* exception = [OGErrorException exceptionWithGError:err];
-		g_error_free(err);
-		@throw exception;
-	}
+	[OGErrorException throwForError:err];
 
 	return returnValue;
 }
@@ -92,7 +94,7 @@
 
 - (const CamelContentDisposition*)contentDisposition
 {
-	const CamelContentDisposition* returnValue = camel_mime_part_get_content_disposition([self castedGObject]);
+	const CamelContentDisposition* returnValue = (const CamelContentDisposition*)camel_mime_part_get_content_disposition([self castedGObject]);
 
 	return returnValue;
 }
@@ -107,7 +109,7 @@
 
 - (const GList*)contentLanguages
 {
-	const GList* returnValue = camel_mime_part_get_content_languages([self castedGObject]);
+	const GList* returnValue = (const GList*)camel_mime_part_get_content_languages([self castedGObject]);
 
 	return returnValue;
 }
@@ -130,7 +132,7 @@
 
 - (CamelContentType*)contentType
 {
-	CamelContentType* returnValue = camel_mime_part_get_content_type([self castedGObject]);
+	CamelContentType* returnValue = (CamelContentType*)camel_mime_part_get_content_type([self castedGObject]);
 
 	return returnValue;
 }
@@ -153,7 +155,7 @@
 
 - (CamelTransferEncoding)encoding
 {
-	CamelTransferEncoding returnValue = camel_mime_part_get_encoding([self castedGObject]);
+	CamelTransferEncoding returnValue = (CamelTransferEncoding)camel_mime_part_get_encoding([self castedGObject]);
 
 	return returnValue;
 }
