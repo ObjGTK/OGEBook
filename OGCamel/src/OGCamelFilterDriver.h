@@ -23,7 +23,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithSession:(OGCamelSession*)session;
++ (instancetype)filterDriver:(OGCamelSession*)session;
 
 /**
  * Methods

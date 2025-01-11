@@ -20,20 +20,24 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-- (instancetype)initWithBs:(OGCamelBlockFile*)bs root:(camel_block_t)root
++ (instancetype)keyTableWithBs:(OGCamelBlockFile*)bs root:(camel_block_t)root
 {
 	CamelKeyTable* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_key_table_new([bs castedGObject], root), CamelKeyTable, CamelKeyTable);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelKeyTable* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelKeyTable alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelKeyTable*)castedGObject

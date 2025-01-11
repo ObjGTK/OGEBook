@@ -18,7 +18,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithSession:(OGCamelSession*)session;
++ (instancetype)gpgContext:(OGCamelSession*)session;
 
 /**
  * Methods

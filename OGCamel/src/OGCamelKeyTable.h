@@ -19,7 +19,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithBs:(OGCamelBlockFile*)bs root:(camel_block_t)root;
++ (instancetype)keyTableWithBs:(OGCamelBlockFile*)bs root:(camel_block_t)root;
 
 /**
  * Methods

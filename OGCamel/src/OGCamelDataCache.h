@@ -19,7 +19,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithPath:(OFString*)path;
++ (instancetype)dataCache:(OFString*)path;
 
 /**
  * Methods

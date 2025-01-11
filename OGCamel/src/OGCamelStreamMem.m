@@ -18,52 +18,64 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-- (instancetype)init
++ (instancetype)streamMem
 {
 	CamelStreamMem* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_mem_new(), CamelStreamMem, CamelStreamMem);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelStreamMem* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelStreamMem alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
-- (instancetype)initWithBufferWithBuffer:(OFString*)buffer len:(gsize)len
++ (instancetype)streamMemWithBufferWithBuffer:(OFString*)buffer len:(gsize)len
 {
 	CamelStreamMem* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_mem_new_with_buffer([buffer UTF8String], len), CamelStreamMem, CamelStreamMem);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelStreamMem* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelStreamMem alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
-- (instancetype)initWithBufferWithByteArray:(GByteArray*)buffer
++ (instancetype)streamMemWithByteArray:(GByteArray*)buffer
 {
 	CamelStreamMem* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_mem_new_with_byte_array(buffer), CamelStreamMem, CamelStreamMem);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelStreamMem* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelStreamMem alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelStreamMem*)castedGObject

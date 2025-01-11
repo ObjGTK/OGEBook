@@ -32,7 +32,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithSession:(OGCamelSession*)session;
++ (instancetype)cipherContext:(OGCamelSession*)session;
 
 /**
  * Methods

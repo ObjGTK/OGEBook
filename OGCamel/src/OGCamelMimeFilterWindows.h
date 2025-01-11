@@ -15,7 +15,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithClaimedCharset:(OFString*)claimedCharset;
++ (instancetype)mimeFilterWindows:(OFString*)claimedCharset;
 
 /**
  * Methods

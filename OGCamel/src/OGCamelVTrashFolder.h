@@ -18,7 +18,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithParentStore:(OGCamelStore*)parentStore type:(CamelVTrashFolderType)type;
++ (instancetype)vTrashFolderWithParentStore:(OGCamelStore*)parentStore type:(CamelVTrashFolderType)type;
 
 /**
  * Methods

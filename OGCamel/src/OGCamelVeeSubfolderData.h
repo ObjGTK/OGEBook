@@ -24,7 +24,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithFolder:(OGCamelFolder*)folder;
++ (instancetype)veeSubfolderData:(OGCamelFolder*)folder;
 
 /**
  * Methods

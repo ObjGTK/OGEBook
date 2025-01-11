@@ -34,36 +34,44 @@
 	return returnValue;
 }
 
-- (instancetype)init
++ (instancetype)vCard
 {
 	EVCard* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_vcard_new(), EVCard, EVCard);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGEVCard* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGEVCard alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
-- (instancetype)initWithStrFromString:(OFString*)str
++ (instancetype)vCardFromString:(OFString*)str
 {
 	EVCard* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_vcard_new_from_string([str UTF8String]), EVCard, EVCard);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGEVCard* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGEVCard alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (EVCard*)castedGObject

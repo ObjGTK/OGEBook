@@ -39,20 +39,24 @@
 	return returnValue;
 }
 
-- (instancetype)initWithPath:(OFString*)path flags:(gint)flags
++ (instancetype)textIndexWithPath:(OFString*)path flags:(gint)flags
 {
 	CamelTextIndex* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_text_index_new([path UTF8String], flags), CamelTextIndex, CamelTextIndex);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelTextIndex* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelTextIndex alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelTextIndex*)castedGObject

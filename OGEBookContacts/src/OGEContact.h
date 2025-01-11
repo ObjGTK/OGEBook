@@ -79,9 +79,9 @@
 /**
  * Constructors
  */
-- (instancetype)init;
-- (instancetype)initWithVcardFromVcard:(OFString*)vcard;
-- (instancetype)initFromVcardWithUidWithVcard:(OFString*)vcard uid:(OFString*)uid;
++ (instancetype)contact;
++ (instancetype)contactFromVcard:(OFString*)vcard;
++ (instancetype)contactFromVcardWithUidWithVcard:(OFString*)vcard uid:(OFString*)uid;
 
 /**
  * Methods

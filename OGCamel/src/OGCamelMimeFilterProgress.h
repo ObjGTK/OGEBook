@@ -17,7 +17,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithCancellable:(OGCancellable*)cancellable total:(gsize)total;
++ (instancetype)mimeFilterProgressWithCancellable:(OGCancellable*)cancellable total:(gsize)total;
 
 /**
  * Methods

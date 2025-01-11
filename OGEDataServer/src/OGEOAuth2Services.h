@@ -48,7 +48,7 @@
 /**
  * Constructors
  */
-- (instancetype)init;
++ (instancetype)oAuth2Services;
 
 /**
  * Methods

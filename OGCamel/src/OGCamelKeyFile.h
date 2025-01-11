@@ -17,7 +17,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithPath:(OFString*)path flags:(gint)flags version:(OFString*)version;
++ (instancetype)keyFileWithPath:(OFString*)path flags:(gint)flags version:(OFString*)version;
 
 /**
  * Methods

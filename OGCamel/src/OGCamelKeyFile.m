@@ -18,20 +18,24 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-- (instancetype)initWithPath:(OFString*)path flags:(gint)flags version:(OFString*)version
++ (instancetype)keyFileWithPath:(OFString*)path flags:(gint)flags version:(OFString*)version
 {
 	CamelKeyFile* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_key_file_new([path UTF8String], flags, [version UTF8String]), CamelKeyFile, CamelKeyFile);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelKeyFile* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelKeyFile alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelKeyFile*)castedGObject

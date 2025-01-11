@@ -17,7 +17,7 @@
 /**
  * Constructors
  */
-- (instancetype)init;
++ (instancetype)hTMLParser;
 
 /**
  * Methods

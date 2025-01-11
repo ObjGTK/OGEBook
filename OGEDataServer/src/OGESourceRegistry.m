@@ -39,44 +39,52 @@
 	e_source_registry_new([cancellable castedGObject], callback, userData);
 }
 
-- (instancetype)initWithResultFinish:(GAsyncResult*)result
++ (instancetype)sourceRegistryFinish:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
 	ESourceRegistry* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_new_finish(result, &err), ESourceRegistry, ESourceRegistry);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
 	[OGErrorException throwForError:err unrefGObject:gobjectValue];
 
+	OGESourceRegistry* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGESourceRegistry alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
-- (instancetype)initWithCancellableSync:(OGCancellable*)cancellable
++ (instancetype)sourceRegistrySync:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
 	ESourceRegistry* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_registry_new_sync([cancellable castedGObject], &err), ESourceRegistry, ESourceRegistry);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
 	[OGErrorException throwForError:err unrefGObject:gobjectValue];
 
+	OGESourceRegistry* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGESourceRegistry alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (ESourceRegistry*)castedGObject

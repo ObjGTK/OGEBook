@@ -18,20 +18,24 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-- (instancetype)initWithDirection:(CamelMimeFilterYencDirection)direction
++ (instancetype)mimeFilterYenc:(CamelMimeFilterYencDirection)direction
 {
 	CamelMimeFilterYenc* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_yenc_new(direction), CamelMimeFilterYenc, CamelMimeFilterYenc);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelMimeFilterYenc* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelMimeFilterYenc alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelMimeFilterYenc*)castedGObject

@@ -20,9 +20,9 @@
 /**
  * Constructors
  */
-- (instancetype)initWithSummary:(OGCamelFolderSummary*)summary;
-- (instancetype)initFromHeadersWithSummary:(OGCamelFolderSummary*)summary headers:(const CamelNameValueArray*)headers;
-- (instancetype)initFromMessageWithSummary:(OGCamelFolderSummary*)summary message:(OGCamelMimeMessage*)message;
++ (instancetype)messageInfo:(OGCamelFolderSummary*)summary;
++ (instancetype)messageInfoFromHeadersWithSummary:(OGCamelFolderSummary*)summary headers:(const CamelNameValueArray*)headers;
++ (instancetype)messageInfoFromMessageWithSummary:(OGCamelFolderSummary*)summary message:(OGCamelMimeMessage*)message;
 
 /**
  * Methods

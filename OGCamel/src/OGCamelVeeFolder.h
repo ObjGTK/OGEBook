@@ -19,7 +19,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithParentStore:(OGCamelStore*)parentStore full:(OFString*)full flags:(guint32)flags;
++ (instancetype)veeFolderWithParentStore:(OGCamelStore*)parentStore full:(OFString*)full flags:(guint32)flags;
 
 /**
  * Methods

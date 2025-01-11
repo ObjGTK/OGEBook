@@ -41,36 +41,44 @@
 	camel_operation_progress([cancellable castedGObject], percent);
 }
 
-- (instancetype)init
++ (instancetype)operation
 {
 	CamelOperation* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_operation_new(), CamelOperation, CamelOperation);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelOperation* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelOperation alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
-- (instancetype)initWithCancellableProxy:(OGCancellable*)cancellable
++ (instancetype)operationProxy:(OGCancellable*)cancellable
 {
 	CamelOperation* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_operation_new_proxy([cancellable castedGObject]), CamelOperation, CamelOperation);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelOperation* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelOperation alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelOperation*)castedGObject

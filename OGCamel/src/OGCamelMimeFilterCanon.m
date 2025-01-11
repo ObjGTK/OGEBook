@@ -18,20 +18,24 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-- (instancetype)initWithFlags:(guint32)flags
++ (instancetype)mimeFilterCanon:(guint32)flags
 {
 	CamelMimeFilterCanon* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_canon_new(flags), CamelMimeFilterCanon, CamelMimeFilterCanon);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelMimeFilterCanon* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelMimeFilterCanon alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelMimeFilterCanon*)castedGObject

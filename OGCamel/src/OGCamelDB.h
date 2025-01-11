@@ -82,7 +82,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithFilename:(OFString*)filename;
++ (instancetype)dB:(OFString*)filename;
 
 /**
  * Methods

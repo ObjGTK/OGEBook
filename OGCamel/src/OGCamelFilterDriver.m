@@ -24,20 +24,24 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-- (instancetype)initWithSession:(OGCamelSession*)session
++ (instancetype)filterDriver:(OGCamelSession*)session
 {
 	CamelFilterDriver* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_filter_driver_new([session castedGObject]), CamelFilterDriver, CamelFilterDriver);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelFilterDriver* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelFilterDriver alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelFilterDriver*)castedGObject

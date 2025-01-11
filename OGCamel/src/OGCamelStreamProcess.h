@@ -15,7 +15,7 @@
 /**
  * Constructors
  */
-- (instancetype)init;
++ (instancetype)streamProcess;
 
 /**
  * Methods

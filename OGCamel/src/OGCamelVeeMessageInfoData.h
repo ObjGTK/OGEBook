@@ -24,7 +24,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithSubfolderData:(OGCamelVeeSubfolderData*)subfolderData origMessageUid:(OFString*)origMessageUid;
++ (instancetype)veeMessageInfoDataWithSubfolderData:(OGCamelVeeSubfolderData*)subfolderData origMessageUid:(OFString*)origMessageUid;
 
 /**
  * Methods

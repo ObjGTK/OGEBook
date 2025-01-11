@@ -15,7 +15,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithMode:(CamelMimeFilterGZipMode)mode level:(gint)level;
++ (instancetype)mimeFilterGZipWithMode:(CamelMimeFilterGZipMode)mode level:(gint)level;
 
 /**
  * Methods

@@ -15,7 +15,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithFromCharset:(OFString*)fromCharset toCharset:(OFString*)toCharset;
++ (instancetype)mimeFilterCharsetWithFromCharset:(OFString*)fromCharset toCharset:(OFString*)toCharset;
 
 /**
  * Methods

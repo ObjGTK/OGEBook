@@ -28,20 +28,24 @@
 	camel_sexp_encode_string(string, [vstring UTF8String]);
 }
 
-- (instancetype)init
++ (instancetype)sExp
 {
 	CamelSExp* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_sexp_new(), CamelSExp, CamelSExp);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelSExp* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelSExp alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelSExp*)castedGObject

@@ -21,7 +21,7 @@
 /**
  * Constructors
  */
-- (instancetype)init;
++ (instancetype)mimeParser;
 
 /**
  * Methods
@@ -237,6 +237,13 @@
  * stream or file descriptor).
  */
 - (goffset)seekWithOffset:(goffset)offset whence:(gint)whence;
+
+/**
+ *
+ * @param matchstr
+ * @return
+ */
+- (gint)setHeaderRegex:(OFString*)matchstr;
 
 /**
  * Get the current parser state.

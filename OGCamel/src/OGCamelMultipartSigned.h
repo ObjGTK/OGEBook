@@ -18,7 +18,7 @@
 /**
  * Constructors
  */
-- (instancetype)init;
++ (instancetype)multipartSigned;
 
 /**
  * Methods

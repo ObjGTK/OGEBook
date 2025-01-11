@@ -62,8 +62,8 @@
 /**
  * Constructors
  */
-- (instancetype)initWithResultFinish:(GAsyncResult*)result;
-- (instancetype)initWithCancellableSync:(OGCancellable*)cancellable;
++ (instancetype)sourceRegistryFinish:(GAsyncResult*)result;
++ (instancetype)sourceRegistrySync:(OGCancellable*)cancellable;
 
 /**
  * Methods

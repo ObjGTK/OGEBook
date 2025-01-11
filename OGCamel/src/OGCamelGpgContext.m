@@ -21,20 +21,24 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-- (instancetype)initWithSession:(OGCamelSession*)session
++ (instancetype)gpgContext:(OGCamelSession*)session
 {
 	CamelGpgContext* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_gpg_context_new([session castedGObject]), CamelGpgContext, CamelGpgContext);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelGpgContext* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelGpgContext alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelGpgContext*)castedGObject

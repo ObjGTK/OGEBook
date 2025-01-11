@@ -29,7 +29,7 @@
 /**
  * Constructors
  */
-- (instancetype)init;
++ (instancetype)certDB;
 
 /**
  * Methods

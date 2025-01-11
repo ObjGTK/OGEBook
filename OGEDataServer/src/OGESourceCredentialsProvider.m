@@ -23,20 +23,24 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-- (instancetype)initWithRegistry:(OGESourceRegistry*)registry
++ (instancetype)sourceCredentialsProvider:(OGESourceRegistry*)registry
 {
 	ESourceCredentialsProvider* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_credentials_provider_new([registry castedGObject]), ESourceCredentialsProvider, ESourceCredentialsProvider);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGESourceCredentialsProvider* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGESourceCredentialsProvider alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (ESourceCredentialsProvider*)castedGObject

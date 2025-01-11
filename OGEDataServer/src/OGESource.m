@@ -29,44 +29,52 @@
 	return returnValue;
 }
 
-- (instancetype)initWithDbusObject:(GDBusObject*)dbusObject mainContext:(GMainContext*)mainContext
++ (instancetype)sourceWithDbusObject:(GDBusObject*)dbusObject mainContext:(GMainContext*)mainContext
 {
 	GError* err = NULL;
 
 	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_new(dbusObject, mainContext, &err), ESource, ESource);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
 	[OGErrorException throwForError:err unrefGObject:gobjectValue];
 
+	OGESource* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGESource alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
-- (instancetype)initWithUidWithUid:(OFString*)uid mainContext:(GMainContext*)mainContext
++ (instancetype)sourceWithUidWithUid:(OFString*)uid mainContext:(GMainContext*)mainContext
 {
 	GError* err = NULL;
 
 	ESource* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_new_with_uid([uid UTF8String], mainContext, &err), ESource, ESource);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
 	[OGErrorException throwForError:err unrefGObject:gobjectValue];
 
+	OGESource* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGESource alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (ESource*)castedGObject

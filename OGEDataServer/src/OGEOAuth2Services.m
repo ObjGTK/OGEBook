@@ -34,20 +34,24 @@
 	return returnValue;
 }
 
-- (instancetype)init
++ (instancetype)oAuth2Services
 {
 	EOAuth2Services* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_oauth2_services_new(), EOAuth2Services, EOAuth2Services);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGEOAuth2Services* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGEOAuth2Services alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (EOAuth2Services*)castedGObject

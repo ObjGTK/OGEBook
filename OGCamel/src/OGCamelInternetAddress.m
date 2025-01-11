@@ -34,20 +34,24 @@
 	return returnValue;
 }
 
-- (instancetype)init
++ (instancetype)internetAddress
 {
 	CamelInternetAddress* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_internet_address_new(), CamelInternetAddress, CamelInternetAddress);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelInternetAddress* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelInternetAddress alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelInternetAddress*)castedGObject

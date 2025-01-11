@@ -20,20 +20,24 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-- (instancetype)initWithSource:(OGCamelStream*)source
++ (instancetype)streamFilter:(OGCamelStream*)source
 {
 	CamelStreamFilter* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_filter_new([source castedGObject]), CamelStreamFilter, CamelStreamFilter);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelStreamFilter* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelStreamFilter alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelStreamFilter*)castedGObject

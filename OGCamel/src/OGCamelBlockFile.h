@@ -17,7 +17,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithPath:(OFString*)path flags:(gint)flags version:(OFString*)version blockSize:(gsize)blockSize;
++ (instancetype)blockFileWithPath:(OFString*)path flags:(gint)flags version:(OFString*)version blockSize:(gsize)blockSize;
 
 /**
  * Methods

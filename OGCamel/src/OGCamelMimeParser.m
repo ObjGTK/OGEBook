@@ -22,20 +22,24 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-- (instancetype)init
++ (instancetype)mimeParser
 {
 	CamelMimeParser* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_parser_new(), CamelMimeParser, CamelMimeParser);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelMimeParser* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelMimeParser alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelMimeParser*)castedGObject
@@ -170,6 +174,13 @@
 - (goffset)seekWithOffset:(goffset)offset whence:(gint)whence
 {
 	goffset returnValue = (goffset)camel_mime_parser_seek([self castedGObject], offset, whence);
+
+	return returnValue;
+}
+
+- (gint)setHeaderRegex:(OFString*)matchstr
+{
+	gint returnValue = (gint)camel_mime_parser_set_header_regex([self castedGObject], g_strdup([matchstr UTF8String]));
 
 	return returnValue;
 }

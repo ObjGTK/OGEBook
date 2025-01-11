@@ -36,7 +36,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithFolder:(OGCamelFolder*)folder;
++ (instancetype)folderSummary:(OGCamelFolder*)folder;
 
 /**
  * Methods

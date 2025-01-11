@@ -30,20 +30,24 @@
 	camel_folder_summary_free_array(array);
 }
 
-- (instancetype)initWithFolder:(OGCamelFolder*)folder
++ (instancetype)folderSummary:(OGCamelFolder*)folder
 {
 	CamelFolderSummary* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_summary_new([folder castedGObject]), CamelFolderSummary, CamelFolderSummary);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelFolderSummary* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelFolderSummary alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelFolderSummary*)castedGObject

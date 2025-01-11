@@ -17,7 +17,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithSource:(OGCamelStream*)source;
++ (instancetype)streamFilter:(OGCamelStream*)source;
 
 /**
  * Methods

@@ -19,7 +19,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithParent:(OGCamelFolder*)parent;
++ (instancetype)veeSummary:(OGCamelFolder*)parent;
 
 /**
  * Methods

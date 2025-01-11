@@ -18,7 +18,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithIndex:(OGCamelIndex*)index;
++ (instancetype)mimeFilterIndex:(OGCamelIndex*)index;
 
 /**
  * Methods

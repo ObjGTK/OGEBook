@@ -15,7 +15,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithFlags:(CamelMimeFilterToHTMLFlags)flags color:(guint32)color;
++ (instancetype)mimeFilterToHTMLWithFlags:(CamelMimeFilterToHTMLFlags)flags color:(guint32)color;
 
 /**
  * Methods

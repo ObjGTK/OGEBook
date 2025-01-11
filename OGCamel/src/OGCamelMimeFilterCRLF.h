@@ -15,7 +15,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithDirection:(CamelMimeFilterCRLFDirection)direction mode:(CamelMimeFilterCRLFMode)mode;
++ (instancetype)mimeFilterCRLFWithDirection:(CamelMimeFilterCRLFDirection)direction mode:(CamelMimeFilterCRLFMode)mode;
 
 /**
  * Methods

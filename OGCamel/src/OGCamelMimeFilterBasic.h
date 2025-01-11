@@ -15,7 +15,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithType:(CamelMimeFilterBasicType)type;
++ (instancetype)mimeFilterBasic:(CamelMimeFilterBasicType)type;
 
 /**
  * Methods

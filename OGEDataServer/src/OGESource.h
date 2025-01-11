@@ -42,8 +42,8 @@
 /**
  * Constructors
  */
-- (instancetype)initWithDbusObject:(GDBusObject*)dbusObject mainContext:(GMainContext*)mainContext;
-- (instancetype)initWithUidWithUid:(OFString*)uid mainContext:(GMainContext*)mainContext;
++ (instancetype)sourceWithDbusObject:(GDBusObject*)dbusObject mainContext:(GMainContext*)mainContext;
++ (instancetype)sourceWithUidWithUid:(OFString*)uid mainContext:(GMainContext*)mainContext;
 
 /**
  * Methods

@@ -22,7 +22,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithNsHref:(OFString*)nsHref rootElement:(OFString*)rootElement;
++ (instancetype)xmlDocumentWithNsHref:(OFString*)nsHref rootElement:(OFString*)rootElement;
 
 /**
  * Methods

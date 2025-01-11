@@ -15,7 +15,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithPreferredLen:(guint)preferredLen maxLen:(guint)maxLen indentChar:(gchar)indentChar flags:(guint32)flags;
++ (instancetype)mimeFilterLinewrapWithPreferredLen:(guint)preferredLen maxLen:(guint)maxLen indentChar:(gchar)indentChar flags:(guint32)flags;
 
 /**
  * Methods

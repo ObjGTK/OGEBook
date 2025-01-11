@@ -42,20 +42,24 @@
 	return returnValue;
 }
 
-- (instancetype)initWithServiceName:(OFString*)serviceName mechanism:(OFString*)mechanism service:(OGCamelService*)service
++ (instancetype)saslWithServiceName:(OFString*)serviceName mechanism:(OFString*)mechanism service:(OGCamelService*)service
 {
 	CamelSasl* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_sasl_new([serviceName UTF8String], [mechanism UTF8String], [service castedGObject]), CamelSasl, CamelSasl);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelSasl* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelSasl alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelSasl*)castedGObject

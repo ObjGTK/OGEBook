@@ -68,7 +68,7 @@
 /**
  * Constructors
  */
-- (instancetype)init;
++ (instancetype)destination;
 
 /**
  * Methods

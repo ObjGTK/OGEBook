@@ -15,7 +15,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithType:(CamelSaslAnonTraceType)type traceInfo:(OFString*)traceInfo;
++ (instancetype)saslAnonymousWithType:(CamelSaslAnonTraceType)type traceInfo:(OFString*)traceInfo;
 
 /**
  * Methods

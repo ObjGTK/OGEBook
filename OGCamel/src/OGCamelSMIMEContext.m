@@ -29,20 +29,24 @@
 	return returnValue;
 }
 
-- (instancetype)initWithSession:(OGCamelSession*)session
++ (instancetype)sMIMEContext:(OGCamelSession*)session
 {
 	CamelSMIMEContext* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_smime_context_new([session castedGObject]), CamelSMIMEContext, CamelSMIMEContext);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelSMIMEContext* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelSMIMEContext alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelSMIMEContext*)castedGObject

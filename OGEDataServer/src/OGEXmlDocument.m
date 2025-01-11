@@ -18,20 +18,24 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-- (instancetype)initWithNsHref:(OFString*)nsHref rootElement:(OFString*)rootElement
++ (instancetype)xmlDocumentWithNsHref:(OFString*)nsHref rootElement:(OFString*)rootElement
 {
 	EXmlDocument* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_xml_document_new([nsHref UTF8String], [rootElement UTF8String]), EXmlDocument, EXmlDocument);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGEXmlDocument* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGEXmlDocument alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (EXmlDocument*)castedGObject

@@ -163,7 +163,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithSource:(OGESource*)source;
++ (instancetype)bookClient:(OGESource*)source;
 
 /**
  * Methods

@@ -70,52 +70,64 @@
 	return returnValue;
 }
 
-- (instancetype)init
++ (instancetype)contact
 {
 	EContact* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_contact_new(), EContact, EContact);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGEContact* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGEContact alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
-- (instancetype)initWithVcardFromVcard:(OFString*)vcard
++ (instancetype)contactFromVcard:(OFString*)vcard
 {
 	EContact* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_contact_new_from_vcard([vcard UTF8String]), EContact, EContact);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGEContact* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGEContact alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
-- (instancetype)initFromVcardWithUidWithVcard:(OFString*)vcard uid:(OFString*)uid
++ (instancetype)contactFromVcardWithUidWithVcard:(OFString*)vcard uid:(OFString*)uid
 {
 	EContact* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_contact_new_from_vcard_with_uid([vcard UTF8String], [uid UTF8String]), EContact, EContact);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGEContact* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGEContact alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (EContact*)castedGObject

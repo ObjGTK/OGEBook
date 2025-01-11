@@ -20,7 +20,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithBaseStream:(OGIOStream*)baseStream;
++ (instancetype)stream:(OGIOStream*)baseStream;
 
 /**
  * Methods

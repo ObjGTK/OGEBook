@@ -63,24 +63,28 @@
 	return returnValue;
 }
 
-- (instancetype)initWithFilename:(OFString*)filename
++ (instancetype)dB:(OFString*)filename
 {
 	GError* err = NULL;
 
 	CamelDB* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_db_new([filename UTF8String], &err), CamelDB, CamelDB);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
 	[OGErrorException throwForError:err unrefGObject:gobjectValue];
 
+	OGCamelDB* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelDB alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelDB*)castedGObject

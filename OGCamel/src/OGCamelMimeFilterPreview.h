@@ -15,7 +15,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithLimit:(guint)limit;
++ (instancetype)mimeFilterPreview:(guint)limit;
 
 /**
  * Methods

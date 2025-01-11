@@ -20,20 +20,24 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-- (instancetype)initWithBs:(OGCamelBlockFile*)bs root:(camel_block_t)root
++ (instancetype)partitionTableWithBs:(OGCamelBlockFile*)bs root:(camel_block_t)root
 {
 	CamelPartitionTable* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_partition_table_new([bs castedGObject], root), CamelPartitionTable, CamelPartitionTable);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelPartitionTable* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelPartitionTable alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelPartitionTable*)castedGObject

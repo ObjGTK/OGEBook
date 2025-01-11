@@ -79,7 +79,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithNode:(JsonNode*)node;
++ (instancetype)reader:(JsonNode*)node;
 
 /**
  * Methods

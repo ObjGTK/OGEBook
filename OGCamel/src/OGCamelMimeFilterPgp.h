@@ -15,7 +15,7 @@
 /**
  * Constructors
  */
-- (instancetype)init;
++ (instancetype)mimeFilterPgp;
 
 /**
  * Methods

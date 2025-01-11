@@ -15,7 +15,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithFlags:(guint)flags;
++ (instancetype)mimeFilterBestenc:(guint)flags;
 
 /**
  * Methods

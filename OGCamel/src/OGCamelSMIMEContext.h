@@ -37,7 +37,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithSession:(OGCamelSession*)session;
++ (instancetype)sMIMEContext:(OGCamelSession*)session;
 
 /**
  * Methods

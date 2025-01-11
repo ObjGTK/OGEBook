@@ -22,20 +22,24 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-- (instancetype)initWithParentStore:(OGCamelStore*)parentStore full:(OFString*)full flags:(guint32)flags
++ (instancetype)veeFolderWithParentStore:(OGCamelStore*)parentStore full:(OFString*)full flags:(guint32)flags
 {
 	CamelVeeFolder* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_folder_new([parentStore castedGObject], [full UTF8String], flags), CamelVeeFolder, CamelVeeFolder);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelVeeFolder* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelVeeFolder alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelVeeFolder*)castedGObject

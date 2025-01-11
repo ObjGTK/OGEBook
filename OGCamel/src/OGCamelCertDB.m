@@ -28,20 +28,24 @@
 	return returnValue;
 }
 
-- (instancetype)init
++ (instancetype)certDB
 {
 	CamelCertDB* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_certdb_new(), CamelCertDB, CamelCertDB);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelCertDB* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelCertDB alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelCertDB*)castedGObject

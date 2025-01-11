@@ -17,7 +17,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithStream:(OGCamelStream*)stream mode:(CamelStreamBufferMode)mode;
++ (instancetype)streamBufferWithStream:(OGCamelStream*)stream mode:(CamelStreamBufferMode)mode;
 
 /**
  * Methods

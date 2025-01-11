@@ -21,52 +21,64 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-- (instancetype)initWithSummary:(OGCamelFolderSummary*)summary
++ (instancetype)messageInfo:(OGCamelFolderSummary*)summary
 {
 	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_message_info_new([summary castedGObject]), CamelMessageInfo, CamelMessageInfo);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelMessageInfo* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelMessageInfo alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
-- (instancetype)initFromHeadersWithSummary:(OGCamelFolderSummary*)summary headers:(const CamelNameValueArray*)headers
++ (instancetype)messageInfoFromHeadersWithSummary:(OGCamelFolderSummary*)summary headers:(const CamelNameValueArray*)headers
 {
 	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_message_info_new_from_headers([summary castedGObject], headers), CamelMessageInfo, CamelMessageInfo);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelMessageInfo* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelMessageInfo alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
-- (instancetype)initFromMessageWithSummary:(OGCamelFolderSummary*)summary message:(OGCamelMimeMessage*)message
++ (instancetype)messageInfoFromMessageWithSummary:(OGCamelFolderSummary*)summary message:(OGCamelMimeMessage*)message
 {
 	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_message_info_new_from_message([summary castedGObject], [message castedGObject]), CamelMessageInfo, CamelMessageInfo);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelMessageInfo* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelMessageInfo alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelMessageInfo*)castedGObject
@@ -100,7 +112,7 @@
 {
 	gchar* gobjectValue = camel_message_info_dup_preview([self castedGObject]);
 
-	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	OFString* returnValue = gobjectValue;
 	return returnValue;
 }
 

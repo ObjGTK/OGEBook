@@ -59,8 +59,8 @@
 /**
  * Constructors
  */
-- (instancetype)init;
-- (instancetype)initImmutable;
++ (instancetype)parser;
++ (instancetype)parserImmutable;
 
 /**
  * Methods

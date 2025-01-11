@@ -21,7 +21,7 @@
 /**
  * Constructors
  */
-- (instancetype)init;
++ (instancetype)veeStore;
 
 /**
  * Methods

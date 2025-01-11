@@ -29,20 +29,24 @@
 	return returnValue;
 }
 
-- (instancetype)initWithSession:(OGCamelSession*)session
++ (instancetype)cipherContext:(OGCamelSession*)session
 {
 	CamelCipherContext* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_cipher_context_new([session castedGObject]), CamelCipherContext, CamelCipherContext);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelCipherContext* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelCipherContext alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelCipherContext*)castedGObject

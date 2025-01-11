@@ -15,7 +15,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithDirection:(CamelMimeFilterYencDirection)direction;
++ (instancetype)mimeFilterYenc:(CamelMimeFilterYencDirection)direction;
 
 /**
  * Methods

@@ -38,8 +38,8 @@
 /**
  * Constructors
  */
-- (instancetype)init;
-- (instancetype)initWithStrFromString:(OFString*)str;
++ (instancetype)vCard;
++ (instancetype)vCardFromString:(OFString*)str;
 
 /**
  * Methods

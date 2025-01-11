@@ -41,7 +41,7 @@
 /**
  * Constructors
  */
-- (instancetype)init;
++ (instancetype)sExp;
 
 /**
  * Methods

@@ -109,24 +109,28 @@
 	return returnValue;
 }
 
-- (instancetype)initWithSource:(OGESource*)source
++ (instancetype)bookClient:(OGESource*)source
 {
 	GError* err = NULL;
 
 	EBookClient* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_book_client_new([source castedGObject], &err), EBookClient, EBookClient);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
 	[OGErrorException throwForError:err unrefGObject:gobjectValue];
 
+	OGEBookClient* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGEBookClient alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (EBookClient*)castedGObject

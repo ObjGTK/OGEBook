@@ -42,7 +42,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithPath:(OFString*)path flags:(gint)flags;
++ (instancetype)textIndexWithPath:(OFString*)path flags:(gint)flags;
 
 /**
  * Methods

@@ -18,7 +18,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithSummary:(OGCamelFolderSummary*)summary originalSummary:(OGCamelFolderSummary*)originalSummary vuid:(OFString*)vuid;
++ (instancetype)veeMessageInfoWithSummary:(OGCamelFolderSummary*)summary originalSummary:(OGCamelFolderSummary*)originalSummary vuid:(OFString*)vuid;
 
 /**
  * Methods

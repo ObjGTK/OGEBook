@@ -15,9 +15,9 @@
 /**
  * Constructors
  */
-- (instancetype)init;
-- (instancetype)initWithBufferWithBuffer:(OFString*)buffer len:(gsize)len;
-- (instancetype)initWithBufferWithByteArray:(GByteArray*)buffer;
++ (instancetype)streamMem;
++ (instancetype)streamMemWithBufferWithBuffer:(OFString*)buffer len:(gsize)len;
++ (instancetype)streamMemWithByteArray:(GByteArray*)buffer;
 
 /**
  * Methods

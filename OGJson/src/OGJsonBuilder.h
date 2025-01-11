@@ -56,8 +56,8 @@
 /**
  * Constructors
  */
-- (instancetype)init;
-- (instancetype)initImmutable;
++ (instancetype)builder;
++ (instancetype)builderImmutable;
 
 /**
  * Methods

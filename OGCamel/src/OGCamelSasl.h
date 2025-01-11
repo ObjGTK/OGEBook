@@ -52,7 +52,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithServiceName:(OFString*)serviceName mechanism:(OFString*)mechanism service:(OGCamelService*)service;
++ (instancetype)saslWithServiceName:(OFString*)serviceName mechanism:(OFString*)mechanism service:(OGCamelService*)service;
 
 /**
  * Methods

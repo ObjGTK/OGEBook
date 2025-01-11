@@ -167,7 +167,7 @@
 /**
  * Constructors
  */
-- (instancetype)init;
++ (instancetype)path;
 
 /**
  * Methods

@@ -68,8 +68,8 @@
 /**
  * Constructors
  */
-- (instancetype)init;
-- (instancetype)initWithCancellableProxy:(OGCancellable*)cancellable;
++ (instancetype)operation;
++ (instancetype)operationProxy:(OGCancellable*)cancellable;
 
 /**
  * Methods

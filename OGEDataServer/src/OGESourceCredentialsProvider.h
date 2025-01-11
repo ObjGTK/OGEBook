@@ -27,7 +27,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithRegistry:(OGESourceRegistry*)registry;
++ (instancetype)sourceCredentialsProvider:(OGESourceRegistry*)registry;
 
 /**
  * Methods

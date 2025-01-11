@@ -24,7 +24,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithRegistry:(OGESourceRegistry*)registry extensionName:(OFString*)extensionName;
++ (instancetype)sourceRegistryWatcherWithRegistry:(OGESourceRegistry*)registry extensionName:(OFString*)extensionName;
 
 /**
  * Methods
