@@ -74,7 +74,7 @@
 	return returnValue;
 }
 
-- (void)setIndent:(guint)indentLevel
+- (void)setIndentWithIndentLevel:(guint)indentLevel
 {
 	json_generator_set_indent([self castedGObject], indentLevel);
 }
@@ -84,17 +84,17 @@
 	json_generator_set_indent_char([self castedGObject], indentChar);
 }
 
-- (void)setPretty:(bool)isPretty
+- (void)setPrettyWithIsPretty:(bool)isPretty
 {
 	json_generator_set_pretty([self castedGObject], isPretty);
 }
 
-- (void)setRoot:(JsonNode*)node
+- (void)setRootWithNode:(JsonNode*)node
 {
 	json_generator_set_root([self castedGObject], node);
 }
 
-- (OFString*)toData:(gsize*)length
+- (OFString*)toDataWithLength:(gsize*)length
 {
 	gchar* gobjectValue = json_generator_to_data([self castedGObject], length);
 
@@ -102,7 +102,7 @@
 	return returnValue;
 }
 
-- (bool)toFile:(OFString*)filename
+- (bool)toFileWithFilename:(OFString*)filename
 {
 	GError* err = NULL;
 
@@ -120,7 +120,7 @@
 	return returnValue;
 }
 
-- (bool)toStreamWithStream:(OGOutputStream*)stream cancellable:(OGCancellable*)cancellable
+- (bool)toStream:(OGOutputStream*)stream cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 

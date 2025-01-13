@@ -24,7 +24,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (gint)threadedMessagesDump:(CamelFolderThreadNode*)c
++ (gint)threadedMessagesDumpWithC:(CamelFolderThreadNode*)c
 {
 	gint returnValue = (gint)camel_folder_threaded_messages_dump(c);
 
@@ -36,7 +36,7 @@
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelFolder, CamelFolder);
 }
 
-- (void)appendMessageWithMessage:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)appendMessage:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	camel_folder_append_message([self castedGObject], [message castedGObject], [info castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
@@ -52,7 +52,7 @@
 	return returnValue;
 }
 
-- (bool)appendMessageSyncWithMessage:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info appendedUid:(gchar**)appendedUid cancellable:(OGCancellable*)cancellable
+- (bool)appendMessageSync:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info appendedUid:(gchar**)appendedUid cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -63,7 +63,7 @@
 	return returnValue;
 }
 
-- (void)changed:(CamelFolderChangeInfo*)changes
+- (void)changedWithChanges:(CamelFolderChangeInfo*)changes
 {
 	camel_folder_changed([self castedGObject], changes);
 }
@@ -75,7 +75,7 @@
 	return returnValue;
 }
 
-- (guint32)countByExpressionWithExpression:(OFString*)expression cancellable:(OGCancellable*)cancellable
+- (guint32)countByExpression:(OFString*)expression cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -120,7 +120,7 @@
 	camel_folder_expunge([self castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)expungeFinish:(GAsyncResult*)result
+- (bool)expungeFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -131,7 +131,7 @@
 	return returnValue;
 }
 
-- (bool)expungeSync:(OGCancellable*)cancellable
+- (bool)expungeSyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -142,22 +142,22 @@
 	return returnValue;
 }
 
-- (void)freeDeep:(GPtrArray*)array
+- (void)freeDeepWithArray:(GPtrArray*)array
 {
 	camel_folder_free_deep([self castedGObject], array);
 }
 
-- (void)freeShallow:(GPtrArray*)array
+- (void)freeShallowWithArray:(GPtrArray*)array
 {
 	camel_folder_free_shallow([self castedGObject], array);
 }
 
-- (void)freeSummary:(GPtrArray*)array
+- (void)freeSummaryWithArray:(GPtrArray*)array
 {
 	camel_folder_free_summary([self castedGObject], array);
 }
 
-- (void)freeUids:(GPtrArray*)array
+- (void)freeUidsWithArray:(GPtrArray*)array
 {
 	camel_folder_free_uids([self castedGObject], array);
 }
@@ -190,7 +190,7 @@
 	return returnValue;
 }
 
-- (OFString*)filename:(OFString*)uid
+- (OFString*)filenameWithUid:(OFString*)uid
 {
 	GError* err = NULL;
 
@@ -276,7 +276,7 @@
 	return returnValue;
 }
 
-- (OGCamelMimeMessage*)messageFinish:(GAsyncResult*)result
+- (OGCamelMimeMessage*)messageFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -288,14 +288,14 @@
 	return returnValue;
 }
 
-- (guint32)messageFlags:(OFString*)uid
+- (guint32)messageFlagsWithUid:(OFString*)uid
 {
 	guint32 returnValue = (guint32)camel_folder_get_message_flags([self castedGObject], [uid UTF8String]);
 
 	return returnValue;
 }
 
-- (OGCamelMessageInfo*)messageInfo:(OFString*)uid
+- (OGCamelMessageInfo*)messageInfoWithUid:(OFString*)uid
 {
 	CamelMessageInfo* gobjectValue = camel_folder_get_message_info([self castedGObject], [uid UTF8String]);
 
@@ -352,7 +352,7 @@
 	camel_folder_get_quota_info([self castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (CamelFolderQuotaInfo*)quotaInfoFinish:(GAsyncResult*)result
+- (CamelFolderQuotaInfo*)quotaInfoFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -363,7 +363,7 @@
 	return returnValue;
 }
 
-- (CamelFolderQuotaInfo*)quotaInfoSync:(OGCancellable*)cancellable
+- (CamelFolderQuotaInfo*)quotaInfoSyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -435,7 +435,7 @@
 	camel_folder_purge_message_cache([self castedGObject], g_strdup([startUid UTF8String]), g_strdup([endUid UTF8String]), ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)purgeMessageCacheFinish:(GAsyncResult*)result
+- (bool)purgeMessageCacheFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -462,7 +462,7 @@
 	camel_folder_refresh_info([self castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)refreshInfoFinish:(GAsyncResult*)result
+- (bool)refreshInfoFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -473,7 +473,7 @@
 	return returnValue;
 }
 
-- (bool)refreshInfoSync:(OGCancellable*)cancellable
+- (bool)refreshInfoSyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -484,12 +484,12 @@
 	return returnValue;
 }
 
-- (void)rename:(OFString*)newName
+- (void)renameWithNewName:(OFString*)newName
 {
 	camel_folder_rename([self castedGObject], [newName UTF8String]);
 }
 
-- (GPtrArray*)searchByExpressionWithExpression:(OFString*)expression cancellable:(OGCancellable*)cancellable
+- (GPtrArray*)searchByExpression:(OFString*)expression cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -511,7 +511,7 @@
 	return returnValue;
 }
 
-- (void)searchFree:(GPtrArray*)result
+- (void)searchFreeWithResult:(GPtrArray*)result
 {
 	camel_folder_search_free([self castedGObject], result);
 }
@@ -526,7 +526,7 @@
 	camel_folder_set_display_name([self castedGObject], [displayName UTF8String]);
 }
 
-- (void)setFlags:(guint32)folderFlags
+- (void)setFlagsWithFolderFlags:(guint32)folderFlags
 {
 	camel_folder_set_flags([self castedGObject], folderFlags);
 }
@@ -536,7 +536,7 @@
 	camel_folder_set_full_name([self castedGObject], [fullName UTF8String]);
 }
 
-- (void)setLockAsync:(bool)skipFolderLock
+- (void)setLockAsyncWithSkipFolderLock:(bool)skipFolderLock
 {
 	camel_folder_set_lock_async([self castedGObject], skipFolderLock);
 }
@@ -578,7 +578,7 @@
 	camel_folder_synchronize([self castedGObject], expunge, ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)synchronizeFinish:(GAsyncResult*)result
+- (bool)synchronizeFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -594,7 +594,7 @@
 	camel_folder_synchronize_message([self castedGObject], [messageUid UTF8String], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)synchronizeMessageFinish:(GAsyncResult*)result
+- (bool)synchronizeMessageFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 

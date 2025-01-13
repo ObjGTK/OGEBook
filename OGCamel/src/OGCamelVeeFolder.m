@@ -57,7 +57,7 @@
 	camel_vee_folder_add_vuid([self castedGObject], [miData castedGObject], changes);
 }
 
-- (void)construct:(guint32)flags
+- (void)constructWithFlags:(guint32)flags
 {
 	camel_vee_folder_construct([self castedGObject], flags);
 }
@@ -92,7 +92,7 @@
 	return returnValue;
 }
 
-- (OGCamelFolder*)veeUidFolder:(OFString*)veeMessageUid
+- (OGCamelFolder*)veeUidFolderWithVeeMessageUid:(OFString*)veeMessageUid
 {
 	CamelFolder* gobjectValue = camel_vee_folder_get_vee_uid_folder([self castedGObject], [veeMessageUid UTF8String]);
 
@@ -100,7 +100,7 @@
 	return returnValue;
 }
 
-- (void)ignoreNextChangedEvent:(OGCamelFolder*)subfolder
+- (void)ignoreNextChangedEventWithSubfolder:(OGCamelFolder*)subfolder
 {
 	camel_vee_folder_ignore_next_changed_event([self castedGObject], [subfolder castedGObject]);
 }
@@ -127,7 +127,7 @@
 	camel_vee_folder_remove_folder([self castedGObject], [subfolder castedGObject], [cancellable castedGObject]);
 }
 
-- (void)removeFromIgnoreChangedEvent:(OGCamelFolder*)subfolder
+- (void)removeFromIgnoreChangedEventWithSubfolder:(OGCamelFolder*)subfolder
 {
 	camel_vee_folder_remove_from_ignore_changed_event([self castedGObject], [subfolder castedGObject]);
 }
@@ -147,7 +147,7 @@
 	camel_vee_folder_set_expression([self castedGObject], [expression UTF8String]);
 }
 
-- (void)setFoldersWithFolders:(GList*)folders cancellable:(OGCancellable*)cancellable
+- (void)setFolders:(GList*)folders cancellable:(OGCancellable*)cancellable
 {
 	camel_vee_folder_set_folders([self castedGObject], folders, [cancellable castedGObject]);
 }

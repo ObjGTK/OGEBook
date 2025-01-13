@@ -23,7 +23,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (time_t)utilAddMonthsWithT:(time_t)t months:(gint)months
++ (time_t)utilAddMonths:(time_t)t months:(gint)months
 {
 	time_t returnValue = (time_t)camel_folder_search_util_add_months(t, months);
 
@@ -37,7 +37,7 @@
 	return returnValue;
 }
 
-+ (guint64)utilHashMessageIdWithMessageId:(OFString*)messageId needsDecode:(bool)needsDecode
++ (guint64)utilHashMessageId:(OFString*)messageId needsDecode:(bool)needsDecode
 {
 	guint64 returnValue = (guint64)camel_folder_search_util_hash_message_id([messageId UTF8String], needsDecode);
 

@@ -20,7 +20,7 @@
 /**
  * Constructors
  */
-+ (instancetype)messageInfo:(OGCamelFolderSummary*)summary;
++ (instancetype)messageInfoWithSummary:(OGCamelFolderSummary*)summary;
 + (instancetype)messageInfoFromHeadersWithSummary:(OGCamelFolderSummary*)summary headers:(const CamelNameValueArray*)headers;
 + (instancetype)messageInfoFromMessageWithSummary:(OGCamelFolderSummary*)summary message:(OGCamelMimeMessage*)message;
 
@@ -38,7 +38,7 @@
  * @param assignSummary parent #CamelFolderSummary object, or %NULL, to set on the clone
  * @return a new #CamelMessageInfo object, clone of the @mi
  */
-- (OGCamelMessageInfo*)clone:(OGCamelFolderSummary*)assignSummary;
+- (OGCamelMessageInfo*)cloneWithAssignSummary:(OGCamelFolderSummary*)assignSummary;
 
 /**
  * Dumps the mesasge info @mi to stdout. This is meand for debugging
@@ -91,7 +91,7 @@
  *    when not available. Free the returned string with g_free(), when no longer
  *    needed.
  */
-- (OFString*)dupUserHeader:(OFString*)name;
+- (OFString*)dupUserHeaderWithName:(OFString*)name;
 
 /**
  *
@@ -107,7 +107,7 @@
  * @return Value of the user tag as newly allocated
  *   string, or %NULL when it is not set. Free it with g_free() when no longer needed.
  */
-- (OFString*)dupUserTag:(OFString*)name;
+- (OFString*)dupUserTagWithName:(OFString*)name;
 
 /**
  *
@@ -268,7 +268,7 @@
  * @param name user flag name
  * @return Whther the user flag named @name is set.
  */
-- (bool)userFlag:(OFString*)name;
+- (bool)userFlagWithName:(OFString*)name;
 
 /**
  *
@@ -284,7 +284,7 @@
  *    the user-defined message headers of the associated message, or %NULL,
  *    when not available.
  */
-- (OFString*)userHeader:(OFString*)name;
+- (OFString*)userHeaderWithName:(OFString*)name;
 
 /**
  *
@@ -299,7 +299,7 @@
  * @return Value of the user tag, or %NULL when
  *   it is not set.
  */
-- (OFString*)userTag:(OFString*)name;
+- (OFString*)userTagWithName:(OFString*)name;
 
 /**
  *

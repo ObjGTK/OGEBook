@@ -52,7 +52,7 @@
  *
  * @param flags flags for the @vf
  */
-- (void)construct:(guint32)flags;
+- (void)constructWithFlags:(guint32)flags;
 
 /**
  *
@@ -90,7 +90,7 @@
  * @return a #CamelFolder to which the @vee_message_uid
  *    belongs, or %NULL, when it could not be found.
  */
-- (OGCamelFolder*)veeUidFolder:(OFString*)veeMessageUid;
+- (OGCamelFolder*)veeUidFolderWithVeeMessageUid:(OFString*)veeMessageUid;
 
 /**
  * The next @subfolder-'s 'changed' event will be silently ignored. This
@@ -102,7 +102,7 @@
  *
  * @param subfolder a #CamelFolder folder
  */
-- (void)ignoreNextChangedEvent:(OGCamelFolder*)subfolder;
+- (void)ignoreNextChangedEventWithSubfolder:(OGCamelFolder*)subfolder;
 
 /**
  * Propagate any skipped changes into the @vf. The skipped changes are used to not
@@ -149,7 +149,7 @@
  *
  * @param subfolder a #CamelFolder folder
  */
-- (void)removeFromIgnoreChangedEvent:(OGCamelFolder*)subfolder;
+- (void)removeFromIgnoreChangedEventWithSubfolder:(OGCamelFolder*)subfolder;
 
 /**
  * Removes given @mi_data from the @vfolder. The @changes can be
@@ -183,6 +183,6 @@
  * @param folders a #GList of #CamelFolder to add
  * @param cancellable optional #GCancellable object, or %NULL
  */
-- (void)setFoldersWithFolders:(GList*)folders cancellable:(OGCancellable*)cancellable;
+- (void)setFolders:(GList*)folders cancellable:(OGCancellable*)cancellable;
 
 @end

@@ -23,7 +23,7 @@
 	camel_sexp_encode_bool(string, vbool);
 }
 
-+ (void)encodeStringWithString:(GString*)string vstring:(OFString*)vstring
++ (void)encodeString:(GString*)string vstring:(OFString*)vstring
 {
 	camel_sexp_encode_string(string, [vstring UTF8String]);
 }
@@ -90,12 +90,12 @@
 	return returnValue;
 }
 
-- (void)inputFile:(gint)fd
+- (void)inputFileWithFd:(gint)fd
 {
 	camel_sexp_input_file([self castedGObject], fd);
 }
 
-- (void)inputTextWithText:(OFString*)text len:(gint)len
+- (void)inputText:(OFString*)text len:(gint)len
 {
 	camel_sexp_input_text([self castedGObject], [text UTF8String], len);
 }
@@ -119,12 +119,12 @@
 	camel_sexp_remove_symbol([self castedGObject], scope, [name UTF8String]);
 }
 
-- (void)resultFree:(CamelSExpResult*)result
+- (void)resultFreeWithResult:(CamelSExpResult*)result
 {
 	camel_sexp_result_free([self castedGObject], result);
 }
 
-- (CamelSExpResult*)resultNew:(gint)type
+- (CamelSExpResult*)resultNewWithType:(gint)type
 {
 	CamelSExpResult* returnValue = (CamelSExpResult*)camel_sexp_result_new([self castedGObject], type);
 
@@ -143,7 +143,7 @@
 	return returnValue;
 }
 
-- (CamelSExpResult*)termEval:(CamelSExpTerm*)term
+- (CamelSExpResult*)termEvalWithTerm:(CamelSExpTerm*)term
 {
 	CamelSExpResult* returnValue = (CamelSExpResult*)camel_sexp_term_eval([self castedGObject], term);
 

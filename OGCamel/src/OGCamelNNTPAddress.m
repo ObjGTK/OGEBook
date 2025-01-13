@@ -43,7 +43,7 @@
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelNNTPAddress, CamelNNTPAddress);
 }
 
-- (gint)add:(OFString*)name
+- (gint)addWithName:(OFString*)name
 {
 	gint returnValue = (gint)camel_nntp_address_add([self castedGObject], [name UTF8String]);
 

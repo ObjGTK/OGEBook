@@ -34,7 +34,7 @@
 	return returnValue;
 }
 
-- (gint)contactAlphabeticIndex:(OGEContact*)contact
+- (gint)contactAlphabeticIndexWithContact:(OGEContact*)contact
 {
 	gint returnValue = (gint)e_book_client_cursor_get_contact_alphabetic_index([self castedGObject], [contact castedGObject]);
 
@@ -65,12 +65,12 @@
 	return returnValue;
 }
 
-- (void)setAlphabeticIndexWithIndex:(gint)index cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)setAlphabeticIndex:(gint)index cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	e_book_client_cursor_set_alphabetic_index([self castedGObject], index, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)setAlphabeticIndexFinish:(GAsyncResult*)result
+- (bool)setAlphabeticIndexFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -81,7 +81,7 @@
 	return returnValue;
 }
 
-- (bool)setAlphabeticIndexSyncWithIndex:(gint)index cancellable:(OGCancellable*)cancellable
+- (bool)setAlphabeticIndexSync:(gint)index cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -92,12 +92,12 @@
 	return returnValue;
 }
 
-- (void)setSexpWithSexp:(OFString*)sexp cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)setSexp:(OFString*)sexp cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	e_book_client_cursor_set_sexp([self castedGObject], [sexp UTF8String], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)setSexpFinish:(GAsyncResult*)result
+- (bool)setSexpFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -108,7 +108,7 @@
 	return returnValue;
 }
 
-- (bool)setSexpSyncWithSexp:(OFString*)sexp cancellable:(OGCancellable*)cancellable
+- (bool)setSexpSync:(OFString*)sexp cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 

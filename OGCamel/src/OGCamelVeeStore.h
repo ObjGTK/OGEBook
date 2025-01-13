@@ -56,7 +56,7 @@
  * @param subfolder a #CamelFolder
  * @param unusedBy a #CamelVeeFolder
  */
-- (void)noteSubfolderUnusedWithSubfolder:(OGCamelFolder*)subfolder unusedBy:(OGCamelVeeFolder*)unusedBy;
+- (void)noteSubfolderUnused:(OGCamelFolder*)subfolder unusedBy:(OGCamelVeeFolder*)unusedBy;
 
 /**
  * Notes that the @subfolder is used by @used_by folder, which
@@ -66,7 +66,7 @@
  * @param subfolder a #CamelFolder
  * @param usedBy a #CamelVeeFolder
  */
-- (void)noteSubfolderUsedWithSubfolder:(OGCamelFolder*)subfolder usedBy:(OGCamelVeeFolder*)usedBy;
+- (void)noteSubfolderUsed:(OGCamelFolder*)subfolder usedBy:(OGCamelVeeFolder*)usedBy;
 
 /**
  * A counter part of camel_vee_store_note_vuid_used(). Once the @unused_by
@@ -94,13 +94,13 @@
  *
  * @param cancellable optional #GCancellable object, or %NULL
  */
-- (void)rebuildUnmatchedFolder:(OGCancellable*)cancellable;
+- (void)rebuildUnmatchedFolderWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Sets whether the Unmatched folder processing is enabled.
  *
  * @param isEnabled value to set
  */
-- (void)setUnmatchedEnabled:(bool)isEnabled;
+- (void)setUnmatchedEnabledWithIsEnabled:(bool)isEnabled;
 
 @end

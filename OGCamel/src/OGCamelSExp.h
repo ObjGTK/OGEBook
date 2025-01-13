@@ -106,7 +106,7 @@
  *
  * @param fd a file descriptor
  */
-- (void)inputFile:(gint)fd;
+- (void)inputFileWithFd:(gint)fd;
 
 /**
  * Prepares to scan a text buffer.
@@ -114,7 +114,7 @@
  * @param text a text buffer to scan
  * @param len the length of the text buffer
  */
-- (void)inputTextWithText:(OFString*)text len:(gint)len;
+- (void)inputText:(OFString*)text len:(gint)len;
 
 /**
  *
@@ -142,7 +142,7 @@
  *
  * @param result a #CamelSExpResult to free
  */
-- (void)resultFree:(CamelSExpResult*)result;
+- (void)resultFreeWithResult:(CamelSExpResult*)result;
 
 /**
  *
@@ -150,7 +150,7 @@
  * @return A new #CamelSExpResult result structure, associated with @sexp.
  *    Free with camel_sexp_result_free(), when no longer needed.
  */
-- (CamelSExpResult*)resultNew:(gint)type;
+- (CamelSExpResult*)resultNewWithType:(gint)type;
 
 /**
  * Frees an array of results.
@@ -175,6 +175,6 @@
  * @return a newly allocated result of the evaluation. Free
  *    the returned pointer with camel_sexp_result_free(), when no longer needed.
  */
-- (CamelSExpResult*)termEval:(CamelSExpTerm*)term;
+- (CamelSExpResult*)termEvalWithTerm:(CamelSExpTerm*)term;
 
 @end

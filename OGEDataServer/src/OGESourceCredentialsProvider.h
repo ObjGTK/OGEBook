@@ -27,7 +27,7 @@
 /**
  * Constructors
  */
-+ (instancetype)sourceCredentialsProvider:(OGESourceRegistry*)registry;
++ (instancetype)sourceCredentialsProviderWithRegistry:(OGESourceRegistry*)registry;
 
 /**
  * Methods
@@ -41,7 +41,7 @@
  * @param source an #ESource
  * @return %TRUE, when a credentials prompt can be shown for @source, %FALSE otherwise.
  */
-- (bool)canPrompt:(OGESource*)source;
+- (bool)canPromptWithSource:(OGESource*)source;
 
 /**
  * Returns whether the @source can store its credentials. When %FALSE is returned,
@@ -51,7 +51,7 @@
  * @param source an #ESource
  * @return %TRUE, when the credentials storing for @source is possible, %FALSE otherwise.
  */
-- (bool)canStore:(OGESource*)source;
+- (bool)canStoreWithSource:(OGESource*)source;
 
 /**
  * Asynchronously deletes any previously stored credentials for @source.
@@ -75,7 +75,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)deleteFinish:(GAsyncResult*)result;
+- (bool)deleteFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Deletes any previously stored credentials for @source.
@@ -145,7 +145,7 @@
  * @return Reference registry associated with this @provider. Unref it
  *    with g_object_unref() when no longer needed.
  */
-- (GObject*)refRegistry;
+- (OGObject*)refRegistry;
 
 /**
  * Returns referenced #ESource with the given @uid, or %NULL, when it could not be found.
@@ -154,7 +154,7 @@
  * @return Referenced #ESource with the given @uid, or %NULL, when it
  *    could not be found. Unref the returned #ESource with g_object_unref(), when no longer needed.
  */
-- (OGESource*)refSource:(OFString*)uid;
+- (OGESource*)refSourceWithUid:(OFString*)uid;
 
 /**
  * Registers a credentials provider implementation and adds its own reference on
@@ -164,7 +164,7 @@
  * @return %TRUE on success, %FALSE on failure, like when there is
  *    the @provider_impl already registered.
  */
-- (bool)registerImpl:(OGESourceCredentialsProviderImpl*)providerImpl;
+- (bool)registerImplWithProviderImpl:(OGESourceCredentialsProviderImpl*)providerImpl;
 
 /**
  * Asynchronously stores the @credentials for @source. Note the actual stored
@@ -192,7 +192,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)storeFinish:(GAsyncResult*)result;
+- (bool)storeFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Stores the @credentials for @source. Note the actual stored values
@@ -216,6 +216,6 @@
  *
  * @param providerImpl an #ESourceCredentialsProviderImpl
  */
-- (void)unregisterImpl:(OGESourceCredentialsProviderImpl*)providerImpl;
+- (void)unregisterImplWithProviderImpl:(OGESourceCredentialsProviderImpl*)providerImpl;
 
 @end

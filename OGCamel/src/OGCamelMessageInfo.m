@@ -21,7 +21,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (instancetype)messageInfo:(OGCamelFolderSummary*)summary
++ (instancetype)messageInfoWithSummary:(OGCamelFolderSummary*)summary
 {
 	CamelMessageInfo* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_message_info_new([summary castedGObject]), CamelMessageInfo, CamelMessageInfo);
 
@@ -86,7 +86,7 @@
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMessageInfo, CamelMessageInfo);
 }
 
-- (OGCamelMessageInfo*)clone:(OGCamelFolderSummary*)assignSummary
+- (OGCamelMessageInfo*)cloneWithAssignSummary:(OGCamelFolderSummary*)assignSummary
 {
 	CamelMessageInfo* gobjectValue = camel_message_info_clone([self castedGObject], [assignSummary castedGObject]);
 
@@ -112,7 +112,7 @@
 {
 	gchar* gobjectValue = camel_message_info_dup_preview([self castedGObject]);
 
-	OFString* returnValue = ((gobjectValue != NULL) ? [OFString stringWithUTF8StringNoCopy:(char * _Nonnull)gobjectValue freeWhenDone:true] : nil);
+	OFString* returnValue = gobjectValue;
 	return returnValue;
 }
 
@@ -130,7 +130,7 @@
 	return returnValue;
 }
 
-- (OFString*)dupUserHeader:(OFString*)name
+- (OFString*)dupUserHeaderWithName:(OFString*)name
 {
 	gchar* gobjectValue = camel_message_info_dup_user_header([self castedGObject], [name UTF8String]);
 
@@ -145,7 +145,7 @@
 	return returnValue;
 }
 
-- (OFString*)dupUserTag:(OFString*)name
+- (OFString*)dupUserTagWithName:(OFString*)name
 {
 	gchar* gobjectValue = camel_message_info_dup_user_tag([self castedGObject], [name UTF8String]);
 
@@ -305,7 +305,7 @@
 	return returnValue;
 }
 
-- (bool)userFlag:(OFString*)name
+- (bool)userFlagWithName:(OFString*)name
 {
 	bool returnValue = (bool)camel_message_info_get_user_flag([self castedGObject], [name UTF8String]);
 
@@ -319,7 +319,7 @@
 	return returnValue;
 }
 
-- (OFString*)userHeader:(OFString*)name
+- (OFString*)userHeaderWithName:(OFString*)name
 {
 	const gchar* gobjectValue = camel_message_info_get_user_header([self castedGObject], [name UTF8String]);
 
@@ -334,7 +334,7 @@
 	return returnValue;
 }
 
-- (OFString*)userTag:(OFString*)name
+- (OFString*)userTagWithName:(OFString*)name
 {
 	const gchar* gobjectValue = camel_message_info_get_user_tag([self castedGObject], [name UTF8String]);
 

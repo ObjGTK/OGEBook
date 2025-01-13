@@ -39,7 +39,7 @@
  *
  * @param body whether to dump also message body
  */
-- (void)dump:(gint)body;
+- (void)dumpWithBody:(gint)body;
 
 /**
  * Encode all message parts to a suitable transfer encoding for transport (7bit clean).
@@ -64,7 +64,7 @@
  * @param offset output for the UTC offset
  * @return the date of the message
  */
-- (time_t)date:(gint*)offset;
+- (time_t)dateWithOffset:(gint*)offset;
 
 /**
  * Get the received date and UTC offset of a message.
@@ -73,7 +73,7 @@
  * @param offset output for the UTC offset
  * @return the received date of the message
  */
-- (time_t)dateReceived:(gint*)offset;
+- (time_t)dateReceivedWithOffset:(gint*)offset;
 
 /**
  * Get the from address of a message.
@@ -103,7 +103,7 @@
  * @param type recipient type
  * @return the requested recipients
  */
-- (OGCamelInternetAddress*)recipients:(OFString*)type;
+- (OGCamelInternetAddress*)recipientsWithType:(OFString*)type;
 
 /**
  * Get the Reply-To of a message.
@@ -166,7 +166,7 @@
  * @param offset an offset from UTC in decimal number using the +HHMM format (for instance an offset
  *   of -10:45 is -1045). If @date set to %CAMEL_MESSAGE_DATE_CURRENT, this parameter is ignored
  */
-- (void)setDateWithDate:(time_t)date offset:(gint)offset;
+- (void)setDate:(time_t)date offset:(gint)offset;
 
 /**
  * Set the from address of a message.
@@ -203,7 +203,7 @@
  *
  * @param sourceUid the uid of the source account
  */
-- (void)setSource:(OFString*)sourceUid;
+- (void)setSourceWithSourceUid:(OFString*)sourceUid;
 
 /**
  * Set the subject text of a message.

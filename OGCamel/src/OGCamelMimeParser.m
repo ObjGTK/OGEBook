@@ -73,14 +73,14 @@
 	return returnValue;
 }
 
-- (gint)filterAdd:(OGCamelMimeFilter*)mf
+- (gint)filterAddWithMf:(OGCamelMimeFilter*)mf
 {
 	gint returnValue = (gint)camel_mime_parser_filter_add([self castedGObject], [mf castedGObject]);
 
 	return returnValue;
 }
 
-- (void)filterRemove:(gint)identifier
+- (void)filterRemoveWithIdentifier:(gint)identifier
 {
 	camel_mime_parser_filter_remove([self castedGObject], identifier);
 }

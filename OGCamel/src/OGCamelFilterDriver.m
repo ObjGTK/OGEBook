@@ -24,7 +24,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (instancetype)filterDriver:(OGCamelSession*)session
++ (instancetype)filterDriverWithSession:(OGCamelSession*)session
 {
 	CamelFilterDriver* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_filter_driver_new([session castedGObject]), CamelFilterDriver, CamelFilterDriver);
 
@@ -54,7 +54,7 @@
 	camel_filter_driver_add_rule([self castedGObject], [name UTF8String], [match UTF8String], [action UTF8String]);
 }
 
-- (gint)filterFolderWithFolder:(OGCamelFolder*)folder cache:(CamelUIDCache*)cache uids:(GPtrArray*)uids remove:(bool)remove cancellable:(OGCancellable*)cancellable
+- (gint)filterFolder:(OGCamelFolder*)folder cache:(CamelUIDCache*)cache uids:(GPtrArray*)uids remove:(bool)remove cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -65,7 +65,7 @@
 	return returnValue;
 }
 
-- (gint)filterMboxWithMbox:(OFString*)mbox originalSourceUrl:(OFString*)originalSourceUrl cancellable:(OGCancellable*)cancellable
+- (gint)filterMbox:(OFString*)mbox originalSourceUrl:(OFString*)originalSourceUrl cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -76,7 +76,7 @@
 	return returnValue;
 }
 
-- (gint)filterMessageWithMessage:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info uid:(OFString*)uid source:(OGCamelFolder*)source storeUid:(OFString*)storeUid originalStoreUid:(OFString*)originalStoreUid cancellable:(OGCancellable*)cancellable
+- (gint)filterMessage:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info uid:(OFString*)uid source:(OGCamelFolder*)source storeUid:(OFString*)storeUid originalStoreUid:(OFString*)originalStoreUid cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -119,22 +119,22 @@
 	camel_filter_driver_set_logfile([self castedGObject], logfile);
 }
 
-- (void)setPlaySoundFuncWithFunc:(CamelFilterPlaySoundFunc)func userData:(gpointer)userData
+- (void)setPlaySoundFunc:(CamelFilterPlaySoundFunc)func userData:(gpointer)userData
 {
 	camel_filter_driver_set_play_sound_func([self castedGObject], func, userData);
 }
 
-- (void)setShellFuncWithFunc:(CamelFilterShellFunc)func userData:(gpointer)userData
+- (void)setShellFunc:(CamelFilterShellFunc)func userData:(gpointer)userData
 {
 	camel_filter_driver_set_shell_func([self castedGObject], func, userData);
 }
 
-- (void)setStatusFuncWithFunc:(CamelFilterStatusFunc)func userData:(gpointer)userData
+- (void)setStatusFunc:(CamelFilterStatusFunc)func userData:(gpointer)userData
 {
 	camel_filter_driver_set_status_func([self castedGObject], func, userData);
 }
 
-- (void)setSystemBeepFuncWithFunc:(CamelFilterSystemBeepFunc)func userData:(gpointer)userData
+- (void)setSystemBeepFunc:(CamelFilterSystemBeepFunc)func userData:(gpointer)userData
 {
 	camel_filter_driver_set_system_beep_func([self castedGObject], func, userData);
 }

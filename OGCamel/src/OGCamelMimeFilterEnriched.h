@@ -15,7 +15,7 @@
 /**
  * Constructors
  */
-+ (instancetype)mimeFilterEnriched:(guint32)flags;
++ (instancetype)mimeFilterEnrichedWithFlags:(guint32)flags;
 
 /**
  * Methods

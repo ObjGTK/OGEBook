@@ -98,7 +98,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)authenticateFinish:(GAsyncResult*)result;
+- (bool)authenticateFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Authenticates @service, which may involve repeated calls to
@@ -159,7 +159,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)forwardToFinish:(GAsyncResult*)result;
+- (bool)forwardToFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Forwards @message in @folder to the email address(es) given by @address.
@@ -338,7 +338,7 @@
  * @param name a name/address to lookup for
  * @return whether found the @name in any address book.
  */
-- (bool)lookupAddressbook:(OFString*)name;
+- (bool)lookupAddressbookWithName:(OFString*)name;
 
 /**
  * Returns the #GMainContext on which event sources for @session are to
@@ -370,7 +370,7 @@
  * @param uid a unique identifier string
  * @return a #CamelService instance, or %NULL
  */
-- (OGCamelService*)refService:(OFString*)uid;
+- (OGCamelService*)refServiceWithUid:(OFString*)uid;
 
 /**
  * Looks up a #CamelService by trying to match its #CamelURL against the
@@ -387,7 +387,7 @@
  * @param type a #CamelProviderType
  * @return a #CamelService instance, or %NULL
  */
-- (OGCamelService*)refServiceByUrlWithUrl:(CamelURL*)url type:(CamelProviderType)type;
+- (OGCamelService*)refServiceByUrl:(CamelURL*)url type:(CamelProviderType)type;
 
 /**
  * Removes a #CamelService previously added by camel_session_add_service().
@@ -424,7 +424,7 @@
  * @param values
  * @param len the length of the headers and values arrays
  */
-- (void)setJunkHeadersWithHeaders:(const gchar**)headers values:(const gchar**)values len:(gint)len;
+- (void)setJunkHeaders:(const gchar**)headers values:(const gchar**)values len:(gint)len;
 
 /**
  * Sets a network monitor instance for the @session. This can be used

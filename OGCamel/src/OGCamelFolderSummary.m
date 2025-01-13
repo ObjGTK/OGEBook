@@ -30,7 +30,7 @@
 	camel_folder_summary_free_array(array);
 }
 
-+ (instancetype)folderSummary:(OGCamelFolder*)folder
++ (instancetype)folderSummaryWithFolder:(OGCamelFolder*)folder
 {
 	CamelFolderSummary* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_folder_summary_new([folder castedGObject]), CamelFolderSummary, CamelFolderSummary);
 
@@ -85,7 +85,7 @@
 	return returnValue;
 }
 
-- (OGCamelMessageInfo*)get:(OFString*)uid
+- (OGCamelMessageInfo*)getWithUid:(OFString*)uid
 {
 	CamelMessageInfo* gobjectValue = camel_folder_summary_get([self castedGObject], [uid UTF8String]);
 
@@ -146,7 +146,7 @@
 	return returnValue;
 }
 
-- (guint32)infoFlags:(OFString*)uid
+- (guint32)infoFlagsWithUid:(OFString*)uid
 {
 	guint32 returnValue = (guint32)camel_folder_summary_get_info_flags([self castedGObject], [uid UTF8String]);
 
@@ -277,7 +277,7 @@
 	camel_folder_summary_lock([self castedGObject]);
 }
 
-- (guint32)generateNextUid
+- (guint32)nextUid
 {
 	guint32 returnValue = (guint32)camel_folder_summary_next_uid([self castedGObject]);
 
@@ -292,7 +292,7 @@
 	return returnValue;
 }
 
-- (OGCamelMessageInfo*)peekLoaded:(OFString*)uid
+- (OGCamelMessageInfo*)peekLoadedWithUid:(OFString*)uid
 {
 	CamelMessageInfo* gobjectValue = camel_folder_summary_peek_loaded([self castedGObject], [uid UTF8String]);
 
@@ -312,7 +312,7 @@
 
 }
 
-- (bool)remove:(OGCamelMessageInfo*)info
+- (bool)removeWithInfo:(OGCamelMessageInfo*)info
 {
 	bool returnValue = (bool)camel_folder_summary_remove([self castedGObject], [info castedGObject]);
 
@@ -333,7 +333,7 @@
 	return returnValue;
 }
 
-- (bool)replaceFlags:(OGCamelMessageInfo*)info
+- (bool)replaceFlagsWithInfo:(OGCamelMessageInfo*)info
 {
 	bool returnValue = (bool)camel_folder_summary_replace_flags([self castedGObject], [info castedGObject]);
 

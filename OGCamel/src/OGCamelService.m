@@ -33,7 +33,7 @@
 	camel_service_authenticate([self castedGObject], [mechanism UTF8String], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (CamelAuthenticationResult)authenticateFinish:(GAsyncResult*)result
+- (CamelAuthenticationResult)authenticateFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -60,7 +60,7 @@
 	camel_service_connect([self castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)connectFinish:(GAsyncResult*)result
+- (bool)connectFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -71,7 +71,7 @@
 	return returnValue;
 }
 
-- (bool)connectSync:(OGCancellable*)cancellable
+- (bool)connectSyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -87,7 +87,7 @@
 	camel_service_disconnect([self castedGObject], clean, ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)disconnectFinish:(GAsyncResult*)result
+- (bool)disconnectFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -140,7 +140,7 @@
 	return returnValue;
 }
 
-- (OFString*)name:(bool)brief
+- (OFString*)nameWithBrief:(bool)brief
 {
 	gchar* gobjectValue = camel_service_get_name([self castedGObject], brief);
 
@@ -204,7 +204,7 @@
 	camel_service_query_auth_types([self castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (GList*)queryAuthTypesFinish:(GAsyncResult*)result
+- (GList*)queryAuthTypesFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -215,7 +215,7 @@
 	return returnValue;
 }
 
-- (GList*)queryAuthTypesSync:(OGCancellable*)cancellable
+- (GList*)queryAuthTypesSyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -226,7 +226,7 @@
 	return returnValue;
 }
 
-- (void)queueTaskWithTask:(OGTask*)task taskFunc:(GTaskThreadFunc)taskFunc
+- (void)queueTask:(OGTask*)task taskFunc:(GTaskThreadFunc)taskFunc
 {
 	camel_service_queue_task([self castedGObject], [task castedGObject], taskFunc);
 }

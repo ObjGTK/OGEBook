@@ -32,7 +32,7 @@
 /**
  * Constructors
  */
-+ (instancetype)cipherContext:(OGCamelSession*)session;
++ (instancetype)cipherContextWithSession:(OGCamelSession*)session;
 
 /**
  * Methods
@@ -62,7 +62,7 @@
  * @param result a #GAsyncResult
  * @return a validity/encryption status, or %NULL on error
  */
-- (CamelCipherValidity*)decryptFinish:(GAsyncResult*)result;
+- (CamelCipherValidity*)decryptFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Decrypts @ipart into @opart.
@@ -101,7 +101,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)encryptFinish:(GAsyncResult*)result;
+- (bool)encryptFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Encrypts the clear-text @ipart and writes the resulting cipher-text to @opart.
@@ -128,14 +128,14 @@
  * @param hash
  * @return
  */
-- (OFString*)hashToId:(CamelCipherHash)hash;
+- (OFString*)hashToIdWithHash:(CamelCipherHash)hash;
 
 /**
  *
  * @param identifier
  * @return
  */
-- (CamelCipherHash)idToHash:(OFString*)identifier;
+- (CamelCipherHash)idToHashWithIdentifier:(OFString*)identifier;
 
 /**
  * Asynchronously converts the (unsigned) part @ipart into a new
@@ -162,7 +162,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)signFinish:(GAsyncResult*)result;
+- (bool)signFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Converts the (unsigned) part @ipart into a new self-contained MIME
@@ -201,7 +201,7 @@
  * about the integrity of the input stream, or %NULL on failure to
  * execute at all
  */
-- (CamelCipherValidity*)verifyFinish:(GAsyncResult*)result;
+- (CamelCipherValidity*)verifyFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Verifies the signature.

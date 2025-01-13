@@ -23,7 +23,7 @@
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelIndexName, CamelIndexName);
 }
 
-- (gsize)addBufferWithBuffer:(OFString*)buffer len:(gsize)len
+- (gsize)addBuffer:(OFString*)buffer len:(gsize)len
 {
 	gsize returnValue = (gsize)camel_index_name_add_buffer([self castedGObject], [buffer UTF8String], len);
 

@@ -28,7 +28,7 @@
  * @param c
  * @return
  */
-+ (gint)threadedMessagesDump:(CamelFolderThreadNode*)c;
++ (gint)threadedMessagesDumpWithC:(CamelFolderThreadNode*)c;
 
 /**
  * Methods
@@ -52,7 +52,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)appendMessageWithMessage:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)appendMessage:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_folder_append_message_finish().
@@ -78,7 +78,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)appendMessageSyncWithMessage:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info appendedUid:(gchar**)appendedUid cancellable:(OGCancellable*)cancellable;
+- (bool)appendMessageSync:(OGCamelMimeMessage*)message info:(OGCamelMessageInfo*)info appendedUid:(gchar**)appendedUid cancellable:(OGCancellable*)cancellable;
 
 /**
  * Emits the #CamelFolder::changed signal from an idle source on the
@@ -86,7 +86,7 @@
  *
  * @param changes change information for @folder
  */
-- (void)changed:(CamelFolderChangeInfo*)changes;
+- (void)changedWithChanges:(CamelFolderChangeInfo*)changes;
 
 /**
  * Compares two uids. The return value meaning is the same as in any other compare function.
@@ -107,7 +107,7 @@
  * @param cancellable a #GCancellable
  * @return an interger
  */
-- (guint32)countByExpressionWithExpression:(OFString*)expression cancellable:(OGCancellable*)cancellable;
+- (guint32)countByExpression:(OFString*)expression cancellable:(OGCancellable*)cancellable;
 
 /**
  * Marks @folder as deleted and performs any required cleanup.
@@ -167,7 +167,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)expungeFinish:(GAsyncResult*)result;
+- (bool)expungeFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Deletes messages which have been marked as "DELETED".
@@ -175,7 +175,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)expungeSync:(OGCancellable*)cancellable;
+- (bool)expungeSyncWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Frees the provided array and its contents. Used by #CamelFolder
@@ -184,7 +184,7 @@
  *
  * @param array an array of uids
  */
-- (void)freeDeep:(GPtrArray*)array;
+- (void)freeDeepWithArray:(GPtrArray*)array;
 
 /**
  * Frees the provided array but not its contents. Used by #CamelFolder
@@ -194,21 +194,21 @@
  *
  * @param array an array of uids or #CamelMessageInfo
  */
-- (void)freeShallow:(GPtrArray*)array;
+- (void)freeShallowWithArray:(GPtrArray*)array;
 
 /**
  * Frees the summary array returned by camel_folder_get_summary().
  *
  * @param array the summary array to free
  */
-- (void)freeSummary:(GPtrArray*)array;
+- (void)freeSummaryWithArray:(GPtrArray*)array;
 
 /**
  * Frees the array of UIDs returned by camel_folder_get_uids().
  *
  * @param array the array of uids to free
  */
-- (void)freeUids:(GPtrArray*)array;
+- (void)freeUidsWithArray:(GPtrArray*)array;
 
 /**
  * Freezes the folder so that a series of operation can be performed
@@ -248,7 +248,7 @@
  *   with UID @uid. Free the returned string with g_free(), when
  *   no longer needed.
  */
-- (OFString*)filename:(OFString*)uid;
+- (OFString*)filenameWithUid:(OFString*)uid;
 
 /**
  *
@@ -339,7 +339,7 @@
  * @param result a #GAsyncResult
  * @return a #CamelMimeMessage corresponding to the requested UID
  */
-- (OGCamelMimeMessage*)messageFinish:(GAsyncResult*)result;
+- (OGCamelMimeMessage*)messageFinishWithResult:(GAsyncResult*)result;
 
 /**
  *
@@ -347,7 +347,7 @@
  * @return the #CamelMessageFlags that are set on the indicated
  * message.
  */
-- (guint32)messageFlags:(OFString*)uid;
+- (guint32)messageFlagsWithUid:(OFString*)uid;
 
 /**
  * Retrieve the #CamelMessageInfo for the specified @uid.
@@ -357,7 +357,7 @@
  *   indicated message, or %NULL if the uid does not exist. Free the returned
  *   object with g_object_unref(), when done with it.
  */
-- (OGCamelMessageInfo*)messageInfo:(OFString*)uid;
+- (OGCamelMessageInfo*)messageInfoWithUid:(OFString*)uid;
 
 /**
  * Gets the message corresponding to @message_uid from @folder.
@@ -424,7 +424,7 @@
  * @param result a #GAsyncResult
  * @return a #CamelFolderQuotaInfo, or %NULL on error
  */
-- (CamelFolderQuotaInfo*)quotaInfoFinish:(GAsyncResult*)result;
+- (CamelFolderQuotaInfo*)quotaInfoFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Gets a list of known quotas for @folder.  Free the returned
@@ -436,7 +436,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return a #CamelFolderQuotaInfo, or %NULL on error
  */
-- (CamelFolderQuotaInfo*)quotaInfoSync:(OGCancellable*)cancellable;
+- (CamelFolderQuotaInfo*)quotaInfoSyncWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * This returns the summary information for the folder. This array
@@ -525,7 +525,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)purgeMessageCacheFinish:(GAsyncResult*)result;
+- (bool)purgeMessageCacheFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Delete the local cache of all messages between these uids.
@@ -556,7 +556,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)refreshInfoFinish:(GAsyncResult*)result;
+- (bool)refreshInfoFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Synchronizes a folder's summary with its backing store.
@@ -564,7 +564,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)refreshInfoSync:(OGCancellable*)cancellable;
+- (bool)refreshInfoSyncWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Marks @folder as renamed.
@@ -577,7 +577,7 @@
  *
  * @param newName new name for the folder
  */
-- (void)rename:(OFString*)newName;
+- (void)renameWithNewName:(OFString*)newName;
 
 /**
  * Searches the folder for messages matching the given search expression.
@@ -588,7 +588,7 @@
  * matching messages. The caller must free the list and each of the elements
  * when it is done.
  */
-- (GPtrArray*)searchByExpressionWithExpression:(OFString*)expression cancellable:(OGCancellable*)cancellable;
+- (GPtrArray*)searchByExpression:(OFString*)expression cancellable:(OGCancellable*)cancellable;
 
 /**
  * Search a subset of uid's for an expression match.
@@ -608,7 +608,7 @@
  *
  * @param result search results to free
  */
-- (void)searchFree:(GPtrArray*)result;
+- (void)searchFreeWithResult:(GPtrArray*)result;
 
 /**
  * Sets a description of the folder suitable for displaying to the user.
@@ -629,7 +629,7 @@
  *
  * @param folderFlags flags (bit-or of #CamelFolderFlags) to set
  */
-- (void)setFlags:(guint32)folderFlags;
+- (void)setFlagsWithFolderFlags:(guint32)folderFlags;
 
 /**
  * Sets the fully qualified name of the folder.
@@ -645,7 +645,7 @@
  *
  * @param skipFolderLock a value to set
  */
-- (void)setLockAsync:(bool)skipFolderLock;
+- (void)setLockAsyncWithSkipFolderLock:(bool)skipFolderLock;
 
 /**
  * Sets whether the messages in this @folder should be marked
@@ -724,7 +724,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)synchronizeFinish:(GAsyncResult*)result;
+- (bool)synchronizeFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Asynchronously ensure that a message identified by @message_uid has been
@@ -749,7 +749,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)synchronizeMessageFinish:(GAsyncResult*)result;
+- (bool)synchronizeMessageFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Ensure that a message identified by @message_uid has been synchronized in

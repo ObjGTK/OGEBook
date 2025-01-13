@@ -40,14 +40,14 @@
  * @param key
  * @return
  */
-- (camel_key_t)lookup:(OFString*)key;
+- (camel_key_t)lookupWithKey:(OFString*)key;
 
 /**
  *
  * @param key
  * @return
  */
-- (bool)remove:(OFString*)key;
+- (bool)removeWithKey:(OFString*)key;
 
 /**
  *

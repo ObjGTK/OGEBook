@@ -120,7 +120,7 @@
  * @return Content of the @xml as newly allocated string.
  *    Free it with g_free(), when no longer needed.
  */
-- (OFString*)content:(gsize*)outLength;
+- (OFString*)contentWithOutLength:(gsize*)outLength;
 
 /**
  *
@@ -177,21 +177,21 @@
  *
  * @param value value to write as the content
  */
-- (void)writeDouble:(gdouble)value;
+- (void)writeDoubleWithValue:(gdouble)value;
 
 /**
  * Writes @value as content of the current element.
  *
  * @param value value to write as the content
  */
-- (void)writeInt:(gint64)value;
+- (void)writeIntWithValue:(gint64)value;
 
 /**
  * Writes @value as content of the current element.
  *
  * @param value value to write as the content
  */
-- (void)writeString:(OFString*)value;
+- (void)writeStringWithValue:(OFString*)value;
 
 /**
  * Writes @value in ISO 8601 format as content of the current element.
@@ -199,6 +199,6 @@
  *
  * @param value value to write as the content
  */
-- (void)writeTime:(time_t)value;
+- (void)writeTimeWithValue:(time_t)value;
 
 @end

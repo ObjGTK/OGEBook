@@ -64,7 +64,7 @@
  * @param attr an #EVCardAttribute to add
  * @param value a value to assign to the attribute
  */
-- (void)addAttributeWithValueWithAttr:(EVCardAttribute*)attr value:(OFString*)value;
+- (void)addAttributeWithValue:(EVCardAttribute*)attr value:(OFString*)value;
 
 /**
  * Appends @attr to @evc to the end of a list of attributes. This takes
@@ -84,7 +84,7 @@
  * @param attr an #EVCardAttribute to append
  * @param value a value to assign to the attribute
  */
-- (void)appendAttributeWithValueWithAttr:(EVCardAttribute*)attr value:(OFString*)value;
+- (void)appendAttributeWithValue:(EVCardAttribute*)attr value:(OFString*)value;
 
 /**
  * Constructs the existing #EVCard, @evc, setting its vCard data to @str.
@@ -103,7 +103,7 @@
  * @param len length of @str, or -1 if @str is %NULL terminated
  * @param uid a unique ID string
  */
-- (void)constructFullWithStr:(OFString*)str len:(gssize)len uid:(OFString*)uid;
+- (void)constructFull:(OFString*)str len:(gssize)len uid:(OFString*)uid;
 
 /**
  * Constructs the existing #EVCard, @evc, setting its vCard data to @str, and
@@ -115,7 +115,7 @@
  * @param str a vCard string
  * @param uid a unique ID string
  */
-- (void)constructWithUidWithStr:(OFString*)str uid:(OFString*)uid;
+- (void)constructWithUid:(OFString*)str uid:(OFString*)uid;
 
 /**
  * Prints a dump of @evc's structure to stdout. Used for
@@ -142,7 +142,7 @@
  * @param name the name of the attribute to get
  * @return An #EVCardAttribute if found, or %NULL.
  */
-- (EVCardAttribute*)attribute:(OFString*)name;
+- (EVCardAttribute*)attributeWithName:(OFString*)name;
 
 /**
  * Similar to e_vcard_get_attribute() but this method will not attempt to
@@ -151,7 +151,7 @@
  * @param name the name of the attribute to get
  * @return An #EVCardAttribute if found, or %NULL.
  */
-- (EVCardAttribute*)attributeIfParsed:(OFString*)name;
+- (EVCardAttribute*)attributeIfParsedWithName:(OFString*)name;
 
 /**
  * Gets the list of all attributes from @evcard. The list and its
@@ -195,7 +195,7 @@
  * @param format the format to export to
  * @return A newly allocated string representing the vcard.
  */
-- (OFString*)toString:(EVCardFormat)format;
+- (OFString*)toStringWithFormat:(EVCardFormat)format;
 
 /**
  *
@@ -204,7 +204,7 @@
  *    when there is no such attribute. Free the returned pointer with g_free(),
  *    when no longer needed.
  */
-- (OFString*)utilDupXattribute:(OFString*)xname;
+- (OFString*)utilDupXattributeWithXname:(OFString*)xname;
 
 /**
  * Sets an "X-" attribute @x_name to value @value in @vcard, or

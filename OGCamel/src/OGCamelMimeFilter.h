@@ -95,6 +95,6 @@
  * @param size requested amount of storage space
  * @param keep %TRUE to keep existing buffered data or %FALSE otherwise
  */
-- (void)setSizeWithSize:(gsize)size keep:(gint)keep;
+- (void)setSize:(gsize)size keep:(gint)keep;
 
 @end

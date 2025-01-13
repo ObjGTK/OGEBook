@@ -30,7 +30,7 @@
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelSaslGssapi, CamelSaslGssapi);
 }
 
-- (void)overrideHostAndUserWithOverrideHost:(OFString*)overrideHost overrideUser:(OFString*)overrideUser
+- (void)overrideHostAndUser:(OFString*)overrideHost overrideUser:(OFString*)overrideUser
 {
 	camel_sasl_gssapi_override_host_and_user([self castedGObject], [overrideHost UTF8String], [overrideUser UTF8String]);
 }

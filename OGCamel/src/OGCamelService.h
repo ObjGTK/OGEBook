@@ -59,7 +59,7 @@
  * @param result a #GAsyncResult
  * @return the authentication result
  */
-- (CamelAuthenticationResult)authenticateFinish:(GAsyncResult*)result;
+- (CamelAuthenticationResult)authenticateFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Attempts to authenticate @service using @mechanism and, if necessary,
@@ -112,7 +112,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE if the connection was made or %FALSE otherwise
  */
-- (bool)connectFinish:(GAsyncResult*)result;
+- (bool)connectFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Connects @service to a remote server using the information in its
@@ -124,7 +124,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return %TRUE if the connection is made or %FALSE otherwise
  */
-- (bool)connectSync:(OGCancellable*)cancellable;
+- (bool)connectSyncWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * If a disconnect operation is already in progress when this function is
@@ -151,7 +151,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE if the connection was severed or %FALSE otherwise
  */
-- (bool)disconnectFinish:(GAsyncResult*)result;
+- (bool)disconnectFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Disconnect from the service. If @clean is %FALSE, it should not
@@ -217,7 +217,7 @@
  * @param brief whether or not to use a briefer form
  * @return a description of the service which the caller must free
  */
-- (OFString*)name:(bool)brief;
+- (OFString*)nameWithBrief:(bool)brief;
 
 /**
  * Returns the password for @service.  Some SASL mechanisms use this
@@ -299,7 +299,7 @@
  * @param result a #GAsyncResult
  * @return a list of #CamelServiceAuthType structs
  */
-- (GList*)queryAuthTypesFinish:(GAsyncResult*)result;
+- (GList*)queryAuthTypesFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Obtains a list of authentication types supported by @service.
@@ -308,7 +308,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return a list of #CamelServiceAuthType structs
  */
-- (GList*)queryAuthTypesSync:(OGCancellable*)cancellable;
+- (GList*)queryAuthTypesSyncWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Adds @task to a queue of waiting tasks with the same source object.
@@ -323,7 +323,7 @@
  * @param task a #GTask
  * @param taskFunc function to call when @task is dispatched
  */
-- (void)queueTaskWithTask:(OGTask*)task taskFunc:(GTaskThreadFunc)taskFunc;
+- (void)queueTask:(OGTask*)task taskFunc:(GTaskThreadFunc)taskFunc;
 
 /**
  * Returns the #GProxyResolver for @service.  If an application needs to

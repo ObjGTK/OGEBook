@@ -39,7 +39,7 @@
  * @return how many bytes the @data_wrapper would use when saved,
  *   or -1 on error.
  */
-- (gsize)calculateDecodedSizeSync:(OGCancellable*)cancellable;
+- (gsize)calculateDecodedSizeSyncWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Calculates size of the @data_wrapper by saving it to a null-stream
@@ -50,7 +50,7 @@
  * @return how many bytes the @data_wrapper would use when saved,
  *   or -1 on error.
  */
-- (gsize)calculateSizeSync:(OGCancellable*)cancellable;
+- (gsize)calculateSizeSyncWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Constructs the content of @data_wrapper from @data of length @data_len.
@@ -60,7 +60,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)constructFromDataSyncWithData:(gconstpointer)data dataLen:(gssize)dataLen cancellable:(OGCancellable*)cancellable;
+- (bool)constructFromDataSync:(gconstpointer)data dataLen:(gssize)dataLen cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously constructs the content of @data_wrapper from @input_stream.
@@ -75,7 +75,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)constructFromInputStreamWithInputStream:(OGInputStream*)inputStream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)constructFromInputStream:(OGInputStream*)inputStream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with
@@ -84,7 +84,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)constructFromInputStreamFinish:(GAsyncResult*)result;
+- (bool)constructFromInputStreamFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Constructs the content of @data_wrapper from @input_stream.
@@ -93,7 +93,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)constructFromInputStreamSyncWithInputStream:(OGInputStream*)inputStream cancellable:(OGCancellable*)cancellable;
+- (bool)constructFromInputStreamSync:(OGInputStream*)inputStream cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously constructs the content of @data_wrapper from the given
@@ -109,7 +109,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)constructFromStreamWithStream:(OGCamelStream*)stream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)constructFromStream:(OGCamelStream*)stream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with
@@ -118,7 +118,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)constructFromStreamFinish:(GAsyncResult*)result;
+- (bool)constructFromStreamFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Constructs the content of @data_wrapper from the given @stream.
@@ -127,7 +127,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)constructFromStreamSyncWithStream:(OGCamelStream*)stream cancellable:(OGCancellable*)cancellable;
+- (bool)constructFromStreamSync:(OGCamelStream*)stream cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously writes the decoded data content to @output_stream.
@@ -142,7 +142,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)decodeToOutputStreamWithOutputStream:(OGOutputStream*)outputStream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)decodeToOutputStream:(OGOutputStream*)outputStream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with
@@ -151,7 +151,7 @@
  * @param result a #GAsyncResult
  * @return the number of bytes written, or -1 on error
  */
-- (gssize)decodeToOutputStreamFinish:(GAsyncResult*)result;
+- (gssize)decodeToOutputStreamFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Writes the decoded data content to @output_stream.
@@ -168,7 +168,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return the number of bytes written, or -1 on error
  */
-- (gssize)decodeToOutputStreamSyncWithOutputStream:(OGOutputStream*)outputStream cancellable:(OGCancellable*)cancellable;
+- (gssize)decodeToOutputStreamSync:(OGOutputStream*)outputStream cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously writes the decoded data content to @stream.
@@ -183,7 +183,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)decodeToStreamWithStream:(OGCamelStream*)stream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)decodeToStream:(OGCamelStream*)stream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_data_wrapper_decode_to_stream().
@@ -191,7 +191,7 @@
  * @param result a #GAsyncResult
  * @return the number of bytes written, or -1 on error
  */
-- (gssize)decodeToStreamFinish:(GAsyncResult*)result;
+- (gssize)decodeToStreamFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Writes the decoded data content to @stream.
@@ -208,7 +208,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return the number of bytes written, or -1 on error
  */
-- (gssize)decodeToStreamSyncWithStream:(OGCamelStream*)stream cancellable:(OGCancellable*)cancellable;
+- (gssize)decodeToStreamSync:(OGCamelStream*)stream cancellable:(OGCancellable*)cancellable;
 
 /**
  * Returns the #GByteArray being used to hold the contents of @data_wrapper.
@@ -309,7 +309,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)writeToOutputStreamWithOutputStream:(OGOutputStream*)outputStream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)writeToOutputStream:(OGOutputStream*)outputStream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with
@@ -318,7 +318,7 @@
  * @param result a #GAsyncResult
  * @return the number of bytes written, or -1 on error
  */
-- (gssize)writeToOutputStreamFinish:(GAsyncResult*)result;
+- (gssize)writeToOutputStreamFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Writes the content of @data_wrapper to @output_stream in a
@@ -336,7 +336,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return the number of bytes written, or -1 on error
  */
-- (gssize)writeToOutputStreamSyncWithOutputStream:(OGOutputStream*)outputStream cancellable:(OGCancellable*)cancellable;
+- (gssize)writeToOutputStreamSync:(OGOutputStream*)outputStream cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously writes the content of @data_wrapper to @stream in a
@@ -354,7 +354,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)writeToStreamWithStream:(OGCamelStream*)stream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)writeToStream:(OGCamelStream*)stream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_data_wrapper_write_to_stream().
@@ -362,7 +362,7 @@
  * @param result a #GAsyncResult
  * @return the number of bytes written, or -1 or error
  */
-- (gssize)writeToStreamFinish:(GAsyncResult*)result;
+- (gssize)writeToStreamFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Writes the content of @data_wrapper to @stream in a machine-independent
@@ -382,6 +382,6 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return the number of bytes written, or -1 on error
  */
-- (gssize)writeToStreamSyncWithStream:(OGCamelStream*)stream cancellable:(OGCancellable*)cancellable;
+- (gssize)writeToStreamSync:(OGCamelStream*)stream cancellable:(OGCancellable*)cancellable;
 
 @end

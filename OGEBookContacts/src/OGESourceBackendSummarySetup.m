@@ -30,19 +30,19 @@
 	return returnValue;
 }
 
-- (EContactField*)summaryFields:(gint*)nfields
+- (EContactField*)summaryFieldsWithNfields:(gint*)nfields
 {
 	EContactField* returnValue = (EContactField*)e_source_backend_summary_setup_get_summary_fields([self castedGObject], nfields);
 
 	return returnValue;
 }
 
-- (void)setIndexedFieldsvWithFields:(EContactField*)fields types:(EBookIndexType*)types nfields:(gint)nfields
+- (void)setIndexedFieldsv:(EContactField*)fields types:(EBookIndexType*)types nfields:(gint)nfields
 {
 	e_source_backend_summary_setup_set_indexed_fieldsv([self castedGObject], fields, types, nfields);
 }
 
-- (void)setSummaryFieldsvWithFields:(EContactField*)fields nfields:(gint)nfields
+- (void)setSummaryFieldsv:(EContactField*)fields nfields:(gint)nfields
 {
 	e_source_backend_summary_setup_set_summary_fieldsv([self castedGObject], fields, nfields);
 }

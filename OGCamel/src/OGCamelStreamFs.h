@@ -16,7 +16,7 @@
  * Constructors
  */
 + (instancetype)streamFsWithFd:(gint)fd;
-+ (instancetype)streamFsWithNameWithName:(OFString*)name flags:(gint)flags mode:(mode_t)mode;
++ (instancetype)streamFsWithName:(OFString*)name flags:(gint)flags mode:(mode_t)mode;
 
 /**
  * Methods

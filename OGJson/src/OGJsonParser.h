@@ -119,7 +119,7 @@
  * @param variableName the variable name
  * @return `TRUE` if there was an assignment, and `FALSE` otherwise
  */
-- (bool)hasAssignment:(gchar**)variableName;
+- (bool)hasAssignmentWithVariableName:(gchar**)variableName;
 
 /**
  * Loads a JSON stream from a buffer and parses it.
@@ -131,7 +131,7 @@
  * @param length the length of the buffer, or -1 if it is `NUL` terminated
  * @return `TRUE` if the buffer was succesfully parsed
  */
-- (bool)loadFromDataWithData:(OFString*)data length:(gssize)length;
+- (bool)loadFromData:(OFString*)data length:(gssize)length;
 
 /**
  * Loads a JSON stream from the content of `filename` and parses it.
@@ -145,7 +145,7 @@
  * @param filename the path for the file to parse
  * @return `TRUE` if the file was successfully loaded and parsed.
  */
-- (bool)loadFromFile:(OFString*)filename;
+- (bool)loadFromFileWithFilename:(OFString*)filename;
 
 /**
  * Loads a JSON stream from the content of `filename` and parses it.
@@ -159,7 +159,7 @@
  * @param filename the path for the file to parse
  * @return `TRUE` if the file was successfully loaded and parsed.
  */
-- (bool)loadFromMappedFile:(OFString*)filename;
+- (bool)loadFromMappedFileWithFilename:(OFString*)filename;
 
 /**
  * Loads the contents of an input stream and parses them.
@@ -174,7 +174,7 @@
  * @return `TRUE` if the data stream was successfully read and
  *   parsed, and `FALSE` otherwise
  */
-- (bool)loadFromStreamWithStream:(OGInputStream*)stream cancellable:(OGCancellable*)cancellable;
+- (bool)loadFromStream:(OGInputStream*)stream cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously reads the contents of a stream.
@@ -191,7 +191,7 @@
  * @param callback the function to call when the request is satisfied
  * @param userData the data to pass to @callback
  */
-- (void)loadFromStreamAsyncWithStream:(OGInputStream*)stream cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)loadFromStreamAsync:(OGInputStream*)stream cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes an asynchronous stream loading started with
@@ -201,7 +201,7 @@
  * @return `TRUE` if the content of the stream was successfully retrieved
  *   and parsed, and `FALSE` otherwise
  */
-- (bool)loadFromStreamFinish:(GAsyncResult*)result;
+- (bool)loadFromStreamFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Steals the top level node from the parsed JSON stream.

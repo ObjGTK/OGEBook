@@ -103,7 +103,7 @@
 	return returnValue;
 }
 
-- (OGJsonBuilder*)addValue:(JsonNode*)node
+- (OGJsonBuilder*)addValueWithNode:(JsonNode*)node
 {
 	JsonBuilder* gobjectValue = json_builder_add_value([self castedGObject], node);
 

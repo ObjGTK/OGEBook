@@ -86,7 +86,7 @@
  *    message info with that virtual UID exists. Unref it with g_object_unref(),
  *    when no longer needed.
  */
-- (OGCamelVeeMessageInfoData*)messageInfoDataByVuid:(OFString*)veeMessageUid;
+- (OGCamelVeeMessageInfoData*)messageInfoDataByVuidWithVeeMessageUid:(OFString*)veeMessageUid;
 
 /**
  * Returns a #CamelVeeSubfolderData for the given @folder.
@@ -102,7 +102,7 @@
  *
  * @param miData a #CamelVeeMessageInfoData to remove
  */
-- (void)removeMessageInfoData:(OGCamelVeeMessageInfoData*)miData;
+- (void)removeMessageInfoDataWithMiData:(OGCamelVeeMessageInfoData*)miData;
 
 /**
  * Removes given @subfolder from the @data_cache, which had been

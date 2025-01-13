@@ -72,7 +72,7 @@
  * @param contact the #EContact to check
  * @return The alphabetic index of @contact in @cursor.
  */
-- (gint)contactAlphabeticIndex:(OGEContact*)contact;
+- (gint)contactAlphabeticIndexWithContact:(OGEContact*)contact;
 
 /**
  * Fetches the number of contacts leading up to the current
@@ -123,7 +123,7 @@
  * @param callback callback to call when a result is ready
  * @param userData user data for the @callback
  */
-- (void)setAlphabeticIndexWithIndex:(gint)index cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)setAlphabeticIndex:(gint)index cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Completes an asynchronous call initiated by e_book_client_cursor_set_alphabetic_index().
@@ -131,7 +131,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, otherwise %FALSE is returned and @error is set.
  */
-- (bool)setAlphabeticIndexFinish:(GAsyncResult*)result;
+- (bool)setAlphabeticIndexFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Sets the cursor to point to an <link linkend="cursor-alphabet">Alphabetic Index</link>.
@@ -162,7 +162,7 @@
  * @param cancellable a #GCancellable to optionally cancel this operation while in progress
  * @return %TRUE on success, otherwise %FALSE is returned and @error is set.
  */
-- (bool)setAlphabeticIndexSyncWithIndex:(gint)index cancellable:(OGCancellable*)cancellable;
+- (bool)setAlphabeticIndexSync:(gint)index cancellable:(OGCancellable*)cancellable;
 
 /**
  * Sets the <link linkend="cursor-search">Search Expression</link> for the cursor.
@@ -177,7 +177,7 @@
  * @param callback callback to call when a result is ready
  * @param userData user data for the @callback
  */
-- (void)setSexpWithSexp:(OFString*)sexp cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)setSexp:(OFString*)sexp cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Completes an asynchronous call initiated by e_book_client_cursor_set_sexp(), reporting
@@ -186,7 +186,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, otherwise %FALSE is returned and @error is set.
  */
-- (bool)setSexpFinish:(GAsyncResult*)result;
+- (bool)setSexpFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Sets the <link linkend="cursor-search">Search Expression</link> for the cursor.
@@ -209,7 +209,7 @@
  * @param cancellable a #GCancellable to optionally cancel this operation while in progress
  * @return %TRUE on success, otherwise %FALSE is returned and @error is set.
  */
-- (bool)setSexpSyncWithSexp:(OFString*)sexp cancellable:(OGCancellable*)cancellable;
+- (bool)setSexpSync:(OFString*)sexp cancellable:(OGCancellable*)cancellable;
 
 /**
  * <link linkend="cursor-iteration">Steps the cursor through the results</link> by

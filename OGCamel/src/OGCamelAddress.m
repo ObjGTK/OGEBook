@@ -43,21 +43,21 @@
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelAddress, CamelAddress);
 }
 
-- (gint)cat:(OGCamelAddress*)source
+- (gint)catWithSource:(OGCamelAddress*)source
 {
 	gint returnValue = (gint)camel_address_cat([self castedGObject], [source castedGObject]);
 
 	return returnValue;
 }
 
-- (gint)copy:(OGCamelAddress*)source
+- (gint)copyWithSource:(OGCamelAddress*)source
 {
 	gint returnValue = (gint)camel_address_copy([self castedGObject], [source castedGObject]);
 
 	return returnValue;
 }
 
-- (gint)decode:(OFString*)raw
+- (gint)decodeWithRaw:(OFString*)raw
 {
 	gint returnValue = (gint)camel_address_decode([self castedGObject], [raw UTF8String]);
 
@@ -97,12 +97,12 @@
 	return returnValue;
 }
 
-- (void)remove:(gint)index
+- (void)removeWithIndex:(gint)index
 {
 	camel_address_remove([self castedGObject], index);
 }
 
-- (gint)unformat:(OFString*)raw
+- (gint)unformatWithRaw:(OFString*)raw
 {
 	gint returnValue = (gint)camel_address_unformat([self castedGObject], [raw UTF8String]);
 

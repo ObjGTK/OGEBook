@@ -54,7 +54,7 @@
  * @param identifier a #camel_block_t
  * @return
  */
-- (gint)freeBlock:(camel_block_t)identifier;
+- (gint)freeBlockWithIdentifier:(camel_block_t)identifier;
 
 /**
  * Retreive a block @id.
@@ -63,7 +63,7 @@
  * @return The block, or %NULL if blockid is invalid or a file
  *    error occurred.
  */
-- (CamelBlock*)block:(camel_block_t)identifier;
+- (CamelBlock*)blockWithIdentifier:(camel_block_t)identifier;
 
 /**
  *
@@ -97,14 +97,14 @@
  * @param path path with filename to rename to
  * @return 0 on success, -1 on error; errno is set on failure
  */
-- (gint)rename:(OFString*)path;
+- (gint)renameWithPath:(OFString*)path;
 
 /**
  * Sets a new block cache limit for @bs.
  *
  * @param blockCacheLimit a new block cache limit to set
  */
-- (void)setCacheLimit:(gint)blockCacheLimit;
+- (void)setCacheLimitWithBlockCacheLimit:(gint)blockCacheLimit;
 
 /**
  * Sync all dirty blocks to disk, including the root block.

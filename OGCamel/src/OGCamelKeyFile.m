@@ -57,7 +57,7 @@
 	return returnValue;
 }
 
-- (gint)rename:(OFString*)path
+- (gint)renameWithPath:(OFString*)path
 {
 	gint returnValue = (gint)camel_key_file_rename([self castedGObject], [path UTF8String]);
 

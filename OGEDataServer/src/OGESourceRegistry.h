@@ -62,8 +62,8 @@
 /**
  * Constructors
  */
-+ (instancetype)sourceRegistryFinish:(GAsyncResult*)result;
-+ (instancetype)sourceRegistrySync:(OGCancellable*)cancellable;
++ (instancetype)sourceRegistryFinishWithResult:(GAsyncResult*)result;
++ (instancetype)sourceRegistrySyncWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Methods
@@ -92,7 +92,7 @@
  * @return a tree of sources,
  *          arranged for display
  */
-- (GNode*)buildDisplayTree:(OFString*)extensionName;
+- (GNode*)buildDisplayTreeWithExtensionName:(OFString*)extensionName;
 
 /**
  * Determines whether @source is "effectively" enabled by examining its
@@ -108,7 +108,7 @@
  * @param source an #ESource
  * @return whether @source is "effectively" enabled
  */
-- (bool)checkEnabled:(OGESource*)source;
+- (bool)checkEnabledWithSource:(OGESource*)source;
 
 /**
  * See e_source_registry_commit_source_sync() for details.
@@ -122,7 +122,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)commitSourceWithSource:(OGESource*)source cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)commitSource:(OGESource*)source cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_registry_commit_source().
@@ -132,7 +132,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)commitSourceFinish:(GAsyncResult*)result;
+- (bool)commitSourceFinishWithResult:(GAsyncResult*)result;
 
 /**
  * This is a convenience function intended for use with graphical
@@ -154,7 +154,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)commitSourceSyncWithSource:(OGESource*)source cancellable:(OGCancellable*)cancellable;
+- (bool)commitSourceSync:(OGESource*)source cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously requests the D-Bus service create new key files for each
@@ -181,7 +181,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)createSourcesFinish:(GAsyncResult*)result;
+- (bool)createSourcesFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Requests the D-Bus service create new key files for each #ESource in
@@ -203,7 +203,7 @@
  *
  * @param extensionName an extension name, or %NULL
  */
-- (void)debugDump:(OFString*)extensionName;
+- (void)debugDumpWithExtensionName:(OFString*)extensionName;
 
 /**
  * Compares @source's #ESource:display-name against other sources having
@@ -277,7 +277,7 @@
  * @param extensionName an extension name, or %NULL
  * @return a sorted list of sources
  */
-- (GList*)listEnabled:(OFString*)extensionName;
+- (GList*)listEnabledWithExtensionName:(OFString*)extensionName;
 
 /**
  * Returns a list of registered sources, sorted by display name.  If
@@ -297,7 +297,7 @@
  * @param extensionName an extension name, or %NULL
  * @return a sorted list of sources
  */
-- (GList*)listSources:(OFString*)extensionName;
+- (GList*)listSourcesWithExtensionName:(OFString*)extensionName;
 
 /**
  * Returns the built-in address book #ESource.
@@ -490,7 +490,7 @@
  * @param uid a unique identifier string
  * @return an #ESource, or %NULL if no match was found
  */
-- (OGESource*)refSource:(OFString*)uid;
+- (OGESource*)refSourceWithUid:(OFString*)uid;
 
 /**
  * Asynchronously requests the D-Bus service to refresh collection backend
@@ -517,7 +517,7 @@
  * @param result a #GAsyncResult
  * @return Whether succeeded
  */
-- (bool)refreshBackendFinish:(GAsyncResult*)result;
+- (bool)refreshBackendFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Requests the D-Bus service to refresh collection backend for an #ESource
@@ -540,7 +540,7 @@
  *
  * @param defaultSource an address book #ESource, or %NULL
  */
-- (void)setDefaultAddressBook:(OGESource*)defaultSource;
+- (void)setDefaultAddressBookWithDefaultSource:(OGESource*)defaultSource;
 
 /**
  * Sets @default_source as the default calendar.  If @default_source
@@ -549,7 +549,7 @@
  *
  * @param defaultSource a calendar #ESource, or %NULL
  */
-- (void)setDefaultCalendar:(OGESource*)defaultSource;
+- (void)setDefaultCalendarWithDefaultSource:(OGESource*)defaultSource;
 
 /**
  * This is a convenience function to set a default #ESource based on
@@ -585,7 +585,7 @@
  * @param extensionName an extension name
  * @param defaultSource an #ESource, or %NULL
  */
-- (void)setDefaultForExtensionNameWithExtensionName:(OFString*)extensionName defaultSource:(OGESource*)defaultSource;
+- (void)setDefaultForExtensionName:(OFString*)extensionName defaultSource:(OGESource*)defaultSource;
 
 /**
  * Sets @default_source as the default mail account.  If @default_source
@@ -594,7 +594,7 @@
  *
  * @param defaultSource a mail account #ESource, or %NULL
  */
-- (void)setDefaultMailAccount:(OGESource*)defaultSource;
+- (void)setDefaultMailAccountWithDefaultSource:(OGESource*)defaultSource;
 
 /**
  * Sets @default_source as the default mail identity.  If @default_source
@@ -603,7 +603,7 @@
  *
  * @param defaultSource a mail identity #ESource, or %NULL
  */
-- (void)setDefaultMailIdentity:(OGESource*)defaultSource;
+- (void)setDefaultMailIdentityWithDefaultSource:(OGESource*)defaultSource;
 
 /**
  * Sets @default_source as the default memo list.  If @default_source
@@ -612,7 +612,7 @@
  *
  * @param defaultSource a memo list #ESource, or %NULL
  */
-- (void)setDefaultMemoList:(OGESource*)defaultSource;
+- (void)setDefaultMemoListWithDefaultSource:(OGESource*)defaultSource;
 
 /**
  * Sets @default_source as the default task list.  If @default_source
@@ -621,6 +621,6 @@
  *
  * @param defaultSource a task list #ESource, or %NULL
  */
-- (void)setDefaultTaskList:(OGESource*)defaultSource;
+- (void)setDefaultTaskListWithDefaultSource:(OGESource*)defaultSource;
 
 @end

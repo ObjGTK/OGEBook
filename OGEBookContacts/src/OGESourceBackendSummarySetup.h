@@ -43,7 +43,7 @@
  * @param nfields A return location for the number of #EContactFields in the returned array.
  * @return An array of #EContactFields @n_fields long, should be freed with g_free() when done.
  */
-- (EContactField*)summaryFields:(gint*)nfields;
+- (EContactField*)summaryFieldsWithNfields:(gint*)nfields;
 
 /**
  * Defines indexes for quick reference for the given given #EContactFields in the addressbook.
@@ -62,7 +62,7 @@
  * @param types The array of #EBookIndexTypes defining what types of indexes to create
  * @param nfields The number elements in the passed @fields, @rule_types and @rules arrays.
  */
-- (void)setIndexedFieldsvWithFields:(EContactField*)fields types:(EBookIndexType*)types nfields:(gint)nfields;
+- (void)setIndexedFieldsv:(EContactField*)fields types:(EBookIndexType*)types nfields:(gint)nfields;
 
 /**
  * Sets the summary fields configured for the given addressbook.
@@ -79,6 +79,6 @@
  * @param fields The array of #EContactFields to set as summary fields
  * @param nfields The number of #EContactFields in @fields
  */
-- (void)setSummaryFieldsvWithFields:(EContactField*)fields nfields:(gint)nfields;
+- (void)setSummaryFieldsv:(EContactField*)fields nfields:(gint)nfields;
 
 @end

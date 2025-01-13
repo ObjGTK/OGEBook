@@ -36,7 +36,7 @@
  * @param authMethod an authentication method, or %NULL
  * @return whether exists any #EOAuth2Service, with the same name as @auth_method.
  */
-+ (bool)isOauth2AliasStatic:(OFString*)authMethod;
++ (bool)isOauth2AliasStaticWithAuthMethod:(OFString*)authMethod;
 
 /**
  *
@@ -62,7 +62,7 @@
  *
  * @param service an #EOAuth2Service to add
  */
-- (void)add:(EOAuth2Service*)service;
+- (void)addWithService:(EOAuth2Service*)service;
 
 /**
  * Searches the list of currently known OAuth2 services for the one which
@@ -74,7 +74,7 @@
  * @return a referenced #EOAuth2Service, which can be used
  *    with given @source, or %NULL, when none was found.
  */
-- (EOAuth2Service*)find:(OGESource*)source;
+- (EOAuth2Service*)findWithSource:(OGESource*)source;
 
 /**
  * Searches the list of currently known OAuth2 services for the one which
@@ -99,7 +99,7 @@
  * 
  * See: e_oauth2_services_is_oauth2_alias_static()
  */
-- (bool)isOauth2Alias:(OFString*)authMethod;
+- (bool)isOauth2AliasWithAuthMethod:(OFString*)authMethod;
 
 /**
  * Lists all currently known services, which had been added
@@ -118,6 +118,6 @@
  *
  * @param service an #EOAuth2Service to remove
  */
-- (void)remove:(EOAuth2Service*)service;
+- (void)removeWithService:(EOAuth2Service*)service;
 
 @end

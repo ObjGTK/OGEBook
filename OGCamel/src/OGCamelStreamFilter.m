@@ -20,7 +20,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (instancetype)streamFilter:(OGCamelStream*)source
++ (instancetype)streamFilterWithSource:(OGCamelStream*)source
 {
 	CamelStreamFilter* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_filter_new([source castedGObject]), CamelStreamFilter, CamelStreamFilter);
 
@@ -45,7 +45,7 @@
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelStreamFilter, CamelStreamFilter);
 }
 
-- (gint)add:(OGCamelMimeFilter*)filter
+- (gint)addWithFilter:(OGCamelMimeFilter*)filter
 {
 	gint returnValue = (gint)camel_stream_filter_add([self castedGObject], [filter castedGObject]);
 
@@ -60,7 +60,7 @@
 	return returnValue;
 }
 
-- (void)remove:(gint)identifier
+- (void)removeWithIdentifier:(gint)identifier
 {
 	camel_stream_filter_remove([self castedGObject], identifier);
 }

@@ -38,7 +38,7 @@
 	return [wrapperObject autorelease];
 }
 
-+ (instancetype)streamMemWithBufferWithBuffer:(OFString*)buffer len:(gsize)len
++ (instancetype)streamMemWithBuffer:(OFString*)buffer len:(gsize)len
 {
 	CamelStreamMem* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_mem_new_with_buffer([buffer UTF8String], len), CamelStreamMem, CamelStreamMem);
 
@@ -58,7 +58,7 @@
 	return [wrapperObject autorelease];
 }
 
-+ (instancetype)streamMemWithByteArray:(GByteArray*)buffer
++ (instancetype)streamMemWithByteArrayWithBuffer:(GByteArray*)buffer
 {
 	CamelStreamMem* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_mem_new_with_byte_array(buffer), CamelStreamMem, CamelStreamMem);
 
@@ -90,12 +90,12 @@
 	return returnValue;
 }
 
-- (void)setBufferWithBuffer:(OFString*)buffer len:(gsize)len
+- (void)setBuffer:(OFString*)buffer len:(gsize)len
 {
 	camel_stream_mem_set_buffer([self castedGObject], [buffer UTF8String], len);
 }
 
-- (void)setByteArray:(GByteArray*)buffer
+- (void)setByteArrayWithBuffer:(GByteArray*)buffer
 {
 	camel_stream_mem_set_byte_array([self castedGObject], buffer);
 }

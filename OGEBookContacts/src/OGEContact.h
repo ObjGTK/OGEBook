@@ -23,7 +23,7 @@
  * @param fieldName a string representing a contact field
  * @return An #EContactField corresponding to @field_name, or 0 if it doesn't exist.
  */
-+ (EContactField)fieldId:(OFString*)fieldName;
++ (EContactField)fieldIdWithFieldName:(OFString*)fieldName;
 
 /**
  * Gets the #EContactField corresponding to the @vcard_field.
@@ -31,7 +31,7 @@
  * @param vcardField a string representing a vCard field
  * @return An #EContactField corresponding to @vcard_field, or 0 if it doesn't exist.
  */
-+ (EContactField)fieldIdFromVcard:(OFString*)vcardField;
++ (EContactField)fieldIdFromVcardWithVcardField:(OFString*)vcardField;
 
 /**
  * Returns whether the @field_id is of a string type,
@@ -40,7 +40,7 @@
  * @param fieldId an #EContactField
  * @return Whether the @field_id is of a string type.
  */
-+ (bool)fieldIsString:(EContactField)fieldId;
++ (bool)fieldIsStringWithFieldId:(EContactField)fieldId;
 
 /**
  * Gets the string representation of @field_id.
@@ -48,7 +48,7 @@
  * @param fieldId an #EContactField
  * @return The string representation of @field_id
  */
-+ (OFString*)fieldName:(EContactField)fieldId;
++ (OFString*)fieldNameWithFieldId:(EContactField)fieldId;
 
 /**
  * Gets the #GType used for this contact field, this indicates
@@ -57,7 +57,7 @@
  * @param fieldId an #EContactField
  * @return The #GType used for @field_id, or %G_TYPE_INVALID if it doesn't exist.
  */
-+ (GType)fieldType:(EContactField)fieldId;
++ (GType)fieldTypeWithFieldId:(EContactField)fieldId;
 
 /**
  * Gets a human-readable, translated string representation
@@ -66,7 +66,7 @@
  * @param fieldId an #EContactField
  * @return The human-readable representation of @field_id
  */
-+ (OFString*)prettyName:(EContactField)fieldId;
++ (OFString*)prettyNameWithFieldId:(EContactField)fieldId;
 
 /**
  * Gets the vcard attribute corresponding to @field_id, as a string.
@@ -74,14 +74,14 @@
  * @param fieldId an #EContactField
  * @return The vcard attribute corresponding to @field_id
  */
-+ (OFString*)vcardAttribute:(EContactField)fieldId;
++ (OFString*)vcardAttributeWithFieldId:(EContactField)fieldId;
 
 /**
  * Constructors
  */
 + (instancetype)contact;
 + (instancetype)contactFromVcard:(OFString*)vcard;
-+ (instancetype)contactFromVcardWithUidWithVcard:(OFString*)vcard uid:(OFString*)uid;
++ (instancetype)contactFromVcardWithUid:(OFString*)vcard uid:(OFString*)uid;
 
 /**
  * Methods
@@ -102,7 +102,7 @@
  * @param fieldId an #EContactField
  * @return Depends on the field's type, owned by the caller. This may be %NULL if the field isn't set.
  */
-- (gpointer)get:(EContactField)fieldId;
+- (gpointer)getWithFieldId:(EContactField)fieldId;
 
 /**
  * Gets a list of the vcard attributes for @contact's @field_id.
@@ -111,7 +111,7 @@
  * @return A #GList of pointers
  * to #EVCardAttribute, owned by the caller.
  */
-- (GList*)attributes:(EContactField)fieldId;
+- (GList*)attributesWithFieldId:(EContactField)fieldId;
 
 /**
  * Gets a list of the vcard attributes for @contact's @field_ids.
@@ -132,7 +132,7 @@
  * @return Depends on the field's type, owned by the
  * #EContact.
  */
-- (gconstpointer)const:(EContactField)fieldId;
+- (gconstpointer)constWithFieldId:(EContactField)fieldId;
 
 /**
  * Tries to modify any #EContactPhoto fields which are

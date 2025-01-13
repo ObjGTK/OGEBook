@@ -55,7 +55,7 @@
  * @param name the name of the header
  * @return the value of the named header, or %NULL
  */
-- (OFString*)header:(OFString*)name;
+- (OFString*)headerWithName:(OFString*)name;
 
 /**
  * Gets an array of all header name/value pairs. The values will be
@@ -72,7 +72,7 @@
  *
  * @param name the name of the header
  */
-- (void)removeHeader:(OFString*)name;
+- (void)removeHeaderWithName:(OFString*)name;
 
 /**
  * Sets the content of @medium to be @content.

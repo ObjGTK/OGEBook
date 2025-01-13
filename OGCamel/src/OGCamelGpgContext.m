@@ -21,7 +21,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (instancetype)gpgContext:(OGCamelSession*)session
++ (instancetype)gpgContextWithSession:(OGCamelSession*)session
 {
 	CamelGpgContext* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_gpg_context_new([session castedGObject]), CamelGpgContext, CamelGpgContext);
 
@@ -53,7 +53,7 @@
 	return returnValue;
 }
 
-- (bool)keyDataInfoSyncWithData:(const guint8*)data dataSize:(gsize)dataSize flags:(guint32)flags outInfos:(GSList**)outInfos cancellable:(OGCancellable*)cancellable
+- (bool)keyDataInfoSync:(const guint8*)data dataSize:(gsize)dataSize flags:(guint32)flags outInfos:(GSList**)outInfos cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 

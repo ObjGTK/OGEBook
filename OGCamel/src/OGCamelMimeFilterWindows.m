@@ -18,7 +18,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (instancetype)mimeFilterWindows:(OFString*)claimedCharset
++ (instancetype)mimeFilterWindowsWithClaimedCharset:(OFString*)claimedCharset
 {
 	CamelMimeFilterWindows* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_windows_new([claimedCharset UTF8String]), CamelMimeFilterWindows, CamelMimeFilterWindows);
 

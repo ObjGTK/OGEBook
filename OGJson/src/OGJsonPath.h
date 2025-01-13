@@ -185,7 +185,7 @@
  * @return `TRUE` if the compilation was successful, and `FALSE`
  *   otherwise
  */
-- (bool)compile:(OFString*)expression;
+- (bool)compileWithExpression:(OFString*)expression;
 
 /**
  * Matches the JSON tree pointed by `root` using the expression compiled
@@ -197,6 +197,6 @@
  * @return a newly-created node of type
  *   `JSON_NODE_ARRAY` containing the array of matching nodes
  */
-- (JsonNode*)match:(JsonNode*)root;
+- (JsonNode*)matchWithRoot:(JsonNode*)root;
 
 @end

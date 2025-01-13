@@ -46,7 +46,7 @@
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelMimePart, CamelMimePart);
 }
 
-- (bool)constructContentFromParserWithMp:(OGCamelMimeParser*)mp cancellable:(OGCancellable*)cancellable
+- (bool)constructContentFromParser:(OGCamelMimeParser*)mp cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -57,12 +57,12 @@
 	return returnValue;
 }
 
-- (void)constructFromParserWithParser:(OGCamelMimeParser*)parser ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)constructFromParser:(OGCamelMimeParser*)parser ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	camel_mime_part_construct_from_parser([self castedGObject], [parser castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)constructFromParserFinish:(GAsyncResult*)result
+- (bool)constructFromParserFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -73,7 +73,7 @@
 	return returnValue;
 }
 
-- (bool)constructFromParserSyncWithParser:(OGCamelMimeParser*)parser cancellable:(OGCancellable*)cancellable
+- (bool)constructFromParserSync:(OGCamelMimeParser*)parser cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -188,7 +188,7 @@
 	camel_mime_part_set_content_location([self castedGObject], [location UTF8String]);
 }
 
-- (void)setContentMd5:(OFString*)md5sum
+- (void)setContentMd5WithMd5sum:(OFString*)md5sum
 {
 	camel_mime_part_set_content_md5([self castedGObject], [md5sum UTF8String]);
 }

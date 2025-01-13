@@ -20,7 +20,7 @@
 /**
  * Constructors
  */
-+ (instancetype)stream:(OGIOStream*)baseStream;
++ (instancetype)streamWithBaseStream:(OGIOStream*)baseStream;
 
 /**
  * Methods
@@ -34,7 +34,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return 0 on success or -1 on error.
  */
-- (gint)close:(OGCancellable*)cancellable;
+- (gint)closeWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Tests if there are bytes left to read on the @stream object.
@@ -50,7 +50,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return 0 on success or -1 on fail along with setting @error
  */
-- (gint)flush:(OGCancellable*)cancellable;
+- (gint)flushWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Attempts to read up to @n bytes from @stream into @buffer.
@@ -102,7 +102,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return the number of characters written or -1 on error.
  */
-- (gssize)writeStringWithString:(OFString*)string cancellable:(OGCancellable*)cancellable;
+- (gssize)writeString:(OFString*)string cancellable:(OGCancellable*)cancellable;
 
 /**
  * Write all of a stream (until eos) into another stream, in a

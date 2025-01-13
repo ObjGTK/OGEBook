@@ -32,12 +32,12 @@
  *    or NULL, when the code is unknown or the library was not compiled with
  *    S/MIME support.
  */
-+ (OFString*)utilNssErrorToString:(gint)nssErrorCode;
++ (OFString*)utilNssErrorToStringWithNssErrorCode:(gint)nssErrorCode;
 
 /**
  * Constructors
  */
-+ (instancetype)sMIMEContext:(OGCamelSession*)session;
++ (instancetype)sMIMEContextWithSession:(OGCamelSession*)session;
 
 /**
  * Methods
@@ -63,6 +63,6 @@
  *
  * @param type
  */
-- (void)setSignMode:(CamelSMIMESign)type;
+- (void)setSignModeWithType:(CamelSMIMESign)type;
 
 @end

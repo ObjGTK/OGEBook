@@ -39,7 +39,7 @@
 	e_source_registry_new([cancellable castedGObject], callback, userData);
 }
 
-+ (instancetype)sourceRegistryFinish:(GAsyncResult*)result
++ (instancetype)sourceRegistryFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -63,7 +63,7 @@
 	return [wrapperObject autorelease];
 }
 
-+ (instancetype)sourceRegistrySync:(OGCancellable*)cancellable
++ (instancetype)sourceRegistrySyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -92,26 +92,26 @@
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceRegistry, ESourceRegistry);
 }
 
-- (GNode*)buildDisplayTree:(OFString*)extensionName
+- (GNode*)buildDisplayTreeWithExtensionName:(OFString*)extensionName
 {
 	GNode* returnValue = (GNode*)e_source_registry_build_display_tree([self castedGObject], [extensionName UTF8String]);
 
 	return returnValue;
 }
 
-- (bool)checkEnabled:(OGESource*)source
+- (bool)checkEnabledWithSource:(OGESource*)source
 {
 	bool returnValue = (bool)e_source_registry_check_enabled([self castedGObject], [source castedGObject]);
 
 	return returnValue;
 }
 
-- (void)commitSourceWithSource:(OGESource*)source cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)commitSource:(OGESource*)source cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	e_source_registry_commit_source([self castedGObject], [source castedGObject], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)commitSourceFinish:(GAsyncResult*)result
+- (bool)commitSourceFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -122,7 +122,7 @@
 	return returnValue;
 }
 
-- (bool)commitSourceSyncWithSource:(OGESource*)source cancellable:(OGCancellable*)cancellable
+- (bool)commitSourceSync:(OGESource*)source cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -138,7 +138,7 @@
 	e_source_registry_create_sources([self castedGObject], listOfSources, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)createSourcesFinish:(GAsyncResult*)result
+- (bool)createSourcesFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -160,7 +160,7 @@
 	return returnValue;
 }
 
-- (void)debugDump:(OFString*)extensionName
+- (void)debugDumpWithExtensionName:(OFString*)extensionName
 {
 	e_source_registry_debug_dump([self castedGObject], [extensionName UTF8String]);
 }
@@ -191,14 +191,14 @@
 	return returnValue;
 }
 
-- (GList*)listEnabled:(OFString*)extensionName
+- (GList*)listEnabledWithExtensionName:(OFString*)extensionName
 {
 	GList* returnValue = (GList*)e_source_registry_list_enabled([self castedGObject], [extensionName UTF8String]);
 
 	return returnValue;
 }
 
-- (GList*)listSources:(OFString*)extensionName
+- (GList*)listSourcesWithExtensionName:(OFString*)extensionName
 {
 	GList* returnValue = (GList*)e_source_registry_list_sources([self castedGObject], [extensionName UTF8String]);
 
@@ -335,7 +335,7 @@
 	return returnValue;
 }
 
-- (OGESource*)refSource:(OFString*)uid
+- (OGESource*)refSourceWithUid:(OFString*)uid
 {
 	ESource* gobjectValue = e_source_registry_ref_source([self castedGObject], [uid UTF8String]);
 
@@ -350,7 +350,7 @@
 	e_source_registry_refresh_backend([self castedGObject], [sourceUid UTF8String], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)refreshBackendFinish:(GAsyncResult*)result
+- (bool)refreshBackendFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -372,37 +372,37 @@
 	return returnValue;
 }
 
-- (void)setDefaultAddressBook:(OGESource*)defaultSource
+- (void)setDefaultAddressBookWithDefaultSource:(OGESource*)defaultSource
 {
 	e_source_registry_set_default_address_book([self castedGObject], [defaultSource castedGObject]);
 }
 
-- (void)setDefaultCalendar:(OGESource*)defaultSource
+- (void)setDefaultCalendarWithDefaultSource:(OGESource*)defaultSource
 {
 	e_source_registry_set_default_calendar([self castedGObject], [defaultSource castedGObject]);
 }
 
-- (void)setDefaultForExtensionNameWithExtensionName:(OFString*)extensionName defaultSource:(OGESource*)defaultSource
+- (void)setDefaultForExtensionName:(OFString*)extensionName defaultSource:(OGESource*)defaultSource
 {
 	e_source_registry_set_default_for_extension_name([self castedGObject], [extensionName UTF8String], [defaultSource castedGObject]);
 }
 
-- (void)setDefaultMailAccount:(OGESource*)defaultSource
+- (void)setDefaultMailAccountWithDefaultSource:(OGESource*)defaultSource
 {
 	e_source_registry_set_default_mail_account([self castedGObject], [defaultSource castedGObject]);
 }
 
-- (void)setDefaultMailIdentity:(OGESource*)defaultSource
+- (void)setDefaultMailIdentityWithDefaultSource:(OGESource*)defaultSource
 {
 	e_source_registry_set_default_mail_identity([self castedGObject], [defaultSource castedGObject]);
 }
 
-- (void)setDefaultMemoList:(OGESource*)defaultSource
+- (void)setDefaultMemoListWithDefaultSource:(OGESource*)defaultSource
 {
 	e_source_registry_set_default_memo_list([self castedGObject], [defaultSource castedGObject]);
 }
 
-- (void)setDefaultTaskList:(OGESource*)defaultSource
+- (void)setDefaultTaskListWithDefaultSource:(OGESource*)defaultSource
 {
 	e_source_registry_set_default_task_list([self castedGObject], [defaultSource castedGObject]);
 }

@@ -18,7 +18,7 @@
 /**
  * Constructors
  */
-+ (instancetype)gpgContext:(OGCamelSession*)session;
++ (instancetype)gpgContextWithSession:(OGCamelSession*)session;
 
 /**
  * Methods
@@ -47,7 +47,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return whether succeeded
  */
-- (bool)keyDataInfoSyncWithData:(const guint8*)data dataSize:(gsize)dataSize flags:(guint32)flags outInfos:(GSList**)outInfos cancellable:(OGCancellable*)cancellable;
+- (bool)keyDataInfoSync:(const guint8*)data dataSize:(gsize)dataSize flags:(guint32)flags outInfos:(GSList**)outInfos cancellable:(OGCancellable*)cancellable;
 
 /**
  * Returns, whether gpg can locate keys using Web Key Directory (WKD) lookup

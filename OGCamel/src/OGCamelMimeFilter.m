@@ -75,7 +75,7 @@
 	camel_mime_filter_set_request_stop([self castedGObject], requestStop);
 }
 
-- (void)setSizeWithSize:(gsize)size keep:(gint)keep
+- (void)setSize:(gsize)size keep:(gint)keep
 {
 	camel_mime_filter_set_size([self castedGObject], size, keep);
 }

@@ -43,7 +43,7 @@
 	return returnValue;
 }
 
-- (OFString*)header:(OFString*)name
+- (OFString*)headerWithName:(OFString*)name
 {
 	const gchar* gobjectValue = camel_medium_get_header([self castedGObject], [name UTF8String]);
 
@@ -58,7 +58,7 @@
 	return returnValue;
 }
 
-- (void)removeHeader:(OFString*)name
+- (void)removeHeaderWithName:(OFString*)name
 {
 	camel_medium_remove_header([self castedGObject], [name UTF8String]);
 }

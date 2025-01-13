@@ -37,13 +37,13 @@
  * @param paramName a #GParamSpec name
  * @return
  */
-+ (OFString*)parameterToKey:(OFString*)paramName;
++ (OFString*)parameterToKeyWithParamName:(OFString*)paramName;
 
 /**
  * Constructors
  */
 + (instancetype)sourceWithDbusObject:(GDBusObject*)dbusObject mainContext:(GMainContext*)mainContext;
-+ (instancetype)sourceWithUidWithUid:(OFString*)uid mainContext:(GMainContext*)mainContext;
++ (instancetype)sourceWithUid:(OFString*)uid mainContext:(GMainContext*)mainContext;
 
 /**
  * Methods
@@ -82,7 +82,7 @@
  *          they compare equal, or a positive value if @source1 compares
  *          after @source2
  */
-- (gint)compareByDisplayName:(OGESource*)source2;
+- (gint)compareByDisplayNameWithSource2:(OGESource*)source2;
 
 /**
  * Asynchronously deletes the password for @source from either the default
@@ -109,7 +109,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)deletePasswordFinish:(GAsyncResult*)result;
+- (bool)deletePasswordFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Deletes the password for @source from either the default keyring or
@@ -124,7 +124,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)deletePasswordSync:(OGCancellable*)cancellable;
+- (bool)deletePasswordSyncWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Thread-safe variation of e_source_get_display_name().
@@ -183,7 +183,7 @@
  * @param source2 the second #ESource
  * @return %TRUE if @source1 and @source2 are equal
  */
-- (bool)equal:(OGESource*)source2;
+- (bool)equalWithSource2:(OGESource*)source2;
 
 /**
  * Obtain current connection status of the @source.
@@ -236,7 +236,7 @@
  * @return an instance of some
  * #ESourceExtension subclass
  */
-- (gpointer)extension:(OFString*)extensionName;
+- (gpointer)extensionWithExtensionName:(OFString*)extensionName;
 
 /**
  * Asynchronously calls the GetLastCredentialsRequiredArguments method
@@ -397,7 +397,7 @@
  * @param extensionName an extension name
  * @return %TRUE if @source has such an extension, %FALSE if not
  */
-- (bool)hasExtension:(OFString*)extensionName;
+- (bool)hasExtensionWithExtensionName:(OFString*)extensionName;
 
 /**
  * Generates a hash value for @source.  This function is intended for
@@ -432,7 +432,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)invokeAuthenticateFinish:(GAsyncResult*)result;
+- (bool)invokeAuthenticateFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Calls the InvokeAuthenticate method on the server side, thus the backend
@@ -472,7 +472,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)invokeCredentialsRequiredFinish:(GAsyncResult*)result;
+- (bool)invokeCredentialsRequiredFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Let's the client-side know that credentials are required. The @reason defines which
@@ -626,7 +626,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)mailSignatureReplaceFinish:(GAsyncResult*)result;
+- (bool)mailSignatureReplaceFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Replaces the signature file for @source with the given @contents
@@ -664,7 +664,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on failure
  */
-- (bool)mailSignatureSymlinkFinish:(GAsyncResult*)result;
+- (bool)mailSignatureSymlinkFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Replaces the signature file for @source with a symbolic link to
@@ -701,7 +701,7 @@
  * @return a %NULL-terminated array of proxy
  *    URIs, or %NULL
  */
-- (gchar**)proxyLookupFinish:(GAsyncResult*)result;
+- (gchar**)proxyLookupFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Looks into @source's #ESourceProxy extension to determine what proxy,
@@ -798,7 +798,7 @@
  * @param refreshTimeoutId a refresh timeout ID
  * @return %TRUE if the timeout was found and removed
  */
-- (bool)refreshRemoveTimeout:(guint)refreshTimeoutId;
+- (bool)refreshRemoveTimeoutWithRefreshTimeoutId:(guint)refreshTimeoutId;
 
 /**
  * Removes all timeout #GSource's added by e_source_refresh_add_timeout()
@@ -807,7 +807,7 @@
  * @param userData user data to match against timeout callbacks
  * @return the number of timeouts found and removed
  */
-- (guint)refreshRemoveTimeoutsByData:(gpointer)userData;
+- (guint)refreshRemoveTimeoutsByDataWithUserData:(gpointer)userData;
 
 /**
  * Asynchronously creates a new remote resource by picking out relevant
@@ -836,7 +836,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)remoteCreateFinish:(GAsyncResult*)result;
+- (bool)remoteCreateFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Creates a new remote resource by picking out relevant details from
@@ -878,7 +878,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)remoteDeleteFinish:(GAsyncResult*)result;
+- (bool)remoteDeleteFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Deletes the resource represented by @source from a remote server.
@@ -891,7 +891,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)remoteDeleteSync:(OGCancellable*)cancellable;
+- (bool)remoteDeleteSyncWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously requests the D-Bus service to delete the key files for
@@ -914,7 +914,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE of failure
  */
-- (bool)removeFinish:(GAsyncResult*)result;
+- (bool)removeFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Requests the D-Bus service to delete the key files for @source and all of
@@ -926,7 +926,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)removeSync:(OGCancellable*)cancellable;
+- (bool)removeSyncWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Set's current connection status of the @source.
@@ -988,7 +988,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)storePasswordWithPassword:(OFString*)password permanently:(bool)permanently cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)storePassword:(OFString*)password permanently:(bool)permanently cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with e_source_store_password().
@@ -996,7 +996,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)storePasswordFinish:(GAsyncResult*)result;
+- (bool)storePasswordFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Stores a password for @source.  This operation does not rely on the
@@ -1012,7 +1012,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)storePasswordSyncWithPassword:(OFString*)password permanently:(bool)permanently cancellable:(OGCancellable*)cancellable;
+- (bool)storePasswordSync:(OFString*)password permanently:(bool)permanently cancellable:(OGCancellable*)cancellable;
 
 /**
  * Outputs the current contents of @source as a key file string.
@@ -1022,7 +1022,7 @@
  *          string, or %NULL
  * @return a newly-allocated string
  */
-- (OFString*)toString:(gsize*)length;
+- (OFString*)toStringWithLength:(gsize*)length;
 
 /**
  * Asynchronously calls the UnsetLastCredentialsRequiredArguments method
@@ -1047,7 +1047,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)unsetLastCredentialsRequiredArgumentsFinish:(GAsyncResult*)result;
+- (bool)unsetLastCredentialsRequiredArgumentsFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Unsets the last used arguments of the 'credentials-required' signal emission.
@@ -1057,7 +1057,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)unsetLastCredentialsRequiredArgumentsSync:(OGCancellable*)cancellable;
+- (bool)unsetLastCredentialsRequiredArgumentsSyncWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously submits the current contents of @source to the D-Bus
@@ -1080,7 +1080,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)writeFinish:(GAsyncResult*)result;
+- (bool)writeFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Submits the current contents of @source to the D-Bus service to be
@@ -1092,6 +1092,6 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)writeSync:(OGCancellable*)cancellable;
+- (bool)writeSyncWithCancellable:(OGCancellable*)cancellable;
 
 @end

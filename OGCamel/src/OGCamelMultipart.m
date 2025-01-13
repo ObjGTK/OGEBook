@@ -81,7 +81,7 @@
 	return returnValue;
 }
 
-- (OGCamelMimePart*)part:(guint)index
+- (OGCamelMimePart*)partWithIndex:(guint)index
 {
 	CamelMimePart* gobjectValue = camel_multipart_get_part([self castedGObject], index);
 

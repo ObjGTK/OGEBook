@@ -47,6 +47,6 @@
  * @param settingsB another #CamelSettings
  * @return %TRUE if @settings_a and @settings_b are equal
  */
-- (bool)equal:(OGCamelSettings*)settingsB;
+- (bool)equalWithSettingsB:(OGCamelSettings*)settingsB;
 
 @end

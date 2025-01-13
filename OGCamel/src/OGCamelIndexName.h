@@ -26,7 +26,7 @@
  * @param len
  * @return
  */
-- (gsize)addBufferWithBuffer:(OFString*)buffer len:(gsize)len;
+- (gsize)addBuffer:(OFString*)buffer len:(gsize)len;
 
 /**
  *

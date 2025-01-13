@@ -56,7 +56,7 @@
  * @param uid a UID of a removed contact
  * @return whether the indices changed
  */
-- (bool)remove:(OFString*)uid;
+- (bool)removeWithUid:(OFString*)uid;
 
 /**
  * Sets the initial indices to be updated by the @self. If %NULL,

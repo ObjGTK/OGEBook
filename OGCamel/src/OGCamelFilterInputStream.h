@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
@@ -8,8 +8,8 @@
 
 #import <OGio/OGFilterInputStream.h>
 
-@class OGInputStream;
 @class OGCamelMimeFilter;
+@class OGInputStream;
 
 @interface OGCamelFilterInputStream : OGFilterInputStream
 {
@@ -20,7 +20,7 @@
 /**
  * Constructors
  */
-- (instancetype)initWithBaseStream:(OGInputStream*)baseStream filter:(OGCamelMimeFilter*)filter;
++ (instancetype)filterInputStreamWithBaseStream:(OGInputStream*)baseStream filter:(OGCamelMimeFilter*)filter;
 
 /**
  * Methods

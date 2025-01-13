@@ -18,14 +18,14 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (gint)check:(OFString*)path
++ (gint)checkWithPath:(OFString*)path
 {
 	gint returnValue = (gint)camel_text_index_check([path UTF8String]);
 
 	return returnValue;
 }
 
-+ (gint)remove:(OFString*)old
++ (gint)removeWithOld:(OFString*)old
 {
 	gint returnValue = (gint)camel_text_index_remove([old UTF8String]);
 

@@ -21,7 +21,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (OFString*)parameterToKey:(OFString*)paramName
++ (OFString*)parameterToKeyWithParamName:(OFString*)paramName
 {
 	gchar* gobjectValue = e_source_parameter_to_key([paramName UTF8String]);
 
@@ -53,7 +53,7 @@
 	return [wrapperObject autorelease];
 }
 
-+ (instancetype)sourceWithUidWithUid:(OFString*)uid mainContext:(GMainContext*)mainContext
++ (instancetype)sourceWithUid:(OFString*)uid mainContext:(GMainContext*)mainContext
 {
 	GError* err = NULL;
 
@@ -92,7 +92,7 @@
 	e_source_changed([self castedGObject]);
 }
 
-- (gint)compareByDisplayName:(OGESource*)source2
+- (gint)compareByDisplayNameWithSource2:(OGESource*)source2
 {
 	gint returnValue = (gint)e_source_compare_by_display_name([self castedGObject], [source2 castedGObject]);
 
@@ -104,7 +104,7 @@
 	e_source_delete_password([self castedGObject], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)deletePasswordFinish:(GAsyncResult*)result
+- (bool)deletePasswordFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -115,7 +115,7 @@
 	return returnValue;
 }
 
-- (bool)deletePasswordSync:(OGCancellable*)cancellable
+- (bool)deletePasswordSyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -163,7 +163,7 @@
 	e_source_emit_credentials_required([self castedGObject], reason, [certificatePem UTF8String], certificateErrors, opError);
 }
 
-- (bool)equal:(OGESource*)source2
+- (bool)equalWithSource2:(OGESource*)source2
 {
 	bool returnValue = (bool)e_source_equal([self castedGObject], [source2 castedGObject]);
 
@@ -192,7 +192,7 @@
 	return returnValue;
 }
 
-- (gpointer)extension:(OFString*)extensionName
+- (gpointer)extensionWithExtensionName:(OFString*)extensionName
 {
 	gpointer returnValue = (gpointer)e_source_get_extension([self castedGObject], [extensionName UTF8String]);
 
@@ -297,7 +297,7 @@
 	return returnValue;
 }
 
-- (bool)hasExtension:(OFString*)extensionName
+- (bool)hasExtensionWithExtensionName:(OFString*)extensionName
 {
 	bool returnValue = (bool)e_source_has_extension([self castedGObject], [extensionName UTF8String]);
 
@@ -316,7 +316,7 @@
 	e_source_invoke_authenticate([self castedGObject], credentials, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)invokeAuthenticateFinish:(GAsyncResult*)result
+- (bool)invokeAuthenticateFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -343,7 +343,7 @@
 	e_source_invoke_credentials_required([self castedGObject], reason, [certificatePem UTF8String], certificateErrors, opError, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)invokeCredentialsRequiredFinish:(GAsyncResult*)result
+- (bool)invokeCredentialsRequiredFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -424,7 +424,7 @@
 	e_source_mail_signature_replace([self castedGObject], [contents UTF8String], length, ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)mailSignatureReplaceFinish:(GAsyncResult*)result
+- (bool)mailSignatureReplaceFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -451,7 +451,7 @@
 	e_source_mail_signature_symlink([self castedGObject], [symlinkTarget UTF8String], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)mailSignatureSymlinkFinish:(GAsyncResult*)result
+- (bool)mailSignatureSymlinkFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -478,7 +478,7 @@
 	e_source_proxy_lookup([self castedGObject], [uri UTF8String], [cancellable castedGObject], callback, userData);
 }
 
-- (gchar**)proxyLookupFinish:(GAsyncResult*)result
+- (gchar**)proxyLookupFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -526,14 +526,14 @@
 	e_source_refresh_force_timeout([self castedGObject]);
 }
 
-- (bool)refreshRemoveTimeout:(guint)refreshTimeoutId
+- (bool)refreshRemoveTimeoutWithRefreshTimeoutId:(guint)refreshTimeoutId
 {
 	bool returnValue = (bool)e_source_refresh_remove_timeout([self castedGObject], refreshTimeoutId);
 
 	return returnValue;
 }
 
-- (guint)refreshRemoveTimeoutsByData:(gpointer)userData
+- (guint)refreshRemoveTimeoutsByDataWithUserData:(gpointer)userData
 {
 	guint returnValue = (guint)e_source_refresh_remove_timeouts_by_data([self castedGObject], userData);
 
@@ -545,7 +545,7 @@
 	e_source_remote_create([self castedGObject], [scratchSource castedGObject], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)remoteCreateFinish:(GAsyncResult*)result
+- (bool)remoteCreateFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -572,7 +572,7 @@
 	e_source_remote_delete([self castedGObject], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)remoteDeleteFinish:(GAsyncResult*)result
+- (bool)remoteDeleteFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -583,7 +583,7 @@
 	return returnValue;
 }
 
-- (bool)remoteDeleteSync:(OGCancellable*)cancellable
+- (bool)remoteDeleteSyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -599,7 +599,7 @@
 	e_source_remove([self castedGObject], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)removeFinish:(GAsyncResult*)result
+- (bool)removeFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -610,7 +610,7 @@
 	return returnValue;
 }
 
-- (bool)removeSync:(OGCancellable*)cancellable
+- (bool)removeSyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -641,12 +641,12 @@
 	e_source_set_parent([self castedGObject], [parent UTF8String]);
 }
 
-- (void)storePasswordWithPassword:(OFString*)password permanently:(bool)permanently cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)storePassword:(OFString*)password permanently:(bool)permanently cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	e_source_store_password([self castedGObject], [password UTF8String], permanently, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)storePasswordFinish:(GAsyncResult*)result
+- (bool)storePasswordFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -657,7 +657,7 @@
 	return returnValue;
 }
 
-- (bool)storePasswordSyncWithPassword:(OFString*)password permanently:(bool)permanently cancellable:(OGCancellable*)cancellable
+- (bool)storePasswordSync:(OFString*)password permanently:(bool)permanently cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -668,7 +668,7 @@
 	return returnValue;
 }
 
-- (OFString*)toString:(gsize*)length
+- (OFString*)toStringWithLength:(gsize*)length
 {
 	gchar* gobjectValue = e_source_to_string([self castedGObject], length);
 
@@ -681,7 +681,7 @@
 	e_source_unset_last_credentials_required_arguments([self castedGObject], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)unsetLastCredentialsRequiredArgumentsFinish:(GAsyncResult*)result
+- (bool)unsetLastCredentialsRequiredArgumentsFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -692,7 +692,7 @@
 	return returnValue;
 }
 
-- (bool)unsetLastCredentialsRequiredArgumentsSync:(OGCancellable*)cancellable
+- (bool)unsetLastCredentialsRequiredArgumentsSyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -708,7 +708,7 @@
 	e_source_write([self castedGObject], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)writeFinish:(GAsyncResult*)result
+- (bool)writeFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -719,7 +719,7 @@
 	return returnValue;
 }
 
-- (bool)writeSync:(OGCancellable*)cancellable
+- (bool)writeSyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 

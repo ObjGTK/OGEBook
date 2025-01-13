@@ -35,7 +35,7 @@
 	e_book_client_connect_direct([source castedGObject], waitForConnectedSeconds, [cancellable castedGObject], callback, userData);
 }
 
-+ (OGEClient*)connectDirectFinish:(GAsyncResult*)result
++ (OGEClient*)connectDirectFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -63,7 +63,7 @@
 	return returnValue;
 }
 
-+ (OGEClient*)connectFinish:(GAsyncResult*)result
++ (OGEClient*)connectFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -102,14 +102,14 @@
 	return returnValue;
 }
 
-+ (bool)isSelf:(OGEContact*)contact
++ (bool)isSelfWithContact:(OGEContact*)contact
 {
 	bool returnValue = (bool)e_book_client_is_self([contact castedGObject]);
 
 	return returnValue;
 }
 
-+ (instancetype)bookClient:(OGESource*)source
++ (instancetype)bookClientWithSource:(OGESource*)source
 {
 	GError* err = NULL;
 
@@ -138,7 +138,7 @@
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], EBookClient, EBookClient);
 }
 
-- (void)addContactWithContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)addContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	e_book_client_add_contact([self castedGObject], [contact castedGObject], opflags, [cancellable castedGObject], callback, userData);
 }
@@ -154,7 +154,7 @@
 	return returnValue;
 }
 
-- (bool)addContactSyncWithContact:(OGEContact*)contact opflags:(guint32)opflags outAddedUid:(gchar**)outAddedUid cancellable:(OGCancellable*)cancellable
+- (bool)addContactSync:(OGEContact*)contact opflags:(guint32)opflags outAddedUid:(gchar**)outAddedUid cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -165,7 +165,7 @@
 	return returnValue;
 }
 
-- (void)addContactsWithContacts:(GSList*)contacts opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)addContacts:(GSList*)contacts opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	e_book_client_add_contacts([self castedGObject], contacts, opflags, [cancellable castedGObject], callback, userData);
 }
@@ -181,7 +181,7 @@
 	return returnValue;
 }
 
-- (bool)addContactsSyncWithContacts:(GSList*)contacts opflags:(guint32)opflags outAddedUids:(GSList**)outAddedUids cancellable:(OGCancellable*)cancellable
+- (bool)addContactsSync:(GSList*)contacts opflags:(guint32)opflags outAddedUids:(GSList**)outAddedUids cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -197,7 +197,7 @@
 	e_book_client_contains_email([self castedGObject], [emailAddress UTF8String], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)containsEmailFinish:(GAsyncResult*)result
+- (bool)containsEmailFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -362,12 +362,12 @@
 	return returnValue;
 }
 
-- (void)modifyContactWithContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)modifyContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	e_book_client_modify_contact([self castedGObject], [contact castedGObject], opflags, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)modifyContactFinish:(GAsyncResult*)result
+- (bool)modifyContactFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -378,7 +378,7 @@
 	return returnValue;
 }
 
-- (bool)modifyContactSyncWithContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable
+- (bool)modifyContactSync:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -389,12 +389,12 @@
 	return returnValue;
 }
 
-- (void)modifyContactsWithContacts:(GSList*)contacts opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)modifyContacts:(GSList*)contacts opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	e_book_client_modify_contacts([self castedGObject], contacts, opflags, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)modifyContactsFinish:(GAsyncResult*)result
+- (bool)modifyContactsFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -405,7 +405,7 @@
 	return returnValue;
 }
 
-- (bool)modifyContactsSyncWithContacts:(GSList*)contacts opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable
+- (bool)modifyContactsSync:(GSList*)contacts opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -416,17 +416,17 @@
 	return returnValue;
 }
 
-- (void)removeContactWithContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)removeContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	e_book_client_remove_contact([self castedGObject], [contact castedGObject], opflags, [cancellable castedGObject], callback, userData);
 }
 
-- (void)removeContactByUidWithUid:(OFString*)uid opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)removeContactByUid:(OFString*)uid opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	e_book_client_remove_contact_by_uid([self castedGObject], [uid UTF8String], opflags, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)removeContactByUidFinish:(GAsyncResult*)result
+- (bool)removeContactByUidFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -437,7 +437,7 @@
 	return returnValue;
 }
 
-- (bool)removeContactByUidSyncWithUid:(OFString*)uid opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable
+- (bool)removeContactByUidSync:(OFString*)uid opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -448,7 +448,7 @@
 	return returnValue;
 }
 
-- (bool)removeContactFinish:(GAsyncResult*)result
+- (bool)removeContactFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -459,7 +459,7 @@
 	return returnValue;
 }
 
-- (bool)removeContactSyncWithContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable
+- (bool)removeContactSync:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -475,7 +475,7 @@
 	e_book_client_remove_contacts([self castedGObject], uids, opflags, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)removeContactsFinish:(GAsyncResult*)result
+- (bool)removeContactsFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -497,7 +497,7 @@
 	return returnValue;
 }
 
-- (bool)setSelf:(OGEContact*)contact
+- (bool)setSelfWithContact:(OGEContact*)contact
 {
 	GError* err = NULL;
 

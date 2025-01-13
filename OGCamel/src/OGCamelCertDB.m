@@ -79,7 +79,7 @@
 	return returnValue;
 }
 
-- (void)put:(CamelCert*)cert
+- (void)putWithCert:(CamelCert*)cert
 {
 	camel_certdb_put([self castedGObject], cert);
 }

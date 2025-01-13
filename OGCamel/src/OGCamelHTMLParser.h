@@ -30,7 +30,7 @@
  * @param name
  * @return
  */
-- (OFString*)attr:(OFString*)name;
+- (OFString*)attrWithName:(OFString*)name;
 
 /**
  * Provides parsed array of values and attributes. Both arrays are
@@ -39,14 +39,14 @@
  * @param values an output #GPtrArray with values, or %NULL
  * @return a #GPtrArray of parsed attributes
  */
-- (const GPtrArray*)attrList:(const GPtrArray**)values;
+- (const GPtrArray*)attrListWithValues:(const GPtrArray**)values;
 
 /**
  *
  * @param lenp
  * @return
  */
-- (OFString*)left:(gint*)lenp;
+- (OFString*)leftWithLenp:(gint*)lenp;
 
 /**
  *

@@ -28,7 +28,7 @@
  * @return a #CamelServiceAuthType for the given mechanism, if
  * it is supported.
  */
-+ (CamelServiceAuthType*)authtype:(OFString*)mechanism;
++ (CamelServiceAuthType*)authtypeWithMechanism:(OFString*)mechanism;
 
 /**
  *
@@ -36,7 +36,7 @@
  * @return a #GList of SASL-supported authtypes. The caller must
  * free the list, but not the contents.
  */
-+ (GList*)authtypeList:(bool)includePlain;
++ (GList*)authtypeListWithIncludePlain:(bool)includePlain;
 
 /**
  * Checks whether exists a #CamelSasl method for the @mechanism and
@@ -47,7 +47,7 @@
  * @return whether exists #CamelSasl for the given @mechanism,
  *    which also derives from #CamelSaslXOAuth2.
  */
-+ (bool)isXoauth2Alias:(OFString*)mechanism;
++ (bool)isXoauth2AliasWithMechanism:(OFString*)mechanism;
 
 /**
  * Constructors
@@ -99,7 +99,7 @@
  * @param result a #GAsyncResult
  * @return the base64-encoded response
  */
-- (OFString*)challengeBase64Finish:(GAsyncResult*)result;
+- (OFString*)challengeBase64FinishWithResult:(GAsyncResult*)result;
 
 /**
  * As with camel_sasl_challenge_sync(), but the challenge @token and the
@@ -119,7 +119,7 @@
  * @return the SASL response or %NULL.  If an
  * error occurred, @error will also be set.
  */
-- (GByteArray*)challengeFinish:(GAsyncResult*)result;
+- (GByteArray*)challengeFinishWithResult:(GAsyncResult*)result;
 
 /**
  * If @token is %NULL, generate the initial SASL message to send to
@@ -190,7 +190,7 @@
  * @param result a #GAsyncResult
  * @return the SASL response.  If an error occurred, @error will also be set.
  */
-- (bool)tryEmptyPasswordFinish:(GAsyncResult*)result;
+- (bool)tryEmptyPasswordFinishWithResult:(GAsyncResult*)result;
 
 /**
  *
@@ -201,6 +201,6 @@
  * credentials, but which can fall back to using a provided password
  * so it still has the @need_password flag set in its description.
  */
-- (bool)tryEmptyPasswordSync:(OGCancellable*)cancellable;
+- (bool)tryEmptyPasswordSyncWithCancellable:(OGCancellable*)cancellable;
 
 @end

@@ -74,7 +74,7 @@
 	return returnValue;
 }
 
-- (OGCamelVeeMessageInfoData*)messageInfoDataByVuid:(OFString*)veeMessageUid
+- (OGCamelVeeMessageInfoData*)messageInfoDataByVuidWithVeeMessageUid:(OFString*)veeMessageUid
 {
 	CamelVeeMessageInfoData* gobjectValue = camel_vee_data_cache_get_message_info_data_by_vuid([self castedGObject], [veeMessageUid UTF8String]);
 
@@ -94,7 +94,7 @@
 	return returnValue;
 }
 
-- (void)removeMessageInfoData:(OGCamelVeeMessageInfoData*)miData
+- (void)removeMessageInfoDataWithMiData:(OGCamelVeeMessageInfoData*)miData
 {
 	camel_vee_data_cache_remove_message_info_data([self castedGObject], [miData castedGObject]);
 }

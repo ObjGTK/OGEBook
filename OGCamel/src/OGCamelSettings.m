@@ -33,7 +33,7 @@
 	return returnValue;
 }
 
-- (bool)equal:(OGCamelSettings*)settingsB
+- (bool)equalWithSettingsB:(OGCamelSettings*)settingsB
 {
 	bool returnValue = (bool)camel_settings_equal([self castedGObject], [settingsB castedGObject]);
 

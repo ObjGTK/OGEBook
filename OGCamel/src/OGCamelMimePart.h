@@ -33,7 +33,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return whether succeeded
  */
-- (bool)constructContentFromParserWithMp:(OGCamelMimeParser*)mp cancellable:(OGCancellable*)cancellable;
+- (bool)constructContentFromParser:(OGCamelMimeParser*)mp cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously constructs a MIME part from a parser.
@@ -48,7 +48,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)constructFromParserWithParser:(OGCamelMimeParser*)parser ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)constructFromParser:(OGCamelMimeParser*)parser ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_mime_part_construct_from_parser().
@@ -56,7 +56,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)constructFromParserFinish:(GAsyncResult*)result;
+- (bool)constructFromParserFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Constructs a MIME part from a parser.
@@ -65,7 +65,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)constructFromParserSyncWithParser:(OGCamelMimeParser*)parser cancellable:(OGCancellable*)cancellable;
+- (bool)constructFromParserSync:(OGCamelMimeParser*)parser cancellable:(OGCancellable*)cancellable;
 
 /**
  * Generates preview of the @mime_part, to be used in the interface,
@@ -191,7 +191,7 @@
  *
  * @param md5sum the md5sum of the MIME part
  */
-- (void)setContentMd5:(OFString*)md5sum;
+- (void)setContentMd5WithMd5sum:(OFString*)md5sum;
 
 /**
  * Set the content-type on a MIME part.

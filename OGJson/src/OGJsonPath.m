@@ -54,7 +54,7 @@
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], JsonPath, JsonPath);
 }
 
-- (bool)compile:(OFString*)expression
+- (bool)compileWithExpression:(OFString*)expression
 {
 	GError* err = NULL;
 
@@ -65,7 +65,7 @@
 	return returnValue;
 }
 
-- (JsonNode*)match:(JsonNode*)root
+- (JsonNode*)matchWithRoot:(JsonNode*)root
 {
 	JsonNode* returnValue = (JsonNode*)json_path_match([self castedGObject], root);
 

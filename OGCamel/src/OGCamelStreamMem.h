@@ -16,8 +16,8 @@
  * Constructors
  */
 + (instancetype)streamMem;
-+ (instancetype)streamMemWithBufferWithBuffer:(OFString*)buffer len:(gsize)len;
-+ (instancetype)streamMemWithByteArray:(GByteArray*)buffer;
++ (instancetype)streamMemWithBuffer:(OFString*)buffer len:(gsize)len;
++ (instancetype)streamMemWithByteArrayWithBuffer:(GByteArray*)buffer;
 
 /**
  * Methods
@@ -40,7 +40,7 @@
  * @param buffer a memory buffer
  * @param len length of @buffer
  */
-- (void)setBufferWithBuffer:(OFString*)buffer len:(gsize)len;
+- (void)setBuffer:(OFString*)buffer len:(gsize)len;
 
 /**
  * Set @buffer to be the backing data to the existing #CamelStreamMem, @mem.
@@ -50,7 +50,7 @@
  *
  * @param buffer a #GByteArray
  */
-- (void)setByteArray:(GByteArray*)buffer;
+- (void)setByteArrayWithBuffer:(GByteArray*)buffer;
 
 /**
  * Mark the memory stream as secure.  At the very least this means the

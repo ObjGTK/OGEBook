@@ -74,7 +74,7 @@
  *
  * @param cert a #CamelCert
  */
-- (void)put:(CamelCert*)cert;
+- (void)putWithCert:(CamelCert*)cert;
 
 /**
  * Removes a certificate identified by the @hostname and @fingerprint.

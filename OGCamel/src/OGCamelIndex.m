@@ -58,7 +58,7 @@
 	camel_index_delete_name([self castedGObject], [name UTF8String]);
 }
 
-- (OGCamelIndexCursor*)find:(OFString*)word
+- (OGCamelIndexCursor*)findWithWord:(OFString*)word
 {
 	CamelIndexCursor* gobjectValue = camel_index_find([self castedGObject], [word UTF8String]);
 
@@ -81,7 +81,7 @@
 	return returnValue;
 }
 
-- (gint)rename:(OFString*)path
+- (gint)renameWithPath:(OFString*)path
 {
 	gint returnValue = (gint)camel_index_rename([self castedGObject], [path UTF8String]);
 
@@ -108,7 +108,7 @@
 	return returnValue;
 }
 
-- (gint)writeName:(OGCamelIndexName*)idn
+- (gint)writeNameWithIdn:(OGCamelIndexName*)idn
 {
 	gint returnValue = (gint)camel_index_write_name([self castedGObject], [idn castedGObject]);
 

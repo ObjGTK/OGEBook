@@ -39,7 +39,7 @@
  * @return a copy of the last text set by camel_operation_push_message(),
  *    or %NULL, when none is set.
  */
-+ (OFString*)dupMessage:(OGCancellable*)cancellable;
++ (OFString*)dupMessageWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Pops the most recently pushed message.
@@ -50,7 +50,7 @@
  *
  * @param cancellable a #GCancellable
  */
-+ (void)popMessage:(OGCancellable*)cancellable;
++ (void)popMessageWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Report progress on the current operation.  @percent reports the current
@@ -69,7 +69,7 @@
  * Constructors
  */
 + (instancetype)operation;
-+ (instancetype)operationProxy:(OGCancellable*)cancellable;
++ (instancetype)operationProxyWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Methods

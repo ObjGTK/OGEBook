@@ -35,7 +35,7 @@
 	return returnValue;
 }
 
-+ (OFString*)errorToString:(EClientError)code
++ (OFString*)errorToStringWithCode:(EClientError)code
 {
 	const gchar* gobjectValue = e_client_error_to_string(code);
 
@@ -74,7 +74,7 @@
 	return returnValue;
 }
 
-+ (gchar**)utilSlistToStrv:(const GSList*)strings
++ (gchar**)utilSlistToStrvWithStrings:(const GSList*)strings
 {
 	gchar** returnValue = (gchar**)e_client_util_slist_to_strv(strings);
 
@@ -88,7 +88,7 @@
 	return returnValue;
 }
 
-+ (bool)utilUnwrapDbusErrorWithDbusError:(GError*)dbusError clientError:(GError**)clientError knownErrors:(const EClientErrorsList*)knownErrors knownErrorsCount:(guint)knownErrorsCount knownErrorsDomain:(GQuark)knownErrorsDomain failWhenNoneMatched:(bool)failWhenNoneMatched
++ (bool)utilUnwrapDbusError:(GError*)dbusError clientError:(GError**)clientError knownErrors:(const EClientErrorsList*)knownErrors knownErrorsCount:(guint)knownErrorsCount knownErrorsDomain:(GQuark)knownErrorsDomain failWhenNoneMatched:(bool)failWhenNoneMatched
 {
 	bool returnValue = (bool)e_client_util_unwrap_dbus_error(dbusError, clientError, knownErrors, knownErrorsCount, knownErrorsDomain, failWhenNoneMatched);
 
@@ -195,7 +195,7 @@
 	e_client_open([self castedGObject], onlyIfExists, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)openFinish:(GAsyncResult*)result
+- (bool)openFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -229,7 +229,7 @@
 	e_client_refresh([self castedGObject], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)refreshFinish:(GAsyncResult*)result
+- (bool)refreshFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -240,7 +240,7 @@
 	return returnValue;
 }
 
-- (bool)refreshSync:(OGCancellable*)cancellable
+- (bool)refreshSyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -256,7 +256,7 @@
 	e_client_remove([self castedGObject], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)removeFinish:(GAsyncResult*)result
+- (bool)removeFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -267,7 +267,7 @@
 	return returnValue;
 }
 
-- (bool)removeSync:(OGCancellable*)cancellable
+- (bool)removeSyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -294,7 +294,7 @@
 	return returnValue;
 }
 
-- (bool)retrieveCapabilitiesSyncWithCapabilities:(gchar**)capabilities cancellable:(OGCancellable*)cancellable
+- (bool)retrieveCapabilitiesSync:(gchar**)capabilities cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -310,7 +310,7 @@
 	e_client_retrieve_properties([self castedGObject], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)retrievePropertiesFinish:(GAsyncResult*)result
+- (bool)retrievePropertiesFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -321,7 +321,7 @@
 	return returnValue;
 }
 
-- (bool)retrievePropertiesSync:(OGCancellable*)cancellable
+- (bool)retrievePropertiesSyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -337,7 +337,7 @@
 	e_client_set_backend_property([self castedGObject], [propName UTF8String], [propValue UTF8String], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)setBackendPropertyFinish:(GAsyncResult*)result
+- (bool)setBackendPropertyFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -379,7 +379,7 @@
 	e_client_wait_for_connected([self castedGObject], timeoutSeconds, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)waitForConnectedFinish:(GAsyncResult*)result
+- (bool)waitForConnectedFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 

@@ -31,7 +31,7 @@
  * @param info a #CamelFolderInfo
  * @return whether folder should be checked for new mails
  */
-- (bool)canRefreshFolder:(CamelFolderInfo*)info;
+- (bool)canRefreshFolderWithInfo:(CamelFolderInfo*)info;
 
 /**
  * Asynchronously creates a new folder as a child of an existing folder.
@@ -57,7 +57,7 @@
  * @param result a #GAsyncResult
  * @return info about the created folder, or %NULL on error
  */
-- (CamelFolderInfo*)createFolderFinish:(GAsyncResult*)result;
+- (CamelFolderInfo*)createFolderFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Creates a new folder as a child of an existing folder.
@@ -82,7 +82,7 @@
  *
  * @param folderName a folder full name to delete from the cache
  */
-- (void)deleteCachedFolder:(OFString*)folderName;
+- (void)deleteCachedFolderWithFolderName:(OFString*)folderName;
 
 /**
  * Asynchronously deletes the folder described by @folder_name.  The
@@ -105,7 +105,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)deleteFolderFinish:(GAsyncResult*)result;
+- (bool)deleteFolderFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Deletes the folder described by @folder_name.  The folder must be empty.
@@ -138,7 +138,7 @@
  *
  * @param folderInfo information about the created folder
  */
-- (void)folderCreated:(CamelFolderInfo*)folderInfo;
+- (void)folderCreatedWithFolderInfo:(CamelFolderInfo*)folderInfo;
 
 /**
  * Emits the #CamelStore::folder-deleted signal from an idle source on
@@ -148,7 +148,7 @@
  *
  * @param folderInfo information about the deleted folder
  */
-- (void)folderDeleted:(CamelFolderInfo*)folderInfo;
+- (void)folderDeletedWithFolderInfo:(CamelFolderInfo*)folderInfo;
 
 /**
  * Emits the #CamelStore::folder-info-stale signal from an idle source
@@ -170,7 +170,7 @@
  *
  * @param folder the #CamelFolder that was opened
  */
-- (void)folderOpened:(OGCamelFolder*)folder;
+- (void)folderOpenedWithFolder:(OGCamelFolder*)folder;
 
 /**
  * Emits the #CamelStore::folder-renamed signal from an idle source on
@@ -225,7 +225,7 @@
  * @return the requested #CamelFolder object, or
  * %NULL on error
  */
-- (OGCamelFolder*)folderFinish:(GAsyncResult*)result;
+- (OGCamelFolder*)folderFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Asynchronously fetches information about the folder structure of @store,
@@ -253,7 +253,7 @@
  * @param result a #GAsyncResult
  * @return a #CamelFolderInfo tree, or %NULL on error
  */
-- (CamelFolderInfo*)folderInfoFinish:(GAsyncResult*)result;
+- (CamelFolderInfo*)folderInfoFinishWithResult:(GAsyncResult*)result;
 
 /**
  * This fetches information about the folder structure of @store,
@@ -323,7 +323,7 @@
  * @return the inbox folder for @store, or %NULL on
  * error or if no such folder exists
  */
-- (OGCamelFolder*)inboxFolderFinish:(GAsyncResult*)result;
+- (OGCamelFolder*)inboxFolderFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Gets the folder in @store into which new mail is delivered.
@@ -332,7 +332,7 @@
  * @return the inbox folder for @store, or %NULL on
  * error or if no such folder exists
  */
-- (OGCamelFolder*)inboxFolderSync:(OGCancellable*)cancellable;
+- (OGCamelFolder*)inboxFolderSyncWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously gets the folder in @store into which junk is delivered.
@@ -355,7 +355,7 @@
  * @return the junk folder for @store, or %NULL on
  * error or if no such folder exists
  */
-- (OGCamelFolder*)junkFolderFinish:(GAsyncResult*)result;
+- (OGCamelFolder*)junkFolderFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Gets the folder in @store into which junk is delivered.
@@ -364,7 +364,7 @@
  * @return the junk folder for @store, or %NULL on
  * error or if no such folder exists
  */
-- (OGCamelFolder*)junkFolderSync:(OGCancellable*)cancellable;
+- (OGCamelFolder*)junkFolderSyncWithCancellable:(OGCancellable*)cancellable;
 
 /**
  *
@@ -393,7 +393,7 @@
  * @return the trash folder for @store, or %NULL on
  * error or if no such folder exists
  */
-- (OGCamelFolder*)trashFolderFinish:(GAsyncResult*)result;
+- (OGCamelFolder*)trashFolderFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Gets the folder in @store into which trash is delivered.
@@ -402,7 +402,7 @@
  * @return the trash folder for @store, or %NULL on
  * error or if no such folder exists
  */
-- (OGCamelFolder*)trashFolderSync:(OGCancellable*)cancellable;
+- (OGCamelFolder*)trashFolderSyncWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Runs initial setup for the @store asynchronously.
@@ -484,7 +484,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)renameFolderFinish:(GAsyncResult*)result;
+- (bool)renameFolderFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Renames the folder described by @old_name to @new_name.
@@ -531,7 +531,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)synchronizeFinish:(GAsyncResult*)result;
+- (bool)synchronizeFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Synchronizes any changes that have been made to @store and its folders

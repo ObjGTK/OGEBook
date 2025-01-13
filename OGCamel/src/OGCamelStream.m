@@ -21,7 +21,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (instancetype)stream:(OGIOStream*)baseStream
++ (instancetype)streamWithBaseStream:(OGIOStream*)baseStream
 {
 	CamelStream* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_stream_new([baseStream castedGObject]), CamelStream, CamelStream);
 
@@ -46,7 +46,7 @@
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelStream, CamelStream);
 }
 
-- (gint)close:(OGCancellable*)cancellable
+- (gint)closeWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -64,7 +64,7 @@
 	return returnValue;
 }
 
-- (gint)flush:(OGCancellable*)cancellable
+- (gint)flushWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -112,7 +112,7 @@
 	return returnValue;
 }
 
-- (gssize)writeStringWithString:(OFString*)string cancellable:(OGCancellable*)cancellable
+- (gssize)writeString:(OFString*)string cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 

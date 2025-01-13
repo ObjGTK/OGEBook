@@ -29,7 +29,7 @@
 	return returnValue;
 }
 
-+ (instancetype)cipherContext:(OGCamelSession*)session
++ (instancetype)cipherContextWithSession:(OGCamelSession*)session
 {
 	CamelCipherContext* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_cipher_context_new([session castedGObject]), CamelCipherContext, CamelCipherContext);
 
@@ -59,7 +59,7 @@
 	camel_cipher_context_decrypt([self castedGObject], [ipart castedGObject], [opart castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (CamelCipherValidity*)decryptFinish:(GAsyncResult*)result
+- (CamelCipherValidity*)decryptFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -86,7 +86,7 @@
 	camel_cipher_context_encrypt([self castedGObject], [userid UTF8String], recipients, [ipart castedGObject], [opart castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)encryptFinish:(GAsyncResult*)result
+- (bool)encryptFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -116,7 +116,7 @@
 	return returnValue;
 }
 
-- (OFString*)hashToId:(CamelCipherHash)hash
+- (OFString*)hashToIdWithHash:(CamelCipherHash)hash
 {
 	const gchar* gobjectValue = camel_cipher_context_hash_to_id([self castedGObject], hash);
 
@@ -124,7 +124,7 @@
 	return returnValue;
 }
 
-- (CamelCipherHash)idToHash:(OFString*)identifier
+- (CamelCipherHash)idToHashWithIdentifier:(OFString*)identifier
 {
 	CamelCipherHash returnValue = (CamelCipherHash)camel_cipher_context_id_to_hash([self castedGObject], [identifier UTF8String]);
 
@@ -136,7 +136,7 @@
 	camel_cipher_context_sign([self castedGObject], [userid UTF8String], hash, [ipart castedGObject], [opart castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)signFinish:(GAsyncResult*)result
+- (bool)signFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -163,7 +163,7 @@
 	camel_cipher_context_verify([self castedGObject], [ipart castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (CamelCipherValidity*)verifyFinish:(GAsyncResult*)result
+- (CamelCipherValidity*)verifyFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 

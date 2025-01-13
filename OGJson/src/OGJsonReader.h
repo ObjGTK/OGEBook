@@ -79,7 +79,7 @@
 /**
  * Constructors
  */
-+ (instancetype)reader:(JsonNode*)node;
++ (instancetype)readerWithNode:(JsonNode*)node;
 
 /**
  * Methods
@@ -290,7 +290,7 @@
  * @param index the index of the element
  * @return `TRUE` on success, and `FALSE` otherwise
  */
-- (bool)readElement:(guint)index;
+- (bool)readElementWithIndex:(guint)index;
 
 /**
  * Advances the cursor of the reader to the `member_name` of the object at
@@ -343,7 +343,7 @@
  * @param memberName the name of the member to read
  * @return `TRUE` on success, and `FALSE` otherwise
  */
-- (bool)readMember:(OFString*)memberName;
+- (bool)readMemberWithMemberName:(OFString*)memberName;
 
 /**
  * Sets the root node of the JSON tree to be read by @reader.

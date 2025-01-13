@@ -21,7 +21,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (OFString*)utilNssErrorToString:(gint)nssErrorCode
++ (OFString*)utilNssErrorToStringWithNssErrorCode:(gint)nssErrorCode
 {
 	const gchar* gobjectValue = camel_smime_context_util_nss_error_to_string(nssErrorCode);
 
@@ -29,7 +29,7 @@
 	return returnValue;
 }
 
-+ (instancetype)sMIMEContext:(OGCamelSession*)session
++ (instancetype)sMIMEContextWithSession:(OGCamelSession*)session
 {
 	CamelSMIMEContext* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_smime_context_new([session castedGObject]), CamelSMIMEContext, CamelSMIMEContext);
 
@@ -66,7 +66,7 @@
 	camel_smime_context_set_encrypt_key([self castedGObject], use, [key UTF8String]);
 }
 
-- (void)setSignMode:(CamelSMIMESign)type
+- (void)setSignModeWithType:(CamelSMIMESign)type
 {
 	camel_smime_context_set_sign_mode([self castedGObject], type);
 }

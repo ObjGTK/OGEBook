@@ -43,7 +43,7 @@
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelHTMLParser, CamelHTMLParser);
 }
 
-- (OFString*)attr:(OFString*)name
+- (OFString*)attrWithName:(OFString*)name
 {
 	const gchar* gobjectValue = camel_html_parser_attr([self castedGObject], [name UTF8String]);
 
@@ -51,14 +51,14 @@
 	return returnValue;
 }
 
-- (const GPtrArray*)attrList:(const GPtrArray**)values
+- (const GPtrArray*)attrListWithValues:(const GPtrArray**)values
 {
 	const GPtrArray* returnValue = (const GPtrArray*)camel_html_parser_attr_list([self castedGObject], values);
 
 	return returnValue;
 }
 
-- (OFString*)left:(gint*)lenp
+- (OFString*)leftWithLenp:(gint*)lenp
 {
 	const gchar* gobjectValue = camel_html_parser_left([self castedGObject], lenp);
 

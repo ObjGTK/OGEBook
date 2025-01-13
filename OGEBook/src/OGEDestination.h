@@ -28,14 +28,14 @@
  * @param destv a %NULL-terminated array of pointers to #EDestination
  * @return An XML string, allocated with g_malloc.
  */
-+ (OFString*)exportv:(EDestination**)destv;
++ (OFString*)exportvWithDestv:(EDestination**)destv;
 
 /**
  * Unrefs the elements of @destv and frees @destv itself.
  *
  * @param destv a %NULL-terminated array of pointers to #EDestination
  */
-+ (void)freev:(EDestination**)destv;
++ (void)freevWithDestv:(EDestination**)destv;
 
 /**
  * Generates a joint text representation of all the #EDestination
@@ -44,7 +44,7 @@
  * @param destv %NULL-terminated array of pointers to #EDestination
  * @return The text representation of @destv.
  */
-+ (OFString*)textrepv:(EDestination**)destv;
++ (OFString*)textrepvWithDestv:(EDestination**)destv;
 
 /**
  * Creates an #EDestination from an XML document.
@@ -53,7 +53,7 @@
  * @return An #EDestination, or %NULL if the document was not
  * well-formed.
  */
-+ (OGEDestination*)import:(OFString*)str;
++ (OGEDestination*)importWithStr:(OFString*)str;
 
 /**
  * Creates an array of pointers to #EDestination elements
@@ -63,7 +63,7 @@
  * @return A %NULL-terminated
  * array of pointers to #EDestination elements.
  */
-+ (EDestination**)importv:(OFString*)str;
++ (EDestination**)importvWithStr:(OFString*)str;
 
 /**
  * Constructors
@@ -96,7 +96,7 @@
  * @param b an #EDestination
  * @return %TRUE if the destinations are equal, %FALSE otherwise.
  */
-- (bool)equal:(const EDestination*)b;
+- (bool)equalWithB:(const EDestination*)b;
 
 /**
  * Exports a destination to an XML document.
@@ -184,7 +184,7 @@
  * @param includeEmail whether to include the e-mail address
  * @return A textual representation of the destination.
  */
-- (OFString*)textrep:(bool)includeEmail;
+- (OFString*)textrepWithIncludeEmail:(bool)includeEmail;
 
 /**
  * Checks if @dest is flagged as an automatic recipient, meaning
@@ -244,7 +244,7 @@
  *
  * @param value the auto recipient flag
  */
-- (void)setAutoRecipient:(bool)value;
+- (void)setAutoRecipientWithValue:(bool)value;
 
 /**
  * Specify the source @dest's contact comes from. This is useful
@@ -261,7 +261,7 @@
  * @param contact an #EContact
  * @param emailNum an email index
  */
-- (void)setContactWithContact:(OGEContact*)contact emailNum:(gint)emailNum;
+- (void)setContact:(OGEContact*)contact emailNum:(gint)emailNum;
 
 /**
  * Sets @dest to point to one of the contact specified by @uid's e-mail
@@ -270,7 +270,7 @@
  * @param uid a unique contact ID
  * @param emailNum an email index
  */
-- (void)setContactUidWithUid:(OFString*)uid emailNum:(gint)emailNum;
+- (void)setContactUid:(OFString*)uid emailNum:(gint)emailNum;
 
 /**
  * Sets the e-mail address of @dest's addressee.
@@ -284,7 +284,7 @@
  *
  * @param flag whether the destination wants HTML mail
  */
-- (void)setHtmlMailPref:(bool)flag;
+- (void)setHtmlMailPrefWithFlag:(bool)flag;
 
 /**
  * Set the ignore flag on an #EDestination.

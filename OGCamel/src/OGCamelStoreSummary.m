@@ -45,7 +45,7 @@
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelStoreSummary, CamelStoreSummary);
 }
 
-- (void)add:(CamelStoreInfo*)info
+- (void)addWithInfo:(CamelStoreInfo*)info
 {
 	camel_store_summary_add([self castedGObject], info);
 }
@@ -64,7 +64,7 @@
 	return returnValue;
 }
 
-- (void)arrayFree:(GPtrArray*)array
+- (void)arrayFreeWithArray:(GPtrArray*)array
 {
 	camel_store_summary_array_free([self castedGObject], array);
 }
@@ -97,14 +97,14 @@
 	return returnValue;
 }
 
-- (CamelStoreInfo*)infoRef:(CamelStoreInfo*)info
+- (CamelStoreInfo*)infoRefWithInfo:(CamelStoreInfo*)info
 {
 	CamelStoreInfo* returnValue = (CamelStoreInfo*)camel_store_summary_info_ref([self castedGObject], info);
 
 	return returnValue;
 }
 
-- (void)infoUnref:(CamelStoreInfo*)info
+- (void)infoUnrefWithInfo:(CamelStoreInfo*)info
 {
 	camel_store_summary_info_unref([self castedGObject], info);
 }
@@ -116,14 +116,14 @@
 	return returnValue;
 }
 
-- (CamelStoreInfo*)path:(OFString*)path
+- (CamelStoreInfo*)pathWithPath:(OFString*)path
 {
 	CamelStoreInfo* returnValue = (CamelStoreInfo*)camel_store_summary_path([self castedGObject], [path UTF8String]);
 
 	return returnValue;
 }
 
-- (void)remove:(CamelStoreInfo*)info
+- (void)removeWithInfo:(CamelStoreInfo*)info
 {
 	camel_store_summary_remove([self castedGObject], info);
 }

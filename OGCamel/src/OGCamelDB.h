@@ -24,7 +24,7 @@
  *
  * @param record a #CamelMIRecord
  */
-+ (void)camelMirFree:(CamelMIRecord*)record;
++ (void)camelMirFreeWithRecord:(CamelMIRecord*)record;
 
 /**
  *
@@ -61,7 +61,7 @@
  * @return A corresponding column name in the message info table
  *   for the @raw_name, or %NULL, when there is no corresponding column in the summary.
  */
-+ (OFString*)columnName:(OFString*)rawName;
++ (OFString*)columnNameWithRawName:(OFString*)rawName;
 
 /**
  * Instructs sqlite to release its memory, if possible. This can be avoided
@@ -82,7 +82,7 @@
 /**
  * Constructors
  */
-+ (instancetype)dB:(OFString*)filename;
++ (instancetype)dBWithFilename:(OFString*)filename;
 
 /**
  * Methods
@@ -103,7 +103,7 @@
  * @param query an SQL (SQLite) statement
  * @return 0 on success, -1 on error
  */
-- (gint)addToTransaction:(OFString*)query;
+- (gint)addToTransactionWithQuery:(OFString*)query;
 
 /**
  * Begins transaction. End it with camel_db_end_transaction() or camel_db_abort_transaction().
@@ -119,7 +119,7 @@
  * @param folderName full name of the folder
  * @return 0 on success, -1 on error
  */
-- (gint)clearFolderSummary:(OFString*)folderName;
+- (gint)clearFolderSummaryWithFolderName:(OFString*)folderName;
 
 /**
  * Executes an SQLite command.
@@ -127,7 +127,7 @@
  * @param stmt an SQL (SQLite) statement to execute
  * @return 0 on success, -1 on error
  */
-- (gint)command:(OFString*)stmt;
+- (gint)commandWithStmt:(OFString*)stmt;
 
 /**
  * Counts how many deleted messages is stored in the given table.
@@ -215,7 +215,7 @@
  * @param folderName full name of the folder
  * @return 0 on success, -1 on error
  */
-- (gint)deleteFolder:(OFString*)folderName;
+- (gint)deleteFolderWithFolderName:(OFString*)folderName;
 
 /**
  * Deletes single mesage info in the given folder with
@@ -250,7 +250,7 @@
  * @param folderName full name of the folder
  * @return 0 on success, -1 on error
  */
-- (gint)flushInMemoryTransactions:(OFString*)folderName;
+- (gint)flushInMemoryTransactionsWithFolderName:(OFString*)folderName;
 
 /**
  *
@@ -265,7 +265,7 @@
  *   of the UID-s of the deleted messages in the given folder. Use
  *   camel_pstring_free() to free the elements.
  */
-- (GPtrArray*)folderDeletedUids:(OFString*)folderName;
+- (GPtrArray*)folderDeletedUidsWithFolderName:(OFString*)folderName;
 
 /**
  *
@@ -274,7 +274,7 @@
  *   of the UID-s of the junk messages in the given folder. Use
  *   camel_pstring_free() to free the elements.
  */
-- (GPtrArray*)folderJunkUids:(OFString*)folderName;
+- (GPtrArray*)folderJunkUidsWithFolderName:(OFString*)folderName;
 
 /**
  * Fills hash with uid->GUINT_TO_POINTER (flag). Use camel_pstring_free()
@@ -301,7 +301,7 @@
  * @param folderName full name of the folder
  * @return 0 on success, -1 on error
  */
-- (gint)prepareMessageInfoTable:(OFString*)folderName;
+- (gint)prepareMessageInfoTableWithFolderName:(OFString*)folderName;
 
 /**
  * reads folder information for the given folder and stores it into the @record.
@@ -372,7 +372,7 @@
  * @param func a #CamelDBCollate collation function
  * @return
  */
-- (gint)setCollateWithCol:(OFString*)col collate:(OFString*)collate func:(CamelDBCollate)func;
+- (gint)setCollate:(OFString*)col collate:(OFString*)collate func:(CamelDBCollate)func;
 
 /**
  * Creates an in-memory table for a batch transactions. Use camel_db_flush_in_memory_transactions()
@@ -388,7 +388,7 @@
  * @param qryList A #GList of querries
  * @return 0 on success, -1 on error
  */
-- (gint)transactionCommand:(const GList*)qryList;
+- (gint)transactionCommandWithQryList:(const GList*)qryList;
 
 /**
  * Write the @record to the 'folders' table.

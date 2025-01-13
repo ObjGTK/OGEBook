@@ -168,7 +168,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return whether succeeded
  */
-- (bool)setSortFieldsSyncWithFields:(const EBookClientViewSortFields*)fields cancellable:(OGCancellable*)cancellable;
+- (bool)setSortFieldsSync:(const EBookClientViewSortFields*)fields cancellable:(OGCancellable*)cancellable;
 
 /**
  * Tells @client_view to start processing events.

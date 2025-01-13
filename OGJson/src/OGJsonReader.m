@@ -18,7 +18,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (instancetype)reader:(JsonNode*)node
++ (instancetype)readerWithNode:(JsonNode*)node
 {
 	JsonReader* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(json_reader_new(node), JsonReader, JsonReader);
 
@@ -160,14 +160,14 @@
 	return returnValue;
 }
 
-- (bool)readElement:(guint)index
+- (bool)readElementWithIndex:(guint)index
 {
 	bool returnValue = (bool)json_reader_read_element([self castedGObject], index);
 
 	return returnValue;
 }
 
-- (bool)readMember:(OFString*)memberName
+- (bool)readMemberWithMemberName:(OFString*)memberName
 {
 	bool returnValue = (bool)json_reader_read_member([self castedGObject], [memberName UTF8String]);
 

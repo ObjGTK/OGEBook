@@ -29,7 +29,7 @@
  * @param name a new NNTP address to add
  * @return Index of added entry, or existing matching entry.
  */
-- (gint)add:(OFString*)name;
+- (gint)addWithName:(OFString*)name;
 
 /**
  * Get the address at @index.

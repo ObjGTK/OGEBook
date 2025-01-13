@@ -47,7 +47,7 @@
  * @param path
  * @return
  */
-- (gint)rename:(OFString*)path;
+- (gint)renameWithPath:(OFString*)path;
 
 /**
  * Write a new list of records to the key file.

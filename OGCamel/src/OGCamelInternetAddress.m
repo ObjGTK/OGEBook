@@ -71,14 +71,14 @@
 	camel_internet_address_ensure_ascii_domains([self castedGObject]);
 }
 
-- (gint)findAddressWithAddress:(OFString*)address namep:(const gchar**)namep
+- (gint)findAddress:(OFString*)address namep:(const gchar**)namep
 {
 	gint returnValue = (gint)camel_internet_address_find_address([self castedGObject], [address UTF8String], namep);
 
 	return returnValue;
 }
 
-- (gint)findNameWithName:(OFString*)name addressp:(const gchar**)addressp
+- (gint)findName:(OFString*)name addressp:(const gchar**)addressp
 {
 	gint returnValue = (gint)camel_internet_address_find_name([self castedGObject], [name UTF8String], addressp);
 

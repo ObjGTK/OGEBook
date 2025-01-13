@@ -84,7 +84,7 @@
 	e_vcard_add_attribute([self castedGObject], attr);
 }
 
-- (void)addAttributeWithValueWithAttr:(EVCardAttribute*)attr value:(OFString*)value
+- (void)addAttributeWithValue:(EVCardAttribute*)attr value:(OFString*)value
 {
 	e_vcard_add_attribute_with_value([self castedGObject], attr, [value UTF8String]);
 }
@@ -94,7 +94,7 @@
 	e_vcard_append_attribute([self castedGObject], attr);
 }
 
-- (void)appendAttributeWithValueWithAttr:(EVCardAttribute*)attr value:(OFString*)value
+- (void)appendAttributeWithValue:(EVCardAttribute*)attr value:(OFString*)value
 {
 	e_vcard_append_attribute_with_value([self castedGObject], attr, [value UTF8String]);
 }
@@ -104,12 +104,12 @@
 	e_vcard_construct([self castedGObject], [str UTF8String]);
 }
 
-- (void)constructFullWithStr:(OFString*)str len:(gssize)len uid:(OFString*)uid
+- (void)constructFull:(OFString*)str len:(gssize)len uid:(OFString*)uid
 {
 	e_vcard_construct_full([self castedGObject], [str UTF8String], len, [uid UTF8String]);
 }
 
-- (void)constructWithUidWithStr:(OFString*)str uid:(OFString*)uid
+- (void)constructWithUid:(OFString*)str uid:(OFString*)uid
 {
 	e_vcard_construct_with_uid([self castedGObject], [str UTF8String], [uid UTF8String]);
 }
@@ -119,14 +119,14 @@
 	e_vcard_dump_structure([self castedGObject]);
 }
 
-- (EVCardAttribute*)attribute:(OFString*)name
+- (EVCardAttribute*)attributeWithName:(OFString*)name
 {
 	EVCardAttribute* returnValue = (EVCardAttribute*)e_vcard_get_attribute([self castedGObject], [name UTF8String]);
 
 	return returnValue;
 }
 
-- (EVCardAttribute*)attributeIfParsed:(OFString*)name
+- (EVCardAttribute*)attributeIfParsedWithName:(OFString*)name
 {
 	EVCardAttribute* returnValue = (EVCardAttribute*)e_vcard_get_attribute_if_parsed([self castedGObject], [name UTF8String]);
 
@@ -157,7 +157,7 @@
 	e_vcard_remove_attributes([self castedGObject], [attrGroup UTF8String], [attrName UTF8String]);
 }
 
-- (OFString*)toString:(EVCardFormat)format
+- (OFString*)toStringWithFormat:(EVCardFormat)format
 {
 	gchar* gobjectValue = e_vcard_to_string([self castedGObject], format);
 
@@ -165,7 +165,7 @@
 	return returnValue;
 }
 
-- (OFString*)utilDupXattribute:(OFString*)xname
+- (OFString*)utilDupXattributeWithXname:(OFString*)xname
 {
 	gchar* gobjectValue = e_vcard_util_dup_x_attribute([self castedGObject], [xname UTF8String]);
 

@@ -19,7 +19,7 @@
 /**
  * Constructors
  */
-+ (instancetype)veeSummary:(OGCamelFolder*)parent;
++ (instancetype)veeSummaryWithParent:(OGCamelFolder*)parent;
 
 /**
  * Methods
@@ -33,7 +33,7 @@
  * @param miData the #CamelVeeMessageInfoData to add
  * @return A new #CamelVeeMessageInfo object.
  */
-- (OGCamelVeeMessageInfo*)add:(OGCamelVeeMessageInfoData*)miData;
+- (OGCamelVeeMessageInfo*)addWithMiData:(OGCamelVeeMessageInfoData*)miData;
 
 /**
  * Returns a hash table of all virtual message info UID-s known to the @summary.
@@ -61,6 +61,6 @@
  *
  * @param uid a message UID to update flags for
  */
-- (void)replaceFlags:(OFString*)uid;
+- (void)replaceFlagsWithUid:(OFString*)uid;
 
 @end

@@ -20,7 +20,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (bool)isOauth2AliasStatic:(OFString*)authMethod
++ (bool)isOauth2AliasStaticWithAuthMethod:(OFString*)authMethod
 {
 	bool returnValue = (bool)e_oauth2_services_is_oauth2_alias_static([authMethod UTF8String]);
 
@@ -59,12 +59,12 @@
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], EOAuth2Services, EOAuth2Services);
 }
 
-- (void)add:(EOAuth2Service*)service
+- (void)addWithService:(EOAuth2Service*)service
 {
 	e_oauth2_services_add([self castedGObject], service);
 }
 
-- (EOAuth2Service*)find:(OGESource*)source
+- (EOAuth2Service*)findWithSource:(OGESource*)source
 {
 	EOAuth2Service* returnValue = (EOAuth2Service*)e_oauth2_services_find([self castedGObject], [source castedGObject]);
 
@@ -78,7 +78,7 @@
 	return returnValue;
 }
 
-- (bool)isOauth2Alias:(OFString*)authMethod
+- (bool)isOauth2AliasWithAuthMethod:(OFString*)authMethod
 {
 	bool returnValue = (bool)e_oauth2_services_is_oauth2_alias([self castedGObject], [authMethod UTF8String]);
 
@@ -92,7 +92,7 @@
 	return returnValue;
 }
 
-- (void)remove:(EOAuth2Service*)service
+- (void)removeWithService:(EOAuth2Service*)service
 {
 	e_oauth2_services_remove([self castedGObject], service);
 }

@@ -56,6 +56,6 @@
  * @return the line read, which the caller must free when done with,
  * or %NULL on eof. If an error occurs, @error will be set.
  */
-- (OFString*)readLine:(OGCancellable*)cancellable;
+- (OFString*)readLineWithCancellable:(OGCancellable*)cancellable;
 
 @end

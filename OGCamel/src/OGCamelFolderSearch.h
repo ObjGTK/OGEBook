@@ -32,7 +32,7 @@
  * @param months number of months to add or subtract
  * @return a new #time_t value
  */
-+ (time_t)utilAddMonthsWithT:(time_t)t months:(gint)months;
++ (time_t)utilAddMonths:(time_t)t months:(gint)months;
 
 /**
  * Compares date portion of the two date-time values, first converted
@@ -52,7 +52,7 @@
  * @param needsDecode whether the @message_id requires camel_header_msgid_decode() first
  * @return hash of the @message_id, or 0 on any error.
  */
-+ (guint64)utilHashMessageIdWithMessageId:(OFString*)messageId needsDecode:(bool)needsDecode;
++ (guint64)utilHashMessageId:(OFString*)messageId needsDecode:(bool)needsDecode;
 
 /**
  * Implementation of 'make-time' function, which expects one argument,

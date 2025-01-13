@@ -22,14 +22,14 @@
  * @param path
  * @return
  */
-+ (gint)check:(OFString*)path;
++ (gint)checkWithPath:(OFString*)path;
 
 /**
  *
  * @param old
  * @return
  */
-+ (gint)remove:(OFString*)old;
++ (gint)removeWithOld:(OFString*)old;
 
 /**
  *

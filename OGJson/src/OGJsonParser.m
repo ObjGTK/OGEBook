@@ -87,14 +87,14 @@
 	return returnValue;
 }
 
-- (bool)hasAssignment:(gchar**)variableName
+- (bool)hasAssignmentWithVariableName:(gchar**)variableName
 {
 	bool returnValue = (bool)json_parser_has_assignment([self castedGObject], variableName);
 
 	return returnValue;
 }
 
-- (bool)loadFromDataWithData:(OFString*)data length:(gssize)length
+- (bool)loadFromData:(OFString*)data length:(gssize)length
 {
 	GError* err = NULL;
 
@@ -105,7 +105,7 @@
 	return returnValue;
 }
 
-- (bool)loadFromFile:(OFString*)filename
+- (bool)loadFromFileWithFilename:(OFString*)filename
 {
 	GError* err = NULL;
 
@@ -116,7 +116,7 @@
 	return returnValue;
 }
 
-- (bool)loadFromMappedFile:(OFString*)filename
+- (bool)loadFromMappedFileWithFilename:(OFString*)filename
 {
 	GError* err = NULL;
 
@@ -127,7 +127,7 @@
 	return returnValue;
 }
 
-- (bool)loadFromStreamWithStream:(OGInputStream*)stream cancellable:(OGCancellable*)cancellable
+- (bool)loadFromStream:(OGInputStream*)stream cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -138,12 +138,12 @@
 	return returnValue;
 }
 
-- (void)loadFromStreamAsyncWithStream:(OGInputStream*)stream cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)loadFromStreamAsync:(OGInputStream*)stream cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	json_parser_load_from_stream_async([self castedGObject], [stream castedGObject], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)loadFromStreamFinish:(GAsyncResult*)result
+- (bool)loadFromStreamFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 

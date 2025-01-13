@@ -17,7 +17,7 @@
 /**
  * Constructors
  */
-+ (instancetype)streamFilter:(OGCamelStream*)source;
++ (instancetype)streamFilterWithSource:(OGCamelStream*)source;
 
 /**
  * Methods
@@ -35,7 +35,7 @@
  * @param filter a #CamelMimeFilter object
  * @return a filter id for the added @filter.
  */
-- (gint)add:(OGCamelMimeFilter*)filter;
+- (gint)addWithFilter:(OGCamelMimeFilter*)filter;
 
 /**
  *
@@ -48,6 +48,6 @@
  *
  * @param identifier Filter id, as returned from camel_stream_filter_add()
  */
-- (void)remove:(gint)identifier;
+- (void)removeWithIdentifier:(gint)identifier;
 
 @end

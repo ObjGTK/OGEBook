@@ -118,7 +118,7 @@
 
 }
 
-- (bool)setSortFieldsSyncWithFields:(const EBookClientViewSortFields*)fields cancellable:(OGCancellable*)cancellable
+- (bool)setSortFieldsSync:(const EBookClientViewSortFields*)fields cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 

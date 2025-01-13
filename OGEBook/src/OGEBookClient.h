@@ -84,7 +84,7 @@
  * @param result a #GAsyncResult
  * @return a new #EBookClient, or %NULL on error
  */
-+ (OGEClient*)connectDirectFinish:(GAsyncResult*)result;
++ (OGEClient*)connectDirectFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Like e_book_client_connect_sync(), except creates the book client for
@@ -111,7 +111,7 @@
  * @return a new #EBookClient,
  * or %NULL on error
  */
-+ (OGEClient*)connectFinish:(GAsyncResult*)result;
++ (OGEClient*)connectFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Creates a new #EBookClient for @source.  If an error occurs, the function
@@ -158,12 +158,12 @@
  * @param contact an #EContact
  * @return %TRUE if @contact is the user, %FALSE otherwise.
  */
-+ (bool)isSelf:(OGEContact*)contact;
++ (bool)isSelfWithContact:(OGEContact*)contact;
 
 /**
  * Constructors
  */
-+ (instancetype)bookClient:(OGESource*)source;
++ (instancetype)bookClientWithSource:(OGESource*)source;
 
 /**
  * Methods
@@ -182,7 +182,7 @@
  * @param callback callback to call when a result is ready
  * @param userData user data for the @callback
  */
-- (void)addContactWithContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)addContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes previous call of e_book_client_add_contact() and
@@ -211,7 +211,7 @@
  * @param cancellable a #GCancellable; can be %NULL
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)addContactSyncWithContact:(OGEContact*)contact opflags:(guint32)opflags outAddedUid:(gchar**)outAddedUid cancellable:(OGCancellable*)cancellable;
+- (bool)addContactSync:(OGEContact*)contact opflags:(guint32)opflags outAddedUid:(gchar**)outAddedUid cancellable:(OGCancellable*)cancellable;
 
 /**
  * Adds @contacts to @client.
@@ -224,7 +224,7 @@
  * @param callback callback to call when a result is ready
  * @param userData user data for the @callback
  */
-- (void)addContactsWithContacts:(GSList*)contacts opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)addContacts:(GSList*)contacts opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes previous call of e_book_client_add_contacts() and
@@ -261,7 +261,7 @@
  * @param cancellable a #GCancellable; can be %NULL
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)addContactsSyncWithContacts:(GSList*)contacts opflags:(guint32)opflags outAddedUids:(GSList**)outAddedUids cancellable:(OGCancellable*)cancellable;
+- (bool)addContactsSync:(GSList*)contacts opflags:(guint32)opflags outAddedUids:(GSList**)outAddedUids cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously checks whether contains an @email_address. When the @email_address
@@ -285,7 +285,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)containsEmailFinish:(GAsyncResult*)result;
+- (bool)containsEmailFinishWithResult:(GAsyncResult*)result;
 
 /**
  *
@@ -530,7 +530,7 @@
  * @param callback callback to call when a result is ready
  * @param userData user data for the @callback
  */
-- (void)modifyContactWithContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)modifyContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes previous call of e_book_client_modify_contact().
@@ -538,7 +538,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)modifyContactFinish:(GAsyncResult*)result;
+- (bool)modifyContactFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Applies the changes made to @contact to the stored version in @client.
@@ -548,7 +548,7 @@
  * @param cancellable a #GCancellable; can be %NULL
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)modifyContactSyncWithContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable;
+- (bool)modifyContactSync:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable;
 
 /**
  * Applies the changes made to @contacts to the stored versions in @client.
@@ -561,7 +561,7 @@
  * @param callback callback to call when a result is ready
  * @param userData user data for the @callback
  */
-- (void)modifyContactsWithContacts:(GSList*)contacts opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)modifyContacts:(GSList*)contacts opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes previous call of e_book_client_modify_contacts().
@@ -569,7 +569,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)modifyContactsFinish:(GAsyncResult*)result;
+- (bool)modifyContactsFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Applies the changes made to @contacts to the stored versions in @client.
@@ -579,7 +579,7 @@
  * @param cancellable a #GCancellable; can be %NULL
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)modifyContactsSyncWithContacts:(GSList*)contacts opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable;
+- (bool)modifyContactsSync:(GSList*)contacts opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable;
 
 /**
  * Removes @contact from the @client.
@@ -592,7 +592,7 @@
  * @param callback callback to call when a result is ready
  * @param userData user data for the @callback
  */
-- (void)removeContactWithContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)removeContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Removes contact with @uid from the @client.
@@ -605,7 +605,7 @@
  * @param callback callback to call when a result is ready
  * @param userData user data for the @callback
  */
-- (void)removeContactByUidWithUid:(OFString*)uid opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)removeContactByUid:(OFString*)uid opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes previous call of e_book_client_remove_contact_by_uid().
@@ -613,7 +613,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)removeContactByUidFinish:(GAsyncResult*)result;
+- (bool)removeContactByUidFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Removes contact with @uid from the @client.
@@ -623,7 +623,7 @@
  * @param cancellable a #GCancellable; can be %NULL
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)removeContactByUidSyncWithUid:(OFString*)uid opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable;
+- (bool)removeContactByUidSync:(OFString*)uid opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable;
 
 /**
  * Finishes previous call of e_book_client_remove_contact().
@@ -631,7 +631,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)removeContactFinish:(GAsyncResult*)result;
+- (bool)removeContactFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Removes @contact from the @client.
@@ -641,7 +641,7 @@
  * @param cancellable a #GCancellable; can be %NULL
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)removeContactSyncWithContact:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable;
+- (bool)removeContactSync:(OGEContact*)contact opflags:(guint32)opflags cancellable:(OGCancellable*)cancellable;
 
 /**
  * Removes the contacts with uids from the list @uids from @client.  This is
@@ -665,7 +665,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)removeContactsFinish:(GAsyncResult*)result;
+- (bool)removeContactsFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Removes the contacts with uids from the list @uids from @client.  This is
@@ -687,6 +687,6 @@
  * @param contact an #EContact
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)setSelf:(OGEContact*)contact;
+- (bool)setSelfWithContact:(OGEContact*)contact;
 
 @end

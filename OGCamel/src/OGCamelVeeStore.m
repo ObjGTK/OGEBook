@@ -72,12 +72,12 @@
 	return returnValue;
 }
 
-- (void)noteSubfolderUnusedWithSubfolder:(OGCamelFolder*)subfolder unusedBy:(OGCamelVeeFolder*)unusedBy
+- (void)noteSubfolderUnused:(OGCamelFolder*)subfolder unusedBy:(OGCamelVeeFolder*)unusedBy
 {
 	camel_vee_store_note_subfolder_unused([self castedGObject], [subfolder castedGObject], [unusedBy castedGObject]);
 }
 
-- (void)noteSubfolderUsedWithSubfolder:(OGCamelFolder*)subfolder usedBy:(OGCamelVeeFolder*)usedBy
+- (void)noteSubfolderUsed:(OGCamelFolder*)subfolder usedBy:(OGCamelVeeFolder*)usedBy
 {
 	camel_vee_store_note_subfolder_used([self castedGObject], [subfolder castedGObject], [usedBy castedGObject]);
 }
@@ -92,7 +92,7 @@
 	camel_vee_store_note_vuid_used([self castedGObject], [miData castedGObject], [usedBy castedGObject]);
 }
 
-- (void)rebuildUnmatchedFolder:(OGCancellable*)cancellable
+- (void)rebuildUnmatchedFolderWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -102,7 +102,7 @@
 
 }
 
-- (void)setUnmatchedEnabled:(bool)isEnabled
+- (void)setUnmatchedEnabledWithIsEnabled:(bool)isEnabled
 {
 	camel_vee_store_set_unmatched_enabled([self castedGObject], isEnabled);
 }

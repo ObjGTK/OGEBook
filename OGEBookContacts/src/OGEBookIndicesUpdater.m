@@ -37,7 +37,7 @@
 	return returnValue;
 }
 
-- (bool)remove:(OFString*)uid
+- (bool)removeWithUid:(OFString*)uid
 {
 	bool returnValue = (bool)e_book_indices_updater_remove([self castedGObject], [uid UTF8String]);
 

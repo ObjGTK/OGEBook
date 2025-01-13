@@ -78,7 +78,7 @@
 	e_xml_document_end_element([self castedGObject]);
 }
 
-- (OFString*)content:(gsize*)outLength
+- (OFString*)contentWithOutLength:(gsize*)outLength
 {
 	gchar* gobjectValue = e_xml_document_get_content([self castedGObject], outLength);
 
@@ -113,22 +113,22 @@
 	e_xml_document_write_buffer([self castedGObject], [value UTF8String], len);
 }
 
-- (void)writeDouble:(gdouble)value
+- (void)writeDoubleWithValue:(gdouble)value
 {
 	e_xml_document_write_double([self castedGObject], value);
 }
 
-- (void)writeInt:(gint64)value
+- (void)writeIntWithValue:(gint64)value
 {
 	e_xml_document_write_int([self castedGObject], value);
 }
 
-- (void)writeString:(OFString*)value
+- (void)writeStringWithValue:(OFString*)value
 {
 	e_xml_document_write_string([self castedGObject], [value UTF8String]);
 }
 
-- (void)writeTime:(time_t)value
+- (void)writeTimeWithValue:(time_t)value
 {
 	e_xml_document_write_time([self castedGObject], value);
 }

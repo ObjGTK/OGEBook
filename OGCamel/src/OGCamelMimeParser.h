@@ -80,7 +80,7 @@
  * @return An id that may be passed to camel_mime_parser_filter_remove() to
  * remove the filter, or -1 if the operation failed.
  */
-- (gint)filterAdd:(OGCamelMimeFilter*)mf;
+- (gint)filterAddWithMf:(OGCamelMimeFilter*)mf;
 
 /**
  * Remove a processing filter from the pipeline.  There is no
@@ -88,7 +88,7 @@
  *
  * @param identifier id of the filter to remove, as returned from camel_mime_parser_filter_add()
  */
-- (void)filterRemove:(gint)identifier;
+- (void)filterRemoveWithIdentifier:(gint)identifier;
 
 /**
  * Get the last scanned "From " line, from a recently scanned from.

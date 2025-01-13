@@ -21,7 +21,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (OFString*)exportv:(EDestination**)destv
++ (OFString*)exportvWithDestv:(EDestination**)destv
 {
 	gchar* gobjectValue = e_destination_exportv(destv);
 
@@ -29,12 +29,12 @@
 	return returnValue;
 }
 
-+ (void)freev:(EDestination**)destv
++ (void)freevWithDestv:(EDestination**)destv
 {
 	e_destination_freev(destv);
 }
 
-+ (OFString*)textrepv:(EDestination**)destv
++ (OFString*)textrepvWithDestv:(EDestination**)destv
 {
 	gchar* gobjectValue = e_destination_get_textrepv(destv);
 
@@ -42,7 +42,7 @@
 	return returnValue;
 }
 
-+ (OGEDestination*)import:(OFString*)str
++ (OGEDestination*)importWithStr:(OFString*)str
 {
 	EDestination* gobjectValue = e_destination_import([str UTF8String]);
 
@@ -52,7 +52,7 @@
 	return returnValue;
 }
 
-+ (EDestination**)importv:(OFString*)str
++ (EDestination**)importvWithStr:(OFString*)str
 {
 	EDestination** returnValue = (EDestination**)e_destination_importv([str UTF8String]);
 
@@ -101,7 +101,7 @@
 	return returnValue;
 }
 
-- (bool)equal:(const EDestination*)b
+- (bool)equalWithB:(const EDestination*)b
 {
 	bool returnValue = (bool)e_destination_equal([self castedGObject], b);
 
@@ -183,7 +183,7 @@
 	return returnValue;
 }
 
-- (OFString*)textrep:(bool)includeEmail
+- (OFString*)textrepWithIncludeEmail:(bool)includeEmail
 {
 	const gchar* gobjectValue = e_destination_get_textrep([self castedGObject], includeEmail);
 
@@ -233,7 +233,7 @@
 	return returnValue;
 }
 
-- (void)setAutoRecipient:(bool)value
+- (void)setAutoRecipientWithValue:(bool)value
 {
 	e_destination_set_auto_recipient([self castedGObject], value);
 }
@@ -243,12 +243,12 @@
 	e_destination_set_client([self castedGObject], [client castedGObject]);
 }
 
-- (void)setContactWithContact:(OGEContact*)contact emailNum:(gint)emailNum
+- (void)setContact:(OGEContact*)contact emailNum:(gint)emailNum
 {
 	e_destination_set_contact([self castedGObject], [contact castedGObject], emailNum);
 }
 
-- (void)setContactUidWithUid:(OFString*)uid emailNum:(gint)emailNum
+- (void)setContactUid:(OFString*)uid emailNum:(gint)emailNum
 {
 	e_destination_set_contact_uid([self castedGObject], [uid UTF8String], emailNum);
 }
@@ -258,7 +258,7 @@
 	e_destination_set_email([self castedGObject], [email UTF8String]);
 }
 
-- (void)setHtmlMailPref:(bool)flag
+- (void)setHtmlMailPrefWithFlag:(bool)flag
 {
 	e_destination_set_html_mail_pref([self castedGObject], flag);
 }

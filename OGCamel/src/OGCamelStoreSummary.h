@@ -34,7 +34,7 @@
  *
  * @param info a #CamelStoreInfo
  */
-- (void)add:(CamelStoreInfo*)info;
+- (void)addWithInfo:(CamelStoreInfo*)info;
 
 /**
  * Build a new info record based on the name, and add it to the summary.
@@ -60,7 +60,7 @@
  * @param array the summary array as gotten from
  * camel_store_summary_array()
  */
-- (void)arrayFree:(GPtrArray*)array;
+- (void)arrayFreeWithArray:(GPtrArray*)array;
 
 /**
  * Connects listeners for count changes on @folder_summary to keep
@@ -107,14 +107,14 @@
  * @param info a #CamelStoreInfo
  * @return the @info argument
  */
-- (CamelStoreInfo*)infoRef:(CamelStoreInfo*)info;
+- (CamelStoreInfo*)infoRefWithInfo:(CamelStoreInfo*)info;
 
 /**
  * Unref and potentially free @info, and all associated memory.
  *
  * @param info a #CamelStoreInfo
  */
-- (void)infoUnref:(CamelStoreInfo*)info;
+- (void)infoUnrefWithInfo:(CamelStoreInfo*)info;
 
 /**
  * Load the summary off disk.
@@ -133,14 +133,14 @@
  * @return the summary item, or %NULL if the @path name is not
  * available
  */
-- (CamelStoreInfo*)path:(OFString*)path;
+- (CamelStoreInfo*)pathWithPath:(OFString*)path;
 
 /**
  * Remove a specific @info record from the summary.
  *
  * @param info a #CamelStoreInfo
  */
-- (void)remove:(CamelStoreInfo*)info;
+- (void)removeWithInfo:(CamelStoreInfo*)info;
 
 /**
  * Remove a specific info record from the summary, by @path.

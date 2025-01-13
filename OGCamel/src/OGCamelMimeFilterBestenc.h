@@ -15,7 +15,7 @@
 /**
  * Constructors
  */
-+ (instancetype)mimeFilterBestenc:(guint)flags;
++ (instancetype)mimeFilterBestencWithFlags:(guint)flags;
 
 /**
  * Methods
@@ -38,7 +38,7 @@
  * @param required maximum level of output encoding allowed.
  * @return the best encoding to use
  */
-- (CamelTransferEncoding)bestEncoding:(CamelBestencEncoding)required;
+- (CamelTransferEncoding)bestEncodingWithRequired:(CamelBestencEncoding)required;
 
 /**
  * Set the flags for subsequent operations.

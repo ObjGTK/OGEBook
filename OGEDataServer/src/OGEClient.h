@@ -50,7 +50,7 @@
  * @param code an #EClientError error code
  * @return Localized human readable description of the given error code
  */
-+ (OFString*)errorToString:(EClientError)code;
++ (OFString*)errorToStringWithCode:(EClientError)code;
 
 /**
  * Use e_util_copy_object_slist() instead.
@@ -73,14 +73,15 @@
 + (GSList*)utilCopyStringSlistWithCopyTo:(GSList*)copyTo strings:(const GSList*)strings;
 
 /**
- * Use g_slist_free_full() instead.
+ * Calls g_object_unref() on each member of @objects and then frees @objects
+ * itself.
  *
  * @param objects a #GSList of #GObject<!-- -->s
  */
 + (void)utilFreeObjectSlist:(GSList*)objects;
 
 /**
- * Frees memory previously allocated by e_client_util_strv_to_slist().
+ * Use g_slist_free_full() instead.
  *
  * @param strings a #GSList of strings (gchar *)
  */
@@ -97,7 +98,7 @@
 + (GSList*)utilParseCommaStrings:(OFString*)strings;
 
 /**
- * Use e_util_slist_to_strv() instead.
+ * Convert a list of strings into a %NULL-terminated array of strings.
  *
  * @param strings a #GSList of strings (const gchar *)
  * @return Newly allocated %NULL-terminated array of strings.
@@ -105,7 +106,7 @@
  * 
  * Note: Paired function for this is e_client_util_strv_to_slist().
  */
-+ (gchar**)utilSlistToStrv:(const GSList*)strings;
++ (gchar**)utilSlistToStrvWithStrings:(const GSList*)strings;
 
 /**
  * Use e_util_strv_to_slist() instead.
@@ -141,7 +142,7 @@
  * 
  * Note: The @dbus_error is automatically freed if returned %TRUE.
  */
-+ (bool)utilUnwrapDbusErrorWithDbusError:(GError*)dbusError clientError:(GError**)clientError knownErrors:(const EClientErrorsList*)knownErrors knownErrorsCount:(guint)knownErrorsCount knownErrorsDomain:(GQuark)knownErrorsDomain failWhenNoneMatched:(bool)failWhenNoneMatched;
++ (bool)utilUnwrapDbusError:(GError*)dbusError clientError:(GError**)clientError knownErrors:(const EClientErrorsList*)knownErrors knownErrorsCount:(guint)knownErrorsCount knownErrorsDomain:(GQuark)knownErrorsDomain failWhenNoneMatched:(bool)failWhenNoneMatched;
 
 /**
  * Methods
@@ -273,7 +274,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)openFinish:(GAsyncResult*)result;
+- (bool)openFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Opens the @client, making it ready for queries and other operations.
@@ -314,7 +315,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)refreshFinish:(GAsyncResult*)result;
+- (bool)refreshFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Initiates refresh on the @client. Finishing the method doesn't mean
@@ -325,7 +326,7 @@
  * @param cancellable a #GCancellable; can be %NULL
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)refreshSync:(OGCancellable*)cancellable;
+- (bool)refreshSyncWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Removes the backing data for this #EClient. For example, with the file
@@ -344,7 +345,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)removeFinish:(GAsyncResult*)result;
+- (bool)removeFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Removes the backing data for this #EClient. For example, with the file
@@ -353,7 +354,7 @@
  * @param cancellable a #GCancellable; can be %NULL
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)removeSync:(OGCancellable*)cancellable;
+- (bool)removeSyncWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Initiates retrieval of capabilities on the @client. This is usually
@@ -391,7 +392,7 @@
  * @param cancellable a #GCancellable; can be %NULL
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)retrieveCapabilitiesSyncWithCapabilities:(gchar**)capabilities cancellable:(OGCancellable*)cancellable;
+- (bool)retrieveCapabilitiesSync:(gchar**)capabilities cancellable:(OGCancellable*)cancellable;
 
 /**
  * Asynchronously retrieves @client properties to match server-side values,
@@ -414,7 +415,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)retrievePropertiesFinish:(GAsyncResult*)result;
+- (bool)retrievePropertiesFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Retrieves @client properties to match server-side values, without waiting
@@ -425,7 +426,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)retrievePropertiesSync:(OGCancellable*)cancellable;
+- (bool)retrievePropertiesSyncWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Sets @client's backend property of name @prop_name
@@ -446,7 +447,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)setBackendPropertyFinish:(GAsyncResult*)result;
+- (bool)setBackendPropertyFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Sets @client's backend property of name @prop_name
@@ -495,7 +496,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE if successful, %FALSE otherwise.
  */
-- (bool)waitForConnectedFinish:(GAsyncResult*)result;
+- (bool)waitForConnectedFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Synchronously waits until the @client is connected (according

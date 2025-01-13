@@ -52,7 +52,7 @@
  * @param result a #GAsyncResult
  * @return %TRUE on success, %FALSE on error
  */
-- (bool)downsyncFinish:(GAsyncResult*)result;
+- (bool)downsyncFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Synchronizes messages in @folder described by the search @expression to

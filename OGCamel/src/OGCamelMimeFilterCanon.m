@@ -18,7 +18,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (instancetype)mimeFilterCanon:(guint32)flags
++ (instancetype)mimeFilterCanonWithFlags:(guint32)flags
 {
 	CamelMimeFilterCanon* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_canon_new(flags), CamelMimeFilterCanon, CamelMimeFilterCanon);
 

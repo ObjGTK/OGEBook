@@ -1,30 +1,44 @@
 /*
  * SPDX-FileCopyrightText: 2015-2017 Tyler Burton <software@tylerburton.ca>
- * SPDX-FileCopyrightText: 2015-2024 The ObjGTK authors, see AUTHORS file
+ * SPDX-FileCopyrightText: 2015-2025 The ObjGTK authors, see AUTHORS file
  * SPDX-License-Identifier: LGPL-2.1-or-later
  */
 
 #import "OGCamelFilterOutputStream.h"
 
-#import <OGio/OGOutputStream.h>
 #import "OGCamelMimeFilter.h"
+#import <OGio/OGOutputStream.h>
 
 @implementation OGCamelFilterOutputStream
 
-- (instancetype)initWithBaseStream:(OGOutputStream*)baseStream filter:(OGCamelMimeFilter*)filter
++ (void)load
+{
+	GType gtypeToAssociate = CAMEL_TYPE_FILTER_OUTPUT_STREAM;
+
+	if (gtypeToAssociate == 0)
+		return;
+
+	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
+}
+
++ (instancetype)filterOutputStreamWithBaseStream:(OGOutputStream*)baseStream filter:(OGCamelMimeFilter*)filter
 {
 	CamelFilterOutputStream* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_filter_output_stream_new([baseStream castedGObject], [filter castedGObject]), CamelFilterOutputStream, CamelFilterOutputStream);
 
+	if OF_UNLIKELY(!gobjectValue)
+		@throw [OGObjectGObjectToWrapCreationFailedException exception];
+
+	OGCamelFilterOutputStream* wrapperObject;
 	@try {
-		self = [super initWithGObject:gobjectValue];
+		wrapperObject = [[OGCamelFilterOutputStream alloc] initWithGObject:gobjectValue];
 	} @catch (id e) {
 		g_object_unref(gobjectValue);
-		[self release];
+		[wrapperObject release];
 		@throw e;
 	}
 
 	g_object_unref(gobjectValue);
-	return self;
+	return [wrapperObject autorelease];
 }
 
 - (CamelFilterOutputStream*)castedGObject
@@ -34,9 +48,9 @@
 
 - (OGCamelMimeFilter*)filter
 {
-	CamelMimeFilter* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_filter_output_stream_get_filter([self castedGObject]), CamelMimeFilter, CamelMimeFilter);
+	CamelMimeFilter* gobjectValue = camel_filter_output_stream_get_filter([self castedGObject]);
 
-	OGCamelMimeFilter* returnValue = [OGCamelMimeFilter withGObject:gobjectValue];
+	OGCamelMimeFilter* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 

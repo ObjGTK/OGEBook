@@ -75,7 +75,7 @@
  * @param namep holder for the matching name, or %NULL, if not required.
  * @return the index of the address, or -1 if not found
  */
-- (gint)findAddressWithAddress:(OFString*)address namep:(const gchar**)namep;
+- (gint)findAddress:(OFString*)address namep:(const gchar**)namep;
 
 /**
  * Find address by real name.
@@ -85,7 +85,7 @@
  * @return the index of the address matching the name, or -1 if no
  * match was found
  */
-- (gint)findNameWithName:(OFString*)name addressp:(const gchar**)addressp;
+- (gint)findName:(OFString*)name addressp:(const gchar**)addressp;
 
 /**
  * Get the address at @index.

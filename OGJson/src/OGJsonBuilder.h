@@ -146,7 +146,7 @@
  * @param node the value of the member or element
  * @return the builder instance
  */
-- (OGJsonBuilder*)addValue:(JsonNode*)node;
+- (OGJsonBuilder*)addValueWithNode:(JsonNode*)node;
 
 /**
  * Opens an array inside the given builder.

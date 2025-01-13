@@ -38,7 +38,7 @@
 	return [wrapperObject autorelease];
 }
 
-+ (instancetype)streamFsWithNameWithName:(OFString*)name flags:(gint)flags mode:(mode_t)mode
++ (instancetype)streamFsWithName:(OFString*)name flags:(gint)flags mode:(mode_t)mode
 {
 	GError* err = NULL;
 

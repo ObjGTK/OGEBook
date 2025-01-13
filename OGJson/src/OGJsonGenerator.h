@@ -70,7 +70,7 @@
  * @param indentLevel the number of repetitions of the indentation character
  *   that should be applied when pretty printing
  */
-- (void)setIndent:(guint)indentLevel;
+- (void)setIndentWithIndentLevel:(guint)indentLevel;
 
 /**
  * Sets the character to be used when indenting.
@@ -88,7 +88,7 @@
  *
  * @param isPretty whether the generated string should be pretty printed
  */
-- (void)setPretty:(bool)isPretty;
+- (void)setPrettyWithIsPretty:(bool)isPretty;
 
 /**
  * Sets the root of the JSON data stream to be serialized by
@@ -99,7 +99,7 @@
  *
  * @param node the root node
  */
-- (void)setRoot:(JsonNode*)node;
+- (void)setRootWithNode:(JsonNode*)node;
 
 /**
  * Generates a JSON data stream from @generator and returns it as a
@@ -109,7 +109,7 @@
  *   buffer
  * @return a newly allocated string holding a JSON data stream
  */
-- (OFString*)toData:(gsize*)length;
+- (OFString*)toDataWithLength:(gsize*)length;
 
 /**
  * Creates a JSON data stream and puts it inside `filename`, overwriting
@@ -121,7 +121,7 @@
  * @param filename the path to the target file
  * @return %TRUE if saving was successful.
  */
-- (bool)toFile:(OFString*)filename;
+- (bool)toFileWithFilename:(OFString*)filename;
 
 /**
  * Generates a JSON data stream and appends it to the string buffer.
@@ -139,6 +139,6 @@
  * @param cancellable a `GCancellable`
  * @return whether the write operation was successful
  */
-- (bool)toStreamWithStream:(OGOutputStream*)stream cancellable:(OGCancellable*)cancellable;
+- (bool)toStream:(OGOutputStream*)stream cancellable:(OGCancellable*)cancellable;
 
 @end

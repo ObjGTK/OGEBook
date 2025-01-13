@@ -18,7 +18,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (void)camelMirFree:(CamelMIRecord*)record
++ (void)camelMirFreeWithRecord:(CamelMIRecord*)record
 {
 	camel_db_camel_mir_free(record);
 }
@@ -42,7 +42,7 @@
 	return returnValue;
 }
 
-+ (OFString*)columnName:(OFString*)rawName
++ (OFString*)columnNameWithRawName:(OFString*)rawName
 {
 	gchar* gobjectValue = camel_db_get_column_name([rawName UTF8String]);
 
@@ -63,7 +63,7 @@
 	return returnValue;
 }
 
-+ (instancetype)dB:(OFString*)filename
++ (instancetype)dBWithFilename:(OFString*)filename
 {
 	GError* err = NULL;
 
@@ -103,7 +103,7 @@
 	return returnValue;
 }
 
-- (gint)addToTransaction:(OFString*)query
+- (gint)addToTransactionWithQuery:(OFString*)query
 {
 	GError* err = NULL;
 
@@ -125,7 +125,7 @@
 	return returnValue;
 }
 
-- (gint)clearFolderSummary:(OFString*)folderName
+- (gint)clearFolderSummaryWithFolderName:(OFString*)folderName
 {
 	GError* err = NULL;
 
@@ -136,7 +136,7 @@
 	return returnValue;
 }
 
-- (gint)command:(OFString*)stmt
+- (gint)commandWithStmt:(OFString*)stmt
 {
 	GError* err = NULL;
 
@@ -246,7 +246,7 @@
 	return returnValue;
 }
 
-- (gint)deleteFolder:(OFString*)folderName
+- (gint)deleteFolderWithFolderName:(OFString*)folderName
 {
 	GError* err = NULL;
 
@@ -290,7 +290,7 @@
 	return returnValue;
 }
 
-- (gint)flushInMemoryTransactions:(OFString*)folderName
+- (gint)flushInMemoryTransactionsWithFolderName:(OFString*)folderName
 {
 	GError* err = NULL;
 
@@ -309,7 +309,7 @@
 	return returnValue;
 }
 
-- (GPtrArray*)folderDeletedUids:(OFString*)folderName
+- (GPtrArray*)folderDeletedUidsWithFolderName:(OFString*)folderName
 {
 	GError* err = NULL;
 
@@ -320,7 +320,7 @@
 	return returnValue;
 }
 
-- (GPtrArray*)folderJunkUids:(OFString*)folderName
+- (GPtrArray*)folderJunkUidsWithFolderName:(OFString*)folderName
 {
 	GError* err = NULL;
 
@@ -353,7 +353,7 @@
 	return returnValue;
 }
 
-- (gint)prepareMessageInfoTable:(OFString*)folderName
+- (gint)prepareMessageInfoTableWithFolderName:(OFString*)folderName
 {
 	GError* err = NULL;
 
@@ -430,7 +430,7 @@
 	return returnValue;
 }
 
-- (gint)setCollateWithCol:(OFString*)col collate:(OFString*)collate func:(CamelDBCollate)func
+- (gint)setCollate:(OFString*)col collate:(OFString*)collate func:(CamelDBCollate)func
 {
 	gint returnValue = (gint)camel_db_set_collate([self castedGObject], [col UTF8String], [collate UTF8String], func);
 
@@ -448,7 +448,7 @@
 	return returnValue;
 }
 
-- (gint)transactionCommand:(const GList*)qryList
+- (gint)transactionCommandWithQryList:(const GList*)qryList
 {
 	GError* err = NULL;
 

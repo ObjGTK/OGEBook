@@ -18,7 +18,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (instancetype)mimeFilterBestenc:(guint)flags
++ (instancetype)mimeFilterBestencWithFlags:(guint)flags
 {
 	CamelMimeFilterBestenc* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_bestenc_new(flags), CamelMimeFilterBestenc, CamelMimeFilterBestenc);
 
@@ -51,7 +51,7 @@
 	return returnValue;
 }
 
-- (CamelTransferEncoding)bestEncoding:(CamelBestencEncoding)required
+- (CamelTransferEncoding)bestEncodingWithRequired:(CamelBestencEncoding)required
 {
 	CamelTransferEncoding returnValue = (CamelTransferEncoding)camel_mime_filter_bestenc_get_best_encoding([self castedGObject], required);
 

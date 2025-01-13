@@ -27,7 +27,7 @@
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceCredentialsProviderImpl, ESourceCredentialsProviderImpl);
 }
 
-- (bool)canProcess:(OGESource*)source
+- (bool)canProcessWithSource:(OGESource*)source
 {
 	bool returnValue = (bool)e_source_credentials_provider_impl_can_process([self castedGObject], [source castedGObject]);
 

@@ -39,7 +39,7 @@
 	return returnValue;
 }
 
-- (bool)prepareForOfflineSync:(OGCancellable*)cancellable
+- (bool)prepareForOfflineSyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -57,12 +57,12 @@
 	return returnValue;
 }
 
-- (void)setOnlineWithOnline:(bool)online ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)setOnline:(bool)online ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	camel_offline_store_set_online([self castedGObject], online, ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)setOnlineFinish:(GAsyncResult*)result
+- (bool)setOnlineFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -73,7 +73,7 @@
 	return returnValue;
 }
 
-- (bool)setOnlineSyncWithOnline:(bool)online cancellable:(OGCancellable*)cancellable
+- (bool)setOnlineSync:(bool)online cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 

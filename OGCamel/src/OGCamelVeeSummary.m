@@ -22,7 +22,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (instancetype)veeSummary:(OGCamelFolder*)parent
++ (instancetype)veeSummaryWithParent:(OGCamelFolder*)parent
 {
 	CamelVeeSummary* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_summary_new([parent castedGObject]), CamelVeeSummary, CamelVeeSummary);
 
@@ -47,7 +47,7 @@
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelVeeSummary, CamelVeeSummary);
 }
 
-- (OGCamelVeeMessageInfo*)add:(OGCamelVeeMessageInfoData*)miData
+- (OGCamelVeeMessageInfo*)addWithMiData:(OGCamelVeeMessageInfoData*)miData
 {
 	CamelVeeMessageInfo* gobjectValue = camel_vee_summary_add([self castedGObject], [miData castedGObject]);
 
@@ -69,7 +69,7 @@
 	camel_vee_summary_remove([self castedGObject], [vuid UTF8String], [subfolder castedGObject]);
 }
 
-- (void)replaceFlags:(OFString*)uid
+- (void)replaceFlagsWithUid:(OFString*)uid
 {
 	camel_vee_summary_replace_flags([self castedGObject], [uid UTF8String]);
 }

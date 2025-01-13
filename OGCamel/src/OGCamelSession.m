@@ -60,7 +60,7 @@
 	camel_session_authenticate([self castedGObject], [service castedGObject], [mechanism UTF8String], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)authenticateFinish:(GAsyncResult*)result
+- (bool)authenticateFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -98,7 +98,7 @@
 	camel_session_forward_to([self castedGObject], [folder castedGObject], [message castedGObject], [address UTF8String], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)forwardToFinish:(GAsyncResult*)result
+- (bool)forwardToFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -217,7 +217,7 @@
 	return returnValue;
 }
 
-- (bool)lookupAddressbook:(OFString*)name
+- (bool)lookupAddressbookWithName:(OFString*)name
 {
 	bool returnValue = (bool)camel_session_lookup_addressbook([self castedGObject], [name UTF8String]);
 
@@ -238,7 +238,7 @@
 	return returnValue;
 }
 
-- (OGCamelService*)refService:(OFString*)uid
+- (OGCamelService*)refServiceWithUid:(OFString*)uid
 {
 	CamelService* gobjectValue = camel_session_ref_service([self castedGObject], [uid UTF8String]);
 
@@ -248,7 +248,7 @@
 	return returnValue;
 }
 
-- (OGCamelService*)refServiceByUrlWithUrl:(CamelURL*)url type:(CamelProviderType)type
+- (OGCamelService*)refServiceByUrl:(CamelURL*)url type:(CamelProviderType)type
 {
 	CamelService* gobjectValue = camel_session_ref_service_by_url([self castedGObject], url, type);
 
@@ -273,7 +273,7 @@
 	camel_session_set_junk_filter([self castedGObject], junkFilter);
 }
 
-- (void)setJunkHeadersWithHeaders:(const gchar**)headers values:(const gchar**)values len:(gint)len
+- (void)setJunkHeaders:(const gchar**)headers values:(const gchar**)values len:(gint)len
 {
 	camel_session_set_junk_headers([self castedGObject], headers, values, len);
 }

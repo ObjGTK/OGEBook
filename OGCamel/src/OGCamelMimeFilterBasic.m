@@ -18,7 +18,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (instancetype)mimeFilterBasic:(CamelMimeFilterBasicType)type
++ (instancetype)mimeFilterBasicWithType:(CamelMimeFilterBasicType)type
 {
 	CamelMimeFilterBasic* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_basic_new(type), CamelMimeFilterBasic, CamelMimeFilterBasic);
 

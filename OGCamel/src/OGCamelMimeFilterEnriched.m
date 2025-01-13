@@ -18,7 +18,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (instancetype)mimeFilterEnriched:(guint32)flags
++ (instancetype)mimeFilterEnrichedWithFlags:(guint32)flags
 {
 	CamelMimeFilterEnriched* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_enriched_new(flags), CamelMimeFilterEnriched, CamelMimeFilterEnriched);
 

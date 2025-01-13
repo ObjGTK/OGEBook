@@ -18,28 +18,28 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (EContactField)fieldId:(OFString*)fieldName
++ (EContactField)fieldIdWithFieldName:(OFString*)fieldName
 {
 	EContactField returnValue = (EContactField)e_contact_field_id([fieldName UTF8String]);
 
 	return returnValue;
 }
 
-+ (EContactField)fieldIdFromVcard:(OFString*)vcardField
++ (EContactField)fieldIdFromVcardWithVcardField:(OFString*)vcardField
 {
 	EContactField returnValue = (EContactField)e_contact_field_id_from_vcard([vcardField UTF8String]);
 
 	return returnValue;
 }
 
-+ (bool)fieldIsString:(EContactField)fieldId
++ (bool)fieldIsStringWithFieldId:(EContactField)fieldId
 {
 	bool returnValue = (bool)e_contact_field_is_string(fieldId);
 
 	return returnValue;
 }
 
-+ (OFString*)fieldName:(EContactField)fieldId
++ (OFString*)fieldNameWithFieldId:(EContactField)fieldId
 {
 	const gchar* gobjectValue = e_contact_field_name(fieldId);
 
@@ -47,14 +47,14 @@
 	return returnValue;
 }
 
-+ (GType)fieldType:(EContactField)fieldId
++ (GType)fieldTypeWithFieldId:(EContactField)fieldId
 {
 	GType returnValue = (GType)e_contact_field_type(fieldId);
 
 	return returnValue;
 }
 
-+ (OFString*)prettyName:(EContactField)fieldId
++ (OFString*)prettyNameWithFieldId:(EContactField)fieldId
 {
 	const gchar* gobjectValue = e_contact_pretty_name(fieldId);
 
@@ -62,7 +62,7 @@
 	return returnValue;
 }
 
-+ (OFString*)vcardAttribute:(EContactField)fieldId
++ (OFString*)vcardAttributeWithFieldId:(EContactField)fieldId
 {
 	const gchar* gobjectValue = e_contact_vcard_attribute(fieldId);
 
@@ -110,7 +110,7 @@
 	return [wrapperObject autorelease];
 }
 
-+ (instancetype)contactFromVcardWithUidWithVcard:(OFString*)vcard uid:(OFString*)uid
++ (instancetype)contactFromVcardWithUid:(OFString*)vcard uid:(OFString*)uid
 {
 	EContact* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_contact_new_from_vcard_with_uid([vcard UTF8String], [uid UTF8String]), EContact, EContact);
 
@@ -145,14 +145,14 @@
 	return returnValue;
 }
 
-- (gpointer)get:(EContactField)fieldId
+- (gpointer)getWithFieldId:(EContactField)fieldId
 {
 	gpointer returnValue = (gpointer)e_contact_get([self castedGObject], fieldId);
 
 	return returnValue;
 }
 
-- (GList*)attributes:(EContactField)fieldId
+- (GList*)attributesWithFieldId:(EContactField)fieldId
 {
 	GList* returnValue = (GList*)e_contact_get_attributes([self castedGObject], fieldId);
 
@@ -166,7 +166,7 @@
 	return returnValue;
 }
 
-- (gconstpointer)const:(EContactField)fieldId
+- (gconstpointer)constWithFieldId:(EContactField)fieldId
 {
 	gconstpointer returnValue = (gconstpointer)e_contact_get_const([self castedGObject], fieldId);
 

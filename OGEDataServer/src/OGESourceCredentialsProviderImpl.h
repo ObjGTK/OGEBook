@@ -34,7 +34,7 @@
  * @param source an #ESource
  * @return Whether the @provider_impl can process credentials for the @source.
  */
-- (bool)canProcess:(OGESource*)source;
+- (bool)canProcessWithSource:(OGESource*)source;
 
 /**
  * Returns whether credential prompt can be done for the @provider_impl.

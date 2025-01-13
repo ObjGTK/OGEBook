@@ -53,7 +53,7 @@
 	return returnValue;
 }
 
-- (void)dump:(gint)body
+- (void)dumpWithBody:(gint)body
 {
 	camel_mime_message_dump([self castedGObject], body);
 }
@@ -68,14 +68,14 @@
 	camel_mime_message_foreach_part([self castedGObject], callback, userData);
 }
 
-- (time_t)date:(gint*)offset
+- (time_t)dateWithOffset:(gint*)offset
 {
 	time_t returnValue = (time_t)camel_mime_message_get_date([self castedGObject], offset);
 
 	return returnValue;
 }
 
-- (time_t)dateReceived:(gint*)offset
+- (time_t)dateReceivedWithOffset:(gint*)offset
 {
 	time_t returnValue = (time_t)camel_mime_message_get_date_received([self castedGObject], offset);
 
@@ -106,7 +106,7 @@
 	return returnValue;
 }
 
-- (OGCamelInternetAddress*)recipients:(OFString*)type
+- (OGCamelInternetAddress*)recipientsWithType:(OFString*)type
 {
 	CamelInternetAddress* gobjectValue = camel_mime_message_get_recipients([self castedGObject], [type UTF8String]);
 
@@ -157,7 +157,7 @@
 	camel_mime_message_set_best_encoding([self castedGObject], required, enctype);
 }
 
-- (void)setDateWithDate:(time_t)date offset:(gint)offset
+- (void)setDate:(time_t)date offset:(gint)offset
 {
 	camel_mime_message_set_date([self castedGObject], date, offset);
 }
@@ -182,7 +182,7 @@
 	camel_mime_message_set_reply_to([self castedGObject], [replyTo castedGObject]);
 }
 
-- (void)setSource:(OFString*)sourceUid
+- (void)setSourceWithSourceUid:(OFString*)sourceUid
 {
 	camel_mime_message_set_source([self castedGObject], [sourceUid UTF8String]);
 }

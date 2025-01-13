@@ -55,7 +55,7 @@
  * @param protocol a #CamelProvider protocol
  * @return the #ESourceCamel extension name for @protocol
  */
-+ (OFString*)extensionName:(OFString*)protocol;
++ (OFString*)extensionNameWithProtocol:(OFString*)protocol;
 
 /**
  * Returns the #GType name of the registered #ESourceCamel subtype for
@@ -67,7 +67,7 @@
  * @param protocol a #CamelProvider protocol
  * @return the #ESourceCamel type name for @protocol
  */
-+ (OFString*)typeName:(OFString*)protocol;
++ (OFString*)typeNameWithProtocol:(OFString*)protocol;
 
 /**
  * Creates and registers subclasses of #ESourceCamel for each available

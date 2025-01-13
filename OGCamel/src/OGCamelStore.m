@@ -27,7 +27,7 @@
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelStore, CamelStore);
 }
 
-- (bool)canRefreshFolder:(CamelFolderInfo*)info
+- (bool)canRefreshFolderWithInfo:(CamelFolderInfo*)info
 {
 	GError* err = NULL;
 
@@ -43,7 +43,7 @@
 	camel_store_create_folder([self castedGObject], [parentName UTF8String], [folderName UTF8String], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (CamelFolderInfo*)createFolderFinish:(GAsyncResult*)result
+- (CamelFolderInfo*)createFolderFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -65,7 +65,7 @@
 	return returnValue;
 }
 
-- (void)deleteCachedFolder:(OFString*)folderName
+- (void)deleteCachedFolderWithFolderName:(OFString*)folderName
 {
 	camel_store_delete_cached_folder([self castedGObject], [folderName UTF8String]);
 }
@@ -75,7 +75,7 @@
 	camel_store_delete_folder([self castedGObject], [folderName UTF8String], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)deleteFolderFinish:(GAsyncResult*)result
+- (bool)deleteFolderFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -104,12 +104,12 @@
 	return returnValue;
 }
 
-- (void)folderCreated:(CamelFolderInfo*)folderInfo
+- (void)folderCreatedWithFolderInfo:(CamelFolderInfo*)folderInfo
 {
 	camel_store_folder_created([self castedGObject], folderInfo);
 }
 
-- (void)folderDeleted:(CamelFolderInfo*)folderInfo
+- (void)folderDeletedWithFolderInfo:(CamelFolderInfo*)folderInfo
 {
 	camel_store_folder_deleted([self castedGObject], folderInfo);
 }
@@ -119,7 +119,7 @@
 	camel_store_folder_info_stale([self castedGObject]);
 }
 
-- (void)folderOpened:(OGCamelFolder*)folder
+- (void)folderOpenedWithFolder:(OGCamelFolder*)folder
 {
 	camel_store_folder_opened([self castedGObject], [folder castedGObject]);
 }
@@ -156,7 +156,7 @@
 	camel_store_get_folder([self castedGObject], [folderName UTF8String], flags, ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (OGCamelFolder*)folderFinish:(GAsyncResult*)result
+- (OGCamelFolder*)folderFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -175,7 +175,7 @@
 	camel_store_get_folder_info([self castedGObject], [top UTF8String], flags, ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (CamelFolderInfo*)folderInfoFinish:(GAsyncResult*)result
+- (CamelFolderInfo*)folderInfoFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -223,7 +223,7 @@
 	camel_store_get_inbox_folder([self castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (OGCamelFolder*)inboxFolderFinish:(GAsyncResult*)result
+- (OGCamelFolder*)inboxFolderFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -237,7 +237,7 @@
 	return returnValue;
 }
 
-- (OGCamelFolder*)inboxFolderSync:(OGCancellable*)cancellable
+- (OGCamelFolder*)inboxFolderSyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -256,7 +256,7 @@
 	camel_store_get_junk_folder([self castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (OGCamelFolder*)junkFolderFinish:(GAsyncResult*)result
+- (OGCamelFolder*)junkFolderFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -270,7 +270,7 @@
 	return returnValue;
 }
 
-- (OGCamelFolder*)junkFolderSync:(OGCancellable*)cancellable
+- (OGCamelFolder*)junkFolderSyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -296,7 +296,7 @@
 	camel_store_get_trash_folder([self castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (OGCamelFolder*)trashFolderFinish:(GAsyncResult*)result
+- (OGCamelFolder*)trashFolderFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -310,7 +310,7 @@
 	return returnValue;
 }
 
-- (OGCamelFolder*)trashFolderSync:(OGCancellable*)cancellable
+- (OGCamelFolder*)trashFolderSyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -367,7 +367,7 @@
 	camel_store_rename_folder([self castedGObject], [oldName UTF8String], [newName UTF8String], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)renameFolderFinish:(GAsyncResult*)result
+- (bool)renameFolderFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -404,7 +404,7 @@
 	camel_store_synchronize([self castedGObject], expunge, ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)synchronizeFinish:(GAsyncResult*)result
+- (bool)synchronizeFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 

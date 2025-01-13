@@ -64,7 +64,7 @@
  * @return a #CamelIndexCursor object with
  *    the given @word, or %NULL, when not found
  */
-- (OGCamelIndexCursor*)find:(OFString*)word;
+- (OGCamelIndexCursor*)findWithWord:(OFString*)word;
 
 /**
  *
@@ -86,7 +86,7 @@
  * @param path
  * @return
  */
-- (gint)rename:(OFString*)path;
+- (gint)renameWithPath:(OFString*)path;
 
 /**
  *
@@ -113,6 +113,6 @@
  * @param idn
  * @return
  */
-- (gint)writeName:(OGCamelIndexName*)idn;
+- (gint)writeNameWithIdn:(OGCamelIndexName*)idn;
 
 @end

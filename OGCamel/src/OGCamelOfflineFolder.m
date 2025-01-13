@@ -37,7 +37,7 @@
 	camel_offline_folder_downsync([self castedGObject], [expression UTF8String], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)downsyncFinish:(GAsyncResult*)result
+- (bool)downsyncFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 

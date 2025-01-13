@@ -73,7 +73,7 @@
  * @param index a zero-based index indicating the part to get
  * @return the indicated subpart, or %NULL
  */
-- (OGCamelMimePart*)part:(guint)index;
+- (OGCamelMimePart*)partWithIndex:(guint)index;
 
 /**
  * Returns the postface text for @multipart.

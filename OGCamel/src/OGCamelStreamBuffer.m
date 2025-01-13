@@ -61,7 +61,7 @@
 	return returnValue;
 }
 
-- (OFString*)readLine:(OGCancellable*)cancellable
+- (OFString*)readLineWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 

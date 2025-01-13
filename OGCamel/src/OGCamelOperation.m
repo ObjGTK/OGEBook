@@ -23,7 +23,7 @@
 	camel_operation_cancel_all();
 }
 
-+ (OFString*)dupMessage:(OGCancellable*)cancellable
++ (OFString*)dupMessageWithCancellable:(OGCancellable*)cancellable
 {
 	gchar* gobjectValue = camel_operation_dup_message([cancellable castedGObject]);
 
@@ -31,7 +31,7 @@
 	return returnValue;
 }
 
-+ (void)popMessage:(OGCancellable*)cancellable
++ (void)popMessageWithCancellable:(OGCancellable*)cancellable
 {
 	camel_operation_pop_message([cancellable castedGObject]);
 }
@@ -61,7 +61,7 @@
 	return [wrapperObject autorelease];
 }
 
-+ (instancetype)operationProxy:(OGCancellable*)cancellable
++ (instancetype)operationProxyWithCancellable:(OGCancellable*)cancellable
 {
 	CamelOperation* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_operation_new_proxy([cancellable castedGObject]), CamelOperation, CamelOperation);
 

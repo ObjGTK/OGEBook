@@ -23,7 +23,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (instancetype)sourceCredentialsProvider:(OGESourceRegistry*)registry
++ (instancetype)sourceCredentialsProviderWithRegistry:(OGESourceRegistry*)registry
 {
 	ESourceCredentialsProvider* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(e_source_credentials_provider_new([registry castedGObject]), ESourceCredentialsProvider, ESourceCredentialsProvider);
 
@@ -48,14 +48,14 @@
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], ESourceCredentialsProvider, ESourceCredentialsProvider);
 }
 
-- (bool)canPrompt:(OGESource*)source
+- (bool)canPromptWithSource:(OGESource*)source
 {
 	bool returnValue = (bool)e_source_credentials_provider_can_prompt([self castedGObject], [source castedGObject]);
 
 	return returnValue;
 }
 
-- (bool)canStore:(OGESource*)source
+- (bool)canStoreWithSource:(OGESource*)source
 {
 	bool returnValue = (bool)e_source_credentials_provider_can_store([self castedGObject], [source castedGObject]);
 
@@ -67,7 +67,7 @@
 	e_source_credentials_provider_delete([self castedGObject], [source castedGObject], [cancellable castedGObject], callback, userData);
 }
 
-- (bool)deleteFinish:(GAsyncResult*)result
+- (bool)deleteFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -126,14 +126,15 @@
 	return returnValue;
 }
 
-- (GObject*)refRegistry
+- (OGObject*)refRegistry
 {
-	GObject* returnValue = (GObject*)e_source_credentials_provider_ref_registry([self castedGObject]);
+	GObject* gobjectValue = e_source_credentials_provider_ref_registry([self castedGObject]);
 
+	OGObject* returnValue = OGWrapperClassAndObjectForGObject(gobjectValue);
 	return returnValue;
 }
 
-- (OGESource*)refSource:(OFString*)uid
+- (OGESource*)refSourceWithUid:(OFString*)uid
 {
 	ESource* gobjectValue = e_source_credentials_provider_ref_source([self castedGObject], [uid UTF8String]);
 
@@ -143,7 +144,7 @@
 	return returnValue;
 }
 
-- (bool)registerImpl:(OGESourceCredentialsProviderImpl*)providerImpl
+- (bool)registerImplWithProviderImpl:(OGESourceCredentialsProviderImpl*)providerImpl
 {
 	bool returnValue = (bool)e_source_credentials_provider_register_impl([self castedGObject], [providerImpl castedGObject]);
 
@@ -155,7 +156,7 @@
 	e_source_credentials_provider_store([self castedGObject], [source castedGObject], credentials, permanently, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)storeFinish:(GAsyncResult*)result
+- (bool)storeFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -177,7 +178,7 @@
 	return returnValue;
 }
 
-- (void)unregisterImpl:(OGESourceCredentialsProviderImpl*)providerImpl
+- (void)unregisterImplWithProviderImpl:(OGESourceCredentialsProviderImpl*)providerImpl
 {
 	e_source_credentials_provider_unregister_impl([self castedGObject], [providerImpl castedGObject]);
 }

@@ -36,7 +36,7 @@
 /**
  * Constructors
  */
-+ (instancetype)folderSummary:(OGCamelFolder*)folder;
++ (instancetype)folderSummaryWithFolder:(OGCamelFolder*)folder;
 
 /**
  * Methods
@@ -91,7 +91,7 @@
  * 
  * See camel_folder_summary_get_info_flags().
  */
-- (OGCamelMessageInfo*)get:(OFString*)uid;
+- (OGCamelMessageInfo*)getWithUid:(OFString*)uid;
 
 /**
  * Obtain a copy of the summary array.  This is done atomically,
@@ -157,7 +157,7 @@
  * @return the flags currently stored for message info with UID @uid,
  *          or (~0) on error
  */
-- (guint32)infoFlags:(OFString*)uid;
+- (guint32)infoFlagsWithUid:(OFString*)uid;
 
 /**
  *
@@ -285,7 +285,7 @@
  *
  * @return the next unique uid value
  */
-- (guint32)generateNextUid;
+- (guint32)nextUid;
 
 /**
  * Retrieve the next uid, but as a formatted string.
@@ -302,7 +302,7 @@
  *    if it's currently loaded in memory, or %NULL otherwise. Unref the non-NULL
  *    info with g_object_unref() when done with it.
  */
-- (OGCamelMessageInfo*)peekLoaded:(OFString*)uid;
+- (OGCamelMessageInfo*)peekLoadedWithUid:(OFString*)uid;
 
 /**
  * Loads all infos into memory, if they are not yet and ensures
@@ -319,7 +319,7 @@
  * @param info a #CamelMessageInfo
  * @return Whether the @info was found and removed from the @summary.
  */
-- (bool)remove:(OGCamelMessageInfo*)info;
+- (bool)removeWithInfo:(OGCamelMessageInfo*)info;
 
 /**
  * Remove a specific info record from the summary, by @uid.
@@ -343,7 +343,7 @@
  * @param info a #CamelMessageInfo
  * @return Whether any count changed
  */
-- (bool)replaceFlags:(OGCamelMessageInfo*)info;
+- (bool)replaceFlagsWithInfo:(OGCamelMessageInfo*)info;
 
 /**
  * Saves the content of the @summary to disk. It does nothing,

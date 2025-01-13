@@ -20,7 +20,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (instancetype)dataCache:(OFString*)path
++ (instancetype)dataCacheWithPath:(OFString*)path
 {
 	GError* err = NULL;
 
@@ -63,7 +63,7 @@
 	return returnValue;
 }
 
-- (void)clear:(OFString*)path
+- (void)clearWithPath:(OFString*)path
 {
 	camel_data_cache_clear([self castedGObject], [path UTF8String]);
 }
@@ -121,12 +121,12 @@
 	return returnValue;
 }
 
-- (void)setExpireAccess:(time_t)when
+- (void)setExpireAccessWithWhen:(time_t)when
 {
 	camel_data_cache_set_expire_access([self castedGObject], when);
 }
 
-- (void)setExpireAge:(time_t)when
+- (void)setExpireAgeWithWhen:(time_t)when
 {
 	camel_data_cache_set_expire_age([self castedGObject], when);
 }

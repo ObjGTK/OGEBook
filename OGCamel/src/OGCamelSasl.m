@@ -21,21 +21,21 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (CamelServiceAuthType*)authtype:(OFString*)mechanism
++ (CamelServiceAuthType*)authtypeWithMechanism:(OFString*)mechanism
 {
 	CamelServiceAuthType* returnValue = (CamelServiceAuthType*)camel_sasl_authtype([mechanism UTF8String]);
 
 	return returnValue;
 }
 
-+ (GList*)authtypeList:(bool)includePlain
++ (GList*)authtypeListWithIncludePlain:(bool)includePlain
 {
 	GList* returnValue = (GList*)camel_sasl_authtype_list(includePlain);
 
 	return returnValue;
 }
 
-+ (bool)isXoauth2Alias:(OFString*)mechanism
++ (bool)isXoauth2AliasWithMechanism:(OFString*)mechanism
 {
 	bool returnValue = (bool)camel_sasl_is_xoauth2_alias([mechanism UTF8String]);
 
@@ -77,7 +77,7 @@
 	camel_sasl_challenge_base64([self castedGObject], [token UTF8String], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (OFString*)challengeBase64Finish:(GAsyncResult*)result
+- (OFString*)challengeBase64FinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -101,7 +101,7 @@
 	return returnValue;
 }
 
-- (GByteArray*)challengeFinish:(GAsyncResult*)result
+- (GByteArray*)challengeFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -164,7 +164,7 @@
 	camel_sasl_try_empty_password([self castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)tryEmptyPasswordFinish:(GAsyncResult*)result
+- (bool)tryEmptyPasswordFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -175,7 +175,7 @@
 	return returnValue;
 }
 
-- (bool)tryEmptyPasswordSync:(OGCancellable*)cancellable
+- (bool)tryEmptyPasswordSyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 

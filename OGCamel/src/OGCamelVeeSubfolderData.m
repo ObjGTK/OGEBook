@@ -20,7 +20,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (instancetype)veeSubfolderData:(OGCamelFolder*)folder
++ (instancetype)veeSubfolderDataWithFolder:(OGCamelFolder*)folder
 {
 	CamelVeeSubfolderData* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_vee_subfolder_data_new([folder castedGObject]), CamelVeeSubfolderData, CamelVeeSubfolderData);
 

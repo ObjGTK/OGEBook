@@ -48,7 +48,7 @@
 	return G_TYPE_CHECK_INSTANCE_CAST([self gObject], CamelDataWrapper, CamelDataWrapper);
 }
 
-- (gsize)calculateDecodedSizeSync:(OGCancellable*)cancellable
+- (gsize)calculateDecodedSizeSyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -59,7 +59,7 @@
 	return returnValue;
 }
 
-- (gsize)calculateSizeSync:(OGCancellable*)cancellable
+- (gsize)calculateSizeSyncWithCancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -70,7 +70,7 @@
 	return returnValue;
 }
 
-- (bool)constructFromDataSyncWithData:(gconstpointer)data dataLen:(gssize)dataLen cancellable:(OGCancellable*)cancellable
+- (bool)constructFromDataSync:(gconstpointer)data dataLen:(gssize)dataLen cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -81,12 +81,12 @@
 	return returnValue;
 }
 
-- (void)constructFromInputStreamWithInputStream:(OGInputStream*)inputStream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)constructFromInputStream:(OGInputStream*)inputStream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	camel_data_wrapper_construct_from_input_stream([self castedGObject], [inputStream castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)constructFromInputStreamFinish:(GAsyncResult*)result
+- (bool)constructFromInputStreamFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -97,7 +97,7 @@
 	return returnValue;
 }
 
-- (bool)constructFromInputStreamSyncWithInputStream:(OGInputStream*)inputStream cancellable:(OGCancellable*)cancellable
+- (bool)constructFromInputStreamSync:(OGInputStream*)inputStream cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -108,12 +108,12 @@
 	return returnValue;
 }
 
-- (void)constructFromStreamWithStream:(OGCamelStream*)stream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)constructFromStream:(OGCamelStream*)stream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	camel_data_wrapper_construct_from_stream([self castedGObject], [stream castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (bool)constructFromStreamFinish:(GAsyncResult*)result
+- (bool)constructFromStreamFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -124,7 +124,7 @@
 	return returnValue;
 }
 
-- (bool)constructFromStreamSyncWithStream:(OGCamelStream*)stream cancellable:(OGCancellable*)cancellable
+- (bool)constructFromStreamSync:(OGCamelStream*)stream cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -135,12 +135,12 @@
 	return returnValue;
 }
 
-- (void)decodeToOutputStreamWithOutputStream:(OGOutputStream*)outputStream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)decodeToOutputStream:(OGOutputStream*)outputStream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	camel_data_wrapper_decode_to_output_stream([self castedGObject], [outputStream castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (gssize)decodeToOutputStreamFinish:(GAsyncResult*)result
+- (gssize)decodeToOutputStreamFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -151,7 +151,7 @@
 	return returnValue;
 }
 
-- (gssize)decodeToOutputStreamSyncWithOutputStream:(OGOutputStream*)outputStream cancellable:(OGCancellable*)cancellable
+- (gssize)decodeToOutputStreamSync:(OGOutputStream*)outputStream cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -162,12 +162,12 @@
 	return returnValue;
 }
 
-- (void)decodeToStreamWithStream:(OGCamelStream*)stream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)decodeToStream:(OGCamelStream*)stream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	camel_data_wrapper_decode_to_stream([self castedGObject], [stream castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (gssize)decodeToStreamFinish:(GAsyncResult*)result
+- (gssize)decodeToStreamFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -178,7 +178,7 @@
 	return returnValue;
 }
 
-- (gssize)decodeToStreamSyncWithStream:(OGCamelStream*)stream cancellable:(OGCancellable*)cancellable
+- (gssize)decodeToStreamSync:(OGCamelStream*)stream cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -250,12 +250,12 @@
 	camel_data_wrapper_take_mime_type_field([self castedGObject], mimeType);
 }
 
-- (void)writeToOutputStreamWithOutputStream:(OGOutputStream*)outputStream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)writeToOutputStream:(OGOutputStream*)outputStream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	camel_data_wrapper_write_to_output_stream([self castedGObject], [outputStream castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (gssize)writeToOutputStreamFinish:(GAsyncResult*)result
+- (gssize)writeToOutputStreamFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -266,7 +266,7 @@
 	return returnValue;
 }
 
-- (gssize)writeToOutputStreamSyncWithOutputStream:(OGOutputStream*)outputStream cancellable:(OGCancellable*)cancellable
+- (gssize)writeToOutputStreamSync:(OGOutputStream*)outputStream cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 
@@ -277,12 +277,12 @@
 	return returnValue;
 }
 
-- (void)writeToStreamWithStream:(OGCamelStream*)stream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
+- (void)writeToStream:(OGCamelStream*)stream ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData
 {
 	camel_data_wrapper_write_to_stream([self castedGObject], [stream castedGObject], ioPriority, [cancellable castedGObject], callback, userData);
 }
 
-- (gssize)writeToStreamFinish:(GAsyncResult*)result
+- (gssize)writeToStreamFinishWithResult:(GAsyncResult*)result
 {
 	GError* err = NULL;
 
@@ -293,7 +293,7 @@
 	return returnValue;
 }
 
-- (gssize)writeToStreamSyncWithStream:(OGCamelStream*)stream cancellable:(OGCancellable*)cancellable
+- (gssize)writeToStreamSync:(OGCamelStream*)stream cancellable:(OGCancellable*)cancellable
 {
 	GError* err = NULL;
 

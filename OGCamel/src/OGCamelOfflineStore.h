@@ -49,7 +49,7 @@
  * @param cancellable optional #GCancellable object, or %NULL
  * @return whether succeeded
  */
-- (bool)prepareForOfflineSync:(OGCancellable*)cancellable;
+- (bool)prepareForOfflineSyncWithCancellable:(OGCancellable*)cancellable;
 
 /**
  * Check whether the @store requires synchronization for offline usage.
@@ -72,7 +72,7 @@
  * @param callback a #GAsyncReadyCallback to call when the request is satisfied
  * @param userData data to pass to the callback function
  */
-- (void)setOnlineWithOnline:(bool)online ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
+- (void)setOnline:(bool)online ioPriority:(gint)ioPriority cancellable:(OGCancellable*)cancellable callback:(GAsyncReadyCallback)callback userData:(gpointer)userData;
 
 /**
  * Finishes the operation started with camel_offline_store_set_online().
@@ -80,7 +80,7 @@
  * @param result a #GAsyncResult
  * @return Whether succeeded.
  */
-- (bool)setOnlineFinish:(GAsyncResult*)result;
+- (bool)setOnlineFinishWithResult:(GAsyncResult*)result;
 
 /**
  * Sets the online/offline state of @store according to @online.
@@ -91,6 +91,6 @@
  * 
  * See: camel_offline_store_set_online
  */
-- (bool)setOnlineSyncWithOnline:(bool)online cancellable:(OGCancellable*)cancellable;
+- (bool)setOnlineSync:(bool)online cancellable:(OGCancellable*)cancellable;
 
 @end

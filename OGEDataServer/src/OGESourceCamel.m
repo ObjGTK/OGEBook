@@ -27,7 +27,7 @@
 	return returnValue;
 }
 
-+ (OFString*)extensionName:(OFString*)protocol
++ (OFString*)extensionNameWithProtocol:(OFString*)protocol
 {
 	const gchar* gobjectValue = e_source_camel_get_extension_name([protocol UTF8String]);
 
@@ -35,7 +35,7 @@
 	return returnValue;
 }
 
-+ (OFString*)typeName:(OFString*)protocol
++ (OFString*)typeNameWithProtocol:(OFString*)protocol
 {
 	const gchar* gobjectValue = e_source_camel_get_type_name([protocol UTF8String]);
 

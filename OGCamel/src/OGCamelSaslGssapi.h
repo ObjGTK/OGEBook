@@ -38,6 +38,6 @@
  * @param overrideHost Host name to use during challenge processing; can be %NULL
  * @param overrideUser User name to use during challenge processing; can be %NULL
  */
-- (void)overrideHostAndUserWithOverrideHost:(OFString*)overrideHost overrideUser:(OFString*)overrideUser;
+- (void)overrideHostAndUser:(OFString*)overrideHost overrideUser:(OFString*)overrideUser;
 
 @end

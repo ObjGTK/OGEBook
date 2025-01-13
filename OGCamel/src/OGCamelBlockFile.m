@@ -60,14 +60,14 @@
 	camel_block_file_detach_block([self castedGObject], bl);
 }
 
-- (gint)freeBlock:(camel_block_t)identifier
+- (gint)freeBlockWithIdentifier:(camel_block_t)identifier
 {
 	gint returnValue = (gint)camel_block_file_free_block([self castedGObject], identifier);
 
 	return returnValue;
 }
 
-- (CamelBlock*)block:(camel_block_t)identifier
+- (CamelBlock*)blockWithIdentifier:(camel_block_t)identifier
 {
 	CamelBlock* returnValue = (CamelBlock*)camel_block_file_get_block([self castedGObject], identifier);
 
@@ -102,14 +102,14 @@
 	return returnValue;
 }
 
-- (gint)rename:(OFString*)path
+- (gint)renameWithPath:(OFString*)path
 {
 	gint returnValue = (gint)camel_block_file_rename([self castedGObject], [path UTF8String]);
 
 	return returnValue;
 }
 
-- (void)setCacheLimit:(gint)blockCacheLimit
+- (void)setCacheLimitWithBlockCacheLimit:(gint)blockCacheLimit
 {
 	camel_block_file_set_cache_limit([self castedGObject], blockCacheLimit);
 }

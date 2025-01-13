@@ -18,7 +18,7 @@
 	g_type_set_qdata(gtypeToAssociate, [super wrapperQuark], [self class]);
 }
 
-+ (instancetype)mimeFilterYenc:(CamelMimeFilterYencDirection)direction
++ (instancetype)mimeFilterYencWithDirection:(CamelMimeFilterYencDirection)direction
 {
 	CamelMimeFilterYenc* gobjectValue = G_TYPE_CHECK_INSTANCE_CAST(camel_mime_filter_yenc_new(direction), CamelMimeFilterYenc, CamelMimeFilterYenc);
 

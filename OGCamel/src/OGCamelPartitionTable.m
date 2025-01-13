@@ -52,14 +52,14 @@
 	return returnValue;
 }
 
-- (camel_key_t)lookup:(OFString*)key
+- (camel_key_t)lookupWithKey:(OFString*)key
 {
 	camel_key_t returnValue = (camel_key_t)camel_partition_table_lookup([self castedGObject], [key UTF8String]);
 
 	return returnValue;
 }
 
-- (bool)remove:(OFString*)key
+- (bool)removeWithKey:(OFString*)key
 {
 	bool returnValue = (bool)camel_partition_table_remove([self castedGObject], [key UTF8String]);
 

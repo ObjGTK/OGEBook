@@ -19,7 +19,7 @@
 /**
  * Constructors
  */
-+ (instancetype)dataCache:(OFString*)path;
++ (instancetype)dataCacheWithPath:(OFString*)path;
 
 /**
  * Methods
@@ -49,7 +49,7 @@
  *
  * @param path Path to the (sub) cache the item exists in.
  */
-- (void)clear:(OFString*)path;
+- (void)clearWithPath:(OFString*)path;
 
 /**
  * Traverses the @cdc sub-cache identified by @path and calls @func for each found file.
@@ -125,7 +125,7 @@
  *
  * @param when Timeout for access, or -1 to disable access expiry.
  */
-- (void)setExpireAccess:(time_t)when;
+- (void)setExpireAccessWithWhen:(time_t)when;
 
 /**
  * Set the cache expiration policy for aged entries.
@@ -140,7 +140,7 @@
  *
  * @param when Timeout for age expiry, or -1 to disable.
  */
-- (void)setExpireAge:(time_t)when;
+- (void)setExpireAgeWithWhen:(time_t)when;
 
 /**
  * Sets whether expire of cache data is enabled.

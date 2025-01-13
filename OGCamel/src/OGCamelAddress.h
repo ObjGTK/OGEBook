@@ -32,7 +32,7 @@
  * @param source source #CamelAddress object
  * @return the number of addresses concatenated
  */
-- (gint)cat:(OGCamelAddress*)source;
+- (gint)catWithSource:(OGCamelAddress*)source;
 
 /**
  * Copy the contents of one address into another.
@@ -40,7 +40,7 @@
  * @param source source #CamelAddress object
  * @return the number of addresses copied
  */
-- (gint)copy:(OGCamelAddress*)source;
+- (gint)copyWithSource:(OGCamelAddress*)source;
 
 /**
  * Construct a new address from a raw address field.
@@ -48,7 +48,7 @@
  * @param raw raw address description
  * @return the number of addresses parsed or -1 on fail
  */
-- (gint)decode:(OFString*)raw;
+- (gint)decodeWithRaw:(OFString*)raw;
 
 /**
  * Encode an address in a format suitable for a raw header.
@@ -83,7 +83,7 @@
  *
  * @param index The address to remove, use -1 to remove all address.
  */
-- (void)remove:(gint)index;
+- (void)removeWithIndex:(gint)index;
 
 /**
  * Attempt to convert a previously formatted and/or edited
@@ -92,6 +92,6 @@
  * @param raw raw address description
  * @return the number of addresses parsed or -1 on fail
  */
-- (gint)unformat:(OFString*)raw;
+- (gint)unformatWithRaw:(OFString*)raw;
 
 @end
