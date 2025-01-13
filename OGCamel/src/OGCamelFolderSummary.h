@@ -285,7 +285,7 @@
  *
  * @return the next unique uid value
  */
-- (guint32)nextUid;
+- (guint32)generateNextUid;
 
 /**
  * Retrieve the next uid, but as a formatted string.

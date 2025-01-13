@@ -36,7 +36,7 @@
  * @param string Destination #GString
  * @param vstring String expression.
  */
-+ (void)encodeStringWithString:(GString*)string vstring:(OFString*)vstring;
++ (void)encodeString:(GString*)string vstring:(OFString*)vstring;
 
 /**
  * Constructors
