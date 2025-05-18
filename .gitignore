@@ -142,7 +142,7 @@ $RECYCLE.BIN/
 *.lnk
 
 # ObjFW / ObjGTK
-*.m4
+aclocal.m4
 *.cache
 configure
 *.oc
